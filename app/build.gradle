@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        applicationId "com.hcare.homeopathy.hcare"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 39
+        versionName '1.108'
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+    compileOptions {
+        targetCompatibility = 1.8
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+repositories {
+    // You can also use jcenter if you prefer
+    mavenCentral()
+}
+dependencies {
+    //facebook
+    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    implementation 'com.facebook.android:facebook-core:[5,6)'
+    implementation 'com.facebook.android:facebook-marketing:[5,6)'
+    //facebook data ends
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    //  implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'com.google.android.material:material:1.2.0'
+    //FIREBASE
+    implementation 'com.google.firebase:firebase-core:17.2.2'
+    implementation 'com.google.firebase:firebase-auth:19.2.0'
+    implementation 'com.google.firebase:firebase-messaging:20.1.0'
+    implementation 'com.google.firebase:firebase-database:19.2.1'
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.google.firebase:firebase-firestore:21.4.0'
+    implementation 'com.firebaseui:firebase-ui:6.2.0'
+    implementation 'com.google.firebase:firebase-invites:17.0.0'
+    //firebase end
+    //external lib starts
+    implementation 'com.github.akshittyagi205:HorizontalCalendarView:v1.0.0'
+    implementation 'id.zelory:compressor:2.0.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.okhttp:okhttp:2.7.5'
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.7' exclude group: 'com.android.support'
+    implementation 'androidx.exifinterface:exifinterface:1.1.0'
+    implementation 'com.victor:lib:1.0.4'
+    implementation 'com.commit451:PhotoView:1.2.4'
+    implementation 'io.gloxey.cfv:custom-font-views:1.0.2'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    implementation 'com.razorpay:checkout:1.6.4'
+    //external lib ends
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+}
+
+
+apply plugin: 'com.google.gms.google-services'

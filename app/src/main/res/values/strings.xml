@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">HCare</string>
+    <string name="create_account" />
+    <string name="log_out" />
+    <string name="rupee">\u20B9</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="consult">Consult</string>
+
+    <string name="country_prompt">Choose a country</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="treatment">Treatment</string>
+    <string name="pdf_file">PDF FILE</string>
+    <string name="opensansRegular">OpenSans-Regular.ttf</string>
+    <string name="opensansBold">OpenSans-Bold.ttf</string>
+    <string name="opensansSemiBold">OpenSans-SemiBold.ttf</string>
+
+    <string name="facebook_app_id">1494302147358414</string>
+    <string name="fb_login_protocol_scheme">1494302147358414</string>
+    <string name="consult_again">Consult again</string>
+
+</resources>

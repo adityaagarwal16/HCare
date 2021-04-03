@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hcare.homeopathy.hcare.Consultation.DocprofileActivity">
+
+    <include
+        android:id="@+id/doctors_appBar"
+        layout="@layout/main_app_bar" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="512dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/doctors_appBar"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="42dp">
+
+        <ImageView
+            android:id="@+id/docimage"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_marginTop="8dp"
+            android:padding="2dp"
+            app:srcCompat="@drawable/default_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+             />
+
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/nameinview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/docimage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="14sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/nameinview"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_toStartOf="@+id/nameinview"
+            android:text="Dr. "
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="14sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/degreeinview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nameinview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="degree"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="14sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/specilazationinview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/degreeinview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="specilazation"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="14sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/aboutyouinview" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/registeridinview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/specilazationinview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="Register Id"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="14sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toBottomOf="@+id/textView33" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/experienceinview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/registeridinview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="Experience"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="14sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toBottomOf="@+id/textView34" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/languageinview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/experienceinview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="Language"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textSize="14sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toBottomOf="@+id/textView35" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/textView30"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorbg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/languageinview" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/aboutyouinview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/languageinview"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="About me :"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/languageinview" />
+
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Name :"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/textView32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Degree"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/textView33"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:lineSpacingExtra="0sp"
+            android:text="Registration :"
+            android:textColor="@color/colorPrimary"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toBottomOf="@+id/degreeinview" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/textView34"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Experience :"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toBottomOf="@+id/registeridinview" />
+
+        <io.gloxey.cfv.CFTextView
+            android:id="@+id/textView35"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:text="Languages :"
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            app:font_name="@string/opensansRegular"
+            app:layout_constraintStart_toEndOf="@+id/docimage"
+            app:layout_constraintTop_toBottomOf="@+id/experienceinview" />
+
+        <TextView
+            android:id="@+id/textView37"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="Status :"
+            android:textColor="@color/blackcolor"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/docimage" />
+
+        <TextView
+            android:id="@+id/textView38"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:text="  Available"
+            android:textColor="@color/blackcolor"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintTop_toBottomOf="@+id/docimage" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="18dp"
+            app:layout_constraintStart_toEndOf="@+id/textView37"
+            app:layout_constraintTop_toBottomOf="@+id/docimage"
+            app:srcCompat="@drawable/green_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

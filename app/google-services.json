@@ -1,0 +1,283 @@
+{
+  "project_info": {
+    "project_number": "1053059612819",
+    "firebase_url": "https://h-line.firebaseio.com",
+    "project_id": "h-line",
+    "storage_bucket": "h-line.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053059612819:android:59605d33dd78f3fa",
+        "android_client_info": {
+          "package_name": "com.example.vinithpc.h_line"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053059612819-bn09tlhbbbudnscgp1o7u7hvkro9qb7q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vinithpc.h_line",
+            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
+          }
+        },
+        {
+          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053059612819:android:96a8cbef8f4f360c",
+        "android_client_info": {
+          "package_name": "com.example.vinithpc.h_linepatient"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053059612819-7bf3iuf2rnaa1rmljj6qq5or4t3b7v6q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vinithpc.h_linepatient",
+            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
+          }
+        },
+        {
+          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053059612819:android:7fa468492de01fa7",
+        "android_client_info": {
+          "package_name": "com.hcare.backend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053059612819-1sbmr6v96lgrim28a12pgub497hbq338.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hcare.backend",
+            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
+          }
+        },
+        {
+          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053059612819:android:9bd50800f8204b3e",
+        "android_client_info": {
+          "package_name": "com.hcare.hcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053059612819-nre6ucis4eu9kucj5kh8vmor1sj8ebee.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hcare.hcare",
+            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
+          }
+        },
+        {
+          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053059612819:android:f479793ce9962f6c",
+        "android_client_info": {
+          "package_name": "com.hcare.homeopathy.hcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053059612819-2oa7k0si5lt1racmij7cm0duqlo7hqsb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hcare.homeopathy.hcare",
+            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
+          }
+        },
+        {
+          "client_id": "1053059612819-4dc4lqi994847nfa32m2hs1805fv07kf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hcare.homeopathy.hcare",
+            "certificate_hash": "fd574d8c8d36087ac4a045cc1182dc853f7a805e"
+          }
+        },
+        {
+          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053059612819:android:6a129d89ad0169cd",
+        "android_client_info": {
+          "package_name": "com.hcare.homeopathy.hcaredoctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053059612819-2fm6so5sq406i36ssaodj5i05tocbt4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hcare.homeopathy.hcaredoctor",
+            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
+          }
+        },
+        {
+          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

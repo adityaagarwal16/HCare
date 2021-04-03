@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Gallery_btn"
+        android:title="Gallery" />
+
+    <item
+        android:id="@+id/File_btn"
+        android:title="File" />
+</menu>

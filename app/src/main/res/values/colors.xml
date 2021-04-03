@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0E3385</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorbg">#FCF6F6</color>
+    <color name="blackcolor">#2E2E2E</color>
+    <color name="greenButton">#00FFA8</color>
+    <color name="greenConsult">#99e338</color>
+    <color name="blur">#03535353</color>
+    <color name="gold">#ffd700</color>
+    <color name="darkgold">#ff8c00</color>
+    <color name="bottomgreen">#0CCEA1</color>
+    <color name="fontcolor">#191D4A</color>
+</resources>

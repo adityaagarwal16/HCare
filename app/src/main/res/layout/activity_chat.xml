@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/chat"
+    tools:context="com.hcare.homeopathy.hcare.Consultation.ChatActivity">
+
+    <include
+        android:id="@+id/main_page_toolbar"
+        layout="@layout/main_app_bar"
+        android:elevation="2dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messages_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/main_page_toolbar"></androidx.recyclerview.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal"
+        android:weightSum="10"
+        tools:visibility="visible">
+
+        <ImageButton
+            android:id="@+id/chat_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:background="@color/fui_transparent"
+            android:rotation="0"
+            android:rotationX="0"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <io.gloxey.cfv.CFEditText
+            android:id="@+id/chat_message_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="9dp"
+            android:layout_weight="6.5"
+            android:background="@drawable/text_bgcolor"
+            android:ems="10"
+            android:hint="    Type a Message"
+            android:inputType="textUri|textShortMessage|textLongMessage|textPersonName|text"
+            android:padding="10dp"
+            android:textAlignment="textStart"
+            android:textColor="@color/common_google_signin_btn_text_dark_focused"
+            android:textColorHighlight="@color/blackcolor"
+            android:textColorHint="@color/cardview_dark_background"
+            android:textColorLink="@color/blackcolor"
+            android:textCursorDrawable="@drawable/cursor_color"
+            app:font_name="@string/opensansRegular" />
+
+        <ImageButton
+            android:id="@+id/chat_send_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_weight="1.07"
+            android:background="@color/fui_transparent"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/ic_send_black_24dp" />
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/consultagainbtn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="2dp"
+        android:layout_weight="1.5"
+        android:background="@color/colorPrimary"
+        android:visibility="invisible"
+        app:srcCompat="@drawable/buton_round" />
+
+    <TextView
+        android:id="@+id/consultagaintxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1.5"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="@string/consult_again"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:visibility="invisible" />
+
+</RelativeLayout>
+

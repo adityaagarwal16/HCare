@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="docimage" type="id" />
+    <item name="nameinview" type="id" />
+    <item name="degreeinview" type="id" />
+    <item name="specilazationinview" type="id" />
+    <item name="registeridinview" type="id" />
+    <item name="experienceinview" type="id" />
+    <item name="languageinview" type="id" />
+    <item name="conslutinviewbtn" type="id" />
+</resources>

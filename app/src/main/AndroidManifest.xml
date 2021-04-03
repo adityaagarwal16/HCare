@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.hcare.homeopathy.hcare">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION"/>
+    <uses-permission android:name="android.permission.INSTALL_SHORTCUT"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+
+
+    <application
+        android:name=".JvFiles.Patientsapp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:exported="false"
+        android:protectionLevel="signature"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".PostConsultation.PrescriptionActivity" />
+        <activity android:name=".PreConsultation.consultationfeeActivity" />
+        <activity android:name=".Mainmenus.FaqActivity" />
+
+        <service
+            android:name=".JvFiles.FirebaseMessagingService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".Start.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Mainmenus.MainActivity" />
+        <activity android:name=".Start.StartActivity" />
+        <activity
+            android:name=".PreConsultation.ChatwithdoctorsActivity"
+            android:parentActivityName=".Mainmenus.MainActivity" />
+        <activity android:name=".PreConsultation.ConsultbtnActivity" />
+        <activity
+            android:name=".Mainmenus.CustomercareActivity"
+            android:parentActivityName=".Mainmenus.MainActivity">
+            <intent-filter>
+                <action android:name="com.hcare.homeopathy.hcare_customercare" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Consultation.DocprofileActivity"
+            android:parentActivityName=".DoctorsActivity" />
+        <activity android:name=".JvFiles.ImageActivity" />
+        <activity
+            android:name=".PostConsultation.OrderActivity"
+            android:parentActivityName=".Mainmenus.MainActivity" />
+        <activity
+            android:name=".Mainmenus.ProfileActivity"
+            android:parentActivityName=".Mainmenus.MainActivity" />
+        <activity android:name=".Start.ProfileSettingActivity" />
+        <activity android:name=".PostConsultation.TreatmentSelectionActivity" />
+        <activity android:name=".PostConsultation.AddressActivity" />
+        <activity
+            android:name=".Consultation.ChatActivity"
+            android:parentActivityName=".ConsultationsActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".Mainmenus.RecentmainmenuActivity">
+            <intent-filter>
+                <action android:name="com.hcare.homeopathy.hcare_TARGET_NOTIFICATION" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Mainmenus.AccountmainmenuActivity" />
+        <activity
+            android:name=".BlogsActivity"
+            android:parentActivityName=".Mainmenus.MainActivity" />
+
+        <meta-data
+            android:exported="false"
+            android:name="com.razorpay.ApiKey"
+            android:value="rzp_live_SzHvbklFoHMBtv" />
+
+        <activity android:name=".InviteActivity" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"
+            tools:replace="android:value" />
+        <meta-data
+            android:name="com.facebook.sdk.CodelessDebugLogEnabled"
+            android:value="true" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+    </application>
+
+</manifest>
