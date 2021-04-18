@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class BlogsActivity extends AppCompatActivity {
+
     private Toolbar mToolbar;
     private FirebaseUser mCurrentUser;
     private RecyclerView mDoctorList;
@@ -18,11 +19,8 @@ public class BlogsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blogs);
-       mToolbar = (Toolbar) findViewById(R.id.doctors_appBar);
-
-     /*   setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Blogs");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+     /* setTitle("Blogs");
+        setDisplayHomeAsUpEnabled(true);
 
         mDoctorsDatabase = FirebaseDatabase.getInstance().getReference().child("Blogs");
         mDoctorsDatabase.keepSynced(true);

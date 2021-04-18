@@ -32,12 +32,9 @@ public class OrderActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.doctors_appBar);
 
+        setTitle("Orders");
 
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Orders");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = mCurrentUser.getUid();
 

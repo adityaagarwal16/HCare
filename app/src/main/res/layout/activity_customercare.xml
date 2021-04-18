@@ -5,9 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.hcare.homeopathy.hcare.Mainmenus.CustomercareActivity">
-    <include
-        android:id="@+id/main_page_toolbar"
-        layout="@layout/app_bar_layout" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_list"

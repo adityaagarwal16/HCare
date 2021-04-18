@@ -20,14 +20,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class DocprofileActivity extends AppCompatActivity {
+
     private Toolbar mToolbar;
     private ImageView mProfileimage;
     private TextView mName,mDegree,mSpecialization,mRegid,mExperience,mLanguage,status;
 
 
     private DatabaseReference mDoctorsDatabase;
-
-
 
 
     private String mcurrent_state, name,patientname,sex,age,Availabilty,bname;
@@ -42,11 +41,9 @@ public class DocprofileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_docprofile);
 
         final String doctor_id = getIntent().getStringExtra("user_id");
-        mToolbar = (Toolbar) findViewById(R.id.doctors_appBar);
 
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("About Doctor");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("About Doctor");
+
         mDoctorsDatabase = FirebaseDatabase.getInstance().getReference().child("Doctors").child(doctor_id);
         mDoctorsDatabase.keepSynced(true);
         mCurrent_patient = FirebaseAuth.getInstance().getCurrentUser();

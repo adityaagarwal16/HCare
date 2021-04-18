@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.hcare.homeopathy.hcare.Start.ProfileSettingActivity">
 
-    <include
-        android:id="@+id/profilesetting_appBar"
-        layout="@layout/main_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name_Input"
         android:layout_width="match_parent"

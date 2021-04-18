@@ -19,12 +19,7 @@ public class FaqActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_faq);
 
-
-        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
-
-        // getSupportActionBar().setIcon(R.drawable.logohorizontal);
-        getSupportActionBar().setTitle("Help and support");
+        setTitle("Help and support");
 
         qus1 =(TextView)findViewById(R.id.qus1);
         qus2 =(TextView)findViewById(R.id.qus2);

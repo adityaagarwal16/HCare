@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,19 +47,17 @@ public class RecentmainmenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recentmainmenu);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Consultations");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setOnClickListener(new View.OnClickListener() {
+        setTitle("Consultations");
+
+       /* final int abTitleId = getResources().getIdentifier("action_bar_title", "id", "android");
+        findViewById(abTitleId).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent docprofileIntent = new Intent(RecentmainmenuActivity.this, MainActivity.class);
                 docprofileIntent .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(docprofileIntent);
-                finish();
             }
-        });
+        });*/
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = mAuth.getCurrentUser().getUid();
@@ -68,9 +67,11 @@ public class RecentmainmenuActivity extends AppCompatActivity {
         mDoctorDatabase = FirebaseDatabase.getInstance().getReference().child("Doctors");
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUserId);
         mDoctorList = (RecyclerView)findViewById(R.id.doctor_list);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
+
         mDoctorList.setHasFixedSize(true);
         mDoctorList.setLayoutManager(linearLayoutManager);
         mDoctorsDatabase.keepSynced(true);
@@ -107,7 +108,7 @@ public class RecentmainmenuActivity extends AppCompatActivity {
 
                 h.limitToLast(1).addChildEventListener(new ChildEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
 
                         if (dataSnapshot.hasChild("seen")) {
                             boolean data = (boolean) dataSnapshot.child("seen").getValue();
@@ -117,24 +118,24 @@ public class RecentmainmenuActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
                         mDoctorList.scrollToPosition(1);
                         notifyDataSetChanged();
 
                     }
 
                     @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
                     }
 
                     @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
 
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
@@ -142,7 +143,7 @@ public class RecentmainmenuActivity extends AppCompatActivity {
 
                 mDoctorDatabase.child(user_ids).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                         String userName = dataSnapshot.child("name").getValue().toString();
                         String userNam = dataSnapshot.child("thumb_image").getValue().toString();
@@ -152,7 +153,7 @@ public class RecentmainmenuActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
                 });
@@ -161,7 +162,6 @@ public class RecentmainmenuActivity extends AppCompatActivity {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         Intent docprofileIntent = new Intent(RecentmainmenuActivity.this, ChatActivity.class);
                         docprofileIntent.putExtra("user_id",user_ids);
                         startActivity(docprofileIntent);

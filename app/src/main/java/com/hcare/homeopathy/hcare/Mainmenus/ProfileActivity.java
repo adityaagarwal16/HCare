@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -44,7 +45,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
 public class ProfileActivity extends AppCompatActivity {
-    private Toolbar mToolbar;
 
     private DatabaseReference mUserrDatabase;
     private FirebaseUser mCurrentUser;
@@ -56,8 +56,6 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView mAge;
     private TextView mSex;
     private TextView mEmail;
-    private Button mEditbtn;
-    private ImageButton mimagebtn;
 
     private static final int GALLERY_PICK = 1;
     ProgressBar mProgressbar;
@@ -70,11 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        mToolbar = (Toolbar) findViewById(R.id.profilesetting_appBar);
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Profile");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Profile");
 
         mDisplayImage = (CircleImageView) findViewById(R.id.settings_image);
         mName = (TextView) findViewById(R.id.name);
@@ -82,8 +76,8 @@ public class ProfileActivity extends AppCompatActivity {
         mAge =(TextView) findViewById(R.id.age);
         mSex =(TextView) findViewById(R.id.sex);
         mEmail =(TextView) findViewById(R.id.emailview);
-        mEditbtn =(Button) findViewById(R.id.edit_btn);
-        mimagebtn =(ImageButton) findViewById(R.id.imageButton);
+        Button mEditbtn = (Button) findViewById(R.id.edit_btn);
+        ImageButton mimagebtn = (ImageButton) findViewById(R.id.imageButton);
 
         mimagestorage = FirebaseStorage.getInstance().getReference();
 
@@ -132,13 +126,11 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                     });
 
-                }else {
-
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });

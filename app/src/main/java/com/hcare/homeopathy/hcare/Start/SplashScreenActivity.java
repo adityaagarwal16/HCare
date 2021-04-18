@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.PopupWindow;
 
@@ -22,7 +23,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
+import com.hcare.homeopathy.hcare.Mainmenus.DiseaseObject;
 import com.hcare.homeopathy.hcare.Mainmenus.MainActivity;
+import com.hcare.homeopathy.hcare.PreConsultation.DiseaseActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
@@ -51,17 +55,23 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 Intent intent;
                                 if(currentUser == null)
                                     intent = new Intent(getApplicationContext(), StartActivity.class);
-                                else
-                                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                                else {
+
+                                    intent = new Intent(getApplicationContext(), DiseaseActivity.class);
+                                    Gson gson = new Gson();
+                                    String myJson = gson.toJson
+                                            (new DiseaseObject("Thyroid", R.drawable.thyroid));
+                                    intent.putExtra("request_type1", myJson);
+
+                                    //intent = new Intent(getApplicationContext(), MainActivity.class);
+                                }
                                 startActivity(intent);
                                 finish();
                             }
                         };
                         myThread.start();
-                        //  Toast.makeText(MainActivity.this, "updated" , Toast.LENGTH_LONG).show();
                     } else {
                         showPopup();
-                        // Toast.makeText(MainActivity.this, "" + userName, Toast.LENGTH_LONG).show();
                     }
                 }
             }

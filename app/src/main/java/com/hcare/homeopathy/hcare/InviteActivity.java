@@ -31,7 +31,7 @@ public class InviteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new AppInviteInvitation.IntentBuilder("Hcare")
-                        .setMessage("consult a homeopathic doctor now")
+                        .setMessage("Consult a homeopathic doctor now")
                         .setDeepLink(Uri.parse("https://play.google.com/store/apps/details?id=com.hcare.homeopathy.hcare"))
                        // .setCustomImage(Uri.parse(getString(R.string.invitation_custom_image)))
                         .setCallToActionText("invitation cta")

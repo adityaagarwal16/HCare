@@ -60,9 +60,8 @@ public class AddressActivity extends AppCompatActivity implements PaymentResultL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
-        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Order");
+
+        setTitle("Order");
 
         OrderId ="Hcr"+getRandomNumberString();
         Log.d("test123456",""+ getRandomNumberString());

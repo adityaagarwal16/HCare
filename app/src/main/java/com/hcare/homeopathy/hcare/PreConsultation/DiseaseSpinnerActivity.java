@@ -25,9 +25,8 @@ import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-public class ConsultbtnActivity extends AppCompatActivity {
+public class DiseaseSpinnerActivity extends AppCompatActivity {
     String[] spinnerTitles;
     int[] spinnerImages;
     private String mName, patientname, age, sex,message;
@@ -39,10 +38,7 @@ public class ConsultbtnActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultbtn);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("consult a Doctor");
-
+        setTitle("Consult a doctor");
 
         spinnerTitles = new String[]{"Select a Problem Area", "Hair", "Skin", "Weight Loss & gain", "Headache", "Renal Problems"
                 , "Respiratory", "Male", "Female","Digestive Problems","Diabetes & HyperTension","Thyroid","Ear, Nose & Throat",
@@ -55,18 +51,18 @@ public class ConsultbtnActivity extends AppCompatActivity {
                 , R.drawable.newrenal
                 , R.drawable.newrespiratory
                 , R.drawable.newmens , R.drawable.newwomen, R.drawable.newdigestive, R.drawable.newdiabetes,
-                R.drawable.thyroid, R.drawable.newent, R.drawable.newmouth, R.drawable.newgrowth
+                R.drawable.newthyroid, R.drawable.newent, R.drawable.newmouth, R.drawable.newgrowth
                 , R.drawable.newjoints, R.drawable.newnutrition, R.drawable.neweye, R.drawable.newheart,
                 R.drawable.newchild, R.drawable.newdepression, R.drawable.newothers};
 
         Spinner mSpinner = findViewById(R.id.spinner);
-        CustomAdapter mCustomAdapter = new CustomAdapter(ConsultbtnActivity.this, spinnerTitles, spinnerImages);
+        CustomAdapter mCustomAdapter = new CustomAdapter(DiseaseSpinnerActivity.this, spinnerTitles, spinnerImages);
         mSpinner.setAdapter(mCustomAdapter);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView adapterView, View view, int i, long l) {
                 mName = spinnerTitles[i];
-                Toast.makeText(ConsultbtnActivity.this, spinnerTitles[i], Toast.LENGTH_SHORT).show();
+                Toast.makeText(DiseaseSpinnerActivity.this, spinnerTitles[i], Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -109,7 +105,7 @@ public class ConsultbtnActivity extends AppCompatActivity {
                         Date date2 = new Date();
                         String time = dateFormat.format(date2);
                        // mConsultingbtn.setEnabled(false);
-                        Intent regIntent = new Intent(ConsultbtnActivity.this, consultationfeeActivity.class);
+                        Intent regIntent = new Intent(DiseaseSpinnerActivity.this, consultationfeeActivity.class);
                         regIntent.putExtra("details1", message);
                         regIntent.putExtra("request_type1", mName);
                         regIntent.putExtra("name", patientname);
@@ -118,7 +114,7 @@ public class ConsultbtnActivity extends AppCompatActivity {
                         startActivity(regIntent);
 
                     } else {
-                        Toast.makeText(ConsultbtnActivity.this, "Please select Health Issue", Toast.LENGTH_LONG).show();
+                        Toast.makeText(DiseaseSpinnerActivity.this, "Please select Health Issue", Toast.LENGTH_LONG).show();
                     }
 
 
@@ -131,9 +127,6 @@ public class ConsultbtnActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         userRef.child("status").setValue("online");
-    }
-    private void getdata(){
-
     }
 
     @Override

@@ -54,22 +54,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ChatActivity extends AppCompatActivity implements PaymentResultListener {
     private String mChatUser;
-    private Toolbar mChatToolbar;
 
     private TextView mTitleView;
-    private FirebaseAuth mAuth;
     private DatabaseReference mRootref;
     private String mCurrentUserId,phone_number,phoneno,mail;
 
     private ImageButton mChatAddBtn,consultagain;
-    private ImageButton mChatSendBtn;
     private EditText mChatMessageView;
-    private ImageButton mPrescribeBtn;
+
     final static int PICK_PDF_CODE = 2342;
     private RecyclerView mMessagesList;
     private final List<Messages> messageList= new ArrayList<>();
-    private LinearLayoutManager mLinearLayout;
-    private MessageAdapter mAdapter;
     private static final int GALLERY_PICK =1;
     private DatabaseReference userRef;
     private DatabaseReference a,h,z,p,followup ;
@@ -82,27 +77,26 @@ public class ChatActivity extends AppCompatActivity implements PaymentResultList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         mChatUser = getIntent().getStringExtra("user_id");
-        mChatToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mChatToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mChatToolbar.setOnClickListener(new View.OnClickListener() {
+
+        //TODO()
+    /*    mChatToolbar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent profileIntent = new Intent(ChatActivity.this, DocprofileActivity.class);
                 profileIntent.putExtra("user_id",mChatUser);
                 startActivity(profileIntent);
 
             }
-        });
+        });*/
 
         mRootref = FirebaseDatabase.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = mAuth.getCurrentUser().getUid();
         mimagestorage = FirebaseStorage.getInstance().getReference();
         mChatAddBtn =(ImageButton) findViewById(R.id.chat_add_btn);
-        mChatSendBtn =(ImageButton) findViewById(R.id.chat_send_btn);
+        ImageButton mChatSendBtn = (ImageButton) findViewById(R.id.chat_send_btn);
         mChatMessageView =(EditText) findViewById(R.id.chat_message_view);
         consultagain =(ImageButton)findViewById(R.id.consultagainbtn);
         mTitleView =(TextView)findViewById(R.id.consultagaintxt);
@@ -113,11 +107,11 @@ public class ChatActivity extends AppCompatActivity implements PaymentResultList
         mProgressDialog.setCanceledOnTouchOutside(false);
 
         mMessagesList =(RecyclerView) findViewById(R.id.messages_list);
-        mLinearLayout = new LinearLayoutManager(this);
+        LinearLayoutManager mLinearLayout = new LinearLayoutManager(this);
 
         mMessagesList.setHasFixedSize(true);
         mMessagesList.setLayoutManager(mLinearLayout);
-        mAdapter =new MessageAdapter(messageList);
+        MessageAdapter mAdapter = new MessageAdapter(messageList);
         mMessagesList.setAdapter(mAdapter);
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
@@ -199,13 +193,13 @@ public class ChatActivity extends AppCompatActivity implements PaymentResultList
 
         p.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String chat_user_name = dataSnapshot.child("name").getValue().toString();
-                getSupportActionBar().setTitle("Dr "+chat_user_name);
+                setTitle("Dr "+chat_user_name);
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });

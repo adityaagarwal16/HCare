@@ -1,214 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.hcare.homeopathy.hcare.PreConsultation.ChatwithdoctorsActivity">
+    android:background="@color/colorAccent"
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/main_page_toolbar"
-        layout="@layout/main_app_bar"
-        android:elevation="2dp"
-        app:subtitleTextColor="@android:color/black"
-        tools:layout_editor_absoluteX="2dp" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:elevation="4dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="20sp"
+                android:gravity="center_vertical"
+                android:text="@string/consult"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <ImageView
+                android:layout_margin="15dp"
+                android:id="@+id/howItWorks"
+                android:background="?selectableItemBackgroundBorderless"
+                android:src="@drawable/vector_how_to_use"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/todo"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                app:tint="@color/colorSecondary" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+    <ImageView
+        android:layout_below="@id/toolbar"
+        android:background="@color/colorPrimary"
+        android:id="@+id/diseaseImage"
+        android:paddingTop="20dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/thyroid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/aboutDisease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"
+        android:gravity="center"
+        android:layout_below="@id/diseaseImage"
+        android:text="Thyroid disease is a medical condition that affects the function of the thyroid gland. The thyroid gland is located at the front of the neck and produces thyroid hormones that travel through the blood to help regulate many other organs, meaning that it is an endocrine organ." />
 
 
     <TextView
-        android:id="@+id/healthissuecat"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/textbackground"
-        android:fontFamily="@font/quicksand_bold"
-        android:paddingTop="16dp"
-        android:text="Health issue name"
-        android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_page_toolbar" />
+        android:id="@+id/header"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="15dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:layout_below="@id/aboutDisease"
+        android:textSize="16sp"
+        android:text="Explain your health issue in detail" />
 
-    <Button
-        android:id="@+id/consult_btn"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:layout_below="@+id/view"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/text_color_background"
-        android:padding="10dp"
-        android:text="continue "
-        android:textColor="@color/colorAccent"
-        android:textColorLink="@color/colorAccent"
-        android:textSize="18sp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <io.gloxey.cfv.CFEditText
+    <EditText
         android:id="@+id/diseases"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_below="@+id/main_page_toolbar"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/textbackground"
-        android:ems="10"
-        android:gravity="top|left"
-        android:hint="Eg: i am suffering from skin rashes since from 1 week  ."
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:layout_above="@id/consult_btn"
+        android:background="@color/colorPrimary"
+        android:gravity="start"
+        android:hint="Eg: I've been suffering from skin rashes\nfor a week."
         android:inputType="textMultiLine"
-        android:lines="5"
+        android:paddingTop="10dp"
+        android:paddingBottom="15dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"/>
+
+    <TextView
+        android:id="@+id/consult_btn"
+        android:elevation="4dp"
+        android:foreground="?selectableItemBackground"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/view"
+        android:background="@color/colorSecondary"
+        android:gravity="center"
         android:padding="10dp"
-        android:scrollbars="vertical"
-        android:scrollHorizontally="false"
-        android:singleLine="false"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textColorHint="@android:color/darker_gray"
-        android:textCursorDrawable="@drawable/cursor_color"
-        app:font_name="@string/opensansRegular"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView12" />
-
-
-    <io.gloxey.cfv.CFTextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/diseases"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Explain your health issue in detail"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:text="CONTINUE"
         android:textSize="18sp"
-        app:font_name="@string/opensansSemiBold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/healthissuecat" />
+        android:layout_alignParentBottom="true"
+        android:textColor="?android:textColorPrimaryInverse" />
 
-
-    <io.gloxey.cfv.CFTextView
-        android:id="@+id/textView54"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/diseases"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:text="How it works"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="18sp"
-        app:font_name="@string/opensansSemiBold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/diseases" />
-
-    <io.gloxey.cfv.CFTextView
-        android:id="@+id/textView58"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/diseases"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="Doctor will be available from 8AM to 10PM
-         \n(if your booking after office hours, we will call you in the next morning)"
-        android:textColor="@color/blackcolor"
-        android:textSize="14sp"
-        app:font_name="@string/opensansSemiBold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView57" />
-
-    <io.gloxey.cfv.CFTextView
-        android:id="@+id/textView55"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/diseases"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Receive a call from doctor after payment"
-        android:textColor="@color/blackcolor"
-        android:textSize="14sp"
-        app:font_name="@string/opensansSemiBold"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView54" />
-
-    <io.gloxey.cfv.CFTextView
-        android:id="@+id/textView56"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/diseases"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Get personalized Treatment plan"
-        android:textColor="@color/blackcolor"
-        android:textSize="14sp"
-        app:font_name="@string/opensansSemiBold"
-        app:layout_constraintStart_toEndOf="@+id/imageView11"
-        app:layout_constraintTop_toBottomOf="@+id/textView55" />
-
-    <io.gloxey.cfv.CFTextView
-        android:id="@+id/textView57"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/diseases"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Get medicine delivered to your doorstep"
-        android:textColor="@color/blackcolor"
-        android:textSize="14sp"
-        app:font_name="@string/opensansSemiBold"
-        app:layout_constraintStart_toEndOf="@+id/imageView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView56" />
-
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView54"
-        app:srcCompat="@drawable/call" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:srcCompat="@drawable/blog" />
-
-    <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView11"
-        app:srcCompat="@drawable/orders" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

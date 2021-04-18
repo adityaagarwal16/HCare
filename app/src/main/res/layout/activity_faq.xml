@@ -7,132 +7,123 @@
     android:orientation="vertical"
     tools:context=".Mainmenus.FaqActivity">
 
-    <include
-        android:id="@+id/main_page_toolbar"
-        layout="@layout/app_bar_layout" />
     <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@id/main_page_toolbar">
-
-    <LinearLayout
+        android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-    <io.gloxey.cfv.CFTextView
-        android:id="@+id/qus1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/doctors_appBar"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="How to consult a doctor?"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="18sp"
-        app:font_name="@string/opensansSemiBold" />
-
-        <io.gloxey.cfv.CFTextView
-            android:id="@+id/ans1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/doctors_appBar"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp"
-            android:text=" To consult a doctor please go to main page, press 'CONSULT NOW' button "
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
-
-        <View
-            android:id="@+id/line1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/qus1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/doctors_appBar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="How to consult a doctor?"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/ans1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/doctors_appBar"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:text=" To consult a doctor please go to main page, press 'CONSULT NOW' button "
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/blackcolor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"></View>
+            <TextView
+                android:id="@+id/qus2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/doctors_appBar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="I Have health related query, where can i ask?"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/ans2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/doctors_appBar"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:text="To get answer for all health queries please go to main page and press 'CONSULT NOW' button and write in detail."
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/blackcolor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"></View>
+
+            <TextView
+                android:id="@+id/qus3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/doctors_appBar"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="I have ______ problem can i get a solution?"
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/ans3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/doctors_appBar"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:text=" Please consult a doctor in our app , they will help you with your health problem.To consult a doctor please go to main page, press 'CONSULT NOW' button "
+                android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:background="@color/blackcolor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
-        <io.gloxey.cfv.CFTextView
-            android:id="@+id/qus2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/doctors_appBar"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="I Have health related query, where can i ask?"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
-
-        <io.gloxey.cfv.CFTextView
-            android:id="@+id/ans2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/doctors_appBar"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp"
-            android:text="To get answer for all health queries please go to main page and press 'CONSULT NOW' button and write in detail."
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
-
-        <View
-            android:id="@+id/line2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/blackcolor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></View>
-
-        <io.gloxey.cfv.CFTextView
-            android:id="@+id/qus3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/doctors_appBar"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:text="I have ______ problem can i get a solution?"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
-
-        <io.gloxey.cfv.CFTextView
-            android:id="@+id/ans3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/doctors_appBar"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp"
-            android:text=" Please consult a doctor in our app , they will help you with your health problem.To consult a doctor please go to main page, press 'CONSULT NOW' button "
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
-
-        <View
-            android:id="@+id/line3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/blackcolor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></View>
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -142,10 +133,9 @@
             android:layout_marginTop="10dp"
             android:text="How can i chat with a doctor?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -154,8 +144,7 @@
             android:layout_marginStart="20dp"
             android:text="After consultation request accepted by doctor , go to recent section by pressing 'Recent' button on bottom navigation bar , and their you can find your doctor  by pressing on doctor name it will take you to chat section."
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
         <View
             android:id="@+id/line4"
@@ -170,7 +159,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -180,10 +169,9 @@
             android:layout_marginTop="10dp"
             android:text="I have sent a consultation request but i didn,t get consultation yet?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -192,8 +180,7 @@
             android:layout_marginStart="20dp"
             android:text="It may take 5 to 45mins to assign you a doctor please wait, once doctor assigned you will recieve a notification"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
 
         <View
@@ -208,7 +195,7 @@
             android:background="@color/blackcolor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -218,10 +205,9 @@
             android:layout_marginTop="10dp"
             android:text="How can i get treatment for multiple health issue?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -230,8 +216,7 @@
             android:layout_marginStart="20dp"
             android:text="You can request for major health issue and while consulting you can explain about other health issue too. one homeopathic doctor can treat multiple health at a time,Feel free to ask your doctor about other health issue."
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
         <View
             android:id="@+id/line6"
@@ -246,7 +231,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -256,10 +241,9 @@
             android:layout_marginTop="10dp"
             android:text="How many days it may take to deliver my medicine?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -268,8 +252,7 @@
             android:layout_marginStart="20dp"
             android:text="The Medicine may take 1 to 5days according to the your city tiering."
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
         <View
             android:id="@+id/line7"
             android:layout_width="match_parent"
@@ -283,7 +266,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -293,10 +276,9 @@
             android:layout_marginTop="10dp"
             android:text="My doctor is not responding to messages what should i do?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -305,8 +287,7 @@
             android:layout_marginStart="20dp"
             android:text="The doctor will do the best to allot time for each patient,he  reply you as soon as they come online please wait."
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
         <View
             android:id="@+id/line8"
@@ -321,7 +302,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -331,10 +312,9 @@
             android:layout_marginTop="10dp"
             android:text="How to have a phone call with doctor?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -343,8 +323,7 @@
             android:layout_marginStart="20dp"
             android:text="To have a phone call with doctor first you need to send consultation request and once consultation starts their will be option for doctor call back request."
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
 
         <View
@@ -359,7 +338,7 @@
             android:background="@color/blackcolor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -369,10 +348,9 @@
             android:layout_marginTop="10dp"
             android:text="Is that medicine delivered to my place?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -381,8 +359,7 @@
             android:layout_marginStart="20dp"
             android:text="The medicines will be delivered across indian tier1, tier2,tier3,tier4 cities"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
         <View
             android:id="@+id/line10"
@@ -397,7 +374,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -407,10 +384,9 @@
             android:layout_marginTop="10dp"
             android:text="I have ______ health issue suggest me some medicine?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -419,8 +395,7 @@
             android:layout_marginStart="20dp"
             android:text="Medicine can not be suggested without consultation,please take the consutation. To consult a doctor please go to main page, press 'CONSULT NOW' button "
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
         <View
             android:id="@+id/line11"
@@ -434,7 +409,7 @@
             android:background="@color/blackcolor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -444,10 +419,9 @@
             android:layout_marginTop="10dp"
             android:text="I want _____ medicine?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -456,8 +430,7 @@
             android:layout_marginStart="20dp"
             android:text="Medicine can not be give without consultation,please take the consutation. To consult a doctor please go to main page, press 'CONSULT NOW' button "
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
         <View
             android:id="@+id/line12"
@@ -471,7 +444,7 @@
             android:background="@color/blackcolor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -481,10 +454,9 @@
             android:layout_marginTop="10dp"
             android:text="What all the benifits i will get if i purchase the medicine here?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -496,8 +468,7 @@ Free diet chart /n
 No delivery charge /n
 Get treatment for multiple health issue with one doctor in single medicine pack "
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
         <View
             android:id="@+id/line13"
             android:layout_width="match_parent"
@@ -511,7 +482,7 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -521,10 +492,9 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:layout_marginTop="10dp"
             android:text="Can i get the prescription directly?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -533,8 +503,7 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:layout_marginStart="20dp"
             android:text="No, prescription will be given after complete consultation, and prescription only provided after purchasing medicine To consult a doctor please go to main page, press 'CONSULT NOW' button "
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
         <View
             android:id="@+id/line14"
             android:layout_width="match_parent"
@@ -548,7 +517,7 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -558,10 +527,9 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:layout_marginTop="10dp"
             android:text="Where can i see the doctor's chat after request sent?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -570,8 +538,7 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:layout_marginStart="20dp"
             android:text="the chat section will appear in 'Recent' tab after doctor accepting your request."
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
         <View
             android:id="@+id/line15"
@@ -585,7 +552,7 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:background="@color/blackcolor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -595,10 +562,9 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:layout_marginTop="10dp"
             android:text="I have ordered medicine where is my medicine?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -607,8 +573,7 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:layout_marginStart="20dp"
             android:text="Your order will be delivered within 1 to 5 days , you can track your order in 'Order' section in main page"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
         <View
             android:id="@+id/line16"
@@ -622,7 +587,7 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:background="@color/blackcolor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"></View>
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -632,10 +597,9 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:layout_marginTop="10dp"
             android:text="I am a Homeopathic doctor, how can i register in the app?"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/ans17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -644,23 +608,22 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:layout_marginStart="20dp"
             android:text="Right now we are not hiring any doctors, please drop you resume to 'connect@hcare.co.in'. we will get in touch with once we get openings"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:visibility="gone"
-            app:font_name="@string/opensansRegular" />
+            android:visibility="gone" />
 
-        <View
-            android:id="@+id/line17"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@color/blackcolor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></View>
+            <View
+                android:id="@+id/line17"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@color/blackcolor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-        <io.gloxey.cfv.CFTextView
+        <TextView
             android:id="@+id/qus18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -671,10 +634,11 @@ Get treatment for multiple health issue with one doctor in single medicine pack 
             android:paddingBottom="20dp"
             android:text="I have other issue"
             android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="18sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="18sp" />
 
 
     </LinearLayout>
+
     </ScrollView>
+
 </RelativeLayout>

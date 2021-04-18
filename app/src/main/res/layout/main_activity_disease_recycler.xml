@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_margin="5dp"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/colorPrimary"
+    android:elevation="2dp"
+    app:cardCornerRadius="5dp"
+    android:foreground="?selectableItemBackground">
+
+    <RelativeLayout
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/diseaseImage"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/diabetes"
+            android:contentDescription="@string/todo" />
+
+        <TextView
+            android:id="@+id/diseaseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/diseaseImage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="13dp"
+            android:layout_marginEnd="13dp"
+            android:gravity="center_vertical"
+            android:letterSpacing="0.02"
+            android:minLines="2"
+            android:paddingTop="5dp"
+            android:paddingBottom="2dp"
+            android:text="@string/disease"
+            android:textColor="?android:textColorPrimary"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+<!--
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_below="@id/diseaseImage"
+            android:id="@+id/line"
+            android:layout_alignParentEnd="true"
+            android:layout_width="30dp"
+            android:layout_alignTop="@id/diseaseName"
+            android:layout_alignBottom="@id/diseaseName"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="2dp"
+                android:layout_below="@id/center"
+                android:background="#8BC34A"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/center" />
+
+
+            <TextView
+                android:id="@+id/center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="3dp"/>
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="2dp"
+                android:layout_below="@id/center"
+                android:background="#8BC34A"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/center" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+-->
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

@@ -37,10 +37,9 @@ public class PrescriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription);
-        mToolbar = (Toolbar) findViewById(R.id.doctors_appBar);
 
-        setSupportActionBar(mToolbar);
-        //getSupportActionBar().setTitle("Treatment");
+        setTitle("Treatment");
+
         mDoctorList = (RecyclerView) findViewById(R.id.doctor_lists);
         mDoctorList.setLayoutManager(new LinearLayoutManager(this));
         mDoctorList.setHasFixedSize(true);
@@ -56,7 +55,7 @@ public class PrescriptionActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String chat_user_name = dataSnapshot.child("name").getValue().toString();
-                getSupportActionBar().setTitle("Dr "+chat_user_name);
+                setTitle("Dr "+chat_user_name);
             }
 
             @Override

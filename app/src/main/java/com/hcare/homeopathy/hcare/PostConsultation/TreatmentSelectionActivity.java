@@ -41,10 +41,8 @@ public class TreatmentSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_treatment_selection);
-        mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("My Cart");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setTitle("My Cart");
 
 
         mDoctorList = (RecyclerView) findViewById(R.id.doctor_lists);

@@ -7,15 +7,9 @@
     android:background="@color/colorbg"
     tools:context="com.hcare.homeopathy.hcare.PostConsultation.AddressActivity">
 
-    <include
-        android:id="@+id/main_page_toolbar"
-        layout="@layout/main_app_bar" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottomNavigationItemView"
-        android:layout_below="@id/appBarLayout"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="64dp"
         android:background="@color/colorbg"

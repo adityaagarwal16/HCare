@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/main_settings_btn"
+        android:id="@+id/profileSettings"
         android:title="Profile" />
     <item
-        android:id="@+id/Terms_btn"
+        android:id="@+id/chat"
         android:title="Chat with doctor" />
     <item
-        android:id="@+id/Orders_btn"
+        android:id="@+id/orders"
         android:title="Orders" />
     <item
-        android:id="@+id/customercare_btn"
+        android:id="@+id/help"
         android:title="Help" />
+
+    <item
+        android:id="@+id/consultation"
+        android:title="Consultation" />
 
 </menu>

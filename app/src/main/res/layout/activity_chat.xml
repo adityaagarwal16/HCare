@@ -7,11 +7,6 @@
     android:background="@drawable/chat"
     tools:context="com.hcare.homeopathy.hcare.Consultation.ChatActivity">
 
-    <include
-        android:id="@+id/main_page_toolbar"
-        layout="@layout/main_app_bar"
-        android:elevation="2dp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_list"
         android:layout_width="match_parent"
@@ -41,7 +36,7 @@
             android:tint="@color/colorPrimary"
             app:srcCompat="@android:drawable/ic_input_add" />
 
-        <io.gloxey.cfv.CFEditText
+        <TextView
             android:id="@+id/chat_message_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -58,8 +53,7 @@
             android:textColorHighlight="@color/blackcolor"
             android:textColorHint="@color/cardview_dark_background"
             android:textColorLink="@color/blackcolor"
-            android:textCursorDrawable="@drawable/cursor_color"
-            app:font_name="@string/opensansRegular" />
+            android:textCursorDrawable="@drawable/cursor_color" />
 
         <ImageButton
             android:id="@+id/chat_send_btn"

@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,8 +54,6 @@ public class AccountmainmenuActivity extends AppCompatActivity {
     private TextView mAge;
     private TextView mSex;
     private TextView mEmail;
-    private TextView mEditbtn;
-    private TextView mimagebtn;
 
     private static final int GALLERY_PICK = 1;
 
@@ -66,18 +66,18 @@ public class AccountmainmenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accountmainmenu);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Account");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Account");
+        //home(true);
+
         mDisplayImage = (CircleImageView) findViewById(R.id.settingsimage);
         mName = (TextView) findViewById(R.id.name);
         mPhone_number =(TextView) findViewById(R.id.phone_number);
         mAge =(TextView) findViewById(R.id.age);
         mSex =(TextView) findViewById(R.id.sex);
         mEmail =(TextView) findViewById(R.id.emailview);
-        mEditbtn =(TextView) findViewById(R.id.profileeditbtn);
-        mimagebtn =(TextView) findViewById(R.id.editImageBtn);
+
+        TextView mEditbtn = (TextView) findViewById(R.id.profileeditbtn);
+        TextView mimagebtn = (TextView) findViewById(R.id.editImageBtn);
 
         mimagestorage = FirebaseStorage.getInstance().getReference();
 
@@ -91,7 +91,7 @@ public class AccountmainmenuActivity extends AppCompatActivity {
 
         mUserrDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 String hname = dataSnapshot.child("name").getValue().toString();
                 String hphone_number = dataSnapshot.child("phone number").getValue().toString();
@@ -106,7 +106,7 @@ public class AccountmainmenuActivity extends AppCompatActivity {
                     mAge.setText(hage);
                     mSex.setText(hsex);
                     mEmail.setText(hemail);
-                }catch (Exception a){
+                } catch (Exception a) {
                     Toast.makeText(getApplicationContext(), "Your order has been placed ", Toast.LENGTH_LONG).show();
                 }
 
@@ -125,13 +125,11 @@ public class AccountmainmenuActivity extends AppCompatActivity {
                     });
 
 
-                }else {
-
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
@@ -174,6 +172,16 @@ public class AccountmainmenuActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mUserrDatabase.child("status").setValue("online");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // Respond to the action bar's Up/Home button
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

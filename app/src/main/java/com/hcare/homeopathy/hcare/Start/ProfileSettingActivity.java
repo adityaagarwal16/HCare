@@ -36,7 +36,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
     private String phone_value;
 
     //Firebase
-    private DatabaseReference meditDatabase,loggedin;
+    private DatabaseReference meditDatabase, loggedin;
 
 
     @Override
@@ -51,10 +51,8 @@ public class ProfileSettingActivity extends AppCompatActivity {
         meditDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
         loggedin = FirebaseDatabase.getInstance().getReference().child("loggedin").child(current_uid);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.profilesetting_appBar);
-        setSupportActionBar(mToolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Profile Setting");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setTitle("Profile Setting");
 
         String name_value = getIntent().getStringExtra("name_value");
          phone_value = getIntent().getStringExtra("phone_value");
@@ -68,10 +66,10 @@ public class ProfileSettingActivity extends AppCompatActivity {
         radioSexGroup=(RadioGroup)findViewById(R.id.radioGroup);
         Button mSavebtn = (Button) findViewById(R.id.save_btn);
 
-        maName.getEditText().setText(name_value);
+        Objects.requireNonNull(maName.getEditText()).setText(name_value);
         maPhone_number.setText(phone_value);
-        maAge.getEditText().setText(age_value);
-        maEmail.getEditText().setText(email_value);
+        Objects.requireNonNull(maAge.getEditText()).setText(age_value);
+        Objects.requireNonNull(maEmail.getEditText()).setText(email_value);
 
         mSavebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +94,7 @@ public class ProfileSettingActivity extends AppCompatActivity {
                                 meditDatabase.child("sex").setValue(bsex);
 
 
-                                HashMap<String, String> notifdata = new HashMap<String, String>();
+                                HashMap<String, String> notifdata = new HashMap<>();
                                 notifdata.put("phone_number", phone_value);
                                 notifdata.put("name", bname);
                                 notifdata.put("age", bage);

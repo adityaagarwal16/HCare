@@ -69,10 +69,9 @@ public class CustomercareActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customercare);
-        mChatToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
-        setSupportActionBar(mChatToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Customer Service");
+
+        setTitle("Customer Service");
+
         mRootref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = mAuth.getCurrentUser().getUid();

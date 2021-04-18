@@ -19,8 +19,6 @@
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
-
-
     <application
         android:name=".JvFiles.Patientsapp"
         android:allowBackup="true"
@@ -32,9 +30,14 @@
         android:exported="false"
         android:protectionLevel="signature"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
         <activity android:name=".PostConsultation.PrescriptionActivity" />
-        <activity android:name=".PreConsultation.consultationfeeActivity" />
-        <activity android:name=".Mainmenus.FaqActivity" />
+
+        <activity android:name=".PreConsultation.consultationfeeActivity">
+        </activity>
+
+        <activity android:name=".Mainmenus.FaqActivity"
+            android:parentActivityName=".Mainmenus.MainActivity" />
 
         <service
             android:name=".JvFiles.FirebaseMessagingService"
@@ -45,55 +48,71 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".Start.SplashScreenActivity">
+        <activity
+            android:name=".Start.SplashScreenActivity"
+            android:theme="@style/splashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Mainmenus.MainActivity" />
+
+        <activity android:name=".Mainmenus.MainActivity"
+            android:theme="@style/splashScreen"/>
+
         <activity android:name=".Start.StartActivity" />
+
         <activity
-            android:name=".PreConsultation.ChatwithdoctorsActivity"
+            android:name=".PreConsultation.DiseaseActivity"
+            android:theme="@style/splashScreen"
             android:parentActivityName=".Mainmenus.MainActivity" />
-        <activity android:name=".PreConsultation.ConsultbtnActivity" />
+
+        <activity android:name=".PreConsultation.DiseaseSpinnerActivity"
+            android:parentActivityName=".Mainmenus.MainActivity" />
+
         <activity
             android:name=".Mainmenus.CustomercareActivity"
             android:parentActivityName=".Mainmenus.MainActivity">
             <intent-filter>
                 <action android:name="com.hcare.homeopathy.hcare_customercare" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Consultation.DocprofileActivity"
             android:parentActivityName=".DoctorsActivity" />
         <activity android:name=".JvFiles.ImageActivity" />
+
         <activity
             android:name=".PostConsultation.OrderActivity"
             android:parentActivityName=".Mainmenus.MainActivity" />
+
         <activity
             android:name=".Mainmenus.ProfileActivity"
             android:parentActivityName=".Mainmenus.MainActivity" />
+
         <activity android:name=".Start.ProfileSettingActivity" />
+
         <activity android:name=".PostConsultation.TreatmentSelectionActivity" />
+
         <activity android:name=".PostConsultation.AddressActivity" />
+
         <activity
             android:name=".Consultation.ChatActivity"
             android:parentActivityName=".ConsultationsActivity" />
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".Mainmenus.RecentmainmenuActivity">
+
+        <activity android:name=".Mainmenus.RecentmainmenuActivity"
+            android:parentActivityName=".Mainmenus.MainActivity" >
             <intent-filter>
                 <action android:name="com.hcare.homeopathy.hcare_TARGET_NOTIFICATION" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Mainmenus.AccountmainmenuActivity" />
+
+        <activity android:name=".Mainmenus.AccountmainmenuActivity"
+            android:parentActivityName=".Mainmenus.MainActivity" />
+
         <activity
             android:name=".BlogsActivity"
             android:parentActivityName=".Mainmenus.MainActivity" />
@@ -109,13 +128,14 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
             tools:replace="android:value" />
+
         <meta-data
             android:name="com.facebook.sdk.CodelessDebugLogEnabled"
             android:value="true" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
     </application>
 
 </manifest>

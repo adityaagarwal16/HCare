@@ -6,10 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.hcare.homeopathy.hcare.PostConsultation.OrderActivity">
 
-    <include
-        android:id="@+id/doctors_appBar"
-        layout="@layout/main_app_bar" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/doctor_list"
         android:layout_width="match_parent"

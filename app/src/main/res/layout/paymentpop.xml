@@ -30,7 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <io.gloxey.cfv.CFButton
+    <TextView
         android:id="@+id/close_popup"
         android:layout_width="120dp"
         android:layout_height="40dp"
@@ -44,7 +44,6 @@
         android:text="okay"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
-        app:font_name="@string/opensansSemiBold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
