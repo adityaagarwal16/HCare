@@ -15,14 +15,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.hcare.homeopathy.hcare.Mainmenus.MainActivity;
+import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.HashMap;
 import java.util.Objects;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class ProfileSettingActivity extends AppCompatActivity {
 

@@ -1,9 +1,10 @@
-package com.hcare.homeopathy.hcare;
+package com.hcare.homeopathy.hcare.NavigationItems;
 
 import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.hcare.homeopathy.hcare.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;

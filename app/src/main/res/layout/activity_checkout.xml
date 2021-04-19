@@ -5,78 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue_grey_50"
-    tools:context=".PreConsultation.consultationfeeActivity">
+    tools:context=".PreConsultation.CheckoutActivity">
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardViewxx"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/colorAccent"
-        android:padding="2dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintEnd_toStartOf="@+id/main_page_toolbar"
-        app:layout_constraintHorizontal_bias="0.019"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView59"
-            android:layout_width="270dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/quicksand"
-            android:text="  Discount price valid for only "
-            android:textAlignment="viewStart"
-            android:textColor="@color/blackcolor"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView64"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="45dp"
-            android:layout_marginEnd="25dp"
-            android:fontFamily="@font/quicksand"
-            android:text="mins"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/blackcolor"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/text_view_countdown"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="8dp"
-            android:text="00:00"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/green_600"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView11"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorAccent"
         android:padding="8dp"
         app:cardCornerRadius="10dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/main_page_toolbar"
-        app:layout_constraintHorizontal_bias="0.019"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewxx">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/textView60"
@@ -129,15 +73,12 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardxView2m"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:backgroundTint="@color/colorAccent"
         android:padding="2dp"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView11">
@@ -145,11 +86,10 @@
         <ViewFlipper
             android:id="@+id/imageView9"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
+            android:layout_height="wrap_content"
+            android:scaleType="matrix"
             app:layout_constraintBottom_toTopOf="@+id/cardView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView11" />
     </androidx.cardview.widget.CardView>
@@ -166,7 +106,6 @@
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/main_page_toolbar"
-        app:layout_constraintHorizontal_bias="0.019"
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -206,7 +145,6 @@
                 android:id="@+id/textViewx2"
                 android:layout_width="wrap_content"
                 android:layout_height="37dp"
-
                 android:layout_marginEnd="2dp"
                 android:fontFamily="@font/quicksand"
                 android:text="@string/rupee"
@@ -219,17 +157,14 @@
             <TextView
                 android:id="@+id/offertext"
                 android:layout_width="wrap_content"
-                android:layout_height="37dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="44dp"
                 android:layout_marginEnd="7dp"
-                android:fontFamily="@font/quicksand"
                 android:text="First 50"
                 android:textColor="@color/green_600"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/textViewx60"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -253,7 +188,6 @@
                 android:layout_height="37dp"
                 android:layout_marginTop="44dp"
                 android:layout_marginEnd="2dp"
-                android:fontFamily="@font/quicksand"
                 android:text="@string/rupee"
                 android:textColor="@color/green_600"
                 android:textSize="16sp"
@@ -264,7 +198,7 @@
             <TextView
                 android:id="@+id/textVisew62"
                 android:layout_width="wrap_content"
-                android:layout_height="37dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="76dp"
                 android:layout_marginEnd="8dp"
@@ -273,8 +207,6 @@
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/offertext"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -315,9 +247,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:background="@color/colorPrimary"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/text_color_background"
         android:text="pay now"
+        android:textColor="?android:textColorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

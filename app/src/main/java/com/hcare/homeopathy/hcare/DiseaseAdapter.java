@@ -1,8 +1,7 @@
-package com.hcare.homeopathy.hcare.Mainmenus;
+package com.hcare.homeopathy.hcare;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +12,26 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.gson.Gson;
 import com.hcare.homeopathy.hcare.PreConsultation.DiseaseActivity;
-import com.hcare.homeopathy.hcare.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
 class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
 
-    private final List<DiseaseObject> list;
+    private final Diseases[] list;
+    private final ArrayList<Diseases> arrayList;
+    boolean isArrayList = false;
     Context context;
 
-    public DiseaseAdapter(List<DiseaseObject> list, Context context) {
+    public DiseaseAdapter(Diseases[] list, Context context) {
         this.list = list;
+        this.arrayList = null;
+        this.context = context;
+    }
+    public DiseaseAdapter(ArrayList<Diseases> list, Context context) {
+        isArrayList = true;
+        this.arrayList = list;
+        this.list = null;
         this.context = context;
     }
 
@@ -38,8 +44,12 @@ class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        final DiseaseObject object = list.get(position);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+        DiseaseInfo object;
+        if(isArrayList)
+            object = new DiseaseInfo(arrayList.get(position));
+        else
+            object = new DiseaseInfo(list[position]);
 
         holder.diseaseName.setText(object.getDiseaseName());
         holder.diseaseImage.setImageResource(object.getDrawable());
@@ -48,9 +58,7 @@ class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DiseaseActivity.class);
-                Gson gson = new Gson();
-                String myJson = gson.toJson(object);
-                intent.putExtra("request_type1", myJson);
+                intent.putExtra("request_type1", list[position]);
                 context.startActivity(intent);
             }
         });
@@ -58,7 +66,10 @@ class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if(isArrayList)
+            return arrayList.size();
+        else
+            return list.length;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

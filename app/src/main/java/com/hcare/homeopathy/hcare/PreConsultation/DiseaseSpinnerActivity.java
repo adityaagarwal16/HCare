@@ -40,9 +40,13 @@ public class DiseaseSpinnerActivity extends AppCompatActivity {
 
         setTitle("Consult a doctor");
 
-        spinnerTitles = new String[]{"Select a Problem Area", "Hair", "Skin", "Weight Loss & gain", "Headache", "Renal Problems"
-                , "Respiratory", "Male", "Female","Digestive Problems","Diabetes & HyperTension","Thyroid","Ear, Nose & Throat",
-                "Mouth & Teeth","Growth", "Bones & joints","Nutrition & health","Eye", "Heart Problems","Children","Mental Health","Other"};
+        spinnerTitles = new String[]
+                {"Select a Problem Area", "Hair", "Skin", "Weight Loss & gain",
+                "Headache", "Renal Problems", "Respiratory", "Male", "Female","Digestive Problems",
+                "Diabetes & HyperTension", "Thyroid","Ear, Nose & Throat","Mouth & Teeth","Growth",
+                "Bones & joints","Nutrition & health","Eye", "Heart Problems","Children",
+                "Mental Health","Other"};
+
         spinnerImages = new int[]{R.drawable.newothers
                 , R.drawable.newhair
                 , R.drawable.newacne
@@ -50,10 +54,14 @@ public class DiseaseSpinnerActivity extends AppCompatActivity {
                 , R.drawable.newheadache
                 , R.drawable.newrenal
                 , R.drawable.newrespiratory
-                , R.drawable.newmens , R.drawable.newwomen, R.drawable.newdigestive, R.drawable.newdiabetes,
-                R.drawable.newthyroid, R.drawable.newent, R.drawable.newmouth, R.drawable.newgrowth
-                , R.drawable.newjoints, R.drawable.newnutrition, R.drawable.neweye, R.drawable.newheart,
-                R.drawable.newchild, R.drawable.newdepression, R.drawable.newothers};
+                , R.drawable.newmens , R.drawable.newwomen,
+                R.drawable.newdigestive, R.drawable.newdiabetes,
+                R.drawable.newthyroid, R.drawable.newent,
+                R.drawable.newmouth, R.drawable.newgrowth
+                , R.drawable.newjoints, R.drawable.newnutrition,
+                R.drawable.neweye, R.drawable.newheart,
+                R.drawable.newchild, R.drawable.newdepression,
+                R.drawable.newothers};
 
         Spinner mSpinner = findViewById(R.id.spinner);
         CustomAdapter mCustomAdapter = new CustomAdapter(DiseaseSpinnerActivity.this, spinnerTitles, spinnerImages);
@@ -95,30 +103,24 @@ public class DiseaseSpinnerActivity extends AppCompatActivity {
         });
 
 
-            mConsultingbtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    message = mChatMessageView.getText().toString();
-                    if (mName!="Select a Problem Area") {
-                        String date = DateFormat.getDateTimeInstance().format(new Date());
-                        DateFormat dateFormat = new SimpleDateFormat("HH");
-                        Date date2 = new Date();
-                        String time = dateFormat.format(date2);
-                       // mConsultingbtn.setEnabled(false);
-                        Intent regIntent = new Intent(DiseaseSpinnerActivity.this, consultationfeeActivity.class);
-                        regIntent.putExtra("details1", message);
-                        regIntent.putExtra("request_type1", mName);
-                        regIntent.putExtra("name", patientname);
-                        regIntent.putExtra("age", age);
-                        regIntent.putExtra("sex", sex);
-                        startActivity(regIntent);
+            mConsultingbtn.setOnClickListener(v -> {
+                message = mChatMessageView.getText().toString();
+                if (mName!="Select a Problem Area") {
+                    String date = DateFormat.getDateTimeInstance().format(new Date());
+                    DateFormat dateFormat = new SimpleDateFormat("HH");
+                    Date date2 = new Date();
+                    String time = dateFormat.format(date2);
+                   // mConsultingbtn.setEnabled(false);
+                    Intent regIntent = new Intent(DiseaseSpinnerActivity.this, CheckoutActivity.class);
+                    regIntent.putExtra("details1", message);
+                    regIntent.putExtra("request_type1", mName);
+                    regIntent.putExtra("name", patientname);
+                    regIntent.putExtra("age", age);
+                    regIntent.putExtra("sex", sex);
+                    startActivity(regIntent);
 
-                    } else {
-                        Toast.makeText(DiseaseSpinnerActivity.this, "Please select Health Issue", Toast.LENGTH_LONG).show();
-                    }
-
-
-                }
+                } else
+                    Toast.makeText(this, "Please select Health Issue", Toast.LENGTH_LONG).show();
             });
 
     }

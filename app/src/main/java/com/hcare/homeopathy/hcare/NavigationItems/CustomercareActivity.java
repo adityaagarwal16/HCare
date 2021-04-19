@@ -1,19 +1,16 @@
-package com.hcare.homeopathy.hcare.Mainmenus;
+package com.hcare.homeopathy.hcare.NavigationItems;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -23,9 +20,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.hcare.homeopathy.hcare.Consultation.MessageAdapter;
 import com.hcare.homeopathy.hcare.Consultation.Messages;
+import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -35,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -93,10 +89,6 @@ public class CustomercareActivity extends AppCompatActivity {
         mMessagesList.setAdapter(mAdapter);
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-
-
-
-
         h = mRootref.child("Customercare").child(mCurrentUserId);
 
 
@@ -107,42 +99,33 @@ public class CustomercareActivity extends AppCompatActivity {
 
 
 
-        mChatSendBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                sendMessage();
+        mChatSendBtn.setOnClickListener(v -> sendMessage());
+        mChatAddBtn.setOnClickListener(v -> {
 
-            }
-        });
-        mChatAddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            PopupMenu popupMenu = new PopupMenu(CustomercareActivity.this,mChatAddBtn);
+            popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    if(item.getItemId()==R.id.Gallery_btn){
+                        Intent galleryIntent = new Intent();
+                        galleryIntent.setType("image/*");
+                        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-                PopupMenu popupMenu = new PopupMenu(CustomercareActivity.this,mChatAddBtn);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        if(item.getItemId()==R.id.Gallery_btn){
-                            Intent galleryIntent = new Intent();
-                            galleryIntent.setType("image/*");
-                            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
 
-                            startActivityForResult(Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
-
-                        }
-                        if(item.getItemId()==R.id.File_btn) {
-                            Intent intent = new Intent();
-                            intent.setType("application/pdf");
-                            intent.setAction(Intent.ACTION_GET_CONTENT);
-                            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PDF_CODE);
-
-                        }
-                        return false;
                     }
-                });
-                popupMenu.show();
-            }
+                    if(item.getItemId()==R.id.File_btn) {
+                        Intent intent = new Intent();
+                        intent.setType("application/pdf");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PDF_CODE);
+
+                    }
+                    return false;
+                }
+            });
+            popupMenu.show();
         });
 
 
@@ -172,41 +155,39 @@ public class CustomercareActivity extends AppCompatActivity {
             CropImage.ActivityResult result =CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK){
                 Uri resultUri = result.getUri();
-                StorageReference filepath = mimagestorage.child("Customercare").child(mCurrentUserId).child(random()+".jpg");
-                filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                StorageReference filepath = mimagestorage.child("Customercare")
+                        .child(mCurrentUserId).child(random()+".jpg");
+                filepath.putFile(resultUri).addOnCompleteListener(task -> {
 
-                        if(task.isSuccessful()){
-                            Uri downloadUri = task.getResult().getUploadSessionUri();
-                            String download_Url = downloadUri.toString();
-                            // mUserrDatabase.child("image").setValue(download_Url);
+                    if(task.isSuccessful()){
+                        Uri downloadUri = task.getResult().getUploadSessionUri();
+                        String download_Url = downloadUri.toString();
+                        // mUserrDatabase.child("image").setValue(download_Url);
 
-                            String current_user_ref = "Customercare/" + mCurrentUserId ;
+                        String current_user_ref = "Customercare/" + mCurrentUserId ;
 
-                            DatabaseReference user_message_push = mRootref.child("Customercare").child(mCurrentUserId).push();
+                        DatabaseReference user_message_push = mRootref.child("Customercare").child(mCurrentUserId).push();
 
-                            String push_id = user_message_push.getKey();
+                        String push_id = user_message_push.getKey();
 
-                            Map messageMap = new HashMap();
-                            messageMap.put("message",download_Url);
-                            messageMap.put("seen", false);
-                            messageMap.put("type","image");
-                            messageMap.put("time", ServerValue.TIMESTAMP);
-                            messageMap.put("from",mCurrentUserId);
-
-
-                            Map messageUserMap = new HashMap();
-                            messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
+                        Map messageMap = new HashMap();
+                        messageMap.put("message",download_Url);
+                        messageMap.put("seen", false);
+                        messageMap.put("type","image");
+                        messageMap.put("time", ServerValue.TIMESTAMP);
+                        messageMap.put("from",mCurrentUserId);
 
 
-                            mRootref.updateChildren(messageUserMap);
+                        Map messageUserMap = new HashMap();
+                        messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
+
+
+                        mRootref.updateChildren(messageUserMap);
 
 
 
-                        }else {
+                    }else {
 
-                        }
                     }
                 });
 
@@ -220,40 +201,35 @@ public class CustomercareActivity extends AppCompatActivity {
     private void uploadFile(final Uri data) {
 
         StorageReference sRef =mimagestorage.child("Files").child(mCurrentUserId).child(random()+ ".pdf");
-        sRef.putFile(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                if(task.isSuccessful()){
-                    Uri downloadUri = task.getResult().getUploadSessionUri();
-                    String download_Url = downloadUri.toString();
-                    // mUserrDatabase.child("image").setValue(download_Url);
+        sRef.putFile(data).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Uri downloadUri = task.getResult().getUploadSessionUri();
+                String download_Url = downloadUri.toString();
+                // mUserrDatabase.child("image").setValue(download_Url);
 
-                    String current_user_ref = "Customercare/" + mCurrentUserId ;
+                String current_user_ref = "Customercare/" + mCurrentUserId ;
 
-                    DatabaseReference user_message_push = mRootref.child("Customercare").child(mCurrentUserId).push();
+                DatabaseReference user_message_push = mRootref.child("Customercare").child(mCurrentUserId).push();
 
-                    String push_id = user_message_push.getKey();
+                String push_id = user_message_push.getKey();
 
-                    Map messageMap = new HashMap();
-                    messageMap.put("message",download_Url);
-                    messageMap.put("seen", false);
-                    messageMap.put("type","pdf");
-                    messageMap.put("time",ServerValue.TIMESTAMP);
-                    messageMap.put("from",mCurrentUserId);
+                Map messageMap = new HashMap();
+                messageMap.put("message",download_Url);
+                messageMap.put("seen", false);
+                messageMap.put("type","pdf");
+                messageMap.put("time",ServerValue.TIMESTAMP);
+                messageMap.put("from",mCurrentUserId);
 
 
-                    Map messageUserMap = new HashMap();
-                    messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
+                Map messageUserMap = new HashMap();
+                messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
 
 
 
-                    mRootref.updateChildren(messageUserMap);
+                mRootref.updateChildren(messageUserMap);
 
 
 
-                }else {
-
-                }
             }
         });
 

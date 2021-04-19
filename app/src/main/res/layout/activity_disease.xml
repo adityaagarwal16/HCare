@@ -50,6 +50,7 @@
         android:background="@color/colorPrimary"
         android:id="@+id/diseaseImage"
         android:paddingTop="20dp"
+        android:layout_centerHorizontal="true"
         android:contentDescription="@string/todo"
         android:src="@drawable/thyroid"
         android:layout_width="match_parent"
@@ -57,46 +58,60 @@
 
     <TextView
         android:id="@+id/aboutDisease"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:layout_centerHorizontal="true"
         android:padding="20dp"
         android:gravity="center"
         android:layout_below="@id/diseaseImage"
-        android:text="Thyroid disease is a medical condition that affects the function of the thyroid gland. The thyroid gland is located at the front of the neck and produces thyroid hormones that travel through the blood to help regulate many other organs, meaning that it is an endocrine organ." />
+        android:text="@string/todo"/>
 
-
-    <TextView
-        android:id="@+id/header"
+    <LinearLayout
         android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:layout_centerHorizontal="true"
-        android:paddingTop="15dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:gravity="center_vertical"
-        android:textStyle="bold"
-        android:layout_below="@id/aboutDisease"
-        android:textSize="16sp"
-        android:text="Explain your health issue in detail" />
-
-    <EditText
-        android:id="@+id/diseases"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/header"
-        android:layout_above="@id/consult_btn"
-        android:background="@color/colorPrimary"
-        android:gravity="start"
-        android:hint="Eg: I've been suffering from skin rashes\nfor a week."
-        android:inputType="textMultiLine"
+        android:orientation="vertical"
         android:paddingTop="10dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:paddingBottom="15dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"/>
+        android:layout_below="@id/aboutDisease"
+        android:layout_above="@id/consult_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:text="Explain your health issues in detail" />
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorSecondary"
+            android:text="Explain your heal" />
+
+        <EditText
+            android:id="@+id/diseases"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="start"
+            android:paddingBottom="25dp"
+            android:background="@color/colorPrimary"
+            android:textSize="16sp"
+            android:hint="Start Typing here .."
+            android:inputType="textMultiLine"
+            android:autofillHints="" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/consult_btn"

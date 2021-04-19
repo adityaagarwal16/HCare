@@ -1,14 +1,17 @@
-package com.hcare.homeopathy.hcare.Mainmenus;
+package com.hcare.homeopathy.hcare.NavigationItems;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -27,13 +30,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-public class RecentmainmenuActivity extends AppCompatActivity {
+public class ConsultationsActivity extends AppCompatActivity {
 
 
     private RecyclerView mDoctorList;
@@ -45,28 +42,20 @@ public class RecentmainmenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recentmainmenu);
+        setContentView(R.layout.activity_consultations);
 
         setTitle("Consultations");
-
-       /* final int abTitleId = getResources().getIdentifier("action_bar_title", "id", "android");
-        findViewById(abTitleId).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent docprofileIntent = new Intent(RecentmainmenuActivity.this, MainActivity.class);
-                docprofileIntent .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(docprofileIntent);
-            }
-        });*/
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = mAuth.getCurrentUser().getUid();
         messageArrived = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mDoctorsDatabase = FirebaseDatabase.getInstance().getReference().child("Private_consult").child(mCurrentUserId);
+
+        DatabaseReference mDoctorsDatabase = FirebaseDatabase.getInstance()
+                .getReference().child("Private_consult").child(mCurrentUserId);
 
         mDoctorDatabase = FirebaseDatabase.getInstance().getReference().child("Doctors");
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUserId);
-        mDoctorList = (RecyclerView)findViewById(R.id.doctor_list);
+        mDoctorList = (RecyclerView) findViewById(R.id.doctor_list);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
@@ -84,22 +73,22 @@ public class RecentmainmenuActivity extends AppCompatActivity {
                         .setQuery(docquervy, Publicreq.class)
                         .setLifecycleOwner(this)
                         .build();
-        final FirebaseRecyclerAdapter<Publicreq,DoctorsVeiwHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Publicreq,DoctorsVeiwHolder>(
-                options
-        ) {
+
+        final FirebaseRecyclerAdapter<Publicreq,DoctorsViewHolder> firebaseRecyclerAdapter =
+                new FirebaseRecyclerAdapter<Publicreq,DoctorsViewHolder>(options) {
+
             @NonNull
             @Override
-            public DoctorsVeiwHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return new DoctorsVeiwHolder(LayoutInflater.from(parent.getContext())
+            public DoctorsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new DoctorsViewHolder(LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.old_consultslayout, parent, false));
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull final DoctorsVeiwHolder viewHolder, int position, @NonNull Publicreq model) {
+            protected void onBindViewHolder(@NonNull final DoctorsViewHolder viewHolder,
+                                            int position, @NonNull Publicreq model) {
 
-
-
-                final String user_id = getRef(position).getKey();
+                getRef(position).getKey();
 
 
                 final String user_ids = getRef(position).getKey();
@@ -113,7 +102,6 @@ public class RecentmainmenuActivity extends AppCompatActivity {
                         if (dataSnapshot.hasChild("seen")) {
                             boolean data = (boolean) dataSnapshot.child("seen").getValue();
                             viewHolder.setSeen(data);
-
                         }
                     }
 
@@ -121,85 +109,59 @@ public class RecentmainmenuActivity extends AppCompatActivity {
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
                         mDoctorList.scrollToPosition(1);
                         notifyDataSetChanged();
-
                     }
 
                     @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                    }
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
 
                     @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
-
-                    }
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) { }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
                 h.keepSynced(true);
 
                 mDoctorDatabase.child(user_ids).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                         String userName = dataSnapshot.child("name").getValue().toString();
-                        String userNam = dataSnapshot.child("thumb_image").getValue().toString();
+                        String userImage = dataSnapshot.child("thumb_image").getValue().toString();
                         viewHolder.setName(userName);
-                        viewHolder.setDoctorImage(userNam,getApplicationContext());
-
+                        viewHolder.setDoctorImage(userImage);
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
 
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent docprofileIntent = new Intent(RecentmainmenuActivity.this, ChatActivity.class);
-                        docprofileIntent.putExtra("user_id",user_ids);
-                        startActivity(docprofileIntent);
+                viewHolder.mView.setOnClickListener(v -> {
+                    Intent docprofileIntent =
+                            new Intent(ConsultationsActivity.this, ChatActivity.class);
+                    docprofileIntent.putExtra("user_id",user_ids);
+                    startActivity(docprofileIntent);
 
-                    }
                 });
             }
         };
+
         mDoctorList.getRecycledViewPool().clear();
         firebaseRecyclerAdapter.notifyDataSetChanged();
         mDoctorList.setAdapter(firebaseRecyclerAdapter);
 
     }
-    public static class DoctorsVeiwHolder extends RecyclerView.ViewHolder{
+    public static class DoctorsViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
-        public DoctorsVeiwHolder(View itemView) {
+        public DoctorsViewHolder(View itemView) {
             super(itemView);
-
             mView = itemView;
         }
         public void setSeen(boolean seen){
-
-
             ImageView messageView = (ImageView)mView.findViewById(R.id.newmessage);
-
-            if(seen ==false){
-
-                messageView.setVisibility(View.VISIBLE);
-
-
-
-            } else if (seen==true){
-
-                messageView.setVisibility(View.INVISIBLE);
-
-            }
-
+            if(seen) messageView.setVisibility(View.INVISIBLE);
+            else messageView.setVisibility(View.VISIBLE);
         }
 
         public void setName(String name){
@@ -207,7 +169,7 @@ public class RecentmainmenuActivity extends AppCompatActivity {
             doctorsNameView.setText(name);
         }
 
-        public void setDoctorImage(final String thumb_image, final Context ctx){
+        public void setDoctorImage(final String thumb_image){
             final ImageView userImageView =(ImageView) mView.findViewById(R.id.doctorImage);
 
             Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)

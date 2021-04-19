@@ -3,9 +3,9 @@ package com.hcare.homeopathy.hcare.PreConsultation;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,13 +19,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.hcare.homeopathy.hcare.Mainmenus.DiseaseObject;
+import com.hcare.homeopathy.hcare.DiseaseInfo;
+import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.R;
 
 public class DiseaseActivity extends AppCompatActivity {
 
-    DiseaseObject object;
+    DiseaseInfo disease;
     private String patientName, age, sex;
     private DatabaseReference userRef;
     private EditText mChatMessageView;
@@ -33,12 +33,12 @@ public class DiseaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chatwithdoctors);
-
-        Gson gson = new Gson();
-        object = gson.fromJson(getIntent().getStringExtra("request_type1"), DiseaseObject.class);
+        setContentView(R.layout.activity_disease);
+        disease = new DiseaseInfo((Diseases) getIntent().getSerializableExtra("request_type1"));
 
         setToolbar();
+
+        setContent();
 
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -60,21 +60,24 @@ public class DiseaseActivity extends AppCompatActivity {
         });
 
 
-        findViewById(R.id.consult_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Intent regIntent = new Intent(DiseaseActivity.this, consultationfeeActivity.class);
-                    regIntent.putExtra("details1", mChatMessageView.getText().toString());
-                    regIntent.putExtra("request_type1", object.getDiseaseName());
-                    regIntent.putExtra("name", patientName);
-                    regIntent.putExtra("age", age);
-                    regIntent.putExtra("sex", sex);
+        findViewById(R.id.consult_btn).setOnClickListener(v -> {
+            try {
+                Intent regIntent = new Intent(DiseaseActivity.this,
+                        CheckoutActivity.class);
+                regIntent.putExtra("details1", mChatMessageView.getText().toString());
+                regIntent.putExtra("request_type1", disease.getDiseaseName());
+                regIntent.putExtra("name", patientName);
+                regIntent.putExtra("age", age);
+                regIntent.putExtra("sex", sex);
 
-                    startActivity(regIntent);
-                } catch (Exception ignored) { }
-            }
+                startActivity(regIntent);
+            } catch (Exception ignored) { }
         });
+    }
+
+    private void setContent() {
+        ((ImageView) findViewById(R.id.diseaseImage)).setImageResource(disease.getDrawable());
+        ((TextView) findViewById(R.id.aboutDisease)).setText(disease.getInfo());
     }
 
     private void setToolbar() {
@@ -82,19 +85,12 @@ public class DiseaseActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        ((TextView) findViewById(R.id.title)).setText(object.getDiseaseName());
-        findViewById(R.id.howItWorks).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showHowToUseDialog();
-            }
-        });
+        ((TextView) findViewById(R.id.title)).setText(disease.getDiseaseName());
+        findViewById(R.id.howItWorks).setOnClickListener(v -> showHowToUseDialog());
     }
 
     private void showHowToUseDialog() {
         final Dialog dialog = new Dialog(this);
-
-
         dialog.setContentView(R.layout.dialog_how_it_works);
 
         int width = ViewGroup.LayoutParams.MATCH_PARENT;

@@ -33,11 +33,11 @@
 
         <activity android:name=".PostConsultation.PrescriptionActivity" />
 
-        <activity android:name=".PreConsultation.consultationfeeActivity">
+        <activity android:name=".PreConsultation.CheckoutActivity">
         </activity>
 
-        <activity android:name=".Mainmenus.FaqActivity"
-            android:parentActivityName=".Mainmenus.MainActivity" />
+        <activity android:name=".NavigationItems.FaqActivity"
+            android:parentActivityName=".MainActivity" />
 
         <service
             android:name=".JvFiles.FirebaseMessagingService"
@@ -57,7 +57,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Mainmenus.MainActivity"
+        <activity android:name=".MainActivity"
             android:theme="@style/splashScreen"/>
 
         <activity android:name=".Start.StartActivity" />
@@ -65,14 +65,14 @@
         <activity
             android:name=".PreConsultation.DiseaseActivity"
             android:theme="@style/splashScreen"
-            android:parentActivityName=".Mainmenus.MainActivity" />
+            android:parentActivityName=".MainActivity" />
 
         <activity android:name=".PreConsultation.DiseaseSpinnerActivity"
-            android:parentActivityName=".Mainmenus.MainActivity" />
+            android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".Mainmenus.CustomercareActivity"
-            android:parentActivityName=".Mainmenus.MainActivity">
+            android:name=".NavigationItems.CustomercareActivity"
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="com.hcare.homeopathy.hcare_customercare" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -86,11 +86,11 @@
 
         <activity
             android:name=".PostConsultation.OrderActivity"
-            android:parentActivityName=".Mainmenus.MainActivity" />
+            android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".Mainmenus.ProfileActivity"
-            android:parentActivityName=".Mainmenus.MainActivity" />
+            android:name=".NavigationItems.ProfileActivity"
+            android:parentActivityName=".MainActivity" />
 
         <activity android:name=".Start.ProfileSettingActivity" />
 
@@ -102,27 +102,27 @@
             android:name=".Consultation.ChatActivity"
             android:parentActivityName=".ConsultationsActivity" />
 
-        <activity android:name=".Mainmenus.RecentmainmenuActivity"
-            android:parentActivityName=".Mainmenus.MainActivity" >
+        <activity android:name=".NavigationItems.ConsultationsActivity"
+            android:parentActivityName=".MainActivity" >
             <intent-filter>
                 <action android:name="com.hcare.homeopathy.hcare_TARGET_NOTIFICATION" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".Mainmenus.AccountmainmenuActivity"
-            android:parentActivityName=".Mainmenus.MainActivity" />
+        <activity android:name=".NavigationItems.AccountmainmenuActivity"
+            android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".BlogsActivity"
-            android:parentActivityName=".Mainmenus.MainActivity" />
+            android:name=".NavigationItems.BlogsActivity"
+            android:parentActivityName=".MainActivity" />
 
         <meta-data
             android:exported="false"
             android:name="com.razorpay.ApiKey"
             android:value="rzp_live_SzHvbklFoHMBtv" />
 
-        <activity android:name=".InviteActivity" />
+        <activity android:name=".NavigationItems.InviteActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

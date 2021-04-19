@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Mainmenus;
+package com.hcare.homeopathy.hcare;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -25,12 +25,22 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
 import com.hcare.homeopathy.hcare.PreConsultation.DiseaseSpinnerActivity;
-import com.hcare.homeopathy.hcare.R;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.Objects;
+
+import static com.hcare.homeopathy.hcare.Diseases.diabetes;
+import static com.hcare.homeopathy.hcare.Diseases.female;
+import static com.hcare.homeopathy.hcare.Diseases.hair;
+import static com.hcare.homeopathy.hcare.Diseases.men;
+import static com.hcare.homeopathy.hcare.Diseases.piles;
+import static com.hcare.homeopathy.hcare.Diseases.renalProblems;
+import static com.hcare.homeopathy.hcare.Diseases.skin;
+import static com.hcare.homeopathy.hcare.Diseases.thyroid;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -56,20 +66,14 @@ public class MainActivity extends AppCompatActivity
         setFlipper();
 
 
-        findViewById(R.id.cart).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent docprofileIntent = new Intent(MainActivity.this, OrderActivity.class);
-                startActivity(docprofileIntent);
-            }
+        findViewById(R.id.cart).setOnClickListener(v -> {
+            Intent docprofileIntent = new Intent(MainActivity.this, OrderActivity.class);
+            startActivity(docprofileIntent);
         });
 
-        findViewById(R.id.mainImage).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent docprofileIntent = new Intent(MainActivity.this, DiseaseSpinnerActivity.class);
-                startActivity(docprofileIntent);
-            }
+        findViewById(R.id.mainImage).setOnClickListener(v -> {
+            Intent docprofileIntent = new Intent(MainActivity.this, DiseaseSpinnerActivity.class);
+            startActivity(docprofileIntent);
         });
 
         setTopIssuesRecycler();
@@ -101,12 +105,11 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
     void eventListeners() {
         mUserRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String name = dataSnapshot.child("name").getValue().toString();
+                //String name = dataSnapshot.child("name").getValue().toString();
                 //setTitle("Hi "+ name.substring(0, 1).toUpperCase() + name.substring(1));
             }
 
@@ -149,15 +152,15 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
 
-        ArrayList<DiseaseObject> list = new ArrayList<>();
-        list.add(new DiseaseObject("Diabetes", R.drawable.diabetes));
+        Diseases[] list = {diabetes, thyroid, female, piles, men, hair, renalProblems, skin};
+    /*    list.add(new DiseaseObject("Diabetes", R.drawable.diabetes));
         list.add(new DiseaseObject("Thyroid", R.drawable.thyroid));
         list.add(new DiseaseObject("Female", R.drawable.female));
         list.add(new DiseaseObject("Piles", R.drawable.newpiles));
         list.add(new DiseaseObject("Mens", R.drawable.newmens));
         list.add(new DiseaseObject("Hair", R.drawable.newhair));
         list.add(new DiseaseObject("Renal stones", R.drawable.newrenal));
-        list.add(new DiseaseObject("Skin", R.drawable.newacne));
+        list.add(new DiseaseObject("Skin", R.drawable.newacne));*/
 
 
         //on click listener set in adapter
@@ -169,8 +172,7 @@ public class MainActivity extends AppCompatActivity
         RecyclerView mRecyclerView = findViewById(R.id.allIssuesRecycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
-
-        ArrayList<DiseaseObject> list = new ArrayList<>();
+      /*  ArrayList<DiseaseObject> list = new ArrayList<>();
         list.add(new DiseaseObject("Skin", R.drawable.skin));
         list.add(new DiseaseObject("Renal Problems", R.drawable.renal));
         list.add(new DiseaseObject("Weight Loss & gain", R.drawable.weight));
@@ -191,10 +193,10 @@ public class MainActivity extends AppCompatActivity
         list.add(new DiseaseObject("Nutrition & health", R.drawable.newacne));
         list.add(new DiseaseObject("Maternal", R.drawable.newmetarnal));
         list.add(new DiseaseObject("Others", R.drawable.newothers));
-
+*/
 
         //on click listener set in adapter
-        mRecyclerView.setAdapter(new DiseaseAdapter(list,this));
+        mRecyclerView.setAdapter(new DiseaseAdapter(new ArrayList<>(EnumSet.allOf(Diseases.class)),this));
 
     }
 
@@ -224,7 +226,8 @@ public class MainActivity extends AppCompatActivity
                 setNavigationItemSelectedListener(this);
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer);
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, mToolbar, R.string.open, R.string.close);
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+                mToolbar, R.string.open,R.string.close);
         drawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }
@@ -232,27 +235,7 @@ public class MainActivity extends AppCompatActivity
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Intent profileIntent;
-        switch (item.getItemId()) {
-            case R.id.profileSettings:
-                profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
-                break;
-            case R.id.orders:
-                profileIntent = new Intent(MainActivity.this, OrderActivity.class);
-                break;
-            case R.id.help:
-                profileIntent = new Intent(MainActivity.this, FaqActivity.class);
-                break;
-            case R.id.chat:
-                profileIntent = new Intent(MainActivity.this, DiseaseSpinnerActivity.class);
-                break;
-            case R.id.consultation:
-                profileIntent = new Intent(MainActivity.this, RecentmainmenuActivity.class);
-                break;
-            default:
-                profileIntent = null;
-        }
-        startActivity(profileIntent);
+        new OpenNavigationItems(this, item.getItemId());
         return false;
     }
 

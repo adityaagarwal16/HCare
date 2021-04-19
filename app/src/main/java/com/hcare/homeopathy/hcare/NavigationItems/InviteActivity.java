@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare;
+package com.hcare.homeopathy.hcare.NavigationItems;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.appinvite.FirebaseAppInvite;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+import com.hcare.homeopathy.hcare.R;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

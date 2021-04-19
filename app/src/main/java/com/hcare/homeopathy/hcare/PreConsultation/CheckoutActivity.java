@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -27,7 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hcare.homeopathy.hcare.Mainmenus.MainActivity;
+import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -38,9 +37,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
-public class consultationfeeActivity extends AppCompatActivity implements PaymentResultListener {
+public class CheckoutActivity extends AppCompatActivity implements PaymentResultListener {
 
     private Button paynowBtn;
 
@@ -52,17 +50,14 @@ public class consultationfeeActivity extends AppCompatActivity implements Paymen
     private TextView total,net,offertxt;
     private int netprice;
 
-    private static final long START_TIME_IN_MILLIS = 600000;
-    private TextView mTextViewCountDown;
-    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consultationfee);
+        setContentView(R.layout.activity_checkout);
 
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Checkout");
 
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -73,8 +68,10 @@ public class consultationfeeActivity extends AppCompatActivity implements Paymen
 
         paynowBtn = (Button)findViewById(R.id.paynowntn);
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-        DatabaseReference mConsultvarify = FirebaseDatabase.getInstance().getReference().child("public_Consulting");
-        mConsultReqDatabase = FirebaseDatabase.getInstance().getReference().child("public_Consulting").child(current_uid);
+        DatabaseReference mConsultvarify =
+                FirebaseDatabase.getInstance().getReference().child("public_Consulting");
+        mConsultReqDatabase = FirebaseDatabase.getInstance()
+                .getReference().child("public_Consulting").child(current_uid);
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -112,7 +109,6 @@ public class consultationfeeActivity extends AppCompatActivity implements Paymen
         userRef.child("consultCount").addValueEventListener(new ValueEventListener() {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 count = (int) dataSnapshot.getChildrenCount();
-                Log.d("test1234",""+ count);
                 if (count == testcount) {
                     total.setText(""+100);
                     net.setText(""+99);
@@ -130,35 +126,25 @@ public class consultationfeeActivity extends AppCompatActivity implements Paymen
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
-        //timer
-        mTextViewCountDown = findViewById(R.id.text_view_countdown);
-        paynowBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetTimer();
-              //  startTimer();
-               startPayment();
-            }
-        });
-        flipper();
+        paynowBtn.setOnClickListener(v -> startPayment());
 
-      //  startTimer();
+        flipper();
     }
 
     void flipper() {
         int[] images ={R.drawable.review1, R.drawable.review2,R.drawable.review3,R.drawable.review4};
-        ViewFlipper mflipper = findViewById(R.id.imageView9);
+        ViewFlipper mFlipper = findViewById(R.id.imageView9);
 
         for (int image: images) {
             ImageView imageView = new ImageView(this);
             imageView.setBackgroundResource(image);
 
-            mflipper.addView(imageView);
-            mflipper.setFlipInterval(4000);
-            mflipper.setAutoStart(true);
+            mFlipper.addView(imageView);
+            mFlipper.setFlipInterval(4000);
+            mFlipper.setAutoStart(true);
 
-            mflipper.setOutAnimation(this,android.R.anim.slide_out_right);
-            mflipper.setInAnimation(this,android.R.anim.slide_in_left);        }
+            mFlipper.setOutAnimation(this,android.R.anim.slide_out_right);
+            mFlipper.setInAnimation(this,android.R.anim.slide_in_left);        }
     }
 
     @Override
@@ -169,18 +155,6 @@ public class consultationfeeActivity extends AppCompatActivity implements Paymen
             return  true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void resetTimer() {
-        mTimeLeftInMillis = START_TIME_IN_MILLIS;
-        updateCountDownText();
-    }
-
-    private void updateCountDownText() {
-        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
-        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-        mTextViewCountDown.setText(timeLeftFormatted);
     }
 
     private void sendRequest(){
@@ -200,7 +174,7 @@ public class consultationfeeActivity extends AppCompatActivity implements Paymen
 
         userRef.child("consultCount").push().child(patientname).setValue(reqtype);
         mConsultReqDatabase.setValue(notifdata);
-        Intent regIntent = new Intent(consultationfeeActivity.this, MainActivity.class);
+        Intent regIntent = new Intent(CheckoutActivity.this, MainActivity.class);
         regIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(regIntent);
         finish();
@@ -211,7 +185,6 @@ public class consultationfeeActivity extends AppCompatActivity implements Paymen
           You need to pass current activity in order to let Razorpay create CheckoutActivity
          */
         final AppCompatActivity activity = this;
-
         final Checkout co = new Checkout();
 
         try {
@@ -232,8 +205,8 @@ public class consultationfeeActivity extends AppCompatActivity implements Paymen
             co.open(activity, options);
 
         } catch (Exception e) {
-            Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
-                    .show();
+            Toast.makeText(activity, "Error in payment: " + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -276,10 +249,11 @@ public class consultationfeeActivity extends AppCompatActivity implements Paymen
             e.printStackTrace();
         }
     }
+
     private final View.OnClickListener close = new View.OnClickListener() {
         public void onClick(View v) {
             pw.dismiss();
-            Intent regIntent = new Intent(consultationfeeActivity.this, MainActivity.class);
+            Intent regIntent = new Intent(CheckoutActivity.this, MainActivity.class);
             regIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(regIntent);
             finish();

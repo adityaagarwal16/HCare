@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Mainmenus;
+package com.hcare.homeopathy.hcare.NavigationItems;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,55 +59,49 @@ public class FaqActivity extends AppCompatActivity {
         ans17 =(TextView)findViewById(R.id.ans17);
 
 
-        qus1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ans1.setVisibility(View.VISIBLE);
-                ans2.setVisibility(View.GONE);
-                ans3.setVisibility(View.GONE);
-                ans4.setVisibility(View.GONE);
-                ans5.setVisibility(View.GONE);
-                ans6.setVisibility(View.GONE);
-                ans7.setVisibility(View.GONE);
-                ans8.setVisibility(View.GONE);
-                ans9.setVisibility(View.GONE);
-                ans10.setVisibility(View.GONE);
-                ans11.setVisibility(View.GONE);
-                ans12.setVisibility(View.GONE);
-                ans13.setVisibility(View.GONE);
-                ans14.setVisibility(View.GONE);
-                ans15.setVisibility(View.GONE);
-                ans16.setVisibility(View.GONE);
-                ans17.setVisibility(View.GONE);
-                 
+        qus1.setOnClickListener(v -> {
+            ans1.setVisibility(View.VISIBLE);
+            ans2.setVisibility(View.GONE);
+            ans3.setVisibility(View.GONE);
+            ans4.setVisibility(View.GONE);
+            ans5.setVisibility(View.GONE);
+            ans6.setVisibility(View.GONE);
+            ans7.setVisibility(View.GONE);
+            ans8.setVisibility(View.GONE);
+            ans9.setVisibility(View.GONE);
+            ans10.setVisibility(View.GONE);
+            ans11.setVisibility(View.GONE);
+            ans12.setVisibility(View.GONE);
+            ans13.setVisibility(View.GONE);
+            ans14.setVisibility(View.GONE);
+            ans15.setVisibility(View.GONE);
+            ans16.setVisibility(View.GONE);
+            ans17.setVisibility(View.GONE);
 
 
-            }
+
         });
-        qus2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ans1.setVisibility(View.GONE);
-                ans2.setVisibility(View.VISIBLE);
-                ans3.setVisibility(View.GONE);
-                ans4.setVisibility(View.GONE);
-                ans5.setVisibility(View.GONE);
-                ans6.setVisibility(View.GONE);
-                ans7.setVisibility(View.GONE);
-                ans8.setVisibility(View.GONE);
-                ans9.setVisibility(View.GONE);
-                ans10.setVisibility(View.GONE);
-                ans11.setVisibility(View.GONE);
-                ans12.setVisibility(View.GONE);
-                ans13.setVisibility(View.GONE);
-                ans14.setVisibility(View.GONE);
-                ans15.setVisibility(View.GONE);
-                ans16.setVisibility(View.GONE);
-                ans17.setVisibility(View.GONE);
-                 
+        qus2.setOnClickListener(v -> {
+            ans1.setVisibility(View.GONE);
+            ans2.setVisibility(View.VISIBLE);
+            ans3.setVisibility(View.GONE);
+            ans4.setVisibility(View.GONE);
+            ans5.setVisibility(View.GONE);
+            ans6.setVisibility(View.GONE);
+            ans7.setVisibility(View.GONE);
+            ans8.setVisibility(View.GONE);
+            ans9.setVisibility(View.GONE);
+            ans10.setVisibility(View.GONE);
+            ans11.setVisibility(View.GONE);
+            ans12.setVisibility(View.GONE);
+            ans13.setVisibility(View.GONE);
+            ans14.setVisibility(View.GONE);
+            ans15.setVisibility(View.GONE);
+            ans16.setVisibility(View.GONE);
+            ans17.setVisibility(View.GONE);
 
 
-            }
+
         });
         qus3.setOnClickListener(new View.OnClickListener() {
             @Override

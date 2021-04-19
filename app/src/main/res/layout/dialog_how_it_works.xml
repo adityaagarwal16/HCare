@@ -11,6 +11,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:layout_marginStart="1dp"
             android:text="How it works"
             android:textColor="?android:textColorPrimary"
             android:textSize="18sp"
@@ -19,12 +20,12 @@
 
         <TextView
             android:id="@+id/line"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="2dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="@+id/textView54"
+            android:background="@color/colorSecondary"
+            android:text="How it works"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView54" />
 
@@ -34,10 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="The doctor will be available from 8AM to 10PM.
-         \n(if your booking is out of office hours, we will call you the next morning)"
-            android:textColor="@color/blackcolor"
-            android:textSize="14sp"
+            android:text="The doctor will be available from 8AM to 10PM (if your booking is out of office hours, we will call you the next morning)."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line1" />
@@ -48,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="false"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="12dp"
             android:text="Receive a call from the doctor after payment"
             android:textColor="@color/blackcolor"
             android:textSize="14sp"
@@ -106,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="15dp"
-            android:background="@color/colorSecondary"
+            android:background="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="@+id/textView54"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView57" />

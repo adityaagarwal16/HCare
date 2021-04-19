@@ -1,12 +1,13 @@
-package com.hcare.homeopathy.hcare.Mainmenus;
+package com.hcare.homeopathy.hcare.NavigationItems;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,9 +24,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.hcare.homeopathy.hcare.Start.ProfileSettingActivity;
-
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -39,11 +40,12 @@ import java.util.Random;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
 
-public class AccountmainmenuActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
+
     private DatabaseReference mUserrDatabase;
     private FirebaseUser mCurrentUser;
 
@@ -56,7 +58,7 @@ public class AccountmainmenuActivity extends AppCompatActivity {
     private TextView mEmail;
 
     private static final int GALLERY_PICK = 1;
-
+    ProgressBar mProgressbar;
 
     //storage image
     private StorageReference mimagestorage;
@@ -64,20 +66,18 @@ public class AccountmainmenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accountmainmenu);
+        setContentView(R.layout.activity_profile);
 
-        setTitle("Account");
-        //home(true);
+        setTitle("Profile");
 
-        mDisplayImage = (CircleImageView) findViewById(R.id.settingsimage);
+        mDisplayImage = (CircleImageView) findViewById(R.id.settings_image);
         mName = (TextView) findViewById(R.id.name);
         mPhone_number =(TextView) findViewById(R.id.phone_number);
         mAge =(TextView) findViewById(R.id.age);
         mSex =(TextView) findViewById(R.id.sex);
         mEmail =(TextView) findViewById(R.id.emailview);
-
-        TextView mEditbtn = (TextView) findViewById(R.id.profileeditbtn);
-        TextView mimagebtn = (TextView) findViewById(R.id.editImageBtn);
+        Button mEditbtn = (Button) findViewById(R.id.edit_btn);
+        ImageButton mimagebtn = (ImageButton) findViewById(R.id.imageButton);
 
         mimagestorage = FirebaseStorage.getInstance().getReference();
 
@@ -89,16 +89,18 @@ public class AccountmainmenuActivity extends AppCompatActivity {
 
 
 
+
+
         mUserrDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
                 String hname = dataSnapshot.child("name").getValue().toString();
                 String hphone_number = dataSnapshot.child("phone number").getValue().toString();
                 String hage = dataSnapshot.child("age").getValue().toString();
                 String hsex = dataSnapshot.child("sex").getValue().toString();
                 String hthumb_image = dataSnapshot.child("thumb_image").getValue().toString();
-                final String himage = dataSnapshot.child("image").getValue().toString();
+
                 String hemail = dataSnapshot.child("email").getValue().toString();
                 try {
                     mName.setText(hname);
@@ -106,10 +108,10 @@ public class AccountmainmenuActivity extends AppCompatActivity {
                     mAge.setText(hage);
                     mSex.setText(hsex);
                     mEmail.setText(hemail);
-                } catch (Exception a) {
-                    Toast.makeText(getApplicationContext(), "Your order has been placed ", Toast.LENGTH_LONG).show();
+                }catch (Exception a){
+                    Toast.makeText(ProfileActivity.this, "Your order has been placed ", Toast.LENGTH_LONG).show();
                 }
-
+                final String himage = dataSnapshot.child("image").getValue().toString();
                 if (!himage.equals("default")) {
                     Picasso.get().load(himage).networkPolicy(NetworkPolicy.OFFLINE)
                             .placeholder(R.drawable.default_profile).into(mDisplayImage, new Callback() {
@@ -123,7 +125,6 @@ public class AccountmainmenuActivity extends AppCompatActivity {
                             Picasso.get().load(himage).placeholder(R.drawable.default_profile).into(mDisplayImage);
                         }
                     });
-
 
                 }
             }
@@ -144,13 +145,13 @@ public class AccountmainmenuActivity extends AppCompatActivity {
                 String age_value = mAge.getText().toString();
                 String email_value = mEmail.getText().toString();
 
-                Intent regIntent = new Intent(AccountmainmenuActivity.this, ProfileSettingActivity.class);
+                Intent regIntent = new Intent(ProfileActivity.this, ProfileSettingActivity.class);
                 regIntent.putExtra("name_value" , name_value);
                 regIntent.putExtra("phone_value" , phone_value);
                 regIntent.putExtra("age_value" , age_value);
                 regIntent.putExtra("email_value" , email_value);
                 startActivity(regIntent);
-
+                finish();
 
             }
         });
@@ -168,20 +169,20 @@ public class AccountmainmenuActivity extends AppCompatActivity {
         });
 
     }
+
     @Override
     protected void onStart() {
         super.onStart();
         mUserrDatabase.child("status").setValue("online");
     }
-
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        // Respond to the action bar's Up/Home button
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent startIntent = new Intent(  ProfileActivity.this, MainActivity.class);
+        startIntent .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(startIntent);
+        finish();
     }
 
     @Override
@@ -191,7 +192,7 @@ public class AccountmainmenuActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode,int resultCode, Intent data){
+    protected void onActivityResult(int requestCode,int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
 
         if (requestCode ==GALLERY_PICK && resultCode ==RESULT_OK){
@@ -228,7 +229,6 @@ public class AccountmainmenuActivity extends AppCompatActivity {
                 filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-
 
                         filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
@@ -282,5 +282,5 @@ public class AccountmainmenuActivity extends AppCompatActivity {
         }
         return randomStringBuilder.toString();
     }
-
 }
+
