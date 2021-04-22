@@ -1,258 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_grey_50"
+    android:background="@color/colorAccent"
     tools:context=".PreConsultation.CheckoutActivity">
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView11"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:backgroundTint="@color/colorAccent"
-        android:padding="8dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/main_page_toolbar"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="0dp"
+        android:layout_above="@+id/summaryBox"
+        android:layout_alignParentTop="true">
 
-        <TextView
-            android:id="@+id/textView60"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_margin="10dp"
-            android:fontFamily="@font/quicksand"
-            android:text="30 mins respond time"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView61"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
-            android:fontFamily="@font/quicksand"
-            android:text="consultation through phone "
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView62"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="70dp"
-            android:fontFamily="@font/quicksand"
-            android:text="10 days follow up"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textView63"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="100sp"
-            android:fontFamily="@font/quicksand"
-            android:text="100% private consultation"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </androidx.cardview.widget.CardView>
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardxView2m"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/colorAccent"
-        android:padding="2dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView11">
-
-        <ViewFlipper
-            android:id="@+id/imageView9"
+        <LinearLayout
             android:layout_width="match_parent"
+            android:paddingBottom="5dp"
             android:layout_height="wrap_content"
-            android:scaleType="matrix"
-            app:layout_constraintBottom_toTopOf="@+id/cardView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView11" />
-    </androidx.cardview.widget.CardView>
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/consultationCard"
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:background="@color/colorPrimary"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/header"
+                    android:background="@color/colorSecondary"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+                    android:padding="10dp"
+                    android:textSize="18sp"
+                    android:gravity="center_vertical"
+                    android:textColor="?android:textColorPrimaryInverse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Consultation for Aditya" />
+
+                <ImageView
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@id/header"
+                    android:id="@+id/diseaseImage"
+                    android:layout_width="145dp"
+                    android:layout_height="150dp"
+                    app:srcCompat="@drawable/thyroid" />
+
+                <TextView
+                    android:id="@+id/diseaseName"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginStart="20dp"
+                    android:gravity="center_vertical"
+                    android:layout_alignTop="@id/diseaseImage"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="18sp"
+                    android:layout_toEndOf="@id/diseaseImage"
+                    android:textColor="?android:textColorPrimary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disease" />
+
+                <TextView
+                    android:id="@+id/patientIssue"
+                    android:layout_marginStart="20dp"
+                    android:maxLines="5"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toEndOf="@id/diseaseImage"
+                    android:layout_below="@id/diseaseName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/yourIssue" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/features"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimary"
+                android:padding="20dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/textView60"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="30 mins response time"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/textView61"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="consultation through phone"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/textView62"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10 days follow up"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/textView63"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="100% private consultation" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimary"
+                android:paddingTop="15dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+                    android:textSize="16sp"
+                    android:textColor="?android:textColorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="22dp"
+                    android:layout_height="wrap_content"
+                    android:text="What customers say about us" />
+
+                <TextView
+                    android:id="@+id/line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/title"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@color/colorSecondary"
+                    android:text="What customers say about us"/>
+
+                <ViewFlipper
+                    android:layout_below="@id/line"
+                    android:id="@+id/imageFlipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:scaleType="fitXY"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="@color/colorAccent"
-        android:padding="2dp"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/main_page_toolbar"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/textViewx60"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:layout_margin="10dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/quicksand"
-                android:text="Consultation Fee"
-                android:textColor="@color/blackcolor"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/consfeetxt"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:layout_margin="10dp"
-                android:layout_marginEnd="26dp"
-                android:fontFamily="@font/quicksand"
-                android:text="199"
-                android:textColor="@color/blackcolor"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textViewx2"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:layout_marginEnd="2dp"
-                android:fontFamily="@font/quicksand"
-                android:text="@string/rupee"
-                android:textColor="@color/blackcolor"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/consfeetxt"
-                app:layout_constraintTop_toTopOf="@+id/consfeetxt" />
-
-            <TextView
-                android:id="@+id/offertext"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="44dp"
-                android:layout_marginEnd="7dp"
-                android:text="First 50"
-                android:textColor="@color/green_600"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/discountfeetxt"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:layout_marginTop="44dp"
-                android:layout_marginEnd="8dp"
-                android:fontFamily="@font/quicksand"
-                android:text="100"
-                android:textColor="@color/green_600"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textVicew2"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:layout_marginTop="44dp"
-                android:layout_marginEnd="2dp"
-                android:text="@string/rupee"
-                android:textColor="@color/green_600"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/discountfeetxt"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textVisew62"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="76dp"
-                android:layout_marginEnd="8dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="To pay"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/conspayfeetxt"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:layout_marginTop="76dp"
-                android:layout_marginEnd="8dp"
-                android:fontFamily="@font/quicksand_bold"
-                android:text="99"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textVisew2"
-                android:layout_width="wrap_content"
-                android:layout_height="37dp"
-                android:layout_marginTop="76dp"
-                android:layout_marginEnd="2dp"
-                android:fontFamily="@font/quicksand"
-                android:text="@string/rupee"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/conspayfeetxt"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/paynowntn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:id="@+id/summaryBox"
+        android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
-        android:layout_marginBottom="16dp"
-        android:text="pay now"
-        android:textColor="?android:textColorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/subtotalHeader"
+                    android:textColor="?android:textColorPrimary"
+                    android:text="Subtotal"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/subTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:letterSpacing="0.03"
+                    android:text="Subtotal"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/rupee1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_toStartOf="@id/subTotal"
+                    android:text="₹"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/discount"
+                    android:textSize="15sp"
+                    android:textColor="?android:textColorPrimary"
+                    android:layout_below="@id/subTotal"
+                    android:text="Discount"
+                    android:letterSpacing="0.03"
+                    android:layout_marginTop="4dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/discountHeader"
+                    android:textColor="?android:textColorPrimary"
+                    android:text="Discount"
+                    android:layout_marginTop="4dp"
+                    android:layout_below="@id/subtotalHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/couponHeader"
+                    android:textColor="@color/colorSecondary"
+                    android:text="100RS OFF is applied"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"
+                    android:layout_below="@id/discount"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/rupee2"
+                    android:textSize="15sp"
+                    android:textColor="?android:textColorPrimary"
+                    android:layout_below="@id/rupee1"
+                    android:layout_toStartOf="@id/discount"
+                    android:text="- ₹"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/total"
+                    android:textColor="?android:textColorPrimary"
+                    android:layout_below="@id/discountHeader"
+                    android:text="Total"
+                    android:textSize="16sp"
+                    android:letterSpacing="0.03"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/totalHeader"
+                    android:textColor="?android:textColorPrimary"
+                    android:text="Total"
+                    android:textSize="18sp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:layout_below="@id/discountHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/rupee3"
+                    android:textColor="?android:textColorPrimary"
+                    android:layout_below="@id/discountHeader"
+                    android:layout_toStartOf="@id/total"
+                    android:text="₹"
+                    android:textSize="16sp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:layout_marginEnd="4dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/payNowButton"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp"
+                android:foreground="?selectableItemBackground"
+                app:cardBackgroundColor="@color/colorSecondary">
+
+                <TextView
+                    android:padding="15dp"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:text="Pay Now"
+                    android:textColor="?android:textColorPrimaryInverse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+</RelativeLayout>

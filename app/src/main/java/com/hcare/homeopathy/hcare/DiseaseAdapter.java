@@ -20,7 +20,6 @@ class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
 
     private final Diseases[] list;
     private final ArrayList<Diseases> arrayList;
-    boolean isArrayList = false;
     Context context;
 
     public DiseaseAdapter(Diseases[] list, Context context) {
@@ -28,8 +27,8 @@ class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
         this.arrayList = null;
         this.context = context;
     }
+
     public DiseaseAdapter(ArrayList<Diseases> list, Context context) {
-        isArrayList = true;
         this.arrayList = list;
         this.list = null;
         this.context = context;
@@ -45,31 +44,36 @@ class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
-        DiseaseInfo object;
-        if(isArrayList)
-            object = new DiseaseInfo(arrayList.get(position));
-        else
-            object = new DiseaseInfo(list[position]);
+        DiseaseInfo object = null;
+        Diseases disease = null;
+        if(arrayList!= null) {
+            disease = arrayList.get(position);
+            object = new DiseaseInfo(disease);
+        } else if(list != null) {
+            disease = list[position];
+            object = new DiseaseInfo(disease);
+        }
 
+        assert object != null;
         holder.diseaseName.setText(object.getDiseaseName());
         holder.diseaseImage.setImageResource(object.getDrawable());
 
-        holder.card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DiseaseActivity.class);
-                intent.putExtra("request_type1", list[position]);
-                context.startActivity(intent);
-            }
+        Diseases finalDisease = disease;
+        holder.card.setOnClickListener(v -> {
+            Intent intent = new Intent(context, DiseaseActivity.class);
+            intent.putExtra("request_type1", finalDisease);
+            context.startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        if(isArrayList)
+        if(arrayList!= null)
             return arrayList.size();
-        else
+        else {
+            assert list != null;
             return list.length;
+        }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

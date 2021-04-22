@@ -22,6 +22,7 @@
     <string name="todo">todo</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="disease">disease</string>
+    <string name="disease">Disease</string>
+    <string name="yourIssue">Your issue here</string>
 
 </resources>

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chat"
     tools:context="com.hcare.homeopathy.hcare.Consultation.ChatActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -36,24 +35,16 @@
             android:tint="@color/colorPrimary"
             app:srcCompat="@android:drawable/ic_input_add" />
 
-        <TextView
+        <EditText
             android:id="@+id/chat_message_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="9dp"
             android:layout_weight="6.5"
-            android:background="@drawable/text_bgcolor"
             android:ems="10"
-            android:hint="    Type a Message"
-            android:inputType="textUri|textShortMessage|textLongMessage|textPersonName|text"
-            android:padding="10dp"
-            android:textAlignment="textStart"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textColorHighlight="@color/blackcolor"
-            android:textColorHint="@color/cardview_dark_background"
-            android:textColorLink="@color/blackcolor"
-            android:textCursorDrawable="@drawable/cursor_color" />
+            android:hint="Type a Message"
+            android:inputType="textUri|textShortMessage
+            |textLongMessage|textPersonName|text"
+            android:padding="10dp"/>
 
         <ImageButton
             android:id="@+id/chat_send_btn"
@@ -76,8 +67,7 @@
         android:layout_marginBottom="2dp"
         android:layout_weight="1.5"
         android:background="@color/colorPrimary"
-        android:visibility="invisible"
-        app:srcCompat="@drawable/buton_round" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/consultagaintxt"
@@ -90,7 +80,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="20dp"
         android:layout_weight="1.5"
-        android:fontFamily="@font/quicksand_bold"
         android:text="@string/consult_again"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"

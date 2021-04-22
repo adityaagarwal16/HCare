@@ -120,7 +120,8 @@ public class MainActivity extends AppCompatActivity
         });
 
         DatabaseReference publicConsult = FirebaseDatabase.getInstance().
-                getReference().child("public_Consulting").child(mAuth.getCurrentUser().getUid());
+                getReference().child("public_Consulting")
+                .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
 
 
         final TextView consultReq = findViewById(R.id.reqtxt);
@@ -153,17 +154,6 @@ public class MainActivity extends AppCompatActivity
                 this, LinearLayoutManager.HORIZONTAL, false));
 
         Diseases[] list = {diabetes, thyroid, female, piles, men, hair, renalProblems, skin};
-    /*    list.add(new DiseaseObject("Diabetes", R.drawable.diabetes));
-        list.add(new DiseaseObject("Thyroid", R.drawable.thyroid));
-        list.add(new DiseaseObject("Female", R.drawable.female));
-        list.add(new DiseaseObject("Piles", R.drawable.newpiles));
-        list.add(new DiseaseObject("Mens", R.drawable.newmens));
-        list.add(new DiseaseObject("Hair", R.drawable.newhair));
-        list.add(new DiseaseObject("Renal stones", R.drawable.newrenal));
-        list.add(new DiseaseObject("Skin", R.drawable.newacne));*/
-
-
-        //on click listener set in adapter
         mRecyclerView.setAdapter(new DiseaseAdapter(list,this));
     }
 
@@ -172,32 +162,7 @@ public class MainActivity extends AppCompatActivity
         RecyclerView mRecyclerView = findViewById(R.id.allIssuesRecycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
-      /*  ArrayList<DiseaseObject> list = new ArrayList<>();
-        list.add(new DiseaseObject("Skin", R.drawable.skin));
-        list.add(new DiseaseObject("Renal Problems", R.drawable.renal));
-        list.add(new DiseaseObject("Weight Loss & gain", R.drawable.weight));
-        list.add(new DiseaseObject("Headache", R.drawable.newheadache));
-        list.add(new DiseaseObject("Hair", R.drawable.newhair));
-        list.add(new DiseaseObject("mens", R.drawable.newmens));
-        list.add(new DiseaseObject("Diabetes", R.drawable.newrenal));
-        list.add(new DiseaseObject("Piles", R.drawable.newacne));
-        list.add(new DiseaseObject("Thyroid", R.drawable.newacne));
-        list.add(new DiseaseObject("Respiratory problems", R.drawable.newrespiratory));
-        list.add(new DiseaseObject("Bones & joints", R.drawable.newjoints));
-        list.add(new DiseaseObject("Depression", R.drawable.newdepression));
-        list.add(new DiseaseObject("Growth", R.drawable.newgrowth));
-        list.add(new DiseaseObject("Heart Problems", R.drawable.newheart));
-        list.add(new DiseaseObject("ENT", R.drawable.newent));
-        list.add(new DiseaseObject("Mouth & Teeth", R.drawable.newrenal));
-        list.add(new DiseaseObject("Children", R.drawable.newacne));
-        list.add(new DiseaseObject("Nutrition & health", R.drawable.newacne));
-        list.add(new DiseaseObject("Maternal", R.drawable.newmetarnal));
-        list.add(new DiseaseObject("Others", R.drawable.newothers));
-*/
-
-        //on click listener set in adapter
         mRecyclerView.setAdapter(new DiseaseAdapter(new ArrayList<>(EnumSet.allOf(Diseases.class)),this));
-
     }
 
     @Override

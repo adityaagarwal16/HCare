@@ -21,7 +21,9 @@ import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -30,42 +32,38 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
-
-    private List<Messages> mMessageList;
-    private FirebaseAuth mAuth;
+    private final List<Messages> mMessageList;
 
     public  MessageAdapter(List<Messages> mMessageList){
         this.mMessageList =mMessageList;
     }
+
+    @NonNull
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.message_single_layout,parent,false);
-
-
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.message_single_layout,parent,false);
         return new MessageViewHolder(v);
-
     }
 
-    public class MessageViewHolder extends RecyclerView.ViewHolder {
+    public static class MessageViewHolder extends RecyclerView.ViewHolder {
 
         public TextView messageText,messageText1,mPdf,mcallback,infotext,time;
         public ImageView messageView,messageView1;
         public Button treatmentBtn;
-        public Animation myAnim;
 
 
         public MessageViewHolder(View view){
             super(view);
-            messageText =(TextView)view.findViewById(R.id.message_text_layout);
-            messageText1 =(TextView)view.findViewById(R.id.message_text_layout1);
-            messageView =(ImageView)view.findViewById(R.id.textimage);
-            messageView1 =(ImageView)view.findViewById(R.id.textimage1);
-            mPdf = (TextView)view.findViewById(R.id.pdfview);
-            mcallback = (TextView)view.findViewById(R.id.callreqView);
-            infotext =(TextView)view.findViewById(R.id.treattext);
-            treatmentBtn =(Button)view.findViewById(R.id.treatment);
-            time =(TextView)view.findViewById(R.id.timeview);
+            messageText = view.findViewById(R.id.message_text_layout);
+            messageText1 =view.findViewById(R.id.message_text_layout1);
+            messageView =view.findViewById(R.id.textimage);
+            messageView1 =view.findViewById(R.id.textimage1);
+            mPdf = view.findViewById(R.id.pdfview);
+            mcallback = view.findViewById(R.id.callreqView);
+            infotext = view.findViewById(R.id.treattext);
+            treatmentBtn = view.findViewById(R.id.treatment);
+            time = view.findViewById(R.id.timeview);
          //    myAnim = AnimationUtils.loadAnimation(view.getContext(), R.anim.shake);
            // treatmentBtn.setAnimation(myAnim);
 
@@ -74,8 +72,8 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.Message
 
     @Override
     public void onBindViewHolder(final MessageViewHolder viewHolder, int i) {
-        mAuth = FirebaseAuth.getInstance();
-        String current_user_id = mAuth.getCurrentUser().getUid();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String current_user_id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
         final Messages c = mMessageList.get(i);
 
@@ -101,85 +99,94 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.Message
             viewHolder.messageText.setVisibility(View.INVISIBLE);
             viewHolder.messageText1.setVisibility(View.VISIBLE);
         }
-        if (message_type.equals("text")) {
-            viewHolder.messageText.setText(c.getMessage());
-            viewHolder.messageText1.setText(c.getMessage());
-            viewHolder.messageView.setVisibility(View.INVISIBLE);
-            viewHolder.messageView1.setVisibility(View.INVISIBLE);
-            viewHolder.mPdf.setVisibility(View.INVISIBLE);
-            viewHolder.mcallback.setVisibility(View.INVISIBLE);
-            viewHolder.treatmentBtn.setVisibility(View.INVISIBLE);
-            viewHolder.infotext.setVisibility(View.INVISIBLE);
-        }else if (message_type.equals("image")){
-            viewHolder.messageText.setVisibility(View.INVISIBLE);
-            viewHolder.messageText1.setVisibility(View.INVISIBLE);
-            viewHolder.mPdf.setVisibility(View.INVISIBLE);
-            viewHolder.mcallback.setVisibility(View.INVISIBLE);
-            viewHolder.treatmentBtn.setVisibility(View.INVISIBLE);
-            viewHolder.infotext.setVisibility(View.INVISIBLE);
-            if(from_user.equals(current_user_id)) {
-                viewHolder.messageView1.setVisibility(View.VISIBLE);
+        switch (message_type) {
+            case "text":
+                viewHolder.messageText.setText(c.getMessage());
+                viewHolder.messageText1.setText(c.getMessage());
                 viewHolder.messageView.setVisibility(View.INVISIBLE);
-            }else {
-                viewHolder.messageView.setVisibility(View.VISIBLE);
                 viewHolder.messageView1.setVisibility(View.INVISIBLE);
-            }
-            Picasso.get().load(c.getMessage()).placeholder(R.drawable.button_bg_rounded_corners).networkPolicy(NetworkPolicy.OFFLINE).into(viewHolder.messageView, new Callback() {
-                @Override
-                public void onSuccess() {
-
+                viewHolder.mPdf.setVisibility(View.INVISIBLE);
+                viewHolder.mcallback.setVisibility(View.INVISIBLE);
+                viewHolder.treatmentBtn.setVisibility(View.INVISIBLE);
+                viewHolder.infotext.setVisibility(View.INVISIBLE);
+                break;
+            case "image":
+                viewHolder.messageText.setVisibility(View.INVISIBLE);
+                viewHolder.messageText1.setVisibility(View.INVISIBLE);
+                viewHolder.mPdf.setVisibility(View.INVISIBLE);
+                viewHolder.mcallback.setVisibility(View.INVISIBLE);
+                viewHolder.treatmentBtn.setVisibility(View.INVISIBLE);
+                viewHolder.infotext.setVisibility(View.INVISIBLE);
+                if (from_user.equals(current_user_id)) {
+                    viewHolder.messageView1.setVisibility(View.VISIBLE);
+                    viewHolder.messageView.setVisibility(View.INVISIBLE);
+                } else {
+                    viewHolder.messageView.setVisibility(View.VISIBLE);
+                    viewHolder.messageView1.setVisibility(View.INVISIBLE);
                 }
 
-                @Override
-                public void onError(Exception e) {
-                    Picasso.get().load(c.getMessage()).into(viewHolder.messageView);
+                Picasso.get().load(c.getMessage())
+                        .networkPolicy(NetworkPolicy.OFFLINE)
+                        .into(viewHolder.messageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
 
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Picasso.get().load(c.getMessage()).into(viewHolder.messageView);
+
+                    }
+                });
+                Picasso.get().load(c.getMessage())
+                        .networkPolicy(NetworkPolicy.OFFLINE)
+                        .into(viewHolder.messageView1, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Picasso.get().load(c.getMessage()).into(viewHolder.messageView1);
+                    }
+                });
+
+                break;
+            case "pdf":
+                viewHolder.mPdf.setVisibility(View.VISIBLE);
+                viewHolder.messageView.setVisibility(View.INVISIBLE);
+                viewHolder.messageView1.setVisibility(View.INVISIBLE);
+                viewHolder.messageText.setVisibility(View.INVISIBLE);
+                viewHolder.messageText1.setVisibility(View.INVISIBLE);
+                viewHolder.mcallback.setVisibility(View.INVISIBLE);
+                viewHolder.treatmentBtn.setVisibility(View.INVISIBLE);
+                viewHolder.infotext.setVisibility(View.INVISIBLE);
+                break;
+            case "call back":
+                viewHolder.mcallback.setVisibility(View.VISIBLE);
+                viewHolder.messageView.setVisibility(View.INVISIBLE);
+                viewHolder.messageView1.setVisibility(View.INVISIBLE);
+                viewHolder.messageText.setVisibility(View.INVISIBLE);
+                viewHolder.messageText1.setVisibility(View.INVISIBLE);
+                viewHolder.treatmentBtn.setVisibility(View.INVISIBLE);
+                viewHolder.infotext.setVisibility(View.INVISIBLE);
+                break;
+            default:
+                viewHolder.infotext.setVisibility(View.VISIBLE);
+                viewHolder.treatmentBtn.setVisibility(View.VISIBLE);
+                viewHolder.mcallback.setVisibility(View.INVISIBLE);
+                viewHolder.messageView.setVisibility(View.INVISIBLE);
+                viewHolder.messageView1.setVisibility(View.INVISIBLE);
+                viewHolder.messageText.setVisibility(View.INVISIBLE);
+                viewHolder.messageText1.setVisibility(View.INVISIBLE);
+                if (order_type.equals("ordered")) {
+                    viewHolder.treatmentBtn.setText("Ordered");
                 }
-            });
-            Picasso.get().load(c.getMessage()).networkPolicy(NetworkPolicy.OFFLINE).into(viewHolder.messageView1, new Callback() {
-                @Override
-                public void onSuccess() {
+                //viewHolder.treatmentBtn.setAnimation(myAnim);
 
-                }
-
-                @Override
-                public void onError(Exception e) {
-                    Picasso.get().load(c.getMessage()).placeholder(R.drawable.button_bg_rounded_corners).into(viewHolder.messageView1);
-                }
-            });
-
-        }
-        else if (message_type.equals("pdf")){
-            viewHolder.mPdf.setVisibility(View.VISIBLE);
-            viewHolder.messageView.setVisibility(View.INVISIBLE);
-            viewHolder.messageView1.setVisibility(View.INVISIBLE);
-            viewHolder.messageText.setVisibility(View.INVISIBLE);
-            viewHolder.messageText1.setVisibility(View.INVISIBLE);
-            viewHolder.mcallback.setVisibility(View.INVISIBLE);
-            viewHolder.treatmentBtn.setVisibility(View.INVISIBLE);
-            viewHolder.infotext.setVisibility(View.INVISIBLE);
-        }
-        else if (message_type.equals("call back")){
-            viewHolder.mcallback.setVisibility(View.VISIBLE);
-            viewHolder.messageView.setVisibility(View.INVISIBLE);
-            viewHolder.messageView1.setVisibility(View.INVISIBLE);
-            viewHolder.messageText.setVisibility(View.INVISIBLE);
-            viewHolder.messageText1.setVisibility(View.INVISIBLE);
-            viewHolder.treatmentBtn.setVisibility(View.INVISIBLE);
-            viewHolder.infotext.setVisibility(View.INVISIBLE);
-        }else {
-            viewHolder.infotext.setVisibility(View.VISIBLE);
-            viewHolder.treatmentBtn.setVisibility(View.VISIBLE);
-            viewHolder.mcallback.setVisibility(View.INVISIBLE);
-            viewHolder.messageView.setVisibility(View.INVISIBLE);
-            viewHolder.messageView1.setVisibility(View.INVISIBLE);
-            viewHolder.messageText.setVisibility(View.INVISIBLE);
-            viewHolder.messageText1.setVisibility(View.INVISIBLE);
-            if (order_type.equals("ordered")){
-                viewHolder.treatmentBtn.setText("Ordered");
-            }
-            //viewHolder.treatmentBtn.setAnimation(myAnim);
-
+                break;
         }
         viewHolder.messageView1.setOnClickListener(new View.OnClickListener() {
             @Override

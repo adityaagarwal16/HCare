@@ -23,6 +23,10 @@ import com.hcare.homeopathy.hcare.DiseaseInfo;
 import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.R;
 
+import java.util.Objects;
+
+import static com.hcare.homeopathy.hcare.PreConsultation.Constants.DISEASE_OBJECT;
+
 public class DiseaseActivity extends AppCompatActivity {
 
     DiseaseInfo disease;
@@ -42,17 +46,17 @@ public class DiseaseActivity extends AppCompatActivity {
 
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        final String current_uid = mCurrentUser.getUid();
+        final String current_uid = Objects.requireNonNull(mCurrentUser).getUid();
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-        mChatMessageView = (EditText) findViewById(R.id.diseases);
+        mChatMessageView = findViewById(R.id.diseases);
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                patientName = dataSnapshot.child("name").getValue().toString();
-                age = dataSnapshot.child("age").getValue().toString();
-                sex = dataSnapshot.child("sex").getValue().toString();
+                patientName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
+                age = Objects.requireNonNull(dataSnapshot.child("age").getValue()).toString();
+                sex = Objects.requireNonNull(dataSnapshot.child("sex").getValue()).toString();
             }
 
             @Override
@@ -64,11 +68,13 @@ public class DiseaseActivity extends AppCompatActivity {
             try {
                 Intent regIntent = new Intent(DiseaseActivity.this,
                         CheckoutActivity.class);
+                regIntent.putExtra(DISEASE_OBJECT, (Diseases) getIntent().getSerializableExtra("request_type1"));
                 regIntent.putExtra("details1", mChatMessageView.getText().toString());
                 regIntent.putExtra("request_type1", disease.getDiseaseName());
                 regIntent.putExtra("name", patientName);
                 regIntent.putExtra("age", age);
                 regIntent.putExtra("sex", sex);
+
 
                 startActivity(regIntent);
             } catch (Exception ignored) { }
@@ -83,7 +89,8 @@ public class DiseaseActivity extends AppCompatActivity {
     private void setToolbar() {
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar())
+                .setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         ((TextView) findViewById(R.id.title)).setText(disease.getDiseaseName());
         findViewById(R.id.howItWorks).setOnClickListener(v -> showHowToUseDialog());
@@ -95,7 +102,7 @@ public class DiseaseActivity extends AppCompatActivity {
 
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        dialog.getWindow().setLayout(width, height);
+        Objects.requireNonNull(dialog.getWindow()).setLayout(width, height);
         dialog.show();
     }
 

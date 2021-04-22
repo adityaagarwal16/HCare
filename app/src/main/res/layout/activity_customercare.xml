@@ -41,15 +41,11 @@
             android:layout_marginLeft="0dp"
             android:layout_marginRight="9dp"
             android:layout_weight="6.5"
-            android:background="@drawable/textbackground"
             android:ems="10"
-            android:hint="    Type a Message"
+            android:hint="Type a Message"
             android:inputType="textPersonName"
             android:padding="10dp"
-            android:textAlignment="textStart"
-            android:textColor="@color/common_google_signin_btn_text_dark_focused"
-            android:textColorHint="@color/cardview_dark_background"
-            android:textCursorDrawable="@drawable/cursor_color"/>
+            android:textColorHint="@color/cardview_dark_background"/>
 
         <ImageButton
             android:id="@+id/chat_send_btn"

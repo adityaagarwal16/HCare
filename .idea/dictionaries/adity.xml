@@ -8,6 +8,7 @@
       <w>consultationfee</w>
       <w>customercare</w>
       <w>docprofile</w>
+      <w>gson</w>
       <w>hcare</w>
       <w>hvbkl</w>
       <w>loggedin</w>
@@ -15,9 +16,11 @@
       <w>mainmenus</w>
       <w>medit</w>
       <w>mens</w>
+      <w>mins</w>
       <w>patientsapp</w>
       <w>razorpay</w>
       <w>recentmainmenu</w>
+      <w>rsoff</w>
       <w>updatepop</w>
     </words>
   </dictionary>

@@ -17,8 +17,7 @@
         android:layout_height="64dp"
         android:layout_marginBottom="15dp"
 
-        android:layout_marginTop="15dp"
-        app:srcCompat="@drawable/buton_round" />
+        android:layout_marginTop="15dp"/>
 
     <io.gloxey.cfv.CFTextView
         android:id="@+id/doctor_single_name"

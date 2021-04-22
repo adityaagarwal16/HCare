@@ -13,23 +13,17 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/text_bg_underline_selector"
         android:ems="10"
-        android:fontFamily="@font/quicksand_medium"
         android:hint="    Mobile Number"
         android:inputType="phone"
         android:padding="5dp"
         android:textAlignment="textStart"
         android:textColor="@color/blackcolor"
         android:textColorHint="@color/blue_grey_100"
-        android:textCursorDrawable="@drawable/cursor_color"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView"
@@ -67,7 +61,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.44" />
 
-    <TextView
+    <EditText
         android:id="@+id/otp_editText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +69,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/text_bg_underline_selector"
         android:elevation="2dp"
         android:ems="10"
         android:hint="OTP"
@@ -84,10 +77,8 @@
         android:textAlignment="center"
         android:textColor="@color/blackcolor"
         android:textColorHint="@android:color/darker_gray"
-        android:textCursorDrawable="@drawable/cursor_color"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

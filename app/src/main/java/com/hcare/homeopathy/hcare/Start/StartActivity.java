@@ -56,15 +56,14 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-
         //phone auth start
-        MobileNumber = (EditText) findViewById(R.id.mobileNumber);
-        Submit = (Button) findViewById(R.id.submit);
-        OTPEditview = (EditText) findViewById(R.id.otp_editText);
-        OTPButton = (Button) findViewById(R.id.otp_button);
-        Textview = (TextView) findViewById(R.id.textView);
-        Otp = (TextView) findViewById(R.id.otp);
-        noview =(TextView)findViewById(R.id.textView41);
+        MobileNumber = findViewById(R.id.mobileNumber);
+        Submit = findViewById(R.id.submit);
+        OTPEditview =  findViewById(R.id.otp_editText);
+        OTPButton = findViewById(R.id.otp_button);
+        Textview = findViewById(R.id.textView);
+        Otp = findViewById(R.id.otp);
+        noview =findViewById(R.id.textView41);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -117,94 +116,104 @@ public class StartActivity extends AppCompatActivity {
                 OTPButton.setVisibility(View.VISIBLE);
                 OTPEditview.setVisibility(View.VISIBLE);
                 Otp.setVisibility(View.VISIBLE);
-                // ...
             }
         };
 
-        Submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty( MobileNumber.getText().toString())) {
-                    Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_SHORT).show();
-                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                            "+91" + MobileNumber.getText().toString(),// Phone number to verify
-                            30, TimeUnit.SECONDS,   // Unit of timeout
-                            StartActivity.this,               // Activity (for callback binding)
-                            mCallbacks);        // OnVerificationStateChangedCallbacks
-                    //mProgressDialog.show();
-                } else {
-                    Toast.makeText(StartActivity.this, "Please enter your Number", Toast.LENGTH_LONG).show();        }
+        Submit.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty( MobileNumber.getText().toString())) {
+                Toast.makeText(getApplicationContext(), "hello",
+                        Toast.LENGTH_SHORT).show();
+
+                PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                        "+91" + MobileNumber.getText().toString()
+                        ,// Phone number to verify
+                        30, TimeUnit.SECONDS,
+                        // Unit of timeout
+                        StartActivity.this,
+                        // Activity (for callback binding)
+                        mCallbacks);
+                // OnVerificationStateChangedCallbacks
+                //mProgressDialog.show();
+            } else {
+                Toast.makeText(StartActivity.this,
+                        "Please enter your Number",
+                        Toast.LENGTH_LONG).show();
             }
         });
 
 
-        OTPButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!TextUtils.isEmpty( MobileNumber.getText().toString())) {
-                    PhoneAuthCredential credential =
-                            PhoneAuthProvider.getCredential(mVerificationId, OTPEditview.getText().toString());
-                    signInWithPhoneAuthCredential(credential);
-                    //mProgressDialog.show();
-                }else {
-                    Toast.makeText(StartActivity.this, "Please enter OTP", Toast.LENGTH_LONG).show();
-                }
-
+        OTPButton.setOnClickListener(v -> {
+            if (!TextUtils.isEmpty( MobileNumber.getText().toString())) {
+                PhoneAuthCredential credential =
+                        PhoneAuthProvider
+                                .getCredential(mVerificationId,
+                                        OTPEditview.getText().toString());
+                signInWithPhoneAuthCredential(credential);
+                //mProgressDialog.show();
+            }else {
+                Toast.makeText(StartActivity.this,
+                        "Please enter OTP", Toast.LENGTH_LONG).show();
             }
+
         });
 
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            String phone = MobileNumber.getText().toString();
-                            FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
-                            assert current_user != null;
-                            String uid = current_user.getUid();
-                            String device_token = FirebaseInstanceId.getInstance().getToken();
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        String phone = MobileNumber.getText().toString();
+                        FirebaseUser current_user = FirebaseAuth
+                                .getInstance().getCurrentUser();
+                        assert current_user != null;
+                        String uid = current_user.getUid();
+                        String device_token = FirebaseInstanceId
+                                .getInstance().getToken();
 
-                            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
-                            HashMap<String, String> userMap = new HashMap<>();
-                            userMap.put("phone number", phone);
-                            userMap.put("name", "patient");
-                            userMap.put("age", "age of patient");
-                            userMap.put("sex", "male or female");
-                            userMap.put("thumb_image", "default");
-                            userMap.put("image", "default");
-                            userMap.put("email", "Email id");
-                            userMap.put("device_token",device_token);
-                            userMap.put("status","online");
+                        mDatabase = FirebaseDatabase.getInstance()
+                                .getReference().child("Users").child(uid);
+                        HashMap<String, String> userMap = new HashMap<>();
+                        userMap.put("phone number", phone);
+                        userMap.put("name", "patient");
+                        userMap.put("age", "age of patient");
+                        userMap.put("sex", "male or female");
+                        userMap.put("thumb_image", "default");
+                        userMap.put("image", "default");
+                        userMap.put("email", "Email id");
+                        userMap.put("device_token",device_token);
+                        userMap.put("status","online");
 
-                            mDatabase.setValue(userMap);
+                        mDatabase.setValue(userMap);
 
-                            // Sign in success, update UI with the signed-in user's information
-                            //mProgressDialog.dismiss();
+                        // Sign in success, update UI with the
+                        // signed-in user's information
+                        //mProgressDialog.dismiss();
 
-                            Toast.makeText(StartActivity.this,
-                                    "Verification done", Toast.LENGTH_LONG).show();
+                        Toast.makeText(StartActivity.this,
+                                "Verification done", Toast.LENGTH_LONG).show();
 
-                            FirebaseUser user = Objects.requireNonNull(task.getResult()).getUser();
+                        FirebaseUser user = Objects.requireNonNull(
+                                task.getResult()).getUser();
 
-                            Intent regIntent =
-                                    new Intent(StartActivity.this, ProfileSettingActivity.class);
-                            startActivity(regIntent);
-                            regIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            finish();
+                        Intent regIntent = new Intent(
+                                StartActivity.this,
+                                ProfileSettingActivity.class);
+                        startActivity(regIntent);
+                        regIntent.addFlags(
+                                Intent.FLAG_ACTIVITY_NEW_TASK |
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        finish();
 
-                        } else {
-                            Toast.makeText(getApplicationContext(),
-                                    Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
-                            // Sign in failed, display a message and update the UI
-                            //mProgressDialog.dismiss();
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
+                        // Sign in failed, display a message and update the UI
+                        //mProgressDialog.dismiss();
 
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                // The verification code entered was invalid
-                                Toast.makeText(StartActivity.this, "Verification failed code invalid", Toast.LENGTH_LONG).show();
-                            }
+                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                            // The verification code entered was invalid
+                            Toast.makeText(StartActivity.this, "Verification failed code invalid", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
