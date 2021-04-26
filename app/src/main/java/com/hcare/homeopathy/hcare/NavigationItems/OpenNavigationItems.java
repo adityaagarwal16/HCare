@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
+import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
 import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
 import com.hcare.homeopathy.hcare.PreConsultation.DiseaseSpinnerActivity;
 import com.hcare.homeopathy.hcare.R;

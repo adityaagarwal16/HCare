@@ -28,8 +28,7 @@
         android:layout_toEndOf="@+id/textView2"
         android:text="Order ID"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="14sp"
-        app:font_name="@string/opensansRegular" />
+        android:textSize="14sp" />
 
     <io.gloxey.cfv.CFTextView
         android:id="@+id/experience"
@@ -37,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/doctor_single_name"
         android:layout_marginTop="10dp"
-        app:font_name="@string/opensansRegular"
         android:layout_toEndOf="@+id/textView23"
         android:text="dd/mm/yy" />
 
@@ -53,8 +51,7 @@
         android:text="Order Updating"
         android:textColor="@android:color/holo_green_dark"
         android:textColorHighlight="#24B606"
-        android:textColorLink="#24B606"
-        app:font_name="@string/opensansRegular" />
+        android:textColorLink="#24B606" />
 
     <io.gloxey.cfv.CFTextView
         android:id="@+id/textView2"
@@ -67,15 +64,13 @@
         android:text="Order ID:- "
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="14sp"
-        android:textStyle="bold"
-        app:font_name="@string/opensansRegular" />
+        android:textStyle="bold" />
 
     <io.gloxey.cfv.CFTextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView2"
-        app:font_name="@string/opensansRegular"
         android:layout_below="@id/doctor_single_name"
         android:layout_marginTop="10dp"
         android:text="Date : "
@@ -88,7 +83,6 @@
         android:layout_alignStart="@+id/textView23"
         android:layout_alignTop="@+id/doctor_degree"
         android:text="AWB : "
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        app:font_name="@string/opensansRegular" />
+        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
 </RelativeLayout>

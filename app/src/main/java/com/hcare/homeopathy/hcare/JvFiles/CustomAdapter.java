@@ -42,8 +42,8 @@ public class CustomAdapter extends ArrayAdapter<String> {
             LayoutInflater mInflater = (LayoutInflater) mContext.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.custom_spinner_row, parent, false);
-            mViewHolder.mFlag = (ImageView) convertView.findViewById(R.id.diseaseimage);
-            mViewHolder.mName = (TextView) convertView.findViewById(R.id.diseasename);
+            mViewHolder.mFlag = convertView.findViewById(R.id.diseaseimage);
+            mViewHolder.mName = convertView.findViewById(R.id.diseasename);
 
             convertView.setTag(mViewHolder);
         } else {

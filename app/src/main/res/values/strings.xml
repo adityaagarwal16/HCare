@@ -12,9 +12,6 @@
     <string name="buy_now">Buy Now</string>
     <string name="treatment">Treatment</string>
     <string name="pdf_file">PDF FILE</string>
-    <string name="opensansRegular">OpenSans-Regular.ttf</string>
-    <string name="opensansBold">OpenSans-Bold.ttf</string>
-    <string name="opensansSemiBold">OpenSans-SemiBold.ttf</string>
 
     <string name="facebook_app_id">1494302147358414</string>
     <string name="fb_login_protocol_scheme">1494302147358414</string>
@@ -24,5 +21,23 @@
     <string name="close">Close</string>
     <string name="disease">Disease</string>
     <string name="yourIssue">Your issue here</string>
+    <string name="Continue">CONTINUE</string>
+    <string name="startTyping">Start Typing here ..</string>
+    <string name="explainHealthIssue">Explain your health issues in detail</string>
+    <string name="editProfile">EDIT PROFILE</string>
+    <string name="name">Name</string>
+    <string name="email">E-mail</string>
+    <string name="gender">Gender</string>
+    <string name="age">Age</string>
+    <string name="contactNum">Contact Number</string>
+    <string name="prefix">+ 91</string>
+    <string name="save">Save</string>
+    <string name="update">UPDATE</string>
+    <string name="faq">F A Q</string>
+
+    <string-array name="genderArray">
+        <item><b>Male</b>    </item>
+        <item><b>Female</b>    </item>
+    </string-array>
 
 </resources>

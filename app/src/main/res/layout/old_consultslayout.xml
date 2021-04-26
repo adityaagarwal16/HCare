@@ -35,7 +35,6 @@
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp"
         android:textStyle="normal"
-        app:font_name="@string/opensansSemiBold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView15"
         app:layout_constraintTop_toTopOf="parent" />
@@ -48,9 +47,7 @@
         android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/doctorImage"
         android:text="DR. "
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="18sp"
-        app:font_name="@string/opensansSemiBold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/doctorImage"
         app:layout_constraintTop_toTopOf="parent" />
@@ -77,7 +74,6 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/green_button" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

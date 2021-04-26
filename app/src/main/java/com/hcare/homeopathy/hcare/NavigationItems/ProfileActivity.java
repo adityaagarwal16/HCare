@@ -5,15 +5,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,8 +26,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
-import com.hcare.homeopathy.hcare.Start.ProfileSettingActivity;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -36,32 +36,24 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import id.zelory.compressor.Compressor;
+import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private DatabaseReference mUserrDatabase;
+    private DatabaseReference mUserDatabase;
     private FirebaseUser mCurrentUser;
+    Spinner spinner;
 
     //android layout
-    private CircleImageView mDisplayImage;
-    private TextView mName;
-    private TextView mPhone_number;
-    private TextView mAge;
-    private TextView mSex;
-    private TextView mEmail;
-
     private static final int GALLERY_PICK = 1;
-    ProgressBar mProgressbar;
 
     //storage image
-    private StorageReference mimagestorage;
+    private StorageReference imageStorage;
+    private DatabaseReference loggedin;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,147 +61,211 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         setTitle("Profile");
+        spinner = findViewById(R.id.genderSpinner);
 
-        mDisplayImage = (CircleImageView) findViewById(R.id.settings_image);
-        mName = (TextView) findViewById(R.id.name);
-        mPhone_number =(TextView) findViewById(R.id.phone_number);
-        mAge =(TextView) findViewById(R.id.age);
-        mSex =(TextView) findViewById(R.id.sex);
-        mEmail =(TextView) findViewById(R.id.emailview);
-        Button mEditbtn = (Button) findViewById(R.id.edit_btn);
-        ImageButton mimagebtn = (ImageButton) findViewById(R.id.imageButton);
-
-        mimagestorage = FirebaseStorage.getInstance().getReference();
-
+        imageStorage = FirebaseStorage.getInstance().getReference();
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String current_uid = Objects.requireNonNull(mCurrentUser).getUid();
 
-        String current_uid = mCurrentUser.getUid();
+        loggedin = FirebaseDatabase.getInstance().getReference().child("loggedin").child(current_uid);
 
-        mUserrDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-
-
-
-
-
-        mUserrDatabase.addValueEventListener(new ValueEventListener() {
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+        mUserDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                String hname = dataSnapshot.child("name").getValue().toString();
-                String hphone_number = dataSnapshot.child("phone number").getValue().toString();
-                String hage = dataSnapshot.child("age").getValue().toString();
-                String hsex = dataSnapshot.child("sex").getValue().toString();
-                String hthumb_image = dataSnapshot.child("thumb_image").getValue().toString();
-
-                String hemail = dataSnapshot.child("email").getValue().toString();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    mName.setText(hname);
-                    mPhone_number.setText(hphone_number);
-                    mAge.setText(hage);
-                    mSex.setText(hsex);
-                    mEmail.setText(hemail);
-                }catch (Exception a){
-                    Toast.makeText(ProfileActivity.this, "Your order has been placed ", Toast.LENGTH_LONG).show();
+                    setFields(dataSnapshot);
+                } catch(Exception ignored) { }
+
+                final String image = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
+
+                if (!image.equals("default")) {
+
+                    Picasso.get()
+                            .load(image)
+                            .networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder(R.drawable.vector_person)
+                            .into(findViewById(R.id.profilePicture), new Callback() {
+
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Picasso.get().load(image)
+                                            .placeholder(R.drawable.vector_person)
+                                            .into((ImageView) findViewById(R.id.profilePicture));
+                                }
+                            });
+
+                    Picasso.get()
+                            .load(image)
+                            .transform(new BlurTransformation(getApplicationContext(), 25, 1))
+                            .networkPolicy(NetworkPolicy.OFFLINE)
+                            .into(findViewById(R.id.background), new Callback() {
+
+                                @Override
+                                public void onSuccess() {
+                                    findViewById(R.id.tint).setVisibility(View.VISIBLE);
+                                }
+
+                                @Override
+                                public void onError(Exception e) {
+                                    Picasso.get().load(image)
+                                            .transform(new BlurTransformation(
+                                                    getApplicationContext(), 25, 1))
+                                            .into((ImageView) findViewById(R.id.background));
+                                    findViewById(R.id.tint).setVisibility(View.VISIBLE);
+                                }
+                            });
+
                 }
-                final String himage = dataSnapshot.child("image").getValue().toString();
-                if (!himage.equals("default")) {
-                    Picasso.get().load(himage).networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.default_profile).into(mDisplayImage, new Callback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-                            Picasso.get().load(himage).placeholder(R.drawable.default_profile).into(mDisplayImage);
-                        }
-                    });
-
-                }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
 
-        mEditbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        findViewById(R.id.imageButton).setOnClickListener(v -> {
+            Intent galleryIntent = new Intent();
+            galleryIntent.setType("image/*");
+            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-                String name_value = mName.getText().toString();
-                String phone_value = mPhone_number.getText().toString();
-                String age_value = mAge.getText().toString();
-                String email_value = mEmail.getText().toString();
-
-                Intent regIntent = new Intent(ProfileActivity.this, ProfileSettingActivity.class);
-                regIntent.putExtra("name_value" , name_value);
-                regIntent.putExtra("phone_value" , phone_value);
-                regIntent.putExtra("age_value" , age_value);
-                regIntent.putExtra("email_value" , email_value);
-                startActivity(regIntent);
-                finish();
-
-            }
+            startActivityForResult(
+                    Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
         });
 
-        mimagebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        setCrosses();
+    }
 
-                Intent galleryIntent = new Intent();
-                galleryIntent.setType("image/*");
-                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+    void setFields(DataSnapshot dataSnapshot) {
+        try{
+            ((EditText) findViewById(R.id.patientName))
+                    .setText(Objects.requireNonNull(
+                            dataSnapshot.child("name").getValue()).toString());
+            ((EditText) findViewById(R.id.email))
+                    .setText(Objects.requireNonNull(
+                            dataSnapshot.child("email").getValue()).toString());
+            ((EditText) findViewById(R.id.age))
+                    .setText(Objects.requireNonNull(
+                            dataSnapshot.child("age").getValue()).toString());
+            ((EditText) findViewById(R.id.contact))
+                    .setText(Objects.requireNonNull(
+                            dataSnapshot.child("phone number").getValue()).toString());
+            spinner.setSelection(getSpinnerNum(
+                    Objects.requireNonNull(dataSnapshot.child("sex")
+                            .getValue()).toString())
+            );
+        } catch (Exception ignored) { }
+    }
 
-                startActivityForResult(Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
-            }
+
+    void setCrosses() {
+        crossListeners(R.id.patientNameCross, R.id.patientName);
+        crossListeners(R.id.emailCross, R.id.email);
+        crossListeners(R.id.ageCross, R.id.age);
+        crossListeners(R.id.contactCross, R.id.contact);
+    }
+
+    void crossListeners(int crossID, int textID) {
+        findViewById(crossID).setOnClickListener(v -> {
+            EditText text =  findViewById(textID);
+            final InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            text.requestFocus();
+            text.setText("");
+            manager.showSoftInput(text, 1);
         });
-
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mUserrDatabase.child("status").setValue("online");
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent startIntent = new Intent(  ProfileActivity.this, MainActivity.class);
-        startIntent .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(startIntent);
-        finish();
+    int getSpinnerNum(String gender) {
+        if(gender.equals("Male"))
+            return 0;
+        else
+            return 1;
     }
 
-    @Override
+    String getSpinnerString() {
+        if(spinner.getSelectedItemPosition() == 0)
+            return "Male";
+        else
+            return "Female";
+    }
+
+    public void saveButton (View view) {
+        String patientName = ((EditText) findViewById(R.id.patientName)).getText().toString();
+        String email = ((EditText) findViewById(R.id.email)).getText().toString();
+        String age = ((EditText) findViewById(R.id.age)).getText().toString();
+        String gender = getSpinnerString();
+        String contactNumber = ((EditText) findViewById(R.id.contact)).getText().toString();
+
+        if (!patientName.isEmpty()) {
+            if (!email.isEmpty()) {
+                if (!age.isEmpty()) {
+                    if (!contactNumber.isEmpty()) {
+
+                        mUserDatabase.child("name").setValue(patientName);
+                        mUserDatabase.child("phone number").setValue(contactNumber);
+                        mUserDatabase.child("age").setValue(age);
+                        mUserDatabase.child("email").setValue(email);
+                        mUserDatabase.child("sex").setValue(gender);
+
+                        HashMap<String, String> notifyData = new HashMap<>();
+                        notifyData.put("phone_number", contactNumber);
+                        notifyData.put("email", email);
+                        notifyData.put("name", patientName);
+                        notifyData.put("age", age);
+                        notifyData.put("sex", gender);
+                        loggedin.setValue(notifyData);
+
+                        Intent regIntent = new Intent(this, MainActivity.class);
+                        regIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(regIntent);
+                        finish();
+
+                    } else
+                        Toast.makeText(this, "Please enter your Contact number",
+                                Toast.LENGTH_LONG).show();
+                } else
+                    Toast.makeText(this, "Please enter your age",
+                            Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(this, "Please enter your Email",
+                        Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(this, "Please enter your name",
+                    Toast.LENGTH_LONG).show();
+    }
+
+
+        @Override
+        protected void onStart() {
+            super.onStart();
+            mUserDatabase.child("status").setValue("online");
+        }
+
+        @Override
     protected void onStop() {
         super.onStop();
-        mUserrDatabase.child("status").setValue("offline");
+        mUserDatabase.child("status").setValue("offline");
     }
 
     @Override
-    protected void onActivityResult(int requestCode,int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-
-        if (requestCode ==GALLERY_PICK && resultCode ==RESULT_OK){
-
+    protected void onActivityResult(int requestCode,int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK){
             Uri imageUri =data.getData();
-
             CropImage.activity(imageUri).setAspectRatio(1,1).start(this);
         }
-        if(requestCode ==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            CropImage.ActivityResult result =CropImage.getActivityResult(data);
-            if (resultCode == RESULT_OK){
 
-
-
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(this, "Loading image\nPlease wait ..", Toast.LENGTH_SHORT).show();
                 Uri resultUri = result.getUri();
-
-                File thumb_filePath = new File(resultUri.getPath());
+                final File thumb_filePath = new File(Objects.requireNonNull(resultUri.getPath()));
 
                 String current_user_id = mCurrentUser.getUid();
 
@@ -223,64 +279,35 @@ public class ProfileActivity extends AppCompatActivity {
                 thumb_bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
                 final byte[] thumb_byte = baos.toByteArray();
 
-                final StorageReference filepath = mimagestorage.child("profile_images").child(current_user_id+".jpg");
-                final StorageReference thumb_filepath = mimagestorage.child("profile_images").child("thumbs").child(current_user_id+"jpg");
+                final StorageReference filepath =
+                        imageStorage.child("profile_images").child(current_user_id+".jpg");
+                final StorageReference thumb_filepath =
+                        imageStorage.child("profile_images").child("thumbs").child(current_user_id+"jpg");
 
-                filepath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                filepath.putFile(resultUri).addOnCompleteListener(
+                        task -> filepath.getDownloadUrl().addOnSuccessListener(uri -> {
+                    // Log.d(TAG, "onSuccess: uri= "+ uri.toString());
 
-                        filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                // Log.d(TAG, "onSuccess: uri= "+ uri.toString());
+                    final String download_Url = uri.toString();
 
-                                final String download_Url = uri.toString();
+                    UploadTask uploadTask = thumb_filepath.putBytes(thumb_byte);
+                    uploadTask.addOnCompleteListener(thumb_task -> thumb_filepath.getDownloadUrl()
+                            .addOnSuccessListener(uri1 -> {
 
-                                UploadTask uploadTask = thumb_filepath.putBytes(thumb_byte);
-                                uploadTask.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> thumb_task) {
-                                        thumb_filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                            @Override
-                                            public void onSuccess(Uri uri) {
-                                                // Log.d(TAG, "onSuccess: uri= "+ uri.toString());
+                                Map update_haspMap = new HashMap<String, String>();
+                                update_haspMap.put("image", download_Url);
+                                update_haspMap.put("thumb_image", uri1.toString());
 
-                                                final String thumb_dowloadUrl = uri.toString();
+                                mUserDatabase.updateChildren(update_haspMap);
 
+                            }));
 
-                                                Map update_haspMap = new HashMap<String, String>();
-                                                update_haspMap.put("image", download_Url);
-                                                update_haspMap.put("thumb_image", thumb_dowloadUrl);
+                }));
 
-                                                mUserrDatabase.updateChildren(update_haspMap);
-
-                                            }
-                                        });
-                                    }
-                                });
-
-                            }
-                        });
-                    }
-                });
-
-            }else if (resultCode ==CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
-                Exception error = result.getError();
             }
         }
+
     }
 
-    public static String random(){
-        Random generator =  new Random();
-        StringBuilder randomStringBuilder = new StringBuilder();
-        int randomLength = generator.nextInt(10);
-        char tempChar;
-        for (int i = 0; i<randomLength; i++){
-            tempChar = (char)(generator.nextInt(96)+32);
-            randomStringBuilder.append(tempChar);
-        }
-        return randomStringBuilder.toString();
-    }
 }
 

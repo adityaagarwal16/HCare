@@ -12,7 +12,7 @@ public class Constants {
             FIRST_100_COUPON = "FIRST100",
             RS50_COUPON = "50RS0FF";
 
-    static final String
+    public static final String
             DISEASE_OBJECT = "DISEASE_OBJECT";
 
 }

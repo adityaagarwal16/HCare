@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="0dp"
     android:layout_marginTop="0dp"
     android:layout_marginRight="0dp"
     android:background="#ffffff"
-    android:padding="0dp">>
-
+    android:padding="0dp">
 
     <ImageView
         android:id="@+id/diseaseimage"
@@ -18,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="2dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/default_profile" />
+        android:src="@drawable/vector_person" />
 
     <io.gloxey.cfv.CFTextView
         android:id="@+id/diseasename"
@@ -28,10 +26,9 @@
         android:layout_marginStart="21dp"
         android:layout_toEndOf="@+id/diseaseimage"
         android:text="Patient"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="?android:textColorPrimary"
         android:textSize="16sp"
-        android:textStyle="normal"
-        app:font_name="@string/opensansRegular" />
+        android:textStyle="normal"/>
 
 
 

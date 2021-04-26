@@ -92,7 +92,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialiconsoutlined/shopping_cart/outline_shopping_cart_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/arrow_back/baseline_arrow_back_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -102,7 +102,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="vector_cart" />
+                            <entry key="outputName" value="vector_back" />
                             <entry key="sourceFile" value="C:\Users\Vinith pc\Downloads\809568-healthcare\809568-healthcare\psd\018-hospital.psd" />
                           </map>
                         </option>

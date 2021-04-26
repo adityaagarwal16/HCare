@@ -48,8 +48,7 @@
         android:textColor="@color/colorAccent"
         android:textCursorDrawable="@color/blackcolor"
         android:textIsSelectable="true"
-        android:textSize="16sp"
-        app:font_name="@string/opensansRegular" />
+        android:textSize="16sp" />
 
     <io.gloxey.cfv.CFTextView
         android:id="@+id/message_text_layout1"
@@ -65,8 +64,7 @@
         android:textColorLink="@color/textColorDark"
         android:textCursorDrawable="@color/blackcolor"
         android:textIsSelectable="true"
-        android:textSize="16sp"
-        app:font_name="@string/opensansRegular" />
+        android:textSize="16sp" />
 
     <io.gloxey.cfv.CFTextView
         android:id="@+id/pdfview"
@@ -77,7 +75,6 @@
         android:background="@drawable/text_color_background"
         android:padding="2dp"
         android:text="@string/pdf_file"
-        app:font_name="@string/opensansRegular"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="14sp"
@@ -98,7 +95,6 @@
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
-        app:font_name="@string/opensansRegular"
         android:visibility="invisible" />
 
 
@@ -113,8 +109,7 @@
         android:text="time"
         android:textAlignment="center"
         android:textSize="12sp"
-        app:fontFamily="@font/quicksand"
-        app:font_name="@string/opensansRegular" />
+        app:fontFamily="@font/quicksand" />
 
     <io.gloxey.cfv.CFTextView
         android:id="@+id/treattext"

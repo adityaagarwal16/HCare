@@ -55,7 +55,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
 
     private CardView payNowBtn;
     private DatabaseReference userRef;
-    private String phoneNum,mail,current_uid;
+    private String phoneNum, mail, current_uid;
     private int totalAmount = 0;
     String patientName, patientIssue;
 
@@ -144,7 +144,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
     void setFields(int discount, String coupon) {
         ((TextView) findViewById(R.id.subTotal)).setText(String.valueOf(CONSULTATION_FEE));
         ((TextView) findViewById(R.id.discount)).setText(String.valueOf(discount));
-        ((TextView) findViewById(R.id.total)).setText(String.valueOf(199 - discount));
+        ((TextView) findViewById(R.id.total)).setText(String.valueOf(CONSULTATION_FEE - discount));
         ((TextView) findViewById(R.id.couponHeader)).setText(String.valueOf(coupon));
     }
 

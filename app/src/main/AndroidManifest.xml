@@ -36,7 +36,8 @@
         <activity android:name=".PreConsultation.CheckoutActivity">
         </activity>
 
-        <activity android:name=".NavigationItems.FaqActivity"
+        <activity android:name=".NavigationItems.Faq.FaqActivity"
+            android:theme="@style/splashScreen"
             android:parentActivityName=".MainActivity" />
 
         <service
@@ -92,8 +93,6 @@
             android:name=".NavigationItems.ProfileActivity"
             android:parentActivityName=".MainActivity" />
 
-        <activity android:name=".Start.ProfileSettingActivity" />
-
         <activity android:name=".PostConsultation.TreatmentSelectionActivity" />
 
         <activity android:name=".PostConsultation.AddressActivity" />
@@ -110,8 +109,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".NavigationItems.AccountmainmenuActivity"
-            android:parentActivityName=".MainActivity" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
 
         <activity
             android:name=".NavigationItems.BlogsActivity"

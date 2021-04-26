@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -64,20 +65,28 @@ public class DiseaseActivity extends AppCompatActivity {
         });
 
 
-        findViewById(R.id.consult_btn).setOnClickListener(v -> {
-            try {
-                Intent regIntent = new Intent(DiseaseActivity.this,
-                        CheckoutActivity.class);
-                regIntent.putExtra(DISEASE_OBJECT, (Diseases) getIntent().getSerializableExtra("request_type1"));
-                regIntent.putExtra("details1", mChatMessageView.getText().toString());
-                regIntent.putExtra("request_type1", disease.getDiseaseName());
-                regIntent.putExtra("name", patientName);
-                regIntent.putExtra("age", age);
-                regIntent.putExtra("sex", sex);
+        findViewById(R.id.continueButton).setOnClickListener(v -> {
 
+                if(mChatMessageView.getText().toString().equals(""))
+                    Toast.makeText(this, "Please enter your health Issue", Toast.LENGTH_SHORT).show();
 
-                startActivity(regIntent);
-            } catch (Exception ignored) { }
+                else {
+                    try {
+                        Intent regIntent = new Intent(DiseaseActivity.this,
+                                CheckoutActivity.class);
+                        regIntent.putExtra(DISEASE_OBJECT,
+                                (Diseases) getIntent().getSerializableExtra("request_type1"));
+                        regIntent.putExtra("details1", mChatMessageView.getText().toString());
+                        regIntent.putExtra("request_type1", disease.getDiseaseName());
+                        regIntent.putExtra("name", patientName);
+                        regIntent.putExtra("age", age);
+                        regIntent.putExtra("sex", sex);
+
+                        startActivity(regIntent);
+                    }
+                    catch (Exception ignored) { }
+                }
+
         });
     }
 

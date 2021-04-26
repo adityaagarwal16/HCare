@@ -39,13 +39,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="40dp"
-            android:background="@drawable/green_button"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
             android:text="Share  and  Help  others"
             android:textColor="@color/blackcolor"
-            android:textSize="14sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:textSize="14sp" />
 
         <io.gloxey.cfv.CFButton
             android:id="@+id/close_popup2"
@@ -55,9 +53,6 @@
             android:background="@color/colorbg"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="close"
-            android:textColor="@color/blackcolor"
-            android:textSize="14sp"
-            app:font_name="@string/opensansSemiBold" />
+            android:text="close" />
     </LinearLayout>
 </LinearLayout>

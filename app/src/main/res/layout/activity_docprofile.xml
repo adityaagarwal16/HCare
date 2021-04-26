@@ -22,7 +22,7 @@
             android:padding="2dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/default_profile" />
+            app:srcCompat="@drawable/vector_person" />
 
 
         <TextView
@@ -255,8 +255,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="18dp"
             app:layout_constraintStart_toEndOf="@+id/textView37"
-            app:layout_constraintTop_toBottomOf="@+id/docimage"
-            app:srcCompat="@drawable/green_button" />
+            app:layout_constraintTop_toBottomOf="@+id/docimage"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

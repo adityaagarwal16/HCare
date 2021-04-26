@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/colorAccent"
     android:layout_height="match_parent">
@@ -77,7 +78,7 @@
         android:paddingEnd="15dp"
         android:paddingBottom="15dp"
         android:layout_below="@id/aboutDisease"
-        android:layout_above="@id/consult_btn"
+        android:layout_above="@id/continueButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -88,7 +89,7 @@
             android:background="@color/colorPrimary"
             android:textStyle="bold"
             android:textSize="17sp"
-            android:text="Explain your health issues in detail" />
+            android:text="@string/explainHealthIssue" />
 
         <TextView
             android:id="@+id/line"
@@ -96,7 +97,8 @@
             android:layout_height="2dp"
             android:layout_marginTop="8dp"
             android:background="@color/colorSecondary"
-            android:text="Explain your heal" />
+            android:text="Explain your heal"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/diseases"
@@ -107,23 +109,22 @@
             android:paddingBottom="25dp"
             android:background="@color/colorPrimary"
             android:textSize="16sp"
-            android:hint="Start Typing here .."
+            android:hint="@string/startTyping"
             android:inputType="textMultiLine"
             android:autofillHints="" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/consult_btn"
+        android:id="@+id/continueButton"
         android:elevation="4dp"
         android:foreground="?selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/view"
         android:background="@color/colorSecondary"
         android:gravity="center"
         android:padding="10dp"
-        android:text="CONTINUE"
+        android:text="@string/Continue"
         android:textSize="18sp"
         android:layout_alignParentBottom="true"
         android:textColor="?android:textColorPrimaryInverse" />

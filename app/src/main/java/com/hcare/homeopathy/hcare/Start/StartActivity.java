@@ -25,6 +25,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.HashMap;
@@ -198,7 +199,7 @@ public class StartActivity extends AppCompatActivity {
 
                         Intent regIntent = new Intent(
                                 StartActivity.this,
-                                ProfileSettingActivity.class);
+                                ProfileActivity.class);
                         startActivity(regIntent);
                         regIntent.addFlags(
                                 Intent.FLAG_ACTIVITY_NEW_TASK |

@@ -4,6 +4,7 @@
     <color name="colorSecondary">#82E4AD</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#F0F0F0</color>
+    <color name="colorPrimaryInverse">#000000</color>
 
     <color name="colorbg">#FCF6F6</color>
     <color name="blackcolor">#2E2E2E</color>
