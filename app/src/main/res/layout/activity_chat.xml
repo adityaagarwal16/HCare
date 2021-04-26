@@ -4,14 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hcare.homeopathy.hcare.Consultation.ChatActivity">
+    tools:context="com.hcare.homeopathy.hcare.Consultations.ChatActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="4dp"
+                android:gravity="center_vertical"
+                android:text="@string/consult"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/details"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="15dp" android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/vector_info"
+                app:tint="@color/colorSecondary" />
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages_list"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"
-        android:layout_below="@+id/main_page_toolbar" />
+        android:layout_above="@+id/linearLayout"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -24,19 +62,15 @@
         android:weightSum="10"
         tools:visibility="visible">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/chat_add_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:background="@color/fui_transparent"
-            android:rotation="0"
-            android:rotationX="0"
-            android:tint="@color/colorPrimary"
             app:srcCompat="@android:drawable/ic_input_add" />
 
         <EditText
-            android:id="@+id/chat_message_view"
+            android:id="@+id/userMessage"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="6.5"
@@ -46,27 +80,22 @@
             |textLongMessage|textPersonName|text"
             android:padding="10dp"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/chat_send_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
             android:layout_weight="1.07"
-            android:background="@color/fui_transparent"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/ic_send_black_24dp" />
+            app:srcCompat="@drawable/vector_send" />
 
     </LinearLayout>
 
-    <ImageButton
+    <ImageView
         android:id="@+id/consultagainbtn"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="2dp"
         android:layout_weight="1.5"
-        android:background="@color/colorPrimary"
         android:visibility="invisible" />
 
     <TextView

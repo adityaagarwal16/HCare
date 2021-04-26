@@ -22,9 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.Consultations.ChatActivity;
 import com.hcare.homeopathy.hcare.MainActivity;
-import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
-import com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity;
+import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
@@ -69,8 +69,14 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     intent.putExtra("sex", "male");*/
 
                                     intent = new Intent(getApplicationContext(), MainActivity.class);
-                                    intent = new Intent(getApplicationContext(), FaqActivity.class);
-                                    intent = new Intent(getApplicationContext(), ProfileActivity.class);
+
+                                    intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
+
+                                    intent = new Intent(getApplicationContext(), ChatActivity.class);
+                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+
+                                    //intent = new Intent(getApplicationContext(), FaqActivity.class);
+                                    //intent = new Intent(getApplicationContext(), ProfileActivity.class);
                                 }
                                 startActivity(intent);
                                 finish();

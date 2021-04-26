@@ -5,7 +5,7 @@
     <item
         android:id="@+id/Recentconsultbtn"
         android:checked="true"
-        android:icon="@drawable/ic_019_medical_report"
+        android:icon="@drawable/vector_report"
         android:title="Recent"
         app:showAsAction="always" />
 

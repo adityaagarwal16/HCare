@@ -3,19 +3,27 @@
 
     <item
         android:id="@+id/profileSettings"
-        android:title="Profile" />
+        android:title="@string/profile" />
     <item
         android:id="@+id/chat"
-        android:title="Chat with doctor" />
+        android:title="@string/chat" />
     <item
         android:id="@+id/orders"
-        android:title="Orders" />
+        android:title="@string/orders" />
     <item
         android:id="@+id/help"
-        android:title="Help" />
+        android:title="@string/helpSupport" />
 
     <item
-        android:id="@+id/consultation"
-        android:title="Consultation" />
+        android:id="@+id/consultations"
+        android:title="@string/consultations" />
+
+    <item
+        android:id="@+id/invite"
+        android:title="@string/invite" />
+
+    <item
+        android:id="@+id/customerCare"
+        android:title="@string/customerCare" />
 
 </menu>

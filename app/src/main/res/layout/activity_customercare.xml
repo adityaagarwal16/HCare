@@ -10,8 +10,7 @@
         android:id="@+id/messages_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/linearLayout"
-        android:layout_below="@+id/main_page_toolbar"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_above="@+id/linearLayout" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -47,16 +46,12 @@
             android:padding="10dp"
             android:textColorHint="@color/cardview_dark_background"/>
 
-        <ImageButton
+        <ImageView
             android:id="@+id/chat_send_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
             android:layout_weight="1.07"
-            android:background="@color/colorbg"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/ic_send_black_24dp" />
+            app:srcCompat="@drawable/vector_send" />
     </LinearLayout>
 
 

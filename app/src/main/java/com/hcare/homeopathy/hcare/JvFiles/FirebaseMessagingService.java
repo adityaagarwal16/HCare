@@ -28,7 +28,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_bg)
+                        .setSmallIcon(R.drawable.vector_doctor)
                         .setContentTitle(notification_title)
                         .setContentText(notification_message)
                         .setAutoCancel(true)

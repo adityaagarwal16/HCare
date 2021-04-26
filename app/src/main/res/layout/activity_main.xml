@@ -93,7 +93,7 @@
 
                 <TextView
                     android:layout_marginTop="5dp"
-                    android:id="@+id/reqtxt"
+                    android:id="@+id/requestText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
@@ -101,7 +101,8 @@
                     android:text="Consultation booked\nDoctor will be here soon"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    tools:visibility="visible" />
+                    tools:visibility="gone"
+                    tools:ignore="HardcodedText" />
 
                 <LinearLayout
                     android:layout_marginTop="5dp"
@@ -148,16 +149,70 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:padding="13dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="18dp"
+                    android:onClick="consultations"
                     android:layout_marginTop="5dp"
+                    android:foreground="?android:selectableItemBackground"
                     android:background="@color/colorPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ViewFlipper
-                        android:id="@+id/imageView9"
-                        android:layout_width="match_parent"
-                        android:layout_height="145dp" />
+                    <ImageView
+                        android:src="@drawable/vector_report"
+                        android:layout_width="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_height="120dp"
+                        app:tint="@color/colorSecondary"
+                        android:contentDescription="@string/todo" />
+
+                    <TextView
+                        android:id="@+id/heading"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_height="wrap_content"
+                        android:text="@string/consultations"
+                        android:letterSpacing="0.02"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:id="@+id/line4"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginStart="2dp"
+                        android:layout_below="@id/heading"
+                        android:layout_width="wrap_content"
+                        android:maxWidth="300dp"
+                        android:layout_height="2dp"
+                        android:background="@color/colorSecondary"
+                        android:layout_alignParentEnd="true"
+                        android:text="@string/consultations" />
+
+                    <TextView
+                        android:id="@+id/subHeading"
+                        android:layout_below="@id/line4"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="8dp"
+                        android:layout_marginStart="2dp"
+                        android:text="View your consultations"
+                        android:textStyle="bold"
+                        android:textSize="14sp"/>
+
+                    <ImageView
+                        android:src="@drawable/vector_back"
+                        android:layout_width="20dp"
+                        android:rotation="180"
+                        android:layout_alignParentBottom="true"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        app:tint="@color/colorSecondary"
+                        android:contentDescription="@string/todo" />
+
 
                 </RelativeLayout>
 
@@ -205,6 +260,20 @@
 
                 </LinearLayout>
 
+                <RelativeLayout
+                    android:padding="13dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ViewFlipper
+                        android:id="@+id/imageView9"
+                        android:layout_width="match_parent"
+                        android:layout_height="145dp" />
+
+                </RelativeLayout>
+
             </LinearLayout>
 
         </ScrollView>
@@ -215,9 +284,9 @@
         android:id="@+id/navigationView"
         android:layout_width="wrap_content"
         app:itemIconPadding="15dp"
-        app:itemIconSize="25dp"
         app:headerLayout="@layout/main_navigation_bar_header"
         app:menu="@menu/main_menu"
+        style="@style/navigationDrawer"
         android:layout_gravity="start"
         android:layout_height="match_parent" />
 

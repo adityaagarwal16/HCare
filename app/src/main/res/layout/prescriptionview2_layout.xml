@@ -29,7 +29,7 @@
                 android:layout_width="20dp"
                 android:layout_height="25dp"
                 android:layout_marginStart="8dp"
-                app:srcCompat="@drawable/ic_019_medical_report" />
+                app:srcCompat="@drawable/vector_report" />
 
             <TextView
                 android:id="@+id/medA"

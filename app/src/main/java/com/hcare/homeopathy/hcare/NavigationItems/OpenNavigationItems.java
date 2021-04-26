@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
+import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
 import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
 import com.hcare.homeopathy.hcare.PreConsultation.DiseaseSpinnerActivity;
@@ -22,27 +23,33 @@ public class OpenNavigationItems {
 
     @SuppressLint("NonConstantResourceId")
     public void open() {
-        Intent profileIntent;
+        Intent intent;
         switch (id) {
             case R.id.profileSettings:
-                profileIntent = new Intent(context, ProfileActivity.class);
+                intent = new Intent(context, ProfileActivity.class);
                 break;
             case R.id.orders:
-                profileIntent = new Intent(context, OrderActivity.class);
+                intent = new Intent(context, OrderActivity.class);
                 break;
             case R.id.help:
-                profileIntent = new Intent(context, FaqActivity.class);
+                intent = new Intent(context, FaqActivity.class);
                 break;
             case R.id.chat:
-                profileIntent = new Intent(context, DiseaseSpinnerActivity.class);
+                intent = new Intent(context, DiseaseSpinnerActivity.class);
                 break;
-            case R.id.consultation:
-                profileIntent = new Intent(context, ConsultationsActivity.class);
+            case R.id.consultations:
+                intent = new Intent(context, ConsultationsActivity.class);
+                break;
+            case R.id.invite:
+                intent = new Intent(context, InviteActivity.class);
+                break;
+            case R.id.customerCare:
+                intent = new Intent(context, CustomercareActivity.class);
                 break;
             default:
-                profileIntent = null;
+                intent = null;
         }
-        context.startActivity(profileIntent);
+        context.startActivity(intent);
     }
 
 }

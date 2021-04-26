@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
 import com.hcare.homeopathy.hcare.PreConsultation.DiseaseSpinnerActivity;
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity
                 .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
 
 
-        final TextView consultReq = findViewById(R.id.reqtxt);
+        final TextView consultReq = findViewById(R.id.requestText);
         consultReq.setVisibility(View.GONE);
 
 
@@ -204,6 +205,9 @@ public class MainActivity extends AppCompatActivity
         return false;
     }
 
+    public void consultations(View view) {
+        startActivity(new Intent(this, ConsultationsActivity.class));
+    }
 }
 
 

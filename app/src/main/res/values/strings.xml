@@ -35,9 +35,22 @@
     <string name="update">UPDATE</string>
     <string name="faq">F A Q</string>
 
+
     <string-array name="genderArray">
         <item><b>Male</b>    </item>
         <item><b>Female</b>    </item>
     </string-array>
+
+
+    <!--navigation items -->
+    <string name="profile"><b>Profile</b></string>
+    <string name="chat"><b>Chat with doctor</b></string>
+    <string name="orders"><b>Orders</b></string>
+    <string name="helpSupport"><b><![CDATA[Help & support]]></b></string>
+    <string name="consultations"><b>Consultations</b></string>
+    <string name="invite"><b>Invite your friends"</b></string>
+    <string name="customerCare"><b>Customer care</b></string>
+    <string name="doctor">Doctor</string>
+
 
 </resources>

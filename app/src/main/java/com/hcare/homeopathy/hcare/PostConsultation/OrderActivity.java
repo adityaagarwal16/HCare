@@ -35,8 +35,6 @@ public class OrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
-        setTitle("Orders");
-
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = Objects.requireNonNull(mCurrentUser).getUid();
 

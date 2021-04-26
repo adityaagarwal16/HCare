@@ -68,7 +68,6 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
 
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle("Checkout");
 
         current_uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         patientName = getIntent().getStringExtra("name");

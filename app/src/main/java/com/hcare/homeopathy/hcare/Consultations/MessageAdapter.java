@@ -1,11 +1,10 @@
-package com.hcare.homeopathy.hcare.Consultation;
+package com.hcare.homeopathy.hcare.Consultations;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -188,53 +187,40 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.Message
 
                 break;
         }
-        viewHolder.messageView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent fullScreenIntent = new Intent(v.getContext(), ImageActivity.class);
-                fullScreenIntent.setData(Uri.parse(c.getMessage()));
+        viewHolder.messageView1.setOnClickListener(v -> {
+            Intent fullScreenIntent = new Intent(v.getContext(), ImageActivity.class);
+            fullScreenIntent.setData(Uri.parse(c.getMessage()));
+            v.getContext().startActivity(fullScreenIntent);
+        });
+        viewHolder.messageView.setOnClickListener(v -> {
+            Intent fullScreenIntent = new Intent(v.getContext(),ImageActivity.class);
+            fullScreenIntent.setData(Uri.parse(c.getMessage()));
+            v.getContext().startActivity(fullScreenIntent);
+        });
+
+        viewHolder.treatmentBtn.setOnClickListener(v -> {
+            if (order_type.equals("order")) {
+                Intent fullScreenIntent = new Intent(v.getContext(), PrescriptionActivity.class);
+                fullScreenIntent.putExtra("user_id", from_user);
+                fullScreenIntent.putExtra("medicine_id",medicine_id);
+                v.getContext().startActivity(fullScreenIntent);
+            }
+            else if (order_type.equals("ordered")){
+                Intent fullScreenIntent = new Intent(v.getContext(), OrderActivity.class);
+                v.getContext().startActivity(fullScreenIntent);
+            }else {
+                Intent fullScreenIntent = new Intent(v.getContext(), PrescriptionActivity.class);
+                fullScreenIntent.putExtra("user_id", from_user);
+                fullScreenIntent.putExtra("medicine_id",medicine_id);
                 v.getContext().startActivity(fullScreenIntent);
             }
         });
-        viewHolder.messageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent fullScreenIntent = new Intent(v.getContext(),ImageActivity.class);
-                fullScreenIntent.setData(Uri.parse(c.getMessage()));
-                v.getContext().startActivity(fullScreenIntent);
-            }
-        });
+        viewHolder.mPdf.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(Uri.parse(c.getMessage()), "application/pdf");
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            v.getContext().startActivity(intent);
 
-        viewHolder.treatmentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (order_type.equals("order")) {
-                    Intent fullScreenIntent = new Intent(v.getContext(), PrescriptionActivity.class);
-                    fullScreenIntent.putExtra("user_id", from_user);
-                    fullScreenIntent.putExtra("medicine_id",medicine_id);
-                    v.getContext().startActivity(fullScreenIntent);
-                }
-                else if (order_type.equals("ordered")){
-                    Intent fullScreenIntent = new Intent(v.getContext(), OrderActivity.class);
-                    v.getContext().startActivity(fullScreenIntent);
-                }else {
-                    Intent fullScreenIntent = new Intent(v.getContext(), PrescriptionActivity.class);
-                    fullScreenIntent.putExtra("user_id", from_user);
-                    fullScreenIntent.putExtra("medicine_id",medicine_id);
-                    v.getContext().startActivity(fullScreenIntent);
-                }
-            }
-        });
-        viewHolder.mPdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.parse(c.getMessage()), "application/pdf");
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                v.getContext().startActivity(intent);
-
-            }
         });
     }
 

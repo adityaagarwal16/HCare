@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Consultation;
+package com.hcare.homeopathy.hcare.Consultations;
 
 import android.content.Context;
 

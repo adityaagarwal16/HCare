@@ -1,8 +1,11 @@
-package com.hcare.homeopathy.hcare.Consultation;
+package com.hcare.homeopathy.hcare.Consultations;
 
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,25 +19,17 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import java.util.Objects;
 
-public class DocprofileActivity extends AppCompatActivity {
+public class DoctorDetailsActivity extends AppCompatActivity {
 
-    private Toolbar mToolbar;
     private ImageView mProfileimage;
     private TextView mName,mDegree,mSpecialization,mRegid,mExperience,mLanguage,status;
+    private String name;
+    private String Availabilty;
 
+    private DatabaseReference userRef;
 
-    private DatabaseReference mDoctorsDatabase;
-
-
-    private String mcurrent_state, name,patientname,sex,age,Availabilty,bname;
-
-    private DatabaseReference mConsultReqDatabase,userRef;
-
-    private FirebaseUser mCurrent_patient;
-    private int count,check =3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,29 +39,27 @@ public class DocprofileActivity extends AppCompatActivity {
 
         setTitle("About Doctor");
 
-        mDoctorsDatabase = FirebaseDatabase.getInstance().getReference().child("Doctors").child(doctor_id);
+        DatabaseReference mDoctorsDatabase = FirebaseDatabase.getInstance().getReference()
+                .child("Doctors").child(Objects.requireNonNull(doctor_id));
         mDoctorsDatabase.keepSynced(true);
-        mCurrent_patient = FirebaseAuth.getInstance().getCurrentUser();
-        final String a = mCurrent_patient.getUid();
-        mcurrent_state ="not connected";
+        FirebaseUser mCurrent_patient = FirebaseAuth.getInstance().getCurrentUser();
+        final String a = Objects.requireNonNull(mCurrent_patient).getUid();
+
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(a);
-        mProfileimage =(ImageView) findViewById(R.id.docimage);
-        mName =(TextView) findViewById(R.id.nameinview);
+        mProfileimage = findViewById(R.id.docimage);
+        mName = findViewById(R.id.nameinview);
 
-        mDegree = (TextView) findViewById(R.id.degreeinview);
-        mSpecialization =(TextView) findViewById(R.id.specilazationinview);
-        mRegid = (TextView) findViewById(R.id.registeridinview);
-        mExperience = (TextView) findViewById(R.id.experienceinview);
-        mLanguage =(TextView) findViewById(R.id.languageinview);
+        mDegree =  findViewById(R.id.degreeinview);
+        mSpecialization = findViewById(R.id.specilazationinview);
+        mRegid =  findViewById(R.id.registeridinview);
+        mExperience =  findViewById(R.id.experienceinview);
+        mLanguage = findViewById(R.id.languageinview);
 
-        status =(TextView) findViewById(R.id.textView38);
-
-        mcurrent_state ="not connected";
-
+        status = findViewById(R.id.textView38);
 
         mDoctorsDatabase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final String image = dataSnapshot.child("image").getValue().toString();
                 name = dataSnapshot.child("name").getValue().toString();
                 String degree = dataSnapshot.child("qualification").getValue().toString();
@@ -83,8 +76,6 @@ public class DocprofileActivity extends AppCompatActivity {
                 mExperience.setText(Experience);
                 mLanguage.setText(language);
                 if (Availabilty.equals("NOT AVAILABLE")) {
-
-
                     status.setText("Not available");
                 }else {
                     status.setText("Available");
@@ -93,9 +84,7 @@ public class DocprofileActivity extends AppCompatActivity {
                 Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE)
                         .placeholder(R.drawable.doctor).into(mProfileimage, new Callback() {
                     @Override
-                    public void onSuccess() {
-
-                    }
+                    public void onSuccess() { }
 
                     @Override
                     public void onError(Exception e) {
@@ -106,9 +95,7 @@ public class DocprofileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
     }
@@ -118,8 +105,6 @@ public class DocprofileActivity extends AppCompatActivity {
         super.onStart();
         userRef.child("status").setValue("online");
     }
-
-
 
     @Override
     protected void onStop() {
