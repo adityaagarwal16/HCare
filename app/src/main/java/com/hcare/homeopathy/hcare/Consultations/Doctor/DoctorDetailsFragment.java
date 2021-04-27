@@ -1,11 +1,16 @@
-package com.hcare.homeopathy.hcare.Consultations;
+package com.hcare.homeopathy.hcare.Consultations.Doctor;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -21,7 +26,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-public class DoctorDetailsActivity extends AppCompatActivity {
+public class DoctorDetailsFragment extends Fragment {
 
     private ImageView mProfileimage;
     private TextView mName,mDegree,mSpecialization,mRegid,mExperience,mLanguage,status;
@@ -29,15 +34,20 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     private String Availabilty;
 
     private DatabaseReference userRef;
+    View root;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.activity_docprofile, container, false);
+        return root;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_docprofile);
-
-        final String doctor_id = getIntent().getStringExtra("user_id");
-
-        setTitle("About Doctor");
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        final String doctor_id = getArguments().getString("user_id");
 
         DatabaseReference mDoctorsDatabase = FirebaseDatabase.getInstance().getReference()
                 .child("Doctors").child(Objects.requireNonNull(doctor_id));
@@ -46,16 +56,16 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         final String a = Objects.requireNonNull(mCurrent_patient).getUid();
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(a);
-        mProfileimage = findViewById(R.id.docimage);
-        mName = findViewById(R.id.nameinview);
+        mProfileimage = root.findViewById(R.id.docimage);
+        mName = root.findViewById(R.id.nameinview);
 
-        mDegree =  findViewById(R.id.degreeinview);
-        mSpecialization = findViewById(R.id.specilazationinview);
-        mRegid =  findViewById(R.id.registeridinview);
-        mExperience =  findViewById(R.id.experienceinview);
-        mLanguage = findViewById(R.id.languageinview);
+        mDegree =  root.findViewById(R.id.degreeinview);
+        mSpecialization = root.findViewById(R.id.specilazationinview);
+        mRegid =  root.findViewById(R.id.registeridinview);
+        mExperience =  root.findViewById(R.id.experienceinview);
+        mLanguage = root.findViewById(R.id.languageinview);
 
-        status = findViewById(R.id.textView38);
+        status = root.findViewById(R.id.textView38);
 
         mDoctorsDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -98,17 +108,5 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        userRef.child("status").setValue("online");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        userRef.child("status").setValue("offline");
     }
 }

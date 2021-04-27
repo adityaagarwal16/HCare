@@ -1,12 +1,17 @@
 package com.hcare.homeopathy.hcare.PostConsultation;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -14,26 +19,25 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Picasso;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OrderActivity extends AppCompatActivity {
+
     private RecyclerView mDoctorList;
     private DatabaseReference mDoctorsDatabase,userRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
+        Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = Objects.requireNonNull(mCurrentUser).getUid();
@@ -44,6 +48,17 @@ public class OrderActivity extends AppCompatActivity {
         mDoctorList.setHasFixedSize(true);
         mDoctorList.setLayoutManager(new LinearLayoutManager(this));
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @Override
     protected void onStart() {
@@ -62,7 +77,7 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public DoctorsVeiwHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 return new DoctorsVeiwHolder(LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.ordersinglelayout, parent, false));
+                        .inflate(R.layout.adapter_orders, parent, false));
             }
 
             @Override
@@ -85,15 +100,6 @@ public class OrderActivity extends AppCompatActivity {
         };
 
         mDoctorList.setAdapter(firebaseRecyclerAdapter);
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent startIntent = new Intent(  OrderActivity.this, MainActivity.class);
-        startIntent .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(startIntent);
-        finish();
     }
 
     @Override

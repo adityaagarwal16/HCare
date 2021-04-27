@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Consultations;
+package com.hcare.homeopathy.hcare.Consultations.Doctor;
 
 import android.content.Context;
 
@@ -6,10 +6,21 @@ import android.content.Context;
  * Created by Vinith pc on 9/10/2017.
  */
 
-public class Messages {
+public class ChatObject {
 
-    private String message;
-    private String type;
+    private String message, type, image, ordering;
+    private long time;
+    private boolean seen;
+
+    public ChatObject() { }
+
+    public ChatObject(String message, boolean seen, long time, String type) {
+        this.message = message;
+        this.seen = seen;
+        this.time = time;
+        this.type = type;
+    }
+
 
     public String getMedicineId() {
 
@@ -30,10 +41,6 @@ public class Messages {
         this.ordering = ordering;
     }
 
-    private String ordering;
-    private long time;
-    private boolean seen;
-
 
     public String getImage() {
         return image;
@@ -43,21 +50,12 @@ public class Messages {
         this.image = image;
     }
 
-    private String image;
-
-
-    public Messages(String from) {
+    public ChatObject(String from) {
         this.from = from;
     }
 
     private String from;
 
-    public Messages(String message, boolean seen, long time, String type) {
-        this.message = message;
-        this.seen = seen;
-        this.time = time;
-        this.type = type;
-    }
 
     public String getMessage() {
         return message;
@@ -89,8 +87,6 @@ public class Messages {
 
     public void setType(String type) {
         this.type = type;
-    }public Messages(){
-
     }
 
     public String getFrom() {

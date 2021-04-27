@@ -59,10 +59,8 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
     private int totalAmount = 0;
     String patientName, patientIssue;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
@@ -177,6 +175,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
         return super.onOptionsItemSelected(item);
     }
 
+
     private void sendRequest() {
         String date = DateFormat.getDateTimeInstance().format(new Date());
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("HH");
@@ -251,7 +250,6 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
     }
 
     private PopupWindow pw;
-
     private void showPopup() {
         try {
             // We need to get the instance of the LayoutInflater

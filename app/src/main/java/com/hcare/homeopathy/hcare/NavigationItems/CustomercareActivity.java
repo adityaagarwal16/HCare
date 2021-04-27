@@ -24,8 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.hcare.homeopathy.hcare.Consultations.MessageAdapter;
-import com.hcare.homeopathy.hcare.Consultations.Messages;
+import com.hcare.homeopathy.hcare.Consultations.Doctor.ChatAdapter;
+import com.hcare.homeopathy.hcare.Consultations.Doctor.ChatObject;
 import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -46,8 +46,8 @@ public class CustomercareActivity extends AppCompatActivity {
     private EditText mChatMessageView;
     final static int PICK_PDF_CODE = 2342;
     private RecyclerView mMessagesList;
-    private final List<Messages> messageList= new ArrayList<>();
-    private MessageAdapter mAdapter;
+    private final List<ChatObject> messageList= new ArrayList<>();
+    private ChatAdapter mAdapter;
     private static final int GALLERY_PICK =1;
     private DatabaseReference userRef;
     private DatabaseReference h;
@@ -70,7 +70,7 @@ public class CustomercareActivity extends AppCompatActivity {
       //  mCallBtn =(ImageButton) findViewById(R.id.CallBtn);
 
 
-        mAdapter =new MessageAdapter(messageList);
+        mAdapter =new ChatAdapter(messageList);
 
         mMessagesList = findViewById(R.id.messages_list);
         LinearLayoutManager mLinearLayout = new LinearLayoutManager(this);
@@ -234,7 +234,7 @@ public class CustomercareActivity extends AppCompatActivity {
         h.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                Messages message = dataSnapshot.getValue(Messages.class);
+                ChatObject message = dataSnapshot.getValue(ChatObject.class);
                 messageList.add(message);
                 mAdapter.notifyDataSetChanged();
                 mMessagesList.scrollToPosition(messageList.size()-1);

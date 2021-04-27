@@ -17,7 +17,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/text_color_background"
+        android:background="@drawable/background_chat_user"
         android:backgroundTint="@color/colorPrimary"
         android:text="Order Now" />
 

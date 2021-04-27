@@ -51,7 +51,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="8dp"
                 android:layout_marginBottom="8dp"
-                android:background="@drawable/text_color_background"
+                android:background="@drawable/background_chat_user"
                 android:backgroundTint="@color/colorPrimary"
                 android:text="Proceed"
                 android:textColor="@color/colorAccent"

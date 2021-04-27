@@ -15,7 +15,7 @@
 
     <string name="facebook_app_id">1494302147358414</string>
     <string name="fb_login_protocol_scheme">1494302147358414</string>
-    <string name="consult_again">Consult again</string>
+    <string name="consult_again">Consult Again</string>
     <string name="todo">todo</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -51,6 +51,7 @@
     <string name="invite"><b>Invite your friends"</b></string>
     <string name="customerCare"><b>Customer care</b></string>
     <string name="doctor">Doctor</string>
+    <string name="time">time</string>
 
 
 </resources>

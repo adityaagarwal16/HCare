@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Start;
+package com.hcare.homeopathy.hcare;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
@@ -22,10 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hcare.homeopathy.hcare.Consultations.ChatActivity;
-import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
-import com.hcare.homeopathy.hcare.R;
+import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
+import com.hcare.homeopathy.hcare.SignUp.StartActivity;
 
 import java.util.Objects;
 
@@ -68,15 +67,17 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     intent.putExtra("age", "19");
                                     intent.putExtra("sex", "male");*/
 
-                                    intent = new Intent(getApplicationContext(), MainActivity.class);
 
                                     intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
 
-                                    intent = new Intent(getApplicationContext(), ChatActivity.class);
+                                    intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
                                     intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
 
                                     //intent = new Intent(getApplicationContext(), FaqActivity.class);
                                     //intent = new Intent(getApplicationContext(), ProfileActivity.class);
+
+                                    //intent = new Intent(getApplicationContext(), MainActivity.class);
+
                                 }
                                 startActivity(intent);
                                 finish();

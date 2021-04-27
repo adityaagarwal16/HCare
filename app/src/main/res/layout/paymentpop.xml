@@ -35,7 +35,7 @@
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/text_color_background"
+        android:background="@drawable/background_chat_user"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/quicksand_bold"
         android:paddingStart="10dp"

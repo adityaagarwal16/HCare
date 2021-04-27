@@ -19,13 +19,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import java.util.Objects;
-
-import static com.hcare.homeopathy.hcare.Consultations.Constants.doctorName;
 
 class ConsultationsAdapter extends FirebaseRecyclerAdapter<
         ConsultationsObject, ConsultationsAdapter.DoctorsViewHolder>  {
@@ -109,7 +108,7 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
 
         holder.mView.setOnClickListener(v -> {
             Intent docprofileIntent =
-                    new Intent(context, ChatActivity.class);
+                    new Intent(context, MainDoctorActivity.class);
             docprofileIntent.putExtra("user_id", user_ids);
             context.startActivity(docprofileIntent);
         });

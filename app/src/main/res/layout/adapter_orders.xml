@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="10dp"
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
@@ -19,7 +17,7 @@
 
         android:layout_marginTop="15dp"/>
 
-    <io.gloxey.cfv.CFTextView
+    <TextView
         android:id="@+id/doctor_single_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +28,7 @@
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
         android:textSize="14sp" />
 
-    <io.gloxey.cfv.CFTextView
+    <TextView
         android:id="@+id/experience"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +37,7 @@
         android:layout_toEndOf="@+id/textView23"
         android:text="dd/mm/yy" />
 
-    <io.gloxey.cfv.CFTextView
+    <TextView
         android:id="@+id/doctor_degree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +51,7 @@
         android:textColorHighlight="#24B606"
         android:textColorLink="#24B606" />
 
-    <io.gloxey.cfv.CFTextView
+    <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,7 +64,7 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 
-    <io.gloxey.cfv.CFTextView
+    <TextView
         android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +74,7 @@
         android:text="Date : "
         android:textColor="@color/common_google_signin_btn_text_dark_focused" />
 
-    <io.gloxey.cfv.CFTextView
+    <TextView
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

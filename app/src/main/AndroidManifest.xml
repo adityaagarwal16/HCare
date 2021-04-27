@@ -43,7 +43,7 @@
             android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".Start.SplashScreenActivity"
+            android:name=".SplashScreenActivity"
             android:theme="@style/splashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,7 +55,7 @@
             android:label="HCare"
             android:theme="@style/splashScreen"/>
 
-        <activity android:name=".Start.StartActivity" />
+        <activity android:name=".SignUp.StartActivity" />
 
         <activity
             android:name=".PreConsultation.DiseaseActivity"
@@ -72,15 +72,15 @@
         </activity>
 
         <activity
-            android:name=".Consultations.DoctorDetailsActivity"
-            android:parentActivityName=".DoctorsActivity" />
+            android:name=".Consultations.Doctor.DoctorDetailsFragment"
+            android:label="Details"
+            android:parentActivityName=".Consultations.ConsultationsActivity" />
 
         <activity android:name=".JvFiles.ImageActivity" />
 
         <activity
             android:name=".PostConsultation.OrderActivity"
-            android:label="Orders"
-            android:parentActivityName=".MainActivity" />
+            android:label="Orders"/>
 
         <activity
             android:name=".NavigationItems.ProfileActivity"
@@ -92,10 +92,9 @@
         <activity android:name=".PostConsultation.AddressActivity" />
 
         <activity
-            android:name=".Consultations.ChatActivity"
-            android:label=""
-            android:theme="@style/splashScreen"
-            android:parentActivityName=".Consultations.ConsultationsActivity" />
+            android:name=".Consultations.Doctor.MainDoctorActivity"
+            android:label="Consultation"
+            android:theme="@style/splashScreen" />
 
         <activity android:name=".Consultations.ConsultationsActivity"
             android:label="Consultations"
