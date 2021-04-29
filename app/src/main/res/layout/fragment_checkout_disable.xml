@@ -1,14 +1,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/popup_1"
+    android:background="@color/colorPrimary"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:background="@drawable/welcom"
-    android:orientation="vertical"
-    tools:ignore="MissingDefaultResource">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/txtView"
@@ -22,7 +16,6 @@
         android:paddingEnd="40dp"
         android:text="You already paid for the consultation please wait Doctor will be here soon."
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/close_popup"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,13 +28,9 @@
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/background_chat_user"
-        android:backgroundTint="@color/colorPrimary"
-        android:fontFamily="@font/quicksand_bold"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="okay"
-        android:textColor="@color/colorAccent"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

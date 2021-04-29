@@ -1,5 +1,6 @@
 package com.hcare.homeopathy.hcare.PostConsultation;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -91,13 +92,13 @@ public class AddressActivity extends AppCompatActivity implements PaymentResultL
 
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 phoneno =  (String) dataSnapshot.child("phone number").getValue();
                 mail  = (String) dataSnapshot.child("email").getValue();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
@@ -179,8 +180,7 @@ public class AddressActivity extends AppCompatActivity implements PaymentResultL
 // We need to get the instance of the LayoutInflater
             LayoutInflater inflater = (LayoutInflater)
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.addresspop,
-                    (ViewGroup) findViewById(R.id.popup_1));
+            @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.addresspop, null);
             pw = new PopupWindow(layout,  ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT,true);
             pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
             Button Close = (Button) layout.findViewById(R.id.close_popup);

@@ -85,7 +85,6 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
 
         loadMessages();
         setConsultAgainButton();
-        showOrHideFragment();
     }
 
     @Override
@@ -147,9 +146,9 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
     @Override
     protected void onResume() {
         super.onResume();
-       /* if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
+        if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
             showOrHideFragment();
-        }*/
+        }
     }
 
     private void setToolbar() {

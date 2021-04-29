@@ -33,7 +33,7 @@
 
         <activity android:name=".PostConsultation.PrescriptionActivity" />
 
-        <activity android:name=".PreConsultation.CheckoutActivity"
+        <activity android:name=".Checkout.CheckoutActivity"
             android:label="Checkout">
         </activity>
 
@@ -58,11 +58,11 @@
         <activity android:name=".SignUp.StartActivity" />
 
         <activity
-            android:name=".PreConsultation.DiseaseActivity"
+            android:name=".Disease.DiseaseActivity"
             android:theme="@style/splashScreen"
             android:parentActivityName=".MainActivity" />
 
-        <activity android:name=".PreConsultation.DiseaseSpinnerActivity"
+        <activity android:name=".Disease.DiseaseSpinnerActivity"
             android:parentActivityName=".MainActivity" />
 
         <activity

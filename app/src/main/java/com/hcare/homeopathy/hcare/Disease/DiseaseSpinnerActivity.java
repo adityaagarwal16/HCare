@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.PreConsultation;
+package com.hcare.homeopathy.hcare.Disease;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.JvFiles.CustomAdapter;
 import com.hcare.homeopathy.hcare.R;
 

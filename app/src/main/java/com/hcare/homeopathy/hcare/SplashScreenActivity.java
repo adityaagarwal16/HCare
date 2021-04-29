@@ -22,8 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
-import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
+import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
+import com.hcare.homeopathy.hcare.Checkout.Constants;
 import com.hcare.homeopathy.hcare.SignUp.StartActivity;
 
 import java.util.Objects;
@@ -40,11 +40,9 @@ public class SplashScreenActivity extends AppCompatActivity {
         updatepop.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("Number")){
-                    String updateVersion =
-                            Objects.requireNonNull(dataSnapshot.child("Number").getValue()).toString();
-
-                    if (updateVersion.equals("update2")) {
+                if (dataSnapshot.hasChild("Number")) {
+                    if (Objects.requireNonNull(dataSnapshot.child("Number")
+                            .getValue()).toString().equals("update2")) {
                         mAuth = FirebaseAuth.getInstance();
                         final FirebaseUser currentUser = mAuth.getCurrentUser();
                         final Thread myThread = new Thread() {
@@ -59,24 +57,25 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     intent.putExtra("request_type1", Diseases.thyroid);
                                     startActivity(intent);
 */
-                                    /*intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+                                    intent = new Intent(getApplicationContext(), CheckoutActivity.class);
                                     intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
                                     intent.putExtra("details1", "hello");
                                     intent.putExtra("request_type1", "Thyroid");
                                     intent.putExtra("name", "hello");
                                     intent.putExtra("age", "19");
-                                    intent.putExtra("sex", "male");*/
+                                    intent.putExtra("sex", "male");
 
 
-                                    intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
+                                    //intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
 
-                                    intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
-                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+                                    //intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
+                                    //intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
 
                                     //intent = new Intent(getApplicationContext(), FaqActivity.class);
                                     //intent = new Intent(getApplicationContext(), ProfileActivity.class);
 
-                                    //intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                                    intent = new Intent(getApplicationContext(), MainActivity.class);
 
                                 }
                                 startActivity(intent);
@@ -103,11 +102,10 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void showPopup() {
         try {
-
             LayoutInflater inflater = (LayoutInflater)
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             @SuppressLint("InflateParams") View layout =
-                    inflater.inflate(R.layout.update_popup, null);
+                    inflater.inflate(R.layout.dialog_update_app, null);
             PopupWindow pw = new PopupWindow(layout, AbsListView.LayoutParams.MATCH_PARENT,
                     AbsListView.LayoutParams.MATCH_PARENT);
             pw.showAtLocation(layout, Gravity.CENTER, 0, 0);

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/frameLayout"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorAccent"
     tools:context=".Checkout.CheckoutActivity">
 
-    <!--<ScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
         android:layout_above="@+id/summaryBox"
         android:layout_alignParentTop="true">
 
@@ -137,7 +138,7 @@
 
                 </RelativeLayout>
 
-            &lt;!&ndash;    <RelativeLayout
+            <!--    <RelativeLayout
                     android:layout_marginTop="7dp"
                     android:id="@+id/layout2"
                     android:layout_width="match_parent"
@@ -174,7 +175,7 @@
                         android:text="Distance doesn't matter. Our team is trained to understand your needs the best way possible."
                         tools:ignore="HardcodedText" />
 
-                    </RelativeLayout>&ndash;&gt;
+                    </RelativeLayout>-->
 
                 <RelativeLayout
                     android:layout_marginTop="7dp"
@@ -541,6 +542,6 @@
         </LinearLayout>
 
 
-</androidx.cardview.widget.CardView>-->
+</androidx.cardview.widget.CardView>
 
-</FrameLayout>
+</RelativeLayout>

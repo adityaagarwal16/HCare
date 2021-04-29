@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hcare.homeopathy.hcare.PreConsultation.DiseaseActivity;
+import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
 
 import java.util.ArrayList;
 

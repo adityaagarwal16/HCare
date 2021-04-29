@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
-import com.hcare.homeopathy.hcare.PreConsultation.DiseaseSpinnerActivity;
+import com.hcare.homeopathy.hcare.Disease.DiseaseSpinnerActivity;
 
 import java.util.ArrayList;
 import java.util.EnumSet;

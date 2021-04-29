@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.PreConsultation;
+package com.hcare.homeopathy.hcare.Checkout;
 
 public class Constants {
 

@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.PreConsultation;
+package com.hcare.homeopathy.hcare.Disease;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -20,13 +20,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.DiseaseInfo;
 import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.PreConsultation.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.Checkout.Constants.DISEASE_OBJECT;
 
 public class DiseaseActivity extends AppCompatActivity {
 
@@ -77,7 +78,6 @@ public class DiseaseActivity extends AppCompatActivity {
                         regIntent.putExtra(DISEASE_OBJECT,
                                 (Diseases) getIntent().getSerializableExtra("request_type1"));
                         regIntent.putExtra("details1", mChatMessageView.getText().toString());
-                        regIntent.putExtra("request_type1", disease.getDiseaseName());
                         regIntent.putExtra("name", patientName);
                         regIntent.putExtra("age", age);
                         regIntent.putExtra("sex", sex);
