@@ -34,7 +34,7 @@ public class GetTime {
             return "";
         } else {
             @SuppressLint("SimpleDateFormat")
-            DateFormat simple = new SimpleDateFormat("MMM dd, HH:mm");
+            DateFormat simple = new SimpleDateFormat("MMM dd, hh:mm a");
             Date result = new Date(time);
             return simple.format(result);
         }

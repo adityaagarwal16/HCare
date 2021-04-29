@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorPrimary"
+    android:layout_height="match_parent"
+    tools:context="com.hcare.homeopathy.hcare.Consultations.Doctor.DoctorDetailsFragment">
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:background="@color/colorSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="260dp">
+
+            <ImageView
+                android:id="@+id/background"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/todo" />
+
+            <ImageView
+                android:id="@+id/tint"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:background="#3B000000"
+                android:visibility="gone"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/todo" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePicture"
+                android:tint="@color/colorPrimary"
+                android:layout_margin="30dp"
+                android:layout_width="120dp"
+                android:layout_centerVertical="true"
+                android:layout_height="120dp"
+                android:src="@drawable/vector_person" />
+
+            <TextView
+                android:id="@+id/aboutTheDoctorHeader"
+                android:layout_width="match_parent"
+                android:layout_marginEnd="30dp"
+                android:layout_alignTop="@id/profilePicture"
+                android:layout_height="wrap_content"
+                android:text="@string/aboutDoctor"
+                android:layout_toEndOf="@id/profilePicture"
+                android:textColor="?android:textColorSecondaryInverse"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/line4"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/aboutTheDoctorHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_alignStart="@id/aboutTheDoctorHeader"
+                android:background="@color/colorSecondary"
+                android:text="@string/aboutDoctor"/>
+
+            <TextView
+                android:id="@+id/aboutTheDoctor"
+                android:layout_width="wrap_content"
+                android:layout_alignStart="@id/aboutTheDoctorHeader"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line4"
+                android:textColor="?android:textColorPrimaryInverse"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="5dp"
+                android:maxLines="6"
+                android:layout_marginEnd="30dp"
+                android:textStyle="bold"
+                android:paddingBottom="20dp"
+                android:text="@string/aboutDoctor"
+                android:textSize="15sp"/>
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/informationLayout"
+            android:padding="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/registrationHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registration"
+                android:textStyle="bold"
+                android:textColor="#BABABA"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/line6"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/registrationHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/colorSecondary"
+                android:layout_alignParentStart="true"
+                android:text="@string/registration"/>
+
+            <TextView
+                android:id="@+id/registration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line6"
+                android:layout_marginEnd="10dp"
+                android:background="@color/colorPrimary"
+                android:paddingTop="10dp"
+                android:paddingBottom="5dp"
+                android:text="@string/registration"
+                android:textSize="17sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/statusHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="@string/status"
+                android:textStyle="bold"
+                android:textColor="#BABABA"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/line"
+                android:layout_marginTop="8dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/statusHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/colorSecondary"
+                android:text="@string/status"/>
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line"
+                android:layout_alignParentEnd="true"
+                android:background="@color/colorPrimary"
+                android:paddingTop="10dp"
+                android:paddingBottom="5dp"
+                android:text="@string/available"
+                android:textSize="17sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/degreeHeader"
+                android:layout_below="@id/status"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/degree"
+                android:textColor="#BABABA"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/line1"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/degreeHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/colorSecondary"
+                android:layout_alignParentStart="true"
+                android:text="@string/degree"/>
+
+            <TextView
+                android:id="@+id/degree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line1"
+                android:paddingTop="10dp"
+                android:textStyle="bold"
+                android:text="@string/degree"
+                android:layout_marginEnd="20dp"
+                android:layout_alignParentStart="true"
+                android:paddingBottom="5dp"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/experienceHeader"
+                android:layout_below="@id/status"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/experience"
+                android:layout_alignParentEnd="true"
+                android:textColor="#BABABA"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="RelativeOverlap" />
+
+            <TextView
+                android:id="@+id/line3"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/experienceHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/colorSecondary"
+                android:layout_alignParentEnd="true"
+                android:text="@string/experience"/>
+
+            <TextView
+                android:id="@+id/experience"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line1"
+                android:paddingTop="10dp"
+                android:layout_alignParentEnd="true"
+                android:textStyle="bold"
+                android:text="@string/experience"
+                android:background="@color/colorPrimary"
+                android:paddingBottom="5dp"
+                android:textSize="17sp"/>
+
+            <TextView
+                android:id="@+id/languagesHeader"
+                android:layout_below="@id/degree"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/knownLanguages"
+                android:textColor="#BABABA"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/line5"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/languagesHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:background="@color/colorSecondary"
+                android:layout_alignParentStart="true"
+                android:text="@string/knownLanguages"/>
+
+            <TextView
+                android:id="@+id/languages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/line5"
+                android:paddingTop="10dp"
+                android:textStyle="bold"
+                android:text="@string/knownLanguages"
+                android:layout_marginEnd="20dp"
+                android:layout_alignParentStart="true"
+                android:paddingBottom="5dp"
+                android:textSize="17sp"/>
+
+
+        </RelativeLayout>
+
+</RelativeLayout>

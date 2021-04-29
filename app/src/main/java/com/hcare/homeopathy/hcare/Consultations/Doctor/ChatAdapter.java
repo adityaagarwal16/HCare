@@ -98,7 +98,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                 viewHolder.userMessage.setVisibility(View.GONE);
                 viewHolder.doctorMessage.setVisibility(View.VISIBLE);
                 viewHolder.doctorMessage
-                        .setText("Here's your treatment, please press the button to get it.");
+                        .setText("Here's your treatment, please press the following button to get it.");
 
                 if (c.getOrdering().equals("ordered")) {
                     viewHolder.treatment.setText("Ordered");

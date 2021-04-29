@@ -20,7 +20,7 @@
         android:padding="10dp"
         android:visibility="gone"
         android:text="@string/time"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -20,6 +21,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Fade;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -80,9 +82,10 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
         userReference = databaseRootReference.child("Private_consult").child(doctorID).child(userID);
         doctorReference = databaseRootReference.child("Private_consult").child(userID).child(doctorID);
 
-        setConsultAgainButton();
 
         loadMessages();
+        setConsultAgainButton();
+        showOrHideFragment();
     }
 
     @Override
@@ -95,13 +98,66 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
+            showOrHideFragment();
+        }
+        else
+            super.onBackPressed();
+    }
+
+    private void showOrHideFragment() {
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        View chatBar = findViewById(R.id.chatBar);
+        int fromDelta, toDelta;
+
+        if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
+            transaction.remove(getSupportFragmentManager().findFragmentById(R.id.fragment)).commit();
+
+            fromDelta = chatBar.getHeight();
+            toDelta = 0;
+
+            ((TextView) findViewById(R.id.getUserMessage)).setFocusable(true);
+        } else {
+            DoctorDetailsFragment fragment = new DoctorDetailsFragment();
+            Bundle args = new Bundle();
+            args.putString("user_id", doctorID);
+            fragment.setArguments(args);
+
+            fragment.setEnterTransition(new Fade().setDuration(300));
+            fragment.setExitTransition(new Fade().setDuration(300));
+
+            transaction.replace(R.id.fragment, fragment).commit();
+
+            toDelta = chatBar.getHeight();
+            fromDelta = 0;
+
+            ((TextView) findViewById(R.id.getUserMessage)).setFocusable(false);
+        }
+
+        TranslateAnimation animate = new TranslateAnimation(0, 0, fromDelta, toDelta);
+        animate.setDuration(400);
+        animate.setFillAfter(true);
+        chatBar.startAnimation(animate);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+       /* if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
+            showOrHideFragment();
+        }*/
+    }
+
     private void setToolbar() {
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         Objects.requireNonNull(getSupportActionBar())
                 .setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
 
         databaseRootReference.child("Doctors").child(doctorID).
                 addValueEventListener(new ValueEventListener() {
@@ -117,28 +173,11 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
 
-
-        findViewById(R.id.details).setOnClickListener(v -> {
-
-            if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
-                getSupportFragmentManager().popBackStack();
-            } else {
-                DoctorDetailsFragment fragment = new DoctorDetailsFragment();
-                Bundle args = new Bundle();
-                args.putString("user_id", doctorID);
-                fragment.setArguments(args);
-
-                FragmentTransaction transaction = getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment, fragment);
-                transaction.commit();
-            }
-        });
+        findViewById(R.id.details).setOnClickListener(v -> showOrHideFragment());
     }
 
     private void setConsultAgainButton() {
         CardView consultAgain = findViewById(R.id.consultAgain);
-
         doctorReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

@@ -52,6 +52,14 @@
     <string name="customerCare"><b>Customer care</b></string>
     <string name="doctor">Doctor</string>
     <string name="time">time</string>
+    <string name="status">Status</string>
+    <string name="specialization">Specialization</string>
+    <string name="degree">Degree</string>
+    <string name="experience">Experience</string>
+    <string name="aboutDoctor">About the doctor</string>
+    <string name="available">Available</string>
+    <string name="knownLanguages">Known languages</string>
+    <string name="registration">Registration</string>
 
 
 </resources>
