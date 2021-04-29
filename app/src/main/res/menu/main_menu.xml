@@ -26,4 +26,8 @@
         android:id="@+id/customerCare"
         android:title="@string/customerCare" />
 
+    <item
+        android:id="@+id/logout"
+        android:title="@string/logout" />
+
 </menu>

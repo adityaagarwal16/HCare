@@ -16,47 +16,41 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.Checkout.Constants;
+import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
 import com.hcare.homeopathy.hcare.SignUp.StartActivity;
 
 import java.util.Objects;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
-        DatabaseReference updatepop = FirebaseDatabase.getInstance().getReference().child("Version");
-        updatepop.addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Version")
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Number")) {
                     if (Objects.requireNonNull(dataSnapshot.child("Number")
                             .getValue()).toString().equals("update2")) {
-                        mAuth = FirebaseAuth.getInstance();
-                        final FirebaseUser currentUser = mAuth.getCurrentUser();
-                        final Thread myThread = new Thread() {
+                        new Thread() {
                             @Override
                             public void run() {
                                 Intent intent;
-                                if(currentUser == null)
+                                if(FirebaseAuth.getInstance().getCurrentUser() == null)
                                     intent = new Intent(getApplicationContext(), StartActivity.class);
                                 else {
-
-                                    /*intent = new Intent(getApplicationContext(), DiseaseActivity.class);
+                                    intent = new Intent(getApplicationContext(), DiseaseActivity.class);
                                     intent.putExtra("request_type1", Diseases.thyroid);
-                                    startActivity(intent);
-*/
+
                                     intent = new Intent(getApplicationContext(), CheckoutActivity.class);
                                     intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
                                     intent.putExtra("details1", "hello");
@@ -81,8 +75,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 startActivity(intent);
                                 finish();
                             }
-                        };
-                        myThread.start();
+                        }.start();
                     } else {
                         showPopup();
                     }
@@ -95,9 +88,8 @@ public class SplashScreenActivity extends AppCompatActivity {
         });
 
         NotificationManager notifyManager=
-                (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notifyManager.cancelAll();
-
     }
 
     private void showPopup() {
@@ -109,19 +101,24 @@ public class SplashScreenActivity extends AppCompatActivity {
             PopupWindow pw = new PopupWindow(layout, AbsListView.LayoutParams.MATCH_PARENT,
                     AbsListView.LayoutParams.MATCH_PARENT);
             pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
-            layout.findViewById(R.id.updateButton).setOnClickListener(cancel);
+
+            layout.findViewById(R.id.updateButton).setOnClickListener(v -> {
+                Intent updateIntent =new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=" +
+                                "com.hcare.homeopathy.hcare&hl=en"));
+                startActivity(updateIntent);
+            });
+
+            layout.findViewById(R.id.close).setOnClickListener(v -> {
+                startActivity(new Intent(getApplicationContext(),
+                        MainActivity.class));
+                finish();
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    private final View.OnClickListener cancel = v -> {
-        Intent updateIntent =new Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://play.google.com/store/apps/details?id=com.hcare.homeopathy.hcare&hl=en"));
-        startActivity(updateIntent);
-        //  pw.dismiss();
-    };
 
     @Override
     public void onBackPressed() {

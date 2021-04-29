@@ -2,6 +2,7 @@ package com.hcare.homeopathy.hcare.PostConsultation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +39,15 @@ public class PrescriptionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prescription);
 
-        setTitle("Treatment");
+
 
         mDoctorList = (RecyclerView) findViewById(R.id.doctor_lists);
         mDoctorList.setLayoutManager(new LinearLayoutManager(this));
         mDoctorList.setHasFixedSize(true);
         mChatUser = getIntent().getStringExtra("user_id");
        medicine_id = getIntent().getStringExtra("medicine_id");
+        Log.i("ids", mChatUser +"\n" + medicine_id);
+
         mCurrent_patient = FirebaseAuth.getInstance().getCurrentUser();
         names = mCurrent_patient.getUid();
         orderBtn =(Button)findViewById(R.id.ordrbtn);

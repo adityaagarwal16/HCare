@@ -60,6 +60,11 @@
     <string name="available">Available</string>
     <string name="knownLanguages">Known languages</string>
     <string name="registration">Registration</string>
+    <string name="logout">Logout</string>
+    <string name="cancel">Cancel</string>
+    <string name="signOutDialogHeading">Are you sure you want to log out?\nYou\'ll have to Sign in Again to access your Details.</string>
+    <string name="username">Username</string>
+    <string name="phone">Phone</string>
 
 
 </resources>

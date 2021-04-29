@@ -1,6 +1,7 @@
 package com.hcare.homeopathy.hcare.Consultations.Doctor;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -23,9 +24,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
 
     private final List<ChatObject> mMessageList;
+    private final Context context;
 
-    public ChatAdapter(List<ChatObject> mMessageList){
+    public ChatAdapter(List<ChatObject> mMessageList, Context context){
         this.mMessageList =mMessageList;
+        this.context = context;
     }
 
     @NonNull
@@ -60,16 +63,19 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         }
 
         switch (c.getType()) {
+
             case "text":
                 viewHolder.userMessage.setText(c.getMessage());
                 viewHolder.doctorMessage.setText(c.getMessage());
                 viewHolder.treatmentCard.setVisibility(View.GONE);
                 break;
+
             case "image":
                 viewHolder.userMessage.setVisibility(View.GONE);
                 viewHolder.doctorMessage.setVisibility(View.GONE);
                 viewHolder.treatmentCard.setVisibility(View.GONE);
                 break;
+
             case "pdf":
                 viewHolder.treatment.setText(R.string.pdf_file);
                 viewHolder.treatmentCard.setVisibility(View.VISIBLE);
@@ -77,8 +83,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                 viewHolder.treatmentCard.setOnClickListener(v -> {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setDataAndType(Uri.parse(c.getMessage()), "application/pdf");
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    v.getContext().startActivity(intent);
+                    context.startActivity(intent);
                 });
 
                 viewHolder.userMessage.setVisibility(View.GONE);
@@ -105,20 +110,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                 }
 
                 viewHolder.treatmentCard.setOnClickListener(v -> {
-                    if (c.getOrdering().equals("order")) {
-                        Intent fullScreenIntent = new Intent(v.getContext(), PrescriptionActivity.class);
-                        fullScreenIntent.putExtra("user_id", c.getFrom());
-                        fullScreenIntent.putExtra("medicine_id", c.getMedicineId());
-                        v.getContext().startActivity(fullScreenIntent);
-                    }
-                    else if (c.getOrdering().equals("ordered")) {
-                        Intent fullScreenIntent = new Intent(v.getContext(), OrderActivity.class);
-                        v.getContext().startActivity(fullScreenIntent);
+                    if (c.getOrdering().equals("ordered")) {
+                        context.startActivity(new Intent(v.getContext(), OrderActivity.class));
                     } else {
-                        Intent fullScreenIntent = new Intent(v.getContext(), PrescriptionActivity.class);
-                        fullScreenIntent.putExtra("user_id", c.getFrom());
-                        fullScreenIntent.putExtra("medicine_id", c.getMedicineId());
-                        v.getContext().startActivity(fullScreenIntent);
+                        Intent intent = new Intent(context, PrescriptionActivity.class);
+                        intent.putExtra("user_id", c.getFrom());
+                        intent.putExtra("medicine_id", c.getMedicineId());
+                        context.startActivity(intent);
                     }
                 });
                 break;

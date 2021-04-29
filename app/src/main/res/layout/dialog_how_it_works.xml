@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/howItWorks"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,7 +17,8 @@
             android:textColor="?android:textColorPrimary"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/line"
@@ -27,7 +29,8 @@
             android:background="@color/colorSecondary"
             android:text="How it works"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView54" />
+            app:layout_constraintTop_toBottomOf="@+id/textView54"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textView58"
@@ -38,7 +41,8 @@
             android:text="The doctor will be available from 8AM to 10PM (if your booking is out of office hours, we will call you the next morning)."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/line1" />
+            app:layout_constraintTop_toBottomOf="@+id/line1"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textView55"
@@ -51,7 +55,8 @@
             android:textColor="@color/blackcolor"
             android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toBottomOf="@+id/line" />
+            app:layout_constraintTop_toBottomOf="@+id/line"
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/textView56"
@@ -64,7 +69,8 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView11"
             app:layout_constraintStart_toEndOf="@+id/imageView11"
-            app:layout_constraintTop_toTopOf="@+id/imageView11" />
+            app:layout_constraintTop_toTopOf="@+id/imageView11"
+            tools:ignore="HardcodedText" />
 
 
         <TextView
@@ -78,7 +84,8 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView12"
             app:layout_constraintStart_toEndOf="@+id/imageView12"
-            app:layout_constraintTop_toTopOf="@+id/imageView12" />
+            app:layout_constraintTop_toTopOf="@+id/imageView12"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/imageView2"
@@ -88,7 +95,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/textView55"
             app:layout_constraintTop_toTopOf="@id/textView55"
-            app:srcCompat="@drawable/call" />
+            app:srcCompat="@drawable/call"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/imageView11"
@@ -97,7 +105,8 @@
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView55"
-            app:srcCompat="@drawable/blog" />
+            app:srcCompat="@drawable/blog"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/line1"
@@ -117,5 +126,6 @@
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView11"
-            app:srcCompat="@drawable/orders" />
+            app:srcCompat="@drawable/orders"
+            android:contentDescription="@string/todo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

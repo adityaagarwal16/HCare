@@ -43,15 +43,12 @@ import jp.wasabeef.picasso.transformations.BlurTransformation;
 public class ProfileActivity extends AppCompatActivity {
 
     private DatabaseReference mUserDatabase;
-    private FirebaseUser mCurrentUser;
     Spinner spinner;
-
-    //android layout
     private static final int GALLERY_PICK = 1;
 
-    //storage image
     private StorageReference imageStorage;
     private DatabaseReference loggedin;
+    String current_uid;
 
 
     @Override
@@ -61,8 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
         spinner = findViewById(R.id.genderSpinner);
 
         imageStorage = FirebaseStorage.getInstance().getReference();
-        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_uid = Objects.requireNonNull(mCurrentUser).getUid();
+        current_uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         loggedin = FirebaseDatabase.getInstance().getReference().child("loggedin").child(current_uid);
 
@@ -159,7 +155,6 @@ public class ProfileActivity extends AppCompatActivity {
         } catch (Exception ignored) { }
     }
 
-
     void setCrosses() {
         crossListeners(R.id.patientNameCross, R.id.patientName);
         crossListeners(R.id.emailCross, R.id.email);
@@ -237,13 +232,13 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 
-        @Override
-        protected void onStart() {
-            super.onStart();
-            mUserDatabase.child("status").setValue("online");
-        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mUserDatabase.child("status").setValue("online");
+    }
 
-        @Override
+    @Override
     protected void onStop() {
         super.onStop();
         mUserDatabase.child("status").setValue("offline");
@@ -264,8 +259,6 @@ public class ProfileActivity extends AppCompatActivity {
                 Uri resultUri = result.getUri();
                 final File thumb_filePath = new File(Objects.requireNonNull(resultUri.getPath()));
 
-                String current_user_id = mCurrentUser.getUid();
-
                 Bitmap thumb_bitmap = new Compressor(this)
                         .setMaxHeight(200)
                         .setMaxWidth(200)
@@ -277,9 +270,9 @@ public class ProfileActivity extends AppCompatActivity {
                 final byte[] thumb_byte = baos.toByteArray();
 
                 final StorageReference filepath =
-                        imageStorage.child("profile_images").child(current_user_id+".jpg");
+                        imageStorage.child("profile_images").child(current_uid+".jpg");
                 final StorageReference thumb_filepath =
-                        imageStorage.child("profile_images").child("thumbs").child(current_user_id+"jpg");
+                        imageStorage.child("profile_images").child("thumbs").child(current_uid+"jpg");
 
                 filepath.putFile(resultUri).addOnCompleteListener(
                         task -> filepath.getDownloadUrl().addOnSuccessListener(uri -> {

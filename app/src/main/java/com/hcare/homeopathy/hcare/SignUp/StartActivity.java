@@ -162,6 +162,7 @@ public class StartActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         String phone = MobileNumber.getText().toString();
+
                         FirebaseUser current_user = FirebaseAuth
                                 .getInstance().getCurrentUser();
                         assert current_user != null;
@@ -171,31 +172,24 @@ public class StartActivity extends AppCompatActivity {
 
                         mDatabase = FirebaseDatabase.getInstance()
                                 .getReference().child("Users").child(uid);
-                        HashMap<String, String> userMap = new HashMap<>();
-                        userMap.put("phone number", phone);
-                        userMap.put("name", "patient");
-                        userMap.put("age", "age of patient");
-                        userMap.put("sex", "male or female");
-                        userMap.put("thumb_image", "default");
-                        userMap.put("image", "default");
-                        userMap.put("email", "Email id");
-                        userMap.put("device_token",device_token);
-                        userMap.put("status","online");
 
-                        mDatabase.setValue(userMap);
-
-                        // Sign in success, update UI with the
-                        // signed-in user's information
-                        //mProgressDialog.dismiss();
-
-                        Toast.makeText(StartActivity.this,
-                                "Verification done", Toast.LENGTH_LONG).show();
-
+                        if(mDatabase == null) {
+                            HashMap<String, String> userMap = new HashMap<>();
+                            userMap.put("phone number", phone);
+                            userMap.put("name", "patient");
+                            userMap.put("age", "age of patient");
+                            userMap.put("sex", "male or female");
+                            userMap.put("thumb_image", "default");
+                            userMap.put("image", "default");
+                            userMap.put("email", "Email id");
+                            userMap.put("device_token", device_token);
+                            userMap.put("status", "online");
+                            mDatabase.setValue(userMap);
+                        }
                         FirebaseUser user = Objects.requireNonNull(
                                 task.getResult()).getUser();
 
-                        Intent regIntent = new Intent(
-                                StartActivity.this,
+                        Intent regIntent = new Intent(this,
                                 ProfileActivity.class);
                         startActivity(regIntent);
                         regIntent.addFlags(

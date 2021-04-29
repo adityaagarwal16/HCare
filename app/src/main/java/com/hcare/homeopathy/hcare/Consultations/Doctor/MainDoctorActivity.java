@@ -212,7 +212,7 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
         consultAgain.setOnClickListener(v -> {
             ProgressDialog mProgressDialog =
                     new ProgressDialog(this);
-            mProgressDialog.setTitle(" payment Loading ");
+            mProgressDialog.setTitle(" Payment Loading ");
             mProgressDialog.setMessage("Please wait ");
             mProgressDialog.setCanceledOnTouchOutside(false);
             mProgressDialog.show();
@@ -228,25 +228,25 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
 
         mLinearLayout.setStackFromEnd(true);
         mMessagesList.setLayoutManager(mLinearLayout);
-        mMessagesList.setAdapter(new ChatAdapter(list));
+        mMessagesList.setAdapter(new ChatAdapter(list, this));
 
         messagesReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 ChatObject message = dataSnapshot.getValue(ChatObject.class);
                 try {
-                    if(lastDay == new GetTime(message.getTime()).getDays()) {
+                    if(lastDay == new GetTime(message.getTime()).getDays())
                         message.setTime(0);
-                    } else
+                    else
                         lastDay = new GetTime(message.getTime()).getDays();
 
-                    Log.i("from", message.getFrom());
+                   /* Log.i("from", message.getFrom());
                     Log.i("message", message.getMessage());
                     Log.i("order", message.getOrdering());
                     Log.i("type", message.getType());
                     Log.i("seen", String.valueOf(message.getSeen()));
                     Log.i("image", message.getImage());
-                    Log.i("medicine", message.getMedicineId());
+                    Log.i("medicine", message.getMedicineId());*/
 
                 } catch (Exception ignored) { }
 

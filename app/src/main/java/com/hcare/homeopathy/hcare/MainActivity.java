@@ -19,16 +19,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
-import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
-import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseSpinnerActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
+import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
+import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity
                 FirebaseDatabase.getInstance().getReference().child("Users").
                         child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
 
+        new SetNavigationHeader(this);
+
         //drawer and toolbar
         setToolbar();
 
@@ -73,7 +75,8 @@ public class MainActivity extends AppCompatActivity
         });
 
         findViewById(R.id.mainImage).setOnClickListener(v -> {
-            Intent docprofileIntent = new Intent(MainActivity.this, DiseaseSpinnerActivity.class);
+            Intent docprofileIntent = new Intent(
+                    MainActivity.this, DiseaseSpinnerActivity.class);
             startActivity(docprofileIntent);
         });
 
@@ -125,25 +128,19 @@ public class MainActivity extends AppCompatActivity
                 .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
 
 
-        final TextView consultReq = findViewById(R.id.requestText);
-        consultReq.setVisibility(View.GONE);
-
-
         publicConsult.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("name")) {
+                final TextView consultReq = findViewById(R.id.requestText);
+                if (dataSnapshot.hasChild("name"))
                     consultReq.setVisibility(View.VISIBLE);
-                }else {
+                else
                     consultReq.setVisibility(View.GONE);
-                }
-
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
 
-            }
         });
 
     }
@@ -154,7 +151,8 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
 
-        Diseases[] list = {diabetes, thyroid, female, piles, men, hair, renalProblems, skin};
+        Diseases[] list = {diabetes, thyroid, female,
+                piles, men, hair, renalProblems, skin};
         mRecyclerView.setAdapter(new DiseaseAdapter(list,this));
     }
 
@@ -163,7 +161,8 @@ public class MainActivity extends AppCompatActivity
         RecyclerView mRecyclerView = findViewById(R.id.allIssuesRecycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
-        mRecyclerView.setAdapter(new DiseaseAdapter(new ArrayList<>(EnumSet.allOf(Diseases.class)),this));
+        mRecyclerView.setAdapter(new DiseaseAdapter(
+                new ArrayList<>(EnumSet.allOf(Diseases.class)),this));
     }
 
     @Override
@@ -176,11 +175,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStop() {
         super.onStop();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null) {
-            mUserRef.child("status").setValue("offline");
-        }
-
+        mUserRef.child("status").setValue("offline");
     }
 
     private void setToolbar() {
@@ -192,8 +187,9 @@ public class MainActivity extends AppCompatActivity
                 setNavigationItemSelectedListener(this);
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer);
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-                mToolbar, R.string.open,R.string.close);
+        ActionBarDrawerToggle mDrawerToggle =
+                new ActionBarDrawerToggle(this, drawerLayout,
+                        mToolbar, R.string.open,R.string.close);
         drawerLayout.addDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
     }

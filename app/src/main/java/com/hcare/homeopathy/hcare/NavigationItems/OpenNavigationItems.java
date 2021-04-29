@@ -1,8 +1,12 @@
 package com.hcare.homeopathy.hcare.NavigationItems;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.Gravity;
+
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
@@ -21,7 +25,7 @@ public class OpenNavigationItems {
         open();
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "RtlHardcoded"})
     public void open() {
         Intent intent;
         switch (id) {
@@ -46,10 +50,17 @@ public class OpenNavigationItems {
             case R.id.customerCare:
                 intent = new Intent(context, CustomercareActivity.class);
                 break;
+            case R.id.logout:
+                intent = null;
+                ((DrawerLayout) ((Activity) context).findViewById(R.id.drawer))
+                        .closeDrawer(Gravity.LEFT);
+                new LogoutDialog(context);
+                break;
             default:
                 intent = null;
         }
-        context.startActivity(intent);
+        if(intent != null)
+            context.startActivity(intent);
     }
 
 }

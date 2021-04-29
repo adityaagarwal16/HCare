@@ -1,6 +1,7 @@
 package com.hcare.homeopathy.hcare.Checkout;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.DiseaseInfo;
 import com.hcare.homeopathy.hcare.Diseases;
+import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 
@@ -54,7 +56,12 @@ public class CheckoutDisableFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        root.findViewById(R.id.closeActivity).setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            requireContext().startActivity(intent);
+            requireActivity().finish();
+        });
     }
 
 }

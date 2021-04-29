@@ -70,7 +70,7 @@ public class CustomercareActivity extends AppCompatActivity {
       //  mCallBtn =(ImageButton) findViewById(R.id.CallBtn);
 
 
-        mAdapter =new ChatAdapter(messageList);
+        mAdapter =new ChatAdapter(messageList, this);
 
         mMessagesList = findViewById(R.id.messages_list);
         LinearLayoutManager mLinearLayout = new LinearLayoutManager(this);

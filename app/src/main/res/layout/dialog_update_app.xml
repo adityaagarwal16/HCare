@@ -35,4 +35,16 @@
         app:srcCompat="@drawable/update_image_popup"
         android:contentDescription="@string/todo" />
 
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/vector_close"
+        android:contentDescription="@string/todo" />
+
 </RelativeLayout>
