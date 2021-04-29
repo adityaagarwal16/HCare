@@ -131,8 +131,6 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
 
     @Override
     public void onPaymentError(int code, String response) {
-        //TODO
-        sendRequest();
         Toast.makeText(this, "Payment failed", Toast.LENGTH_LONG).show();
     }
 }
