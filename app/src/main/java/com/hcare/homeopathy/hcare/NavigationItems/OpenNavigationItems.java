@@ -10,7 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
-import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseSpinnerActivity;
 import com.hcare.homeopathy.hcare.R;
 
@@ -33,7 +33,7 @@ public class OpenNavigationItems {
                 intent = new Intent(context, ProfileActivity.class);
                 break;
             case R.id.orders:
-                intent = new Intent(context, OrderActivity.class);
+                intent = new Intent(context, OrdersActivity.class);
                 break;
             case R.id.help:
                 intent = new Intent(context, FaqActivity.class);
@@ -48,7 +48,7 @@ public class OpenNavigationItems {
                 intent = new Intent(context, InviteActivity.class);
                 break;
             case R.id.customerCare:
-                intent = new Intent(context, CustomercareActivity.class);
+                intent = new Intent(context, CustomerCareActivity.class);
                 break;
             case R.id.logout:
                 intent = null;

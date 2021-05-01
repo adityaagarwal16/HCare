@@ -50,6 +50,9 @@
     <string name="consultations"><b>Consultations</b></string>
     <string name="invite"><b>Invite your friends"</b></string>
     <string name="customerCare"><b>Customer care</b></string>
+    <string name="logout"><b>Logout</b></string>
+
+
     <string name="doctor">Doctor</string>
     <string name="time">time</string>
     <string name="status">Status</string>
@@ -60,11 +63,16 @@
     <string name="available">Available</string>
     <string name="knownLanguages">Known languages</string>
     <string name="registration">Registration</string>
-    <string name="logout">Logout</string>
+
     <string name="cancel">Cancel</string>
     <string name="signOutDialogHeading">Are you sure you want to log out?\nYou\'ll have to Sign in Again to access your Details.</string>
     <string name="username">Username</string>
     <string name="phone">Phone</string>
+    <string name="orderNow">Order Now</string>
+    <string name="phoneNumber">Phone number</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="patient">Patient</string>
 
 
 </resources>

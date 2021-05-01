@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
-import com.hcare.homeopathy.hcare.PostConsultation.PrescriptionActivity;
+import com.hcare.homeopathy.hcare.OrderTreatment.CartActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.List;
@@ -57,7 +57,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         if(c.getFrom().equals(userID)) {
             viewHolder.doctorMessage.setVisibility(View.GONE);
             viewHolder.userMessage.setVisibility(View.VISIBLE);
-        }else{
+        }else {
             viewHolder.userMessage.setVisibility(View.GONE);
             viewHolder.doctorMessage.setVisibility(View.VISIBLE);
         }
@@ -111,9 +111,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
                 viewHolder.treatmentCard.setOnClickListener(v -> {
                     if (c.getOrdering().equals("ordered")) {
-                        context.startActivity(new Intent(v.getContext(), OrderActivity.class));
+                        context.startActivity(new Intent(v.getContext(), OrdersActivity.class));
                     } else {
-                        Intent intent = new Intent(context, PrescriptionActivity.class);
+                        Intent intent = new Intent(context, CartActivity.class);
                         intent.putExtra("user_id", c.getFrom());
                         intent.putExtra("medicine_id", c.getMedicineId());
                         context.startActivity(intent);

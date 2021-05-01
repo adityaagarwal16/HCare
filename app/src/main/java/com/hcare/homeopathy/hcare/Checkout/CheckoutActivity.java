@@ -115,7 +115,8 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
         notifyData.put("sex", getIntent().getStringExtra("sex"));
         notifyData.put("Time",time);
 
-        userRef.child("consultCount").push().child(patientName).setValue(patientName);
+        userRef.child("consultCount").push().child(Objects.requireNonNull(patientName))
+                .setValue(patientName);
 
         DatabaseReference mConsultReqDatabase = FirebaseDatabase.getInstance()
                 .getReference().child("public_Consulting").child(userID);

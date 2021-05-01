@@ -8,7 +8,7 @@ import android.content.Context;
 
 public class ChatObject {
 
-    private String message, type, image, ordering;
+    private String message, type, image, ordering, medicineId, from;
     private long time;
     private boolean seen;
 
@@ -31,8 +31,6 @@ public class ChatObject {
         this.medicineId = medicineId;
     }
 
-    private String medicineId;
-
     public String getOrdering() {
         return ordering;
     }
@@ -53,9 +51,6 @@ public class ChatObject {
     public ChatObject(String from) {
         this.from = from;
     }
-
-    private String from;
-
 
     public String getMessage() {
         return message;

@@ -22,7 +22,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.Checkout.Constants;
+import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
+import com.hcare.homeopathy.hcare.OrderTreatment.CartActivity;
+import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
 import com.hcare.homeopathy.hcare.SignUp.StartActivity;
 
 import java.util.Objects;
@@ -39,8 +42,9 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("Number")) {
-                    if (Objects.requireNonNull(dataSnapshot.child("Number")
-                            .getValue()).toString().equals("update2")) {
+                    if (Objects.requireNonNull(dataSnapshot.child
+                            ("Number").getValue())
+                            .toString().equals("update2")) {
                         new Thread() {
                             @Override
                             public void run() {
@@ -48,6 +52,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 if(FirebaseAuth.getInstance().getCurrentUser() == null)
                                     intent = new Intent(getApplicationContext(), StartActivity.class);
                                 else {
+
                                     intent = new Intent(getApplicationContext(), DiseaseActivity.class);
                                     intent.putExtra("request_type1", Diseases.thyroid);
 
@@ -60,7 +65,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     intent.putExtra("sex", "male");
 
 
-                                    //intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
+                                    intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
 
                                     //intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
                                     //intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
@@ -69,8 +74,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     //intent = new Intent(getApplicationContext(), ProfileActivity.class);
 
 
-                                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent = new Intent(getApplicationContext(), OrderNowActivity.class);
+                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+                                    intent.putExtra("discount", 360);
+                                    intent.putExtra("price", 600);
 
+                                    intent = new Intent(getApplicationContext(), MainActivity.class);
                                 }
                                 startActivity(intent);
                                 finish();

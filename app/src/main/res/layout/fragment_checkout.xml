@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -358,6 +359,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginStart="22dp"
                     android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText"
                     android:text="What customers say about us" />
 
                 <TextView
@@ -368,6 +370,7 @@
                     android:layout_marginStart="14dp"
                     android:layout_marginTop="7dp"
                     android:background="@color/colorSecondary"
+                    tools:ignore="HardcodedText"
                     android:text="What customers say about us"/>
 
                 <ViewFlipper
@@ -391,7 +394,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:orientation="vertical"
+    android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -408,6 +411,7 @@
                     android:textColor="?android:textColorPrimary"
                     android:text="Subtotal"
                     android:textSize="16sp"
+                    tools:ignore="HardcodedText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -418,6 +422,7 @@
                     android:layout_alignParentEnd="true"
                     android:letterSpacing="0.03"
                     android:text="Subtotal"
+                    tools:ignore="HardcodedText"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="16sp" />
 
@@ -428,6 +433,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_toStartOf="@id/subTotal"
                     android:text="₹"
+                    tools:ignore="HardcodedText"
                     android:textColor="?android:textColorPrimary"
                     android:textSize="16sp" />
 
@@ -437,6 +443,7 @@
                     android:textColor="?android:textColorPrimary"
                     android:layout_below="@id/subTotal"
                     android:text="Discount"
+                    tools:ignore="HardcodedText"
                     android:letterSpacing="0.03"
                     android:layout_marginTop="4dp"
                     android:layout_alignParentEnd="true"
@@ -447,6 +454,7 @@
                     android:id="@+id/discountHeader"
                     android:textColor="?android:textColorPrimary"
                     android:text="Discount"
+                    tools:ignore="HardcodedText"
                     android:layout_marginTop="4dp"
                     android:layout_below="@id/subtotalHeader"
                     android:layout_width="wrap_content"
@@ -456,6 +464,7 @@
                     android:id="@+id/couponHeader"
                     android:textColor="@color/colorSecondary"
                     android:text="100RS OFF is applied"
+                    tools:ignore="HardcodedText"
                     android:layout_marginTop="4dp"
                     android:visibility="gone"
                     android:layout_below="@id/discount"
@@ -470,6 +479,7 @@
                     android:layout_below="@id/rupee1"
                     android:layout_toStartOf="@id/discount"
                     android:text="- ₹"
+                    tools:ignore="HardcodedText"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="4dp"
                     android:layout_width="wrap_content"
@@ -480,6 +490,7 @@
                     android:textColor="?android:textColorPrimary"
                     android:layout_below="@id/discountHeader"
                     android:text="Total"
+                    tools:ignore="HardcodedText"
                     android:textSize="16sp"
                     android:letterSpacing="0.03"
                     android:layout_marginTop="20dp"
@@ -492,6 +503,7 @@
                     android:id="@+id/totalHeader"
                     android:textColor="?android:textColorPrimary"
                     android:text="Total"
+                    tools:ignore="HardcodedText"
                     android:textSize="18sp"
                     android:layout_marginTop="20dp"
                     android:textStyle="bold"
@@ -510,7 +522,8 @@
                     android:textStyle="bold"
                     android:layout_marginEnd="4dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText" />
 
             </RelativeLayout>
 
@@ -532,6 +545,7 @@
                     android:textSize="16sp"
                     android:gravity="center"
                     android:text="Pay Now"
+                    tools:ignore="HardcodedText"
                     android:textColor="?android:textColorPrimaryInverse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>

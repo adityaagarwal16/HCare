@@ -1,7 +1,9 @@
-package com.hcare.homeopathy.hcare.PostConsultation;
+package com.hcare.homeopathy.hcare.OrderTreatment;
 
-public class Prescriptionjavaclass {
-    public Prescriptionjavaclass(String medicine_name, String medicine_days, String medicine_time, String medicine_Instruction, String instructions) {
+public class PrescriptionObject {
+
+    public PrescriptionObject(String medicine_name, String medicine_days,
+                              String medicine_time, String medicine_Instruction, String instructions) {
         Medicine_name = medicine_name;
         Medicine_days = medicine_days;
         Medicine_time = medicine_time;
@@ -9,9 +11,10 @@ public class Prescriptionjavaclass {
         Instructions = instructions;
     }
 
-    public Prescriptionjavaclass(){
+    public PrescriptionObject(){
 
     }
+
     public String getMedicine_name() {
         return Medicine_name;
     }

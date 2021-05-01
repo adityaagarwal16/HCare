@@ -1,5 +1,6 @@
 package com.hcare.homeopathy.hcare.Disease;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,17 +18,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
-import com.hcare.homeopathy.hcare.JvFiles.CustomAdapter;
 import com.hcare.homeopathy.hcare.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class DiseaseSpinnerActivity extends AppCompatActivity {
+
     String[] spinnerTitles;
     int[] spinnerImages;
     private String mName, patientname, age, sex,message;
@@ -48,24 +50,26 @@ public class DiseaseSpinnerActivity extends AppCompatActivity {
                 "Bones & joints","Nutrition & health","Eye", "Heart Problems","Children",
                 "Mental Health","Other"};
 
-        spinnerImages = new int[]{R.drawable.newothers
-                , R.drawable.newhair
-                , R.drawable.newacne
-                , R.drawable.newweight
-                , R.drawable.newheadache
-                , R.drawable.newrenal
-                , R.drawable.newrespiratory
-                , R.drawable.newmens , R.drawable.newwomen,
+        spinnerImages = new int[] {
+                R.drawable.newothers,
+                R.drawable.newhair,
+                R.drawable.newacne,
+                R.drawable.newweight,
+                R.drawable.newheadache,
+                R.drawable.newrenal,
+                R.drawable.newrespiratory,
+                R.drawable.newmens , R.drawable.newwomen,
                 R.drawable.newdigestive, R.drawable.newdiabetes,
                 R.drawable.newthyroid, R.drawable.newent,
-                R.drawable.newmouth, R.drawable.newgrowth
-                , R.drawable.newjoints, R.drawable.newnutrition,
+                R.drawable.newmouth, R.drawable.newgrowth,
+                R.drawable.newjoints, R.drawable.newnutrition,
                 R.drawable.neweye, R.drawable.newheart,
                 R.drawable.newchild, R.drawable.newdepression,
                 R.drawable.newothers};
 
         Spinner mSpinner = findViewById(R.id.spinner);
-        CustomAdapter mCustomAdapter = new CustomAdapter(DiseaseSpinnerActivity.this, spinnerTitles, spinnerImages);
+        CustomAdapter mCustomAdapter = new CustomAdapter
+                (DiseaseSpinnerActivity.this, spinnerTitles, spinnerImages);
         mSpinner.setAdapter(mCustomAdapter);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -83,7 +87,7 @@ public class DiseaseSpinnerActivity extends AppCompatActivity {
 
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        final String current_uid = mCurrentUser.getUid();
+        final String current_uid = Objects.requireNonNull(mCurrentUser).getUid();
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
         mChatMessageView = (EditText) findViewById(R.id.diseases);
@@ -92,9 +96,9 @@ public class DiseaseSpinnerActivity extends AppCompatActivity {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                patientname = dataSnapshot.child("name").getValue().toString();
-                age = dataSnapshot.child("age").getValue().toString();
-                sex = dataSnapshot.child("sex").getValue().toString();
+                patientname = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
+                age = Objects.requireNonNull(dataSnapshot.child("age").getValue()).toString();
+                sex = Objects.requireNonNull(dataSnapshot.child("sex").getValue()).toString();
             }
 
             @Override
@@ -106,13 +110,8 @@ public class DiseaseSpinnerActivity extends AppCompatActivity {
 
             mConsultingbtn.setOnClickListener(v -> {
                 message = mChatMessageView.getText().toString();
-                if (mName!="Select a Problem Area") {
-                    String date = DateFormat.getDateTimeInstance().format(new Date());
-                    DateFormat dateFormat = new SimpleDateFormat("HH");
-                    Date date2 = new Date();
-                    String time = dateFormat.format(date2);
-                   // mConsultingbtn.setEnabled(false);
-                    Intent regIntent = new Intent(DiseaseSpinnerActivity.this, CheckoutActivity.class);
+                if (!mName.equals("Select a Problem Area")) {
+                    Intent regIntent = new Intent(this, CheckoutActivity.class);
                     regIntent.putExtra("details1", message);
                     regIntent.putExtra("request_type1", mName);
                     regIntent.putExtra("name", patientname);

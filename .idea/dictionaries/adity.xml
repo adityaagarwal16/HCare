@@ -7,10 +7,12 @@
       <w>blogs</w>
       <w>chatwithdoctors</w>
       <w>cjsvm</w>
+      <w>codeless</w>
       <w>consultationfee</w>
       <w>consultdate</w>
       <w>customercare</w>
       <w>docprofile</w>
+      <w>edmodo</w>
       <w>gson</w>
       <w>hcare</w>
       <w>hvbkl</w>
@@ -20,11 +22,15 @@
       <w>medit</w>
       <w>mens</w>
       <w>mins</w>
+      <w>neworder</w>
+      <w>ordertime</w>
       <w>patientsapp</w>
       <w>prefill</w>
       <w>razorpay</w>
       <w>recentmainmenu</w>
+      <w>recieved</w>
       <w>rsoff</w>
+      <w>theartofdev</w>
       <w>updatepop</w>
     </words>
   </dictionary>

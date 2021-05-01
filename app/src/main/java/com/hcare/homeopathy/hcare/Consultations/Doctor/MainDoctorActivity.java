@@ -110,10 +110,12 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
         View chatBar = findViewById(R.id.chatBar);
+        View consultAgain = findViewById(R.id.consultAgain);
         int fromDelta, toDelta;
 
         if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
-            transaction.remove(getSupportFragmentManager().findFragmentById(R.id.fragment)).commit();
+            transaction.remove(Objects.requireNonNull(getSupportFragmentManager()
+                    .findFragmentById(R.id.fragment))).commit();
 
             fromDelta = chatBar.getHeight();
             toDelta = 0;
@@ -140,7 +142,7 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
         animate.setDuration(400);
         animate.setFillAfter(true);
         chatBar.startAnimation(animate);
-
+        consultAgain.startAnimation(animate);
     }
 
     @Override
@@ -235,7 +237,8 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 ChatObject message = dataSnapshot.getValue(ChatObject.class);
                 try {
-                    if(lastDay == new GetTime(message.getTime()).getDays())
+                    if(lastDay == new GetTime(Objects.requireNonNull(message)
+                            .getTime()).getDays())
                         message.setTime(0);
                     else
                         lastDay = new GetTime(message.getTime()).getDays();
@@ -364,7 +367,7 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
         }
 
         if(requestCode ==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            CropImage.ActivityResult result =CropImage.getActivityResult(data);
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
                 Uri resultUri = result.getUri();

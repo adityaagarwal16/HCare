@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.PostConsultation;
+package com.hcare.homeopathy.hcare.NavigationItems.Orders;
 
 /**
  * Created by Vinith pc on 2/21/2018.

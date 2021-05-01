@@ -31,8 +31,6 @@
         android:protectionLevel="signature"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".PostConsultation.PrescriptionActivity" />
-
         <activity android:name=".Checkout.CheckoutActivity"
             android:label="Checkout">
         </activity>
@@ -66,30 +64,31 @@
             android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".NavigationItems.CustomercareActivity"
+            android:name=".NavigationItems.CustomerCareActivity"
             android:label="Customer care"
             android:parentActivityName=".MainActivity">
         </activity>
 
-        <activity
-            android:name=".Consultations.Doctor.DoctorDetailsFragment"
-            android:label="Details"
-            android:parentActivityName=".Consultations.ConsultationsActivity" />
-
         <activity android:name=".JvFiles.ImageActivity" />
 
         <activity
-            android:name=".PostConsultation.OrderActivity"
+            android:name=".NavigationItems.Orders.OrdersActivity"
             android:label="Orders"/>
 
         <activity
             android:name=".NavigationItems.ProfileActivity"
             android:label="Profile"
+            android:windowSoftInputMode="stateHidden|adjustPan"
             android:parentActivityName=".MainActivity" />
 
-        <activity android:name=".PostConsultation.TreatmentSelectionActivity" />
+        <activity android:name=".OrderTreatment.CartActivity"
+            android:label="My Cart"
+            android:parentActivityName=".OrderTreatment.MainDoctorActivity"/>
 
-        <activity android:name=".PostConsultation.AddressActivity" />
+        <activity android:name=".OrderTreatment.OrderNowActivity"
+            android:label="Order now"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:parentActivityName=".OrderTreatment.CartActivity"/>
 
         <activity
             android:name=".Consultations.Doctor.MainDoctorActivity"
@@ -111,6 +110,9 @@
             android:name=".NavigationItems.BlogsActivity"
             android:parentActivityName=".MainActivity" />
 
+        <activity android:name=".NavigationItems.InviteActivity"
+            android:label="Invite your friends"
+            android:parentActivityName=".MainActivity" />
 
 
 
@@ -124,14 +126,11 @@
         </service>
 
 
+
         <meta-data
             android:exported="false"
             android:name="com.razorpay.ApiKey"
             android:value="rzp_live_SzHvbklFoHMBtv" />
-
-        <activity android:name=".NavigationItems.InviteActivity"
-            android:label="Invite your friends"
-            android:parentActivityName=".MainActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -145,6 +144,8 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+
     </application>
 
 </manifest>

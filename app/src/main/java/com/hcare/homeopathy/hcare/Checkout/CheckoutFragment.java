@@ -57,7 +57,7 @@ public class CheckoutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        patientName = getArguments().getString("name");
+        patientName = Objects.requireNonNull(getArguments()).getString("name");
         patientIssue = getArguments().getString("details1");
 
         userRef = FirebaseDatabase.getInstance()
@@ -88,7 +88,7 @@ public class CheckoutFragment extends Fragment {
     void setHeaders() {
         try {
             DiseaseInfo disease = new DiseaseInfo((Diseases)
-                    getArguments().getSerializable(DISEASE_OBJECT));
+                    Objects.requireNonNull(getArguments()).getSerializable(DISEASE_OBJECT));
 
             ((TextView) root.findViewById(R.id.header)).setText
                     (MessageFormat.format("{0} {1}", "Consultation for",
@@ -145,7 +145,6 @@ public class CheckoutFragment extends Fragment {
                     options.put("description", "discount applied");
 
                     //You can omit the image option to fetch the image from dashboard
-                    // options.put("image", R.drawable.hcarehori);
                     options.put("currency", "INR");
 
                     int RAZORPAY_MULTIPLIER = 100;

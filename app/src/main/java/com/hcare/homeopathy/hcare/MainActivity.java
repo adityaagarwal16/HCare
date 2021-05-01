@@ -28,7 +28,7 @@ import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseSpinnerActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
-import com.hcare.homeopathy.hcare.PostConsultation.OrderActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
 
         findViewById(R.id.cart).setOnClickListener(v -> {
-            Intent docprofileIntent = new Intent(MainActivity.this, OrderActivity.class);
+            Intent docprofileIntent = new Intent(MainActivity.this, OrdersActivity.class);
             startActivity(docprofileIntent);
         });
 

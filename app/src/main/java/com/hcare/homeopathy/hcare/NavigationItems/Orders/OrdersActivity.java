@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.PostConsultation;
+package com.hcare.homeopathy.hcare.NavigationItems.Orders;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class OrderActivity extends AppCompatActivity {
+public class OrdersActivity extends AppCompatActivity {
 
     private RecyclerView mDoctorList;
     private DatabaseReference mDoctorsDatabase,userRef;
@@ -42,7 +42,8 @@ public class OrderActivity extends AppCompatActivity {
         FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String current_uid = Objects.requireNonNull(mCurrentUser).getUid();
 
-        mDoctorsDatabase = FirebaseDatabase.getInstance().getReference().child("Orders").child(current_uid);
+        mDoctorsDatabase = FirebaseDatabase.getInstance().getReference()
+                .child("Orders").child(current_uid);
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
         mDoctorList = findViewById(R.id.doctor_list);
         mDoctorList.setHasFixedSize(true);

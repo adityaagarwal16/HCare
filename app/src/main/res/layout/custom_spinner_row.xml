@@ -12,20 +12,20 @@
         android:id="@+id/diseaseimage"
         android:layout_width="40dp"
         android:layout_height="55dp"
-        android:layout_marginLeft="10dp"
+        android:contentDescription="@string/todo"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="2dp"
         android:scaleType="fitCenter"
         android:src="@drawable/vector_person" />
 
-    <io.gloxey.cfv.CFTextView
+    <TextView
         android:id="@+id/diseasename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="21dp"
         android:layout_toEndOf="@+id/diseaseimage"
-        android:text="Patient"
+        android:text="@string/patient"
         android:textColor="?android:textColorPrimary"
         android:textSize="16sp"
         android:textStyle="normal"/>

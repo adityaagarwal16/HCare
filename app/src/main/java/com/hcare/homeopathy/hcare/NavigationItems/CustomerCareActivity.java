@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
@@ -37,13 +36,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
-public class CustomercareActivity extends AppCompatActivity {
+public class CustomerCareActivity extends AppCompatActivity {
 
     private DatabaseReference mRootref;
     private String mCurrentUserId;
 
-    private ImageButton mChatAddBtn;
-    private EditText mChatMessageView;
     final static int PICK_PDF_CODE = 2342;
     private RecyclerView mMessagesList;
     private final List<ChatObject> messageList= new ArrayList<>();
@@ -57,24 +54,22 @@ public class CustomercareActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customercare);
+        setContentView(R.layout.activity_customer_care);
 
         mRootref = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
         mimagestorage = FirebaseStorage.getInstance().getReference();
-        mChatAddBtn = findViewById(R.id.chat_add_btn);
-        ImageView mChatSendBtn = findViewById(R.id.chat_send_btn);
-        mChatMessageView = findViewById(R.id.chat_message_view);
 
       //  mCallBtn =(ImageButton) findViewById(R.id.CallBtn);
 
 
-        mAdapter =new ChatAdapter(messageList, this);
+        mAdapter = new ChatAdapter(messageList, this);
 
         mMessagesList = findViewById(R.id.messages_list);
         LinearLayoutManager mLinearLayout = new LinearLayoutManager(this);
 
+        mLinearLayout.setStackFromEnd(true);
         mMessagesList.setHasFixedSize(true);
         mMessagesList.setLayoutManager(mLinearLayout);
         mMessagesList.setAdapter(mAdapter);
@@ -84,34 +79,59 @@ public class CustomercareActivity extends AppCompatActivity {
         h = mRootref.child("Customercare").child(mCurrentUserId);
 
         loadMessage();
+    }
 
-        mChatSendBtn.setOnClickListener(v -> sendMessage());
-        mChatAddBtn.setOnClickListener(v -> {
+    public void attachFile(View view) {
+        PopupMenu popupMenu = new PopupMenu(CustomerCareActivity.this,
+                findViewById(R.id.attachFile));
+        popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if(item.getItemId()==R.id.Gallery_btn){
+                Intent galleryIntent = new Intent();
+                galleryIntent.setType("image/*");
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
 
-            PopupMenu popupMenu = new PopupMenu(CustomercareActivity.this,mChatAddBtn);
-            popupMenu.getMenuInflater().inflate(R.menu.popup_menu,popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(item -> {
-                if(item.getItemId()==R.id.Gallery_btn){
-                    Intent galleryIntent = new Intent();
-                    galleryIntent.setType("image/*");
-                    galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
 
-                    startActivityForResult(Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
+            }
+            if(item.getItemId()==R.id.File_btn) {
+                Intent intent = new Intent();
+                intent.setType("application/pdf");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PDF_CODE);
 
-                }
-                if(item.getItemId()==R.id.File_btn) {
-                    Intent intent = new Intent();
-                    intent.setType("application/pdf");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PDF_CODE);
-
-                }
-                return false;
-            });
-            popupMenu.show();
+            }
+            return false;
         });
+        popupMenu.show();
+    }
+
+    public void sendMessage(View view) {
+        String message = ((EditText) findViewById(R.id.getUserMessage)).getText().toString();
+
+        if (!TextUtils.isEmpty(message)){
+            String current_user_ref = "Customercare/" + mCurrentUserId ;
 
 
+            DatabaseReference user_message_push =
+                    mRootref.child("Customercare").child(mCurrentUserId).push();
+
+            String push_id = user_message_push.getKey();
+
+            Map messageMap = new HashMap();
+            messageMap.put("message",message);
+            messageMap.put("seen", false);
+            messageMap.put("type","text");
+            messageMap.put("time",ServerValue.TIMESTAMP);
+            messageMap.put("from",mCurrentUserId);
+
+
+            Map messageUserMap = new HashMap();
+            messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
+
+            ((EditText) findViewById(R.id.getUserMessage)).setText("");
+            mRootref.updateChildren(messageUserMap);
+        }
     }
 
     @Override
@@ -175,6 +195,7 @@ public class CustomercareActivity extends AppCompatActivity {
         }
 
     }
+
     private void uploadFile(final Uri data) {
 
         StorageReference sRef =mimagestorage.child("Files").child(mCurrentUserId).child(random()+ ".pdf");
@@ -219,18 +240,7 @@ public class CustomercareActivity extends AppCompatActivity {
         userRef.child("status").setValue("online");
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent startIntent = new Intent(  CustomercareActivity.this, MainActivity.class);
-        startIntent .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(startIntent);
-        finish();
-    }
-
     private void loadMessage() {
-
         h.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
@@ -254,35 +264,6 @@ public class CustomercareActivity extends AppCompatActivity {
         });
     }
 
-    private void sendMessage() {
-        String message = mChatMessageView.getText().toString();
-
-        if (!TextUtils.isEmpty(message)){
-            String current_user_ref = "Customercare/" + mCurrentUserId ;
-
-
-            DatabaseReference user_message_push = mRootref.child("Customercare").child(mCurrentUserId).push();
-
-            String push_id = user_message_push.getKey();
-
-            Map messageMap = new HashMap();
-            messageMap.put("message",message);
-            messageMap.put("seen", false);
-            messageMap.put("type","text");
-            messageMap.put("time",ServerValue.TIMESTAMP);
-            messageMap.put("from",mCurrentUserId);
-
-
-            Map messageUserMap = new HashMap();
-            messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
-
-            mChatMessageView.setText("");
-            mRootref.updateChildren(messageUserMap);
-
-        }
-    }
-
-
     public static String random(){
         Random generator =  new Random();
         StringBuilder randomStringBuilder = new StringBuilder();
@@ -294,4 +275,5 @@ public class CustomercareActivity extends AppCompatActivity {
         }
         return randomStringBuilder.toString();
     }
+
 }

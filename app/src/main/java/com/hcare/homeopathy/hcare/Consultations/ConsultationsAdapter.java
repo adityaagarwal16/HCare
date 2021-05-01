@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -65,8 +66,10 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.hasChild("seen")) {
-                    boolean data = (boolean) dataSnapshot.child("seen").getValue();
-                    holder.setSeen(data);
+                    try {
+                        boolean data = (boolean) dataSnapshot.child("seen").getValue();
+                        holder.setSeen(data);
+                    } catch (Exception e) {e.printStackTrace();}
                 }
             }
 
@@ -138,6 +141,7 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
         public void setName(String name) {
             ((TextView) mView.findViewById(R.id.doctorName)).setText(name);
         }
+
 
         public void setDoctorImage(final String thumb_image) {
 

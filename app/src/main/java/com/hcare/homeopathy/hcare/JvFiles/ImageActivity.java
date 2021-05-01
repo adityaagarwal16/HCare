@@ -9,6 +9,9 @@ import com.bumptech.glide.Glide;
 import com.hcare.homeopathy.hcare.R;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Objects;
+
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ImageActivity extends AppCompatActivity {
@@ -17,7 +20,8 @@ public class ImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
-        ImageView fullScreenImageView = (ImageView) findViewById(R.id.fullScreenImageView);
+        ImageView fullScreenImageView = (ImageView)
+                findViewById(R.id.fullScreenImageView);
         Intent callingActivityIntent = getIntent();
         if(callingActivityIntent != null) {
             Uri imageUri = callingActivityIntent.getData();
@@ -27,7 +31,8 @@ public class ImageActivity extends AppCompatActivity {
                         .into(fullScreenImageView);
             }
             PhotoViewAttacher photoAttacher;
-            photoAttacher= new PhotoViewAttacher(fullScreenImageView);
+            photoAttacher= new PhotoViewAttacher
+                    (Objects.requireNonNull(fullScreenImageView));
             photoAttacher.update();
         }
 

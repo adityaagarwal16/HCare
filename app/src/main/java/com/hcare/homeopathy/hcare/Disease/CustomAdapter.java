@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.JvFiles;
+package com.hcare.homeopathy.hcare.Disease;
 
 import android.content.Context;
 import android.view.LayoutInflater;

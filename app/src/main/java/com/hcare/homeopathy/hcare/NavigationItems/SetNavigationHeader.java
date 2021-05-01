@@ -3,7 +3,6 @@ package com.hcare.homeopathy.hcare.NavigationItems;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 

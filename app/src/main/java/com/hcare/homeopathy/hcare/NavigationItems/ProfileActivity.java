@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -95,7 +94,8 @@ public class ProfileActivity extends AppCompatActivity {
 
                     Picasso.get()
                             .load(image)
-                            .transform(new BlurTransformation(getApplicationContext(), 25, 1))
+                            .transform(new BlurTransformation(
+                                    getApplicationContext(), 25, 1))
                             .networkPolicy(NetworkPolicy.OFFLINE)
                             .into(findViewById(R.id.background), new Callback() {
 
