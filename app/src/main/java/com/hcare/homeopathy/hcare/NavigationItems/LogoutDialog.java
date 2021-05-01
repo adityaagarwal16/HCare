@@ -1,7 +1,6 @@
 package com.hcare.homeopathy.hcare.NavigationItems;
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,7 @@ import android.view.WindowManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcare.homeopathy.hcare.R;
-import com.hcare.homeopathy.hcare.SignUp.StartActivity;
+import com.hcare.homeopathy.hcare.Start.StartActivity;
 
 public class LogoutDialog {
 

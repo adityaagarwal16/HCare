@@ -49,7 +49,6 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseReference loggedin;
     String current_uid;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,70 +67,64 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     setFields(dataSnapshot);
                 } catch(Exception ignored) { }
-
-                final String image = Objects.requireNonNull(dataSnapshot.child("image").getValue()).toString();
-
-                if (!image.equals("default")) {
-
-                    Picasso.get()
-                            .load(image)
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .placeholder(R.drawable.vector_person)
-                            .into(findViewById(R.id.profilePicture), new Callback() {
-
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onError(Exception e) {
-                                    Picasso.get().load(image)
-                                            .placeholder(R.drawable.vector_person)
-                                            .into((ImageView) findViewById(R.id.profilePicture));
-                                }
-                            });
-
-                    Picasso.get()
-                            .load(image)
-                            .transform(new BlurTransformation(
-                                    getApplicationContext(), 25, 1))
-                            .networkPolicy(NetworkPolicy.OFFLINE)
-                            .into(findViewById(R.id.background), new Callback() {
-
-                                @Override
-                                public void onSuccess() {
-                                    findViewById(R.id.tint).setVisibility(View.VISIBLE);
-                                }
-
-                                @Override
-                                public void onError(Exception e) {
-                                    Picasso.get().load(image)
-                                            .transform(new BlurTransformation(
-                                                    getApplicationContext(), 25, 1))
-                                            .into((ImageView) findViewById(R.id.background));
-                                    findViewById(R.id.tint).setVisibility(View.VISIBLE);
-                                }
-                            });
-
-                }
+                try {
+                    setImage(Objects.requireNonNull(dataSnapshot.child("image")
+                            .getValue()).toString());
+                } catch(Exception ignored) { }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
-
-        findViewById(R.id.imageButton).setOnClickListener(v -> {
-            Intent galleryIntent = new Intent();
-            galleryIntent.setType("image/*");
-            galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
-
-            startActivityForResult(
-                    Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
-        });
-
         setCrosses();
+    }
+
+    void setImage(String image) {
+        if (!image.equals("default")) {
+
+            Picasso.get()
+                    .load(image)
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .placeholder(R.drawable.vector_person)
+                    .into(findViewById(R.id.profilePicture), new Callback() {
+
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Picasso.get().load(image)
+                                    .placeholder(R.drawable.vector_person)
+                                    .into((ImageView) findViewById(R.id.profilePicture));
+                        }
+                    });
+
+            Picasso.get()
+                    .load(image)
+                    .transform(new BlurTransformation(
+                            getApplicationContext(), 25, 1))
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(findViewById(R.id.background), new Callback() {
+
+                        @Override
+                        public void onSuccess() {
+                            findViewById(R.id.tint).setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Picasso.get().load(image)
+                                    .transform(new BlurTransformation(
+                                            getApplicationContext(), 25, 1))
+                                    .into((ImageView) findViewById(R.id.background));
+                            findViewById(R.id.tint).setVisibility(View.VISIBLE);
+                        }
+                    });
+
+        }
     }
 
     void setFields(DataSnapshot dataSnapshot) {
@@ -153,6 +146,15 @@ public class ProfileActivity extends AppCompatActivity {
                             .getValue()).toString())
             );
         } catch (Exception ignored) { }
+    }
+
+    public void imageButton(View view) {
+        Intent galleryIntent = new Intent();
+        galleryIntent.setType("image/*");
+        galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(
+                Intent.createChooser(galleryIntent,"SELECT IMAGE"),GALLERY_PICK);
     }
 
     void setCrosses() {
@@ -231,7 +233,6 @@ public class ProfileActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -247,12 +248,12 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode,int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK){
+        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
             Uri imageUri =data.getData();
             CropImage.activity(imageUri).setAspectRatio(1,1).start(this);
         }
 
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Toast.makeText(this, "Loading image\nPlease wait ..", Toast.LENGTH_SHORT).show();
@@ -298,6 +299,5 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
     }
-
 }
 

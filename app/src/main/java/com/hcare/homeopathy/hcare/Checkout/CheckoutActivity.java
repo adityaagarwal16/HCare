@@ -80,7 +80,6 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
                 });
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

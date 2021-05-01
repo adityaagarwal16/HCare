@@ -34,7 +34,7 @@ public class OrdersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order);
+        setContentView(R.layout.activity_recycler);
 
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -45,7 +45,7 @@ public class OrdersActivity extends AppCompatActivity {
         mDoctorsDatabase = FirebaseDatabase.getInstance().getReference()
                 .child("Orders").child(current_uid);
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-        mDoctorList = findViewById(R.id.doctor_list);
+        mDoctorList = findViewById(R.id.recycler);
         mDoctorList.setHasFixedSize(true);
         mDoctorList.setLayoutManager(new LinearLayoutManager(this));
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hcare.homeopathy.hcare.SignUp.StartActivity">
+    tools:context="com.hcare.homeopathy.hcare.Start.StartActivity">
 
     <EditText
         android:id="@+id/mobileNumber"

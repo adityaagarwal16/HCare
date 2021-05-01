@@ -20,7 +20,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:name=".JvFiles.Patientsapp"
+        android:name=".Start.SplashScreenApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -41,7 +41,7 @@
             android:parentActivityName=".MainActivity" />
 
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".Start.SplashScreenActivity"
             android:theme="@style/splashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -53,7 +53,7 @@
             android:label="HCare"
             android:theme="@style/splashScreen"/>
 
-        <activity android:name=".SignUp.StartActivity" />
+        <activity android:name=".Start.StartActivity" />
 
         <activity
             android:name=".Disease.DiseaseActivity"

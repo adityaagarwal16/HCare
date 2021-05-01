@@ -73,6 +73,8 @@
     <string name="address">Address</string>
     <string name="city">City</string>
     <string name="patient">Patient</string>
+    <string name="pinCode">PIN code</string>
+    <string name="state">State</string>
 
 
 </resources>

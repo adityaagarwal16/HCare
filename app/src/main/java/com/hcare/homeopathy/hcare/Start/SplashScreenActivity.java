@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare;
+package com.hcare.homeopathy.hcare.Start;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;
@@ -24,9 +24,11 @@ import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.Checkout.Constants;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
-import com.hcare.homeopathy.hcare.OrderTreatment.CartActivity;
+import com.hcare.homeopathy.hcare.Diseases;
+import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
-import com.hcare.homeopathy.hcare.SignUp.StartActivity;
+import com.hcare.homeopathy.hcare.R;
+import com.hcare.homeopathy.hcare.Start.StartActivity;
 
 import java.util.Objects;
 
@@ -79,7 +81,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     intent.putExtra("discount", 360);
                                     intent.putExtra("price", 600);
 
-                                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    //intent = new Intent(getApplicationContext(), MainActivity.class);
                                 }
                                 startActivity(intent);
                                 finish();

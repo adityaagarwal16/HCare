@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -164,7 +165,7 @@
                     android:id="@+id/header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Your Address"
+                    android:text="Delivery details"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -202,7 +203,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/nameLine"
                         android:layout_alignParentStart="true"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@id/nameCross"
                         android:autofillHints=""
@@ -261,10 +261,10 @@
                         android:layout_below="@id/phoneNumberLine"
                         android:layout_marginEnd="10dp"
                         android:paddingTop="10dp"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="7dp"
                         android:text="@string/prefix"
                         android:textColor="#BABABA"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <EditText
@@ -273,8 +273,8 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@id/pre"
                         android:layout_below="@id/phoneNumberLine"
-                        android:layout_centerHorizontal="true"
                         android:layout_marginEnd="10dp"
+                        android:letterSpacing="0.03"
                         android:layout_toStartOf="@id/phoneNumberCross"
                         android:autofillHints=""
                         android:background="@android:color/transparent"
@@ -292,6 +292,64 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBottom="@id/phoneNumber"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginBottom="5dp"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/vector_close" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp">
+
+                    <TextView
+                        android:id="@+id/pinCodeHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/pinCode"
+                        android:textColor="#BABABA"
+                        android:textSize="17sp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/pinCodeLine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/pinCodeHeader"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/colorSecondary"
+                        android:text="@string/pinCode" />
+
+                    <EditText
+                        android:id="@+id/pinCode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/pinCodeLine"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginEnd="10dp"
+                        android:layout_toStartOf="@id/pinCodeCross"
+                        android:autofillHints=""
+                        android:background="@android:color/transparent"
+                        android:hint="Enter your PIN code"
+                        android:inputType="number"
+                        android:paddingTop="10dp"
+                        android:letterSpacing="0.02"
+                        android:paddingBottom="5dp"
+                        android:text=""
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText" />
+
+                    <ImageView
+                        android:id="@+id/pinCodeCross"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@id/pinCode"
                         android:layout_alignParentEnd="true"
                         android:layout_marginBottom="5dp"
                         android:background="?selectableItemBackgroundBorderless"
@@ -332,7 +390,7 @@
                         android:layout_below="@id/addressLine"
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@id/addressCross"
-                        android:hint="Flat / House No. / Floor / Building  / street  / area"
+                        android:hint="House No. / Building / area"
                         android:autofillHints=""
                         android:paddingBottom="5dp"
                         android:background="@android:color/transparent"
@@ -340,7 +398,7 @@
                         android:textSize="17sp"
                         android:textStyle="bold"
                         tools:ignore="HardcodedText"
-                        android:inputType="textMultiLine" />
+                        android:inputType="textMultiLine|textCapSentences" />
 
                     <ImageView
                         android:id="@+id/addressCross"
@@ -392,7 +450,7 @@
                         android:autofillHints=""
                         android:background="@android:color/transparent"
                         android:hint="Enter your city"
-                        android:inputType="phone"
+                        android:inputType="textCapSentences"
                         android:paddingTop="10dp"
                         android:paddingBottom="5dp"
                         android:text=""
@@ -413,76 +471,67 @@
 
                 </RelativeLayout>
 
-                <!--   <TextView
-                    android:id="@+id/header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Your Address"
-                    android:textSize="18sp"
-                    android:layout_marginStart="7dp"
-                    android:layout_marginEnd="7dp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText" />
-
-                <EditText
-                    android:id="@+id/name"
-                    android:background="@android:color/transparent"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Full Name"
-                    android:inputType="textPersonName"
-                    android:padding="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/header"
-                    android:autofillHints="" />
+                    android:layout_marginTop="15dp">
 
-                <EditText
-                    android:id="@+id/phoneNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Phone_number"
-                    android:inputType="phone"
-                    android:padding="10dp"
-                    android:background="@android:color/transparent"                    app:layout_constraintTop_toBottomOf="@+id/name" />
+                    <TextView
+                        android:id="@+id/stateHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/state"
+                        android:textColor="#BABABA"
+                        android:textSize="17sp"
+                        android:textStyle="bold"/>
 
-                <EditText
-                    android:id="@+id/PinCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:background="@android:color/transparent"                     android:hint="Pin Code"
-                    android:inputType="number|textPersonName"
-                    app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
+                    <TextView
+                        android:id="@+id/stateLine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="2dp"
+                        android:layout_below="@id/stateHeader"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/colorSecondary"
+                        android:text="@string/state" />
 
-                <EditText
-                    android:id="@+id/address"
-                    android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:hint="Flat / House No. / Floor /Building  / street  /area"
-                    android:inputType="textMultiLine"
-                    android:padding="10dp"
-                    android:background="@android:color/transparent"
-                    app:layout_constraintTop_toBottomOf="@+id/PinCode" />
+                    <RelativeLayout
+                        android:id="@+id/selectState"
+                        android:layout_width="match_parent"
+                        android:layout_below="@id/stateLine"
+                        android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/City"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:hint="Town / City"
-                    android:inputType="textPersonName"
-                    android:padding="10dp"
-                    android:background="@android:color/transparent"                     app:layout_constraintTop_toBottomOf="@+id/address" />
+                        <TextView
+                            android:id="@+id/state"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginEnd="10dp"
+                            android:layout_toStartOf="@id/stateCross"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:textColor="?android:textColorPrimary"
+                            android:hint="Select your state"
+                            android:textSize="17sp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText" />
 
-                <EditText
-                    android:id="@+id/state"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="State"
-                    android:inputType="textPersonName"
-                    android:padding="10dp"
-                    android:background="@android:color/transparent"                     app:layout_constraintTop_toBottomOf="@id/City"/>-->
+                        <ImageView
+                            android:id="@+id/stateCross"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="5dp" android:background="?selectableItemBackgroundBorderless"
+                            android:contentDescription="@string/todo"
+                            android:src="@drawable/vector_down_arrow" />
+
+                    </RelativeLayout>
+
+
+
+                </RelativeLayout>
 
             </LinearLayout>
 

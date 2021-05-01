@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.SignUp;
+package com.hcare.homeopathy.hcare.Start;
 
 import android.content.Intent;
 import android.os.Bundle;

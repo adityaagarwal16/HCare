@@ -21,7 +21,7 @@ public class ConsultationsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consultations);
+        setContentView(R.layout.activity_recycler);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         String mCurrentUserId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();

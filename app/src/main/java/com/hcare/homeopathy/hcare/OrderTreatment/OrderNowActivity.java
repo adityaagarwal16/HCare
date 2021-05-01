@@ -1,15 +1,16 @@
 package com.hcare.homeopathy.hcare.OrderTreatment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -43,11 +44,7 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
     private DatabaseReference reference, userRef;
     private String doctorID, userID;
 
-    private String name, email, phoneNumber;
-    private String bpinCode;
-    private String bFlat;
-    private String bTown;
-    private String bState;
+    private String name, email, phoneNumber, pinCode, address, city, state;
     int totalPrice;
 
     @Override
@@ -66,8 +63,8 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
 
         setFields();
         setAddress();
-
-
+        setSpinner();
+        setCrosses();
     }
 
     private void setFields() {
@@ -79,7 +76,7 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
 
         ((TextView) findViewById(R.id.savings))
                 .setText(MessageFormat.format("{0} {1}",
-                        "Your Savings : ₹ ",
+                        "Your Savings : ₹",
                         getIntent().getIntExtra("discount", 0))
                 );
 
@@ -109,62 +106,106 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
     }
 
     private void setAddress() {
+        ((EditText) findViewById(R.id.pinCode)).setText(String.valueOf(828282));
+        ((EditText) findViewById(R.id.address)).setText("aa");
+        ((EditText) findViewById(R.id.city)).setText("aa");
+        ((TextView) findViewById(R.id.state)).setText("Maha");
+    }
 
+    void setSpinner() {
+        String[] states = {
+                "Andaman and Nicobar Islands", "Andhra Pradesh",
+                "Arunachal Pradesh", "Assam", "Bihar",
+                "Chandigarh", "Chhattisgarh", "Dadra and Nagar Haveli",
+                "Daman and Diu", "Delhi", "Goa", "Gujarat",
+                "Haryana", "Himachal Pradesh", "Jammu and Kashmir",
+                "Jharkhand", "Karnataka", "Kerala", "Ladakh",
+                "Lakshadweep", "Madhya Pradesh", "Maharashtra", "Manipur",
+                "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Puducherry",
+                "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+                "Uttar Pradesh", "Uttarakhand", "West Bengal"
+        };
+
+        findViewById(R.id.selectState).setOnClickListener(v -> {
+            AlertDialog.Builder b = new AlertDialog.Builder(this);
+            b.setTitle("Select State");
+
+            b.setItems(states, (dialog, which) -> {
+                dialog.dismiss();
+                ((TextView) findViewById(R.id.state)).setText(states[which]);
+            });
+
+            AlertDialog alertDialog = b.create();
+            alertDialog.show();
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+
+            Objects.requireNonNull(alertDialog.getWindow()).setLayout(
+                    (int) (metrics.widthPixels * 0.9),
+                    (int) (metrics.heightPixels * 0.6)
+            );
+        });
+    }
+
+    void setCrosses() {
+        crossListeners(R.id.name, R.id.nameCross);
+        crossListeners(R.id.phoneNumber, R.id.phoneNumberCross);
+        crossListeners(R.id.pinCode, R.id.pinCodeCross);
+        crossListeners(R.id.address, R.id.addressCross);
+        crossListeners(R.id.city, R.id.cityCross);
+    }
+
+    void crossListeners(int textID, int crossID) {
+        findViewById(crossID).setOnClickListener(v -> {
+            EditText text =  findViewById(textID);
+            final InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            text.requestFocus();
+            text.setText("");
+            manager.showSoftInput(text, 1);
+        });
     }
 
     public void placeOrder(View view) {
-        /*pincode = (EditText) findViewById(R.id.PinCode);
-        Flat =(EditText) findViewById(R.id.FlatAddress);
-        Towm =(EditText) findViewById(R.id.City);
-        state =(EditText) findViewById(R.id.state);*/
         name = ((EditText) findViewById(R.id.name)).getText().toString();
         phoneNumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
+        pinCode = ((EditText) findViewById(R.id.pinCode)).getText().toString();
+        address = ((EditText) findViewById(R.id.address)).getText().toString();
+        city = ((EditText) findViewById(R.id.city)).getText().toString();
+        state = ((TextView) findViewById(R.id.state)).getText().toString();
 
         try {
             if (!name.isEmpty()) {
-                if (!phoneNumber.isEmpty()) {
-                    /*bpinCode = pincode.getText().toString();
-                    if (!TextUtils.isEmpty(bpinCode)) {
-                        bFlat = Flat.getText().toString();
-                        if (!TextUtils.isEmpty(bFlat)) {
-                            bTown = Towm.getText().toString();
-                            if (!TextUtils.isEmpty(bTown)) {
-                                bState = state.getText().toString();
-                                if (!TextUtils.isEmpty(bState)) {
+                if (phoneNumber.length() == 10) {
+                    if (pinCode.length() == 6) {
+                        if (!address.isEmpty()) {
+                            if (!city.isEmpty()) {
+                                if (!state.isEmpty())
 
-
-                                    // payedorder();
                                     startPayment();
-                                    Toast.makeText(this, "pay now ",
-                                            Toast.LENGTH_LONG).show();
 
-
-                                } else {
-                                    Toast.makeText(this, "please enter your State ",
+                                else
+                                    Toast.makeText(this, "Please enter your State",
                                             Toast.LENGTH_LONG).show();
-                                }
-                            } else {
-                                Toast.makeText(this, "please enter your City ",
-                                        Toast.LENGTH_LONG).show();
                             }
-
-                        } else {
-                            Toast.makeText(this, "please enter your Flat No ",
-                                    Toast.LENGTH_LONG).show();
+                            else
+                                Toast.makeText(this, "Please enter your City",
+                                        Toast.LENGTH_LONG).show();
                         }
-                    } else {
-                        Toast.makeText(this, "please enter your Pin Code ",
-                                Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(this, "please enter your Address",
+                                    Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(this, "please enter your Phone Number ",
+                    else
+                        Toast.makeText(this, "Please enter 6 digit Pin Code",
+                                Toast.LENGTH_LONG).show();
+                }
+                else
+                    Toast.makeText(this, "Please enter valid Phone Number",
                             Toast.LENGTH_LONG).show();
-                }
-*/
-                }
-            } else {
-                Toast.makeText(this, "please enter your name ", Toast.LENGTH_LONG).show();
             }
+            else
+                Toast.makeText(this, "Please enter your name",
+                        Toast.LENGTH_LONG).show();
+
         } catch (Exception e){
             Toast.makeText(this, "Error, please try again", Toast.LENGTH_LONG).show();
         }
@@ -188,16 +229,21 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
             // We need to get the instance of the LayoutInflater
             LayoutInflater inflater = (LayoutInflater)
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            @SuppressLint("InflateParams")
-            View layout = inflater.inflate(R.layout.addresspop, null);
+
+            View layout = inflater.inflate(R.layout.dialog_order_successful,
+                    findViewById(R.id.layout));
+
             pw = new PopupWindow(layout,
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     true);
 
-            pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
-            Button Close = (Button) layout.findViewById(R.id.close_popup);
-            Close.setOnClickListener(v -> {
+            layout.post(new Runnable() {
+                public void run() {
+                    pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+                }
+            });
+            layout.findViewById(R.id.closeActivity).setOnClickListener(v -> {
                 pw.dismiss();
                 Intent regIntent = new Intent(this, MainActivity.class);
                 regIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -211,11 +257,13 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
     }
 
     public void startPayment() {
-        final Checkout co = new Checkout();
+        final AppCompatActivity activity = this;
+
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
+                    final Checkout co = new Checkout();
                     email = (String) dataSnapshot.child("email").getValue();
                     JSONObject options = new JSONObject();
                     options.put("name", "Medicine");
@@ -229,13 +277,13 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
 
                     JSONObject preFill = new JSONObject();
                     preFill.put("email", email);
-                    preFill.put("contact", (String) dataSnapshot.child("phone number").getValue());
+                    preFill.put("contact", dataSnapshot.child("phone number").getValue());
 
                     options.put("prefill", preFill);
 
-                    co.open(OrderNowActivity.this, options);
+                    co.open(activity, options);
                 } catch (Exception e) {
-                    Toast.makeText(OrderNowActivity.this ,
+                    Toast.makeText(getApplicationContext() ,
                             "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
                             .show();
                 }
@@ -259,21 +307,22 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
 
     @Override
     public void onPaymentError(int code, String response) {
+        orderSuccessful();
         Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
     }
 
     private void orderSuccessful() {
-        String OrderId ="Hcr"+getRandomNumberString();
+        String OrderId ="Hcr" + getRandomNumberString();
         String time = DateFormat.getDateTimeInstance().format(new Date());
 
         HashMap<String, String> userMap = new HashMap<>();
         userMap.put("FullName", name);
         userMap.put("PhoneNumber", phoneNumber);
-        userMap.put("PinCode", bpinCode);
-        userMap.put("Address", bFlat);
+        userMap.put("PinCode", pinCode);
+        userMap.put("Address", address);
         userMap.put("PatientId", userID);
-        userMap.put("City", bTown);
-        userMap.put("State", bState);
+        userMap.put("City", city);
+        userMap.put("State", state);
         userMap.put("Doctor", doctorID);
         userMap.put("emailId", email);
         userMap.put("Amount", String.valueOf(totalPrice));
@@ -281,7 +330,7 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
         userMap.put("orderId", OrderId);
         userMap.put("Ordertime", time);
 
-        reference.child("neworder").child(OrderId).setValue(userMap);
+       /* reference.child("neworder").child(OrderId).setValue(userMap);
         reference.child("Orders").child(userID)
                 .child(OrderId).setValue(userMap).addOnCompleteListener(task -> {
             reference.child("Doctors").child(doctorID)
@@ -316,12 +365,12 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
 
                 }
             });
-        });
+        });*/
         showPopup();
     }
 
     @SuppressLint("DefaultLocale")
-    public static String getRandomNumberString() {
+    public String getRandomNumberString() {
         // It will generate 6 digit random Number.
         // from 0 to 999999
         Random rnd = new Random();

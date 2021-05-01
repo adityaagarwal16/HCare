@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.JvFiles;
+package com.hcare.homeopathy.hcare.Start;
 
 import android.app.Application;
 import android.content.Context;
@@ -13,7 +13,7 @@ import androidx.multidex.MultiDex;
  * Created by Vinith pc on 8/17/2017.
  */
 
-public class Patientsapp extends Application {
+public class SplashScreenApp extends Application {
 
 
     @Override

@@ -151,8 +151,8 @@ public class CheckoutFragment extends Fragment {
                     options.put("amount", totalAmount * RAZORPAY_MULTIPLIER);
 
                     JSONObject preFill = new JSONObject();
-                    preFill.put("email", (String) dataSnapshot.child("email").getValue());
-                    preFill.put("contact", (String) dataSnapshot.child("phone number").getValue());
+                    preFill.put("email", dataSnapshot.child("email").getValue());
+                    preFill.put("contact", dataSnapshot.child("phone number").getValue());
 
                     options.put("prefill", preFill);
 
