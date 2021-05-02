@@ -75,6 +75,6 @@
     <string name="patient">Patient</string>
     <string name="pinCode">PIN code</string>
     <string name="state">State</string>
-
+    <string name="enterPhoneNumber"><font size="20">Enter your phone number</font></string>
 
 </resources>

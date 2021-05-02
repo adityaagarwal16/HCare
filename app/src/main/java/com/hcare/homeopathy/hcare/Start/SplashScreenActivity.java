@@ -28,7 +28,6 @@ import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
 import com.hcare.homeopathy.hcare.R;
-import com.hcare.homeopathy.hcare.Start.StartActivity;
 
 import java.util.Objects;
 
@@ -52,7 +51,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                             public void run() {
                                 Intent intent;
                                 if(FirebaseAuth.getInstance().getCurrentUser() == null)
-                                    intent = new Intent(getApplicationContext(), StartActivity.class);
+                                    intent = new Intent(getApplicationContext(), LoginActivity.class);
                                 else {
 
                                     intent = new Intent(getApplicationContext(), DiseaseActivity.class);

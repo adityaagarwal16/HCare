@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    tools:context="com.hcare.homeopathy.hcare.Start.LoginActivity">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login with Mobile Number"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/line"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/line"
+        app:layout_constraintVertical_bias="0.42"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/colorSecondary"
+        android:text="Login with Mobile Number"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/pre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="@string/prefix"
+        android:textColor="#BABABA"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/phoneNumber"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/phoneNumber" />
+
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:autofillHints=""
+        android:background="@color/colorPrimary"
+        android:gravity="bottom"
+        android:hint="@string/enterPhoneNumber"
+        android:inputType="phone"
+        android:letterSpacing="0.06"
+        android:paddingTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:paddingBottom="5dp"
+        android:text=""
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/cross"
+        app:layout_constraintStart_toEndOf="@+id/pre"
+        app:layout_constraintTop_toBottomOf="@+id/line" />
+
+    <ImageView
+        android:id="@+id/cross"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginBottom="5dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/vector_close"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/phoneNumber"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <com.agrawalsuneet.dotsloader.loaders.LinearDotsLoader
+        android:id="@+id/loader"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:loader_animDur="250"
+        app:loader_circleRadius="7dp"
+        app:loader_defaultColor="@color/colorSecondary"
+        app:loader_dotsDist="5dp"
+        app:loader_expandOnSelect="false"
+        app:loader_firstShadowColor="#40AC6F"
+        app:loader_isSingleDir="false"
+        app:loader_noOfDots="5"
+        android:layout_centerInParent="true"
+        app:loader_secondShadowColor="#59CC8B"
+        app:loader_selectedColor="#2CAF67"
+        app:loader_selectedRadius="10dp"
+        app:loader_showRunningShadow="true" />
+
+    <RelativeLayout
+        android:id="@+id/otpSentLayout"
+        android:visibility="gone"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf=
+            "@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:contentDescription="@string/todo"
+            android:padding="5dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/vector_check_circle"
+            app:tint="@color/colorSecondary" />
+
+        <TextView
+            android:id="@+id/heading1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/image1"
+            android:text="OTP SENT"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textSize="20sp"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/otpFailedLayout"
+        android:visibility="gone"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/imageCard"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="50dp"
+            android:layout_centerVertical="true"
+            app:cardBackgroundColor="@color/red_400"
+            android:layout_width="36dp"
+            android:layout_height="36dp">
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/todo"
+                android:padding="5dp"
+                android:src="@drawable/vector_close"
+                app:tint="@color/colorPrimary" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/otpFailedText"
+            android:textAllCaps="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imageCard"
+            android:layout_marginStart="2dp"
+            android:text="OTP Failed"
+            android:textStyle="bold"
+            android:paddingBottom="3dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:textSize="20sp"
+            tools:ignore="HardcodedText" />
+
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:foreground="?selectableItemBackground"
+        app:cardBackgroundColor="@color/colorSecondary"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="18dp"
+            android:text="Submit"
+            android:textStyle="bold"
+            android:textColor="?android:textColorPrimaryInverse"
+            android:textSize="20sp"
+            tools:ignore="HardcodedText" />
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,10 +9,6 @@ import com.squareup.picasso.Picasso;
 
 import androidx.multidex.MultiDex;
 
-/**
- * Created by Vinith pc on 8/17/2017.
- */
-
 public class SplashScreenApp extends Application {
 
 

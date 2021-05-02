@@ -31,14 +31,6 @@
         android:protectionLevel="signature"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
-        <activity android:name=".Checkout.CheckoutActivity"
-            android:label="Checkout">
-        </activity>
-
-        <activity android:name=".NavigationItems.Faq.FaqActivity"
-            android:theme="@style/splashScreen"
-            android:label="FAQ"
-            android:parentActivityName=".MainActivity" />
 
         <activity
             android:name=".Start.SplashScreenActivity"
@@ -49,11 +41,15 @@
             </intent-filter>
         </activity>
 
+
+        <activity android:name=".Start.LoginActivity"
+            android:theme="@style/splashScreen"/>
+
+
         <activity android:name=".MainActivity"
             android:label="HCare"
             android:theme="@style/splashScreen"/>
 
-        <activity android:name=".Start.StartActivity" />
 
         <activity
             android:name=".Disease.DiseaseActivity"
@@ -63,35 +59,12 @@
         <activity android:name=".Disease.DiseaseSpinnerActivity"
             android:parentActivityName=".MainActivity" />
 
-        <activity
-            android:name=".NavigationItems.CustomerCareActivity"
-            android:label="Customer care"
-            android:parentActivityName=".MainActivity">
-        </activity>
-
-        <activity android:name=".JvFiles.ImageActivity" />
-
-        <activity
-            android:name=".NavigationItems.Orders.OrdersActivity"
-            android:label="Orders"/>
-
-        <activity
-            android:name=".NavigationItems.ProfileActivity"
-            android:label="Profile"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:parentActivityName=".MainActivity" />
-
-        <activity android:name=".OrderTreatment.CartActivity"
-            android:label="My Cart"/>
-
-        <activity android:name=".OrderTreatment.OrderNowActivity"
-            android:label="Order now"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
 
         <activity
             android:name=".Consultations.Doctor.MainDoctorActivity"
             android:label="Consultation"
             android:theme="@style/splashScreen" />
+
 
         <activity android:name=".Consultations.ConsultationsActivity"
             android:label="Consultations"
@@ -102,15 +75,62 @@
             </intent-filter>
         </activity>
 
+
+        <activity android:name=".Checkout.CheckoutActivity"
+            android:label="Checkout">
+        </activity>
+
+
+        <activity android:name=".NavigationItems.Faq.FaqActivity"
+            android:theme="@style/splashScreen"
+            android:label="FAQ"
+            android:parentActivityName=".MainActivity" />
+
+
+        <activity
+            android:name=".NavigationItems.CustomerCareActivity"
+            android:label="Customer care"
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+
+        <activity android:name=".JvFiles.ImageActivity" />
+
+
+        <activity
+            android:name=".NavigationItems.Orders.OrdersActivity"
+            android:label="Orders"/>
+
+
+        <activity
+            android:name=".NavigationItems.ProfileActivity"
+            android:label="Profile"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:parentActivityName=".MainActivity" />
+
+
+        <activity android:name=".OrderTreatment.CartActivity"
+            android:label="My Cart"/>
+
+
+        <activity android:name=".OrderTreatment.OrderNowActivity"
+            android:label="Order now"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
+
 
         <activity
             android:name=".NavigationItems.BlogsActivity"
             android:parentActivityName=".MainActivity" />
 
+
         <activity android:name=".NavigationItems.InviteActivity"
             android:label="Invite your friends"
             android:parentActivityName=".MainActivity" />
+
+
 
 
 

@@ -76,9 +76,7 @@ public class SetNavigationHeader {
                     .into(headerView.findViewById(R.id.profilePicture), new Callback() {
 
                         @Override
-                        public void onSuccess() {
-
-                        }
+                        public void onSuccess() { }
 
                         @Override
                         public void onError(Exception e) {

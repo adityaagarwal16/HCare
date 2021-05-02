@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.hcare.homeopathy.hcare.R;
-import com.hcare.homeopathy.hcare.Start.StartActivity;
+import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
 public class LogoutDialog {
 
@@ -45,7 +45,7 @@ public class LogoutDialog {
 
         FirebaseAuth.getInstance().signOut();
         ((Activity) context).finishAffinity();
-        Intent intent = new Intent(context, StartActivity.class);
+        Intent intent = new Intent(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
     }
