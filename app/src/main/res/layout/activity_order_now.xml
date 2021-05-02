@@ -557,5 +557,10 @@
         android:textSize="18sp"
         tools:ignore="HardcodedText" />
 
+    <FrameLayout
+        android:layout_centerInParent="true"
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

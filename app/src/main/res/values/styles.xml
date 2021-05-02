@@ -26,7 +26,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-
     <style name="splashScreen" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#FFFFFF</item>

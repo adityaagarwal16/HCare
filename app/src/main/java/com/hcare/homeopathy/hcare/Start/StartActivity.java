@@ -22,6 +22,7 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity;
 import com.hcare.homeopathy.hcare.R;
 
@@ -118,7 +119,7 @@ public class StartActivity extends AppCompatActivity {
         };
 
         Submit.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty( MobileNumber.getText().toString())) {
+            if (!TextUtils.isEmpty(MobileNumber.getText().toString())) {
                 Toast.makeText(getApplicationContext(), "hello",
                         Toast.LENGTH_SHORT).show();
 
@@ -173,6 +174,7 @@ public class StartActivity extends AppCompatActivity {
                         mDatabase = FirebaseDatabase.getInstance()
                                 .getReference().child("Users").child(uid);
 
+                        Intent intent;
                         if(mDatabase == null) {
                             HashMap<String, String> userMap = new HashMap<>();
                             userMap.put("phone number", phone);
@@ -185,14 +187,18 @@ public class StartActivity extends AppCompatActivity {
                             userMap.put("device_token", device_token);
                             userMap.put("status", "online");
                             mDatabase.setValue(userMap);
-                        }
-                        FirebaseUser user = Objects.requireNonNull(
-                                task.getResult()).getUser();
 
-                        Intent regIntent = new Intent(this,
-                                ProfileActivity.class);
-                        startActivity(regIntent);
-                        regIntent.addFlags(
+                            intent = new Intent(this,
+                                    ProfileActivity.class);
+                        }
+                        else{
+                            intent = new Intent(this,
+                                    MainActivity.class);
+                            Toast.makeText(this, "Welcome back", Toast.LENGTH_SHORT).show();
+                        }
+
+                        startActivity(intent);
+                        intent.addFlags(
                                 Intent.FLAG_ACTIVITY_NEW_TASK |
                                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         finish();
@@ -205,7 +211,8 @@ public class StartActivity extends AppCompatActivity {
 
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                             // The verification code entered was invalid
-                            Toast.makeText(StartActivity.this, "Verification failed code invalid", Toast.LENGTH_LONG).show();
+                            Toast.makeText(StartActivity.this,
+                                    "Verification failed code invalid", Toast.LENGTH_LONG).show();
                         }
                     }
                 });

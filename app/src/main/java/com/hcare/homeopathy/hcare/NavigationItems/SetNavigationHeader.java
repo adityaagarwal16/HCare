@@ -21,11 +21,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
+import jp.wasabeef.picasso.transformations.BlurTransformation;
+
 public class SetNavigationHeader {
 
     private final View headerView;
+    private final Context context;
 
     public SetNavigationHeader(Context context) {
+        this.context = context;
         this.headerView = ((NavigationView) ((Activity) context).
                 findViewById(R.id.navigationView)).getHeaderView(0);
 
@@ -81,6 +85,28 @@ public class SetNavigationHeader {
                             Picasso.get().load(image)
                                     .placeholder(R.drawable.vector_person)
                                     .into((ImageView) headerView.findViewById(R.id.profilePicture));
+                        }
+                    });
+
+            Picasso.get()
+                    .load(image)
+                    .transform(new BlurTransformation(
+                            context, 25, 1))
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(headerView.findViewById(R.id.background), new Callback() {
+
+                        @Override
+                        public void onSuccess() {
+                            headerView.findViewById(R.id.tint).setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            Picasso.get().load(image)
+                                    .transform(new BlurTransformation(
+                                            context, 25, 1))
+                                    .into((ImageView) headerView.findViewById(R.id.background));
+                            headerView.findViewById(R.id.tint).setVisibility(View.VISIBLE);
                         }
                     });
         }

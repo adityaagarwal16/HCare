@@ -1,33 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/profileSettings"
-        android:title="@string/profile" />
-    <item
-        android:id="@+id/chat"
-        android:title="@string/chat" />
-    <item
-        android:id="@+id/orders"
-        android:title="@string/orders" />
-    <item
-        android:id="@+id/help"
-        android:title="@string/helpSupport" />
+    <group android:id="@+id/group1">
+        <item
+            android:id="@+id/profileSettings"
+            android:icon="@drawable/vector_person"
+            android:title="@string/profile" />
+    </group>
 
-    <item
-        android:id="@+id/consultations"
-        android:title="@string/consultations" />
+    <group android:id="@+id/group2">
 
-    <item
-        android:id="@+id/invite"
-        android:title="@string/invite" />
+        <item
+            android:id="@+id/chat"
+            android:icon="@drawable/vector_check_circle"
+            android:title="@string/chat" />
+        <item
+            android:id="@+id/orders"
+            android:icon="@drawable/vector_cart"
+            android:title="@string/orders" />
 
-    <item
-        android:id="@+id/customerCare"
-        android:title="@string/customerCare" />
+        <item
+            android:id="@+id/consultations"
+            android:icon="@drawable/vector_consultations"
+            android:title="@string/consultations" />
+    </group>
 
-    <item
-        android:id="@+id/logout"
-        android:title="@string/logout" />
+    <group android:id="@+id/group3">
+
+        <item
+            android:id="@+id/help"
+            android:icon="@drawable/vector_help"
+            android:title="@string/helpSupport" />
+
+        <item
+            android:id="@+id/invite"
+            android:icon="@drawable/vector_share"
+            android:title="@string/invite" />
+
+        <item
+            android:id="@+id/customerCare"
+            android:icon="@drawable/vector_chat"
+            android:title="@string/customerCare" />
+
+        <item
+            android:id="@+id/rateUs"
+            android:icon="@drawable/vector_like"
+            android:title="@string/rateUs" />
+
+    </group>
+
+    <group android:id="@+id/group4">
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/vector_logout"
+            android:title="@string/logout" />
+    </group>
+
+
 
 </menu>

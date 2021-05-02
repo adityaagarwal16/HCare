@@ -30,7 +30,7 @@ public class ConsultationsActivity extends AppCompatActivity {
                 .getReference().child("Private_consult").child(mCurrentUserId);
 
         userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUserId);
-        RecyclerView mDoctorList = findViewById(R.id.doctor_list);
+        RecyclerView mDoctorList = findViewById(R.id.recycler);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);

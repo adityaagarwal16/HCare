@@ -2,6 +2,7 @@ package com.hcare.homeopathy.hcare.OrderTreatment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -35,6 +36,9 @@ public class CartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         doctorID = getIntent().getStringExtra("user_id");
         medicine_id = getIntent().getStringExtra("medicine_id");
 
@@ -62,6 +66,17 @@ public class CartActivity extends AppCompatActivity {
         setRecycler();
         setHeader();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void setHeader() {
         FirebaseDatabase.getInstance().getReference()

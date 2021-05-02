@@ -1,52 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/colorSecondary"
-    android:layout_height="200dp">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profilePicture"
-        android:tint="@color/colorPrimary"
-        android:layout_margin="15dp"
-        android:layout_width="80dp"
-        android:layout_centerVertical="true"
-        android:layout_height="80dp"
-        android:src="@drawable/vector_person" />
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/username"
-        android:layout_width="match_parent"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="7dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/line"
-        android:text="@string/username"
-        android:layout_toEndOf="@id/profilePicture"
-        android:textColor="?android:textColorPrimaryInverse"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/line"
-        android:layout_width="wrap_content"
-        android:layout_height="2dp"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@id/username"
-        android:background="@color/colorAccent"
-        android:text="@string/username"/>
-
-    <TextView
-        android:id="@+id/phoneNum"
-        android:layout_width="wrap_content"
-        android:layout_alignStart="@id/username"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/line"
-        android:textColor="?android:textColorSecondaryInverse"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/colorSecondary"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:textSize="21sp"
         android:textStyle="bold"
-        android:text="@string/phone"
-        android:textSize="15sp"/>
+        android:text="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/background"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:src="@color/colorSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/todo" />
+
+        <ImageView
+            android:id="@+id/tint"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:background="#30000000"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/todo" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profilePicture"
+            android:tint="@color/colorPrimary"
+            android:layout_margin="15dp"
+            android:layout_width="80dp"
+            android:layout_centerVertical="true"
+            android:layout_height="80dp"
+            android:src="@drawable/vector_person" />
+
+        <TextView
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="7dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/line"
+            android:text="@string/username"
+            android:layout_toEndOf="@id/profilePicture"
+            android:textColor="?android:textColorPrimaryInverse"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_centerVertical="true"
+            android:layout_alignStart="@id/username"
+            android:background="@color/colorAccent"
+            android:text="@string/username"/>
+
+        <TextView
+            android:id="@+id/phoneNum"
+            android:layout_width="wrap_content"
+            android:layout_alignStart="@id/username"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line"
+            android:textColor="?android:textColorSecondaryInverse"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:textStyle="bold"
+            android:text="@string/phone"
+            android:textSize="15sp"/>
+
+    </RelativeLayout>
+</LinearLayout>

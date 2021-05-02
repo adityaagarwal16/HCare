@@ -2,17 +2,12 @@ package com.hcare.homeopathy.hcare.OrderTreatment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -38,6 +32,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
+
+import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.ADDRESS;
+import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.CITY;
+import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.PIN_CODE;
+import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.STATE;
 
 public class OrderNowActivity extends AppCompatActivity implements PaymentResultListener {
 
@@ -52,6 +51,9 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_now);
 
+        Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
 
@@ -65,6 +67,16 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
         setAddress();
         setSpinner();
         setCrosses();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setFields() {
@@ -106,10 +118,12 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
     }
 
     private void setAddress() {
-        ((EditText) findViewById(R.id.pinCode)).setText(String.valueOf(828282));
-        ((EditText) findViewById(R.id.address)).setText("aa");
-        ((EditText) findViewById(R.id.city)).setText("aa");
-        ((TextView) findViewById(R.id.state)).setText("Maha");
+        AddressSharedPref sharedPref = new AddressSharedPref(this);
+
+        ((EditText) findViewById(R.id.pinCode)).setText(sharedPref.get(PIN_CODE));
+        ((EditText) findViewById(R.id.address)).setText(sharedPref.get(ADDRESS));
+        ((EditText) findViewById(R.id.city)).setText(sharedPref.get(CITY));
+        ((TextView) findViewById(R.id.state)).setText(sharedPref.get(STATE));
     }
 
     void setSpinner() {
@@ -223,40 +237,21 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
         userRef.child("status").setValue("offline");
     }
 
-    private void showPopup() {
-        PopupWindow pw;
-        try {
-            // We need to get the instance of the LayoutInflater
-            LayoutInflater inflater = (LayoutInflater)
-                    getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View layout = inflater.inflate(R.layout.dialog_order_successful,
-                    findViewById(R.id.layout));
-
-            pw = new PopupWindow(layout,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    true);
-
-            layout.post(new Runnable() {
-                public void run() {
-                    pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
-                }
-            });
-            layout.findViewById(R.id.closeActivity).setOnClickListener(v -> {
-                pw.dismiss();
-                Intent regIntent = new Intent(this, MainActivity.class);
-                regIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(regIntent);
-                finish();
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void showOrderSuccessfulFragment() {
+        findViewById(R.id.placeOrder).setVisibility(View.GONE);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frameLayout, new OrderSuccessfulFragment())
+                .commit();
     }
 
     public void startPayment() {
+        AddressSharedPref sharedPref = new AddressSharedPref(this);
+        sharedPref.save(PIN_CODE, pinCode);
+        sharedPref.save(ADDRESS, address);
+        sharedPref.save(CITY, city);
+        sharedPref.save(STATE, state);
+
         final AppCompatActivity activity = this;
 
         userRef.addValueEventListener(new ValueEventListener() {
@@ -330,7 +325,7 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
         userMap.put("orderId", OrderId);
         userMap.put("Ordertime", time);
 
-       /* reference.child("neworder").child(OrderId).setValue(userMap);
+        reference.child("neworder").child(OrderId).setValue(userMap);
         reference.child("Orders").child(userID)
                 .child(OrderId).setValue(userMap).addOnCompleteListener(task -> {
             reference.child("Doctors").child(doctorID)
@@ -365,8 +360,9 @@ public class OrderNowActivity extends AppCompatActivity implements PaymentResult
 
                 }
             });
-        });*/
-        showPopup();
+        });
+
+        showOrderSuccessfulFragment();
     }
 
     @SuppressLint("DefaultLocale")

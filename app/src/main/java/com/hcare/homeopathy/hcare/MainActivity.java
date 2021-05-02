@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseSpinnerActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.LogoutDialog;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
 import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
@@ -67,7 +68,6 @@ public class MainActivity extends AppCompatActivity
         eventListeners();
 
         setFlipper();
-
 
         findViewById(R.id.cart).setOnClickListener(v -> {
             Intent docprofileIntent = new Intent(MainActivity.this, OrdersActivity.class);

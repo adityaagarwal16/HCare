@@ -16,5 +16,5 @@
     <color name="bottomgreen">#0CCEA1</color>
     <color name="fontcolor">#191D4A</color>
 
-    <color name="signOutDialogBackground">#D9FFFFFF</color>
+    <color name="signOutDialogBackground">#FAFFFFFF</color>
 </resources>

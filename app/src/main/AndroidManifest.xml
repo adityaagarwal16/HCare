@@ -82,13 +82,11 @@
             android:parentActivityName=".MainActivity" />
 
         <activity android:name=".OrderTreatment.CartActivity"
-            android:label="My Cart"
-            android:parentActivityName=".OrderTreatment.MainDoctorActivity"/>
+            android:label="My Cart"/>
 
         <activity android:name=".OrderTreatment.OrderNowActivity"
             android:label="Order now"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:parentActivityName=".OrderTreatment.CartActivity"/>
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
 
         <activity
             android:name=".Consultations.Doctor.MainDoctorActivity"
