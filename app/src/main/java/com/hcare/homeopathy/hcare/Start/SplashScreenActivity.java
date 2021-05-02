@@ -26,6 +26,7 @@ import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
 import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.MainActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity;
 import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
 import com.hcare.homeopathy.hcare.R;
 
@@ -72,15 +73,15 @@ public class SplashScreenActivity extends AppCompatActivity {
                                     //intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
 
                                     //intent = new Intent(getApplicationContext(), FaqActivity.class);
-                                    //intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                                    intent = new Intent(getApplicationContext(), ProfileActivity.class);
 
 
-                                    intent = new Intent(getApplicationContext(), OrderNowActivity.class);
-                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
-                                    intent.putExtra("discount", 360);
-                                    intent.putExtra("price", 600);
-
-                                    intent = new Intent(getApplicationContext(), MainActivity.class);
+//                                    intent = new Intent(getApplicationContext(), OrderNowActivity.class);
+//                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+//                                    intent.putExtra("discount", 360);
+//                                    intent.putExtra("price", 600);
+//
+//                                    intent = new Intent(getApplicationContext(), MainActivity.class);
                                 }
                                 startActivity(intent);
                                 finish();

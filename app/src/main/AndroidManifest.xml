@@ -126,12 +126,6 @@
             android:parentActivityName=".MainActivity" />
 
 
-        <activity android:name=".NavigationItems.InviteActivity"
-            android:label="Invite your friends"
-            android:parentActivityName=".MainActivity" />
-
-
-
 
 
         <service

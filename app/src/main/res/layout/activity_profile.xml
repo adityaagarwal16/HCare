@@ -134,6 +134,19 @@
                     app:tint="@color/colorPrimary"
                     android:contentDescription="@string/todo" />
 
+                <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
+                    android:id="@+id/loader"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:trailingcircular_animDelay="0"
+                    app:trailingcircular_animDuration="1100"
+                    app:trailingcircular_bigCircleRadius="50dp"
+                    app:trailingcircular_dotsColor="@color/loader_selected"
+                    app:trailingcircular_dotsRadius="8dp"
+                    app:trailingcircular_noOfTrailingDots="6" />
+
             </RelativeLayout>
 
             <RelativeLayout

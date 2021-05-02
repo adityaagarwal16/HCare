@@ -256,7 +256,8 @@ public class ProfileActivity extends AppCompatActivity {
         if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "Loading image\nPlease wait ..", Toast.LENGTH_SHORT).show();
+                findViewById(R.id.loader).setVisibility(View.VISIBLE);
+
                 Uri resultUri = result.getUri();
                 final File thumb_filePath = new File(Objects.requireNonNull(resultUri.getPath()));
 
@@ -290,7 +291,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 update_haspMap.put("thumb_image", uri1.toString());
 
                                 mUserDatabase.updateChildren(update_haspMap);
-
+                                findViewById(R.id.loader).setVisibility(View.GONE);
                             }));
 
                 }));

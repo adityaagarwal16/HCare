@@ -47,7 +47,6 @@ public class PhoneNumberFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         LoginActivity.OTP_FRAGMENT_OPEN = false;
         phoneNumber = root.findViewById(R.id.phoneNumber);
-        phoneNumber.setText("9876543210");
 
         submitButton();
         setCross();

@@ -45,11 +45,28 @@ public class OpenNavigationItems {
                 intent = new Intent(context, ConsultationsActivity.class);
                 break;
             case R.id.invite:
-                intent = new Intent(context, InviteActivity.class);
+                intent = null;
+                try {
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name));
+                    String shareMessage= "Check out HCare!! India's first only Homeopathic " +
+                            "online consultation and delivery app \n\n"
+                            + "https://play.google.com/store/apps/details?id=com.hcare.homeopathy.hcare";
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+                    context.startActivity(Intent.createChooser(shareIntent, "choose one"));
+                } catch(Exception e) { e.printStackTrace(); }
                 break;
+
             case R.id.customerCare:
                 intent = new Intent(context, CustomerCareActivity.class);
                 break;
+
+            case R.id.rateUs:
+                intent = null;
+                new RateUs(context);
+                break;
+
             case R.id.logout:
                 intent = null;
                 ((DrawerLayout) ((Activity) context).findViewById(R.id.drawer))

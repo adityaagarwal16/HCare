@@ -144,7 +144,6 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
 
 
         public void setDoctorImage(final String thumb_image) {
-
             Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
                     .placeholder(R.drawable.doctor).into(mView.findViewById(R.id.doctorImage),
                     new Callback() {

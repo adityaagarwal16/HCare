@@ -200,31 +200,37 @@ public class OTPFragment extends Fragment {
                         if(mDatabase == null) {
                             HashMap<String, String> userMap = new HashMap<>();
                             userMap.put("phone number", getArguments().getString("phoneNumber"));
-                            userMap.put("name", "patient");
-                            userMap.put("age", "age of patient");
-                            userMap.put("sex", "male or female");
+                            userMap.put("name", "New user");
+                            userMap.put("age", "");
+                            userMap.put("sex", "Male");
                             userMap.put("thumb_image", "default");
                             userMap.put("image", "default");
-                            userMap.put("email", "Email id");
+                            userMap.put("email", "");
                             userMap.put("device_token", device_token);
                             userMap.put("status", "online");
                             mDatabase.setValue(userMap);
 
                             intent = new Intent(requireActivity(),
-                                    ProfileActivity.class);
+                                    MainActivity.class);
+                            intent.addFlags(
+                                    Intent.FLAG_ACTIVITY_NEW_TASK |
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            startActivity(new Intent(requireActivity(),
+                                    ProfileActivity.class));
+
+                            requireActivity().finish();
                         }
                         else{
                             Toast.makeText(requireActivity(),
                                     "Sign in successful", Toast.LENGTH_SHORT).show();
                             intent = new Intent(requireActivity(),
                                     MainActivity.class);
+                            intent.addFlags(
+                                    Intent.FLAG_ACTIVITY_NEW_TASK |
+                                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
                         }
-
-                        startActivity(intent);
-                        intent.addFlags(
-                                Intent.FLAG_ACTIVITY_NEW_TASK |
-                                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        requireActivity().finish();
 
                     } else {
                         if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
