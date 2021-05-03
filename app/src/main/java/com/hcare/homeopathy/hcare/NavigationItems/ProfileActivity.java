@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -290,8 +292,11 @@ public class ProfileActivity extends AppCompatActivity {
                                 update_haspMap.put("image", download_Url);
                                 update_haspMap.put("thumb_image", uri1.toString());
 
+                                new Handler(Looper.getMainLooper()).postDelayed(()
+                                        -> findViewById(R.id.loader).setVisibility(View.GONE),
+                                        4500);
                                 mUserDatabase.updateChildren(update_haspMap);
-                                findViewById(R.id.loader).setVisibility(View.GONE);
+
                             }));
 
                 }));

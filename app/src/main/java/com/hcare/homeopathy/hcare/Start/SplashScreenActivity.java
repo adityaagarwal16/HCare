@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.Checkout.Constants;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
+import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
 import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.MainActivity;
@@ -69,11 +70,11 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                                     intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
 
-                                    //intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
-                                    //intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+                                    intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
+                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
 
                                     //intent = new Intent(getApplicationContext(), FaqActivity.class);
-                                    intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                                    //intent = new Intent(getApplicationContext(), ProfileActivity.class);
 
 
 //                                    intent = new Intent(getApplicationContext(), OrderNowActivity.class);
@@ -81,7 +82,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 //                                    intent.putExtra("discount", 360);
 //                                    intent.putExtra("price", 600);
 //
-//                                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                                    intent = new Intent(getApplicationContext(), MainActivity.class);
                                 }
                                 startActivity(intent);
                                 finish();

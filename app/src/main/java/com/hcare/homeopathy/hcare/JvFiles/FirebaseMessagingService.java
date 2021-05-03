@@ -28,16 +28,12 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         String click_action = remoteMessage.getNotification().getClickAction();
 
-      //  Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notification);
-      //  builder.setSound(sound);
-
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.vector_doctor)
                         .setContentTitle(notification_title)
                         .setContentText(notification_message)
                         .setAutoCancel(true)
-                        //.setSound(sound)
                 ;
 
         Intent resultIntent = new Intent(click_action);

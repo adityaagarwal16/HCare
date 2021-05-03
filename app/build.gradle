@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-marketing:5.15.3'
     //facebook data ends
 
-
+    implementation 'com.github.stfalcon:stfalcon-imageviewer:1.0.0'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.2.0'

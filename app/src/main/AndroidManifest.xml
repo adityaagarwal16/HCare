@@ -94,9 +94,6 @@
         </activity>
 
 
-        <activity android:name=".JvFiles.ImageActivity" />
-
-
         <activity
             android:name=".NavigationItems.Orders.OrdersActivity"
             android:label="Orders"/>

@@ -17,13 +17,16 @@ public class AddressSharedPref {
     }
 
     public void save(String key, String value) {
-        SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = context
+                .getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE)
+                .edit();
         editor.putString(key, value);
         editor.apply();
     }
 
     public String get(String key) {
-        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences prefs = context
+                .getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         return prefs.getString(key, "");
     }
 }
