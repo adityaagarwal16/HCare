@@ -8,94 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1053059612819:android:59605d33dd78f3fa",
-        "android_client_info": {
-          "package_name": "com.example.vinithpc.h_line"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1053059612819-bn09tlhbbbudnscgp1o7u7hvkro9qb7q.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.vinithpc.h_line",
-            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
-          }
-        },
-        {
-          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1053059612819:android:96a8cbef8f4f360c",
-        "android_client_info": {
-          "package_name": "com.example.vinithpc.h_linepatient"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1053059612819-7bf3iuf2rnaa1rmljj6qq5or4t3b7v6q.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.vinithpc.h_linepatient",
-            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
-          }
-        },
-        {
-          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:1053059612819:android:7fa468492de01fa7",
         "android_client_info": {
           "package_name": "com.hcare.backend"
@@ -121,64 +33,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1053059612819:android:9bd50800f8204b3e",
-        "android_client_info": {
-          "package_name": "com.hcare.hcare"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1053059612819-nre6ucis4eu9kucj5kh8vmor1sj8ebee.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.hcare.hcare",
-            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
-          }
-        },
-        {
-          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     },
@@ -207,6 +68,14 @@
           }
         },
         {
+          "client_id": "1053059612819-pvmgqvhg3osv2d5o9mpba2eectdbtp1s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hcare.homeopathy.hcare",
+            "certificate_hash": "3d1c82805ee642900eadf2d241671b8c56cc6278"
+          }
+        },
+        {
           "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -217,20 +86,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     },
@@ -261,20 +123,50 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053059612819:android:0639506e80e22b27eecd66",
+        "android_client_info": {
+          "package_name": "in.co.hcare.hcdoctri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053059612819-7u9620iq2b474brglbok9q8ivb0dkikb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "in.co.hcare.hcdoctri",
+            "certificate_hash": "624944948c21d3e0d25243cc03c1bb8df83996e1"
+          }
         },
-        "ads_service": {
-          "status": 2
+        {
+          "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAd1LVUJv4vCRG0BZrXc_clH1KU5q-AnCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

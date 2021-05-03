@@ -3,8 +3,10 @@ package com.hcare.homeopathy.hcare.Consultations.Doctor;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +42,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.ParseException;
@@ -81,7 +84,6 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
 
         userReference = databaseRootReference.child("Private_consult").child(doctorID).child(userID);
         doctorReference = databaseRootReference.child("Private_consult").child(userID).child(doctorID);
-
 
         loadMessages();
         setConsultAgainButton();
@@ -156,6 +158,7 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
     private void setToolbar() {
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
         Objects.requireNonNull(getSupportActionBar())
                 .setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -366,7 +369,7 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
                 Toast.makeText(this, "No file chosen", Toast.LENGTH_SHORT).show();
         }
 
-        if(requestCode ==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
 
@@ -422,9 +425,21 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
     }
 
     private void uploadFile(final Uri data) {
+        String displayName = null;
+        if ((String.valueOf(data)).startsWith("content://")) {
+            try (Cursor cursor = getContentResolver()
+                    .query(data, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+        } else
+            displayName = new File(String.valueOf(data)).getName();
+
         final StorageReference sRef =  FirebaseStorage.getInstance()
                 .getReference().child("Files")
-                .child(userID).child(random()+ ".pdf");
+                .child(userID).child(displayName);
+
         sRef.putFile(data).addOnCompleteListener(task -> sRef.getDownloadUrl()
                 .addOnSuccessListener(uri -> {
                     String download_Url = uri.toString();

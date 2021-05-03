@@ -35,6 +35,7 @@ import com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -45,8 +46,6 @@ public class OTPFragment extends Fragment {
     View root;
     boolean timerOn = false;
     Toast toastMessage;
-
-
     private DatabaseReference mDatabase;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -63,10 +62,12 @@ public class OTPFragment extends Fragment {
 
         root.findViewById(R.id.confirm).setOnClickListener(v -> {
             if (!otp.getText().toString().isEmpty()) {
+                assert getArguments() != null;
                 PhoneAuthCredential credential =
                         PhoneAuthProvider
                                 .getCredential(
-                                        getArguments().getString("verificationId"),
+                                        Objects.requireNonNull(getArguments()
+                                                .getString("verificationId")),
                                         otp.getText().toString());
 
                 signInWithPhoneAuthCredential(credential);
@@ -82,8 +83,10 @@ public class OTPFragment extends Fragment {
     }
 
     private void resendVerificationCode() {
+        assert getArguments() != null;
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                getArguments().getString("phoneNumber"),        // Phone number to verify
+                Objects.requireNonNull(getArguments()
+                        .getString("phoneNumber")),        // Phone number to verify
                 30,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 requireActivity(),               // Activity (for callback binding)
@@ -189,7 +192,8 @@ public class OTPFragment extends Fragment {
                         FirebaseUser current_user = FirebaseAuth
                                 .getInstance().getCurrentUser();
 
-                        String uid = current_user.getUid();
+                        String uid = Objects.requireNonNull
+                                (current_user).getUid();
                         String device_token = FirebaseInstanceId
                                 .getInstance().getToken();
 

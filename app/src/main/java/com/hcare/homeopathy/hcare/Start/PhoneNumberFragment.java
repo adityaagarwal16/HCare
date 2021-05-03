@@ -1,6 +1,7 @@
 package com.hcare.homeopathy.hcare.Start;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,6 +22,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.transition.Slide;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -28,13 +32,13 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.concurrent.TimeUnit;
-
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class PhoneNumberFragment extends Fragment {
 
     EditText phoneNumber;
     View root;
+    public static final int RC_SIGN_IN = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -47,6 +51,9 @@ public class PhoneNumberFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         LoginActivity.OTP_FRAGMENT_OPEN = false;
         phoneNumber = root.findViewById(R.id.phoneNumber);
+
+        root.findViewById(R.id.googleSignIn).setOnClickListener
+                (v -> signInWithGoogle());
 
         submitButton();
         setCross();
@@ -73,6 +80,19 @@ public class PhoneNumberFragment extends Fragment {
             }
         });
 
+    }
+
+    protected void signInWithGoogle() {
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        GoogleSignInClient mGoogleSignInClient =
+                GoogleSignIn.getClient(requireContext(), gso);
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     void setCross() {

@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,24 +11,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.hcare.homeopathy.hcare.OrderTreatment.CartActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
+import com.hcare.homeopathy.hcare.OrderTreatment.CartActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-import com.stfalcon.imageviewer.StfalconImageViewer;
-import com.stfalcon.imageviewer.loader.ImageLoader;
 
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
 
@@ -45,7 +40,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         return new MessageViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_chat,parent,false));
+                .inflate(R.layout.adapter_chat, parent,false));
     }
 
     @SuppressLint("SetTextI18n")
@@ -96,18 +91,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                                         .into(viewHolder.chatImage);
                             }
                         });
-                viewHolder.imageCard.setVisibility(View.VISIBLE);
+
 
                 RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)
                         viewHolder.imageCard.getLayoutParams();
                 if(c.getFrom().equals(userID)) {
-                    lp.addRule(RelativeLayout.ALIGN_PARENT_END);
                     lp.removeRule(RelativeLayout.ALIGN_PARENT_START);
+                    lp.addRule(RelativeLayout.ALIGN_PARENT_END);
                 } else {
-                    lp.addRule(RelativeLayout.ALIGN_PARENT_START);
                     lp.removeRule(RelativeLayout.ALIGN_PARENT_END);
+                    lp.addRule(RelativeLayout.ALIGN_PARENT_START);
+
                 }
                 viewHolder.imageCard.setLayoutParams(lp);
+                viewHolder.imageCard.setVisibility(View.VISIBLE);
 
                 viewHolder.imageCard.setOnClickListener(v -> {
                     Intent intent = new Intent();
@@ -119,7 +116,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                 break;
 
             case "pdf":
-                viewHolder.treatment.setText(R.string.pdf_file);
+                viewHolder.header.setText(R.string.pdf_file);
+                RelativeLayout.LayoutParams lp1 = (RelativeLayout.LayoutParams)
+                        viewHolder.treatmentCard.getLayoutParams();
+                if(c.getFrom().equals(userID)) {
+                    lp1.removeRule(RelativeLayout.ALIGN_PARENT_START);
+                    lp1.addRule(RelativeLayout.ALIGN_PARENT_END);
+
+                } else {
+                    lp1.removeRule(RelativeLayout.ALIGN_PARENT_END);
+                    lp1.addRule(RelativeLayout.ALIGN_PARENT_START);
+                }
+                viewHolder.treatmentCard.setLayoutParams(lp1);
                 viewHolder.treatmentCard.setVisibility(View.VISIBLE);
 
                 viewHolder.treatmentCard.setOnClickListener(v -> {
@@ -144,14 +152,20 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
             default:
                 viewHolder.treatmentCard.setVisibility(View.VISIBLE);
+                RelativeLayout.LayoutParams lp3 = (RelativeLayout.LayoutParams)
+                        viewHolder.treatmentCard.getLayoutParams();
+                lp3.removeRule(RelativeLayout.ALIGN_PARENT_END);
+                lp3.addRule(RelativeLayout.ALIGN_PARENT_START);
+                viewHolder.treatmentCard.setLayoutParams(lp3);
+
                 viewHolder.userMessage.setVisibility(View.GONE);
                 viewHolder.imageCard.setVisibility(View.GONE);
                 viewHolder.doctorMessage.setVisibility(View.VISIBLE);
                 viewHolder.doctorMessage
-                        .setText("Here's your treatment, please press the following button to get it.");
+                        .setText("Here's your header, please press the following button to get it.");
 
                 if (c.getOrdering().equals("ordered")) {
-                    viewHolder.treatment.setText("Ordered");
+                    viewHolder.header.setText("Ordered");
                 }
 
                 viewHolder.treatmentCard.setOnClickListener(v -> {
@@ -177,7 +191,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView userMessage , doctorMessage, messageTime, treatment;
+        public TextView userMessage , doctorMessage, messageTime, header;
         public CardView treatmentCard, imageCard;
         public ImageView chatImage;
 
@@ -185,7 +199,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
             super(view);
             userMessage = view.findViewById(R.id.userMessage);
             doctorMessage =view.findViewById(R.id.doctorMessage);
-            treatment = view.findViewById(R.id.treatment);
+            header = view.findViewById(R.id.header);
             messageTime = view.findViewById(R.id.messageTime);
             treatmentCard = view.findViewById(R.id.treatmentCard);
             imageCard = view.findViewById(R.id.imageCard);

@@ -294,7 +294,7 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 new Handler(Looper.getMainLooper()).postDelayed(()
                                         -> findViewById(R.id.loader).setVisibility(View.GONE),
-                                        4500);
+                                        4000);
                                 mUserDatabase.updateChildren(update_haspMap);
 
                             }));
