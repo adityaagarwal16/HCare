@@ -1,9 +1,13 @@
 package com.hcare.homeopathy.hcare.Disease;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.DiseaseInfo;
 import com.hcare.homeopathy.hcare.Diseases;
@@ -29,10 +34,10 @@ import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.Checkout.Constants.DISEASE_OBJECT;
 
-public class DiseaseActivity extends AppCompatActivity {
+public class DiseaseActivity extends BaseActivity {
 
     DiseaseInfo disease;
-    private String patientName, age, sex;
+    private String patientName = "Username", age = "", sex = "Male";
     private DatabaseReference userRef;
     private EditText mChatMessageView;
 
@@ -40,6 +45,7 @@ public class DiseaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_disease);
+
         disease = new DiseaseInfo((Diseases) getIntent().getSerializableExtra("request_type1"));
 
         setToolbar();
@@ -56,38 +62,40 @@ public class DiseaseActivity extends AppCompatActivity {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                patientName = Objects.requireNonNull(dataSnapshot.child("name").getValue()).toString();
-                age = Objects.requireNonNull(dataSnapshot.child("age").getValue()).toString();
-                sex = Objects.requireNonNull(dataSnapshot.child("sex").getValue()).toString();
+                try { patientName = dataSnapshot.child("name").getValue().toString(); }
+                catch(Exception e) {
+                    try { age = dataSnapshot.child("age").getValue().toString(); }
+                    catch (Exception e1) {
+                        try { sex = dataSnapshot.child("sex").getValue().toString(); }
+                        catch (Exception ignored) { }
+                    }
+                }
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+    }
 
+    public void continueButton(View view) {
+        if(mChatMessageView.getText().toString().equals(""))
+            Toast.makeText(this, "Please enter your health Issue", Toast.LENGTH_SHORT).show();
+        else {
+            try {
+                Intent regIntent = new Intent(DiseaseActivity.this,
+                        CheckoutActivity.class);
+                regIntent.putExtra(DISEASE_OBJECT,
+                        getIntent().getSerializableExtra("request_type1"));
+                regIntent.putExtra("details1", mChatMessageView.getText().toString());
+                regIntent.putExtra("name", patientName);
+                regIntent.putExtra("age", age);
+                regIntent.putExtra("sex", sex);
 
-        findViewById(R.id.continueButton).setOnClickListener(v -> {
-
-                if(mChatMessageView.getText().toString().equals(""))
-                    Toast.makeText(this, "Please enter your health Issue", Toast.LENGTH_SHORT).show();
-
-                else {
-                    try {
-                        Intent regIntent = new Intent(DiseaseActivity.this,
-                                CheckoutActivity.class);
-                        regIntent.putExtra(DISEASE_OBJECT,
-                                (Diseases) getIntent().getSerializableExtra("request_type1"));
-                        regIntent.putExtra("details1", mChatMessageView.getText().toString());
-                        regIntent.putExtra("name", patientName);
-                        regIntent.putExtra("age", age);
-                        regIntent.putExtra("sex", sex);
-
-                        startActivity(regIntent);
-                    }
-                    catch (Exception ignored) { }
-                }
-
-        });
+                startActivity(regIntent);
+            }
+            catch (Exception ignored) { }
+        }
     }
 
     private void setContent() {
@@ -98,11 +106,23 @@ public class DiseaseActivity extends AppCompatActivity {
     private void setToolbar() {
         Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
         Objects.requireNonNull(getSupportActionBar())
                 .setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         ((TextView) findViewById(R.id.title)).setText(disease.getDiseaseName());
         findViewById(R.id.howItWorks).setOnClickListener(v -> showHowToUseDialog());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showHowToUseDialog() {
@@ -126,5 +146,7 @@ public class DiseaseActivity extends AppCompatActivity {
         super.onStop();
         userRef.child("status").setValue("offline");
     }
+
+
 }
 

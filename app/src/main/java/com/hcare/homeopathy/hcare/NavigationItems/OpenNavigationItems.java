@@ -2,6 +2,7 @@ package com.hcare.homeopathy.hcare.NavigationItems;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Gravity;
@@ -11,7 +12,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
-import com.hcare.homeopathy.hcare.Disease.DiseaseSpinnerActivity;
 import com.hcare.homeopathy.hcare.R;
 
 public class OpenNavigationItems {
@@ -37,9 +37,6 @@ public class OpenNavigationItems {
                 break;
             case R.id.help:
                 intent = new Intent(context, FaqActivity.class);
-                break;
-            case R.id.chat:
-                intent = new Intent(context, DiseaseSpinnerActivity.class);
                 break;
             case R.id.consultations:
                 intent = new Intent(context, ConsultationsActivity.class);

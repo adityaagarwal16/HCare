@@ -6,10 +6,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by AkshayeJH on 16/07/17.
- */
-
 public class GetTime {
 
     long time;

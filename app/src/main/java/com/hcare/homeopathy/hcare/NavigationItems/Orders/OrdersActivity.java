@@ -1,35 +1,31 @@
 package com.hcare.homeopathy.hcare.NavigationItems.Orders;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+public class OrdersActivity extends BaseActivity {
 
-public class OrdersActivity extends AppCompatActivity {
-
-    private RecyclerView mDoctorList;
-    private DatabaseReference mDoctorsDatabase,userRef;
+    private DatabaseReference userRef;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +35,42 @@ public class OrdersActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_uid = Objects.requireNonNull(mCurrentUser).getUid();
+        userID = Objects.requireNonNull(
+                FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        mDoctorsDatabase = FirebaseDatabase.getInstance().getReference()
-                .child("Orders").child(current_uid);
-        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-        mDoctorList = findViewById(R.id.recycler);
+        userRef = FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(userID);
+
+        setRecycler();
+    }
+
+    private void setRecycler() {
+        DatabaseReference mDoctorsDatabase =
+                FirebaseDatabase.getInstance().getReference()
+                .child("Orders").child(userID);
+
+        mDoctorsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()) {
+                    findViewById(R.id.nothingHereLayout).setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+
+        RecyclerView mDoctorList = findViewById(R.id.recycler);
         mDoctorList.setHasFixedSize(true);
         mDoctorList.setLayoutManager(new LinearLayoutManager(this));
+        FirebaseRecyclerOptions<OrdersObject> options =
+                new FirebaseRecyclerOptions.Builder<OrdersObject>()
+                        .setQuery(mDoctorsDatabase, OrdersObject.class)
+                        .setLifecycleOwner(this)
+                        .build();
+
+        mDoctorList.setAdapter(new OrdersAdapter(options, this));
     }
 
     @Override
@@ -64,43 +87,7 @@ public class OrdersActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         userRef.child("status").setValue("online");
-        FirebaseRecyclerOptions<Orders> options =
-                new FirebaseRecyclerOptions.Builder<Orders>()
-                        .setQuery(mDoctorsDatabase, Orders.class)
-                        .setLifecycleOwner(this)
-                        .build();
-        FirebaseRecyclerAdapter<Orders,DoctorsVeiwHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Orders, DoctorsVeiwHolder>(
-               options
-        ) {
-            @NonNull
-            @Override
-            public DoctorsVeiwHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return new DoctorsVeiwHolder(LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.adapter_orders, parent, false));
-            }
-
-            @Override
-            protected void onBindViewHolder(@NonNull DoctorsVeiwHolder viewHolder,
-                                            int position, @NonNull Orders model) {
-                viewHolder.Name(model.getOrderId());
-                viewHolder.Degree(model.getOrderStatus());
-                viewHolder.experience(model.getOrdertime());
-                viewHolder.setDoctorImage(model,getApplicationContext());
-
-                final String user_id = getRef(position).getKey();
-
-                viewHolder.mView.setOnClickListener(v -> {
-
-                    //  Intent docprofileIntent = new Intent(OrderActivity.this,DocprofileActivity.class);
-                    //  startActivity(docprofileIntent);
-                });
-
-            }
-        };
-
-        mDoctorList.setAdapter(firebaseRecyclerAdapter);
     }
 
     @Override
@@ -109,33 +96,4 @@ public class OrdersActivity extends AppCompatActivity {
         userRef.child("status").setValue("offline");
     }
 
-    public static class DoctorsVeiwHolder extends RecyclerView.ViewHolder{
-
-        View mView;
-        public DoctorsVeiwHolder(View itemView) {
-            super(itemView);
-
-            mView = itemView;
-        }
-        public void Degree(String name){
-            TextView doctorsNameView = mView.findViewById(R.id.doctor_degree);
-            doctorsNameView.setText(name);
-        }
-
-        public void experience(String name){
-            TextView doctorsNameView = mView.findViewById(R.id.experience);
-            doctorsNameView.setText(name);
-        }
-
-        public void Name(String name){
-            TextView doctorsNameView = mView.findViewById(R.id.doctor_single_name);
-            doctorsNameView.setText(name);
-        }
-
-        public void setDoctorImage(Orders thumb_image, Context ctx){
-            CircleImageView userImageView = mView.findViewById(R.id.orderBtn);
-
-             Picasso.get().load(R.drawable.orders).placeholder(R.drawable.orders).into(userImageView);
-        }
-    }
 }

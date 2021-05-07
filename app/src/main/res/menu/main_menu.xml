@@ -11,10 +11,6 @@
     <group android:id="@+id/group2">
 
         <item
-            android:id="@+id/chat"
-            android:icon="@drawable/vector_check_circle"
-            android:title="@string/chat" />
-        <item
             android:id="@+id/orders"
             android:icon="@drawable/vector_cart"
             android:title="@string/orders" />

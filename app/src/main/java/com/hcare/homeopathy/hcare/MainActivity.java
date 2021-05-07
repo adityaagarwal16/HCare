@@ -3,6 +3,10 @@ package com.hcare.homeopathy.hcare;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,11 +15,12 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Slide;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,11 +30,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
-import com.hcare.homeopathy.hcare.Disease.DiseaseSpinnerActivity;
-import com.hcare.homeopathy.hcare.NavigationItems.LogoutDialog;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
-import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
 import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -44,21 +47,24 @@ import static com.hcare.homeopathy.hcare.Diseases.renalProblems;
 import static com.hcare.homeopathy.hcare.Diseases.skin;
 import static com.hcare.homeopathy.hcare.Diseases.thyroid;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FirebaseAuth mAuth;
     private DatabaseReference mUserRef;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
+        userID = Objects.requireNonNull(FirebaseAuth.getInstance()
+                .getCurrentUser()).getUid();
+        Log.i("userID", userID);
+
         mUserRef =
                 FirebaseDatabase.getInstance().getReference().child("Users").
-                        child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+                        child(userID);
 
         new SetNavigationHeader(this);
 
@@ -69,19 +75,51 @@ public class MainActivity extends AppCompatActivity
 
         setFlipper();
 
-        findViewById(R.id.cart).setOnClickListener(v -> {
-            Intent docprofileIntent = new Intent(MainActivity.this, OrdersActivity.class);
-            startActivity(docprofileIntent);
-        });
-
-        findViewById(R.id.mainImage).setOnClickListener(v -> {
-            Intent docprofileIntent = new Intent(
-                    MainActivity.this, DiseaseSpinnerActivity.class);
-            startActivity(docprofileIntent);
-        });
+        findViewById(R.id.cart).setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, OrdersActivity.class)));
 
         setTopIssuesRecycler();
         setAllCategoriesRecycler();
+        findViewById(R.id.searchDisease).setOnClickListener(V -> showOrHideFragment());
+    }
+
+    private void showOrHideFragment() {
+        FragmentTransaction transaction =
+                getSupportFragmentManager()
+                        .beginTransaction();
+
+        Toolbar mToolbar = findViewById(R.id.toolbar);
+
+        try {
+            if (getSupportFragmentManager().findFragmentById(R.id.searchFragment) != null) {
+                transaction.remove(Objects.requireNonNull
+                        (getSupportFragmentManager()
+                                .findFragmentById(R.id.searchFragment))).commit();
+                mToolbar.animate().translationX(0);
+
+            } else {
+                SearchFragment fragment = new SearchFragment();
+
+                fragment.setEnterTransition(new Slide(Gravity.END).setDuration(300));
+                fragment.setExitTransition(new Slide(Gravity.END).setDuration(300));
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.searchFragment, fragment)
+                        .commit();
+
+                mToolbar.animate().translationX(-1 * (mToolbar.getWidth()));
+            }
+
+        } catch(Exception ignored) { }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentById(R.id.searchFragment) != null) {
+            showOrHideFragment();
+        }
+        else
+            super.onBackPressed();
     }
 
     void setFlipper() {
@@ -110,22 +148,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     void eventListeners() {
-        mUserRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //String name = dataSnapshot.child("name").getValue().toString();
-                //setTitle("Hi "+ name.substring(0, 1).toUpperCase() + name.substring(1));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
         DatabaseReference publicConsult = FirebaseDatabase.getInstance().
                 getReference().child("public_Consulting")
-                .child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+                .child(userID);
 
 
         publicConsult.addValueEventListener(new ValueEventListener() {
@@ -164,6 +189,15 @@ public class MainActivity extends AppCompatActivity
         mRecyclerView.setAdapter(new DiseaseAdapter(
                 new ArrayList<>(EnumSet.allOf(Diseases.class)),this));
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getSupportFragmentManager().findFragmentById(R.id.searchFragment) != null) {
+            showOrHideFragment();
+        }
+    }
+
 
     @Override
     public void onStart() {

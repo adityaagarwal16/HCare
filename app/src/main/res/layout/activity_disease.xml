@@ -120,6 +120,7 @@
     <TextView
         android:id="@+id/continueButton"
         android:elevation="4dp"
+        android:onClick="continueButton"
         android:foreground="?selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="60dp"

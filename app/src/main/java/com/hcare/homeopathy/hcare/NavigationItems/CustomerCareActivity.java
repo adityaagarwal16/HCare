@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Consultations.Doctor.ChatAdapter;
 import com.hcare.homeopathy.hcare.Consultations.Doctor.ChatObject;
 import com.hcare.homeopathy.hcare.MainActivity;
@@ -36,7 +38,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
-public class CustomerCareActivity extends AppCompatActivity {
+public class CustomerCareActivity extends BaseActivity {
 
     private DatabaseReference mRootref;
     private String mCurrentUserId;
@@ -55,6 +57,9 @@ public class CustomerCareActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_care);
+
+        Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mRootref = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -79,6 +84,16 @@ public class CustomerCareActivity extends AppCompatActivity {
         h = mRootref.child("Customercare").child(mCurrentUserId);
 
         loadMessage();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void attachFile(View view) {

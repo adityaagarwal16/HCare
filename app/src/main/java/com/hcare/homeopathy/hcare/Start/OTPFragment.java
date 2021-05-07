@@ -27,8 +27,11 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity;
@@ -46,7 +49,6 @@ public class OTPFragment extends Fragment {
     View root;
     boolean timerOn = false;
     Toast toastMessage;
-    private DatabaseReference mDatabase;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -64,18 +66,19 @@ public class OTPFragment extends Fragment {
             if (!otp.getText().toString().isEmpty()) {
                 assert getArguments() != null;
                 PhoneAuthCredential credential =
-                        PhoneAuthProvider
-                                .getCredential(
+                        PhoneAuthProvider.getCredential(
                                         Objects.requireNonNull(getArguments()
                                                 .getString("verificationId")),
                                         otp.getText().toString());
+                root.findViewById(R.id.circleLoader).setVisibility(View.VISIBLE);
+                new SignIn(requireContext()).signInWithPhoneAuthCredential(
+                        root,
+                        getArguments().getString("phoneNumber"),
+                        credential);
 
-                signInWithPhoneAuthCredential(credential);
-            } else {
+            } else
                 Toast.makeText(requireActivity(),
                         "Please enter OTP", Toast.LENGTH_LONG).show();
-            }
-
         });
 
         setCross();
@@ -182,70 +185,5 @@ public class OTPFragment extends Fragment {
             }
             return false;
         });
-    }
-
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(requireActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        FirebaseUser current_user = FirebaseAuth
-                                .getInstance().getCurrentUser();
-
-                        String uid = Objects.requireNonNull
-                                (current_user).getUid();
-                        String device_token = FirebaseInstanceId
-                                .getInstance().getToken();
-
-                        mDatabase = FirebaseDatabase.getInstance()
-                                .getReference().child("Users").child(uid);
-
-                        Intent intent;
-                        if(mDatabase == null) {
-                            HashMap<String, String> userMap = new HashMap<>();
-                            userMap.put("phone number", getArguments().getString("phoneNumber"));
-                            userMap.put("name", "New user");
-                            userMap.put("age", "");
-                            userMap.put("sex", "Male");
-                            userMap.put("thumb_image", "default");
-                            userMap.put("image", "default");
-                            userMap.put("email", "");
-                            userMap.put("device_token", device_token);
-                            userMap.put("status", "online");
-                            mDatabase.setValue(userMap);
-
-                            intent = new Intent(requireActivity(),
-                                    MainActivity.class);
-                            intent.addFlags(
-                                    Intent.FLAG_ACTIVITY_NEW_TASK |
-                                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                            startActivity(new Intent(requireActivity(),
-                                    ProfileActivity.class));
-
-                            requireActivity().finish();
-                        }
-                        else{
-                            Toast.makeText(requireActivity(),
-                                    "Sign in successful", Toast.LENGTH_SHORT).show();
-                            intent = new Intent(requireActivity(),
-                                    MainActivity.class);
-                            intent.addFlags(
-                                    Intent.FLAG_ACTIVITY_NEW_TASK |
-                                            Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
-
-                    } else {
-                        if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                            // The verification code entered was invalid
-                            Toast.makeText(requireActivity(),
-                                    "Invalid OTP", Toast.LENGTH_LONG).show();
-                        }
-                        else
-                            Toast.makeText(requireActivity(),
-                                    "Verification failed", Toast.LENGTH_LONG).show();
-                    }
-                });
     }
 }

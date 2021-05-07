@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.JvFiles;
+package com.hcare.homeopathy.hcare.Consultations;
 
 import android.annotation.SuppressLint;
 import android.app.NotificationManager;

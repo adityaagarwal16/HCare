@@ -49,7 +49,8 @@ public class CheckoutFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_checkout, container, false);
+        root = inflater.inflate(R.layout.fragment_checkout,
+                container, false);
         return root;
     }
 
@@ -57,7 +58,8 @@ public class CheckoutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        patientName = Objects.requireNonNull(getArguments()).getString("name");
+        patientName = Objects.requireNonNull(getArguments())
+                .getString("name");
         patientIssue = getArguments().getString("details1");
 
         userRef = FirebaseDatabase.getInstance()
@@ -102,12 +104,17 @@ public class CheckoutFragment extends Fragment {
             if(!patientIssue.equals(""))
                 ((TextView) root.findViewById(R.id.patientIssue))
                         .setText(patientIssue);
-        } catch(Exception ignored) {}
+        } catch(Exception ignored) { }
     }
 
     void setFields(int discount, String coupon) {
         ((TextView) root.findViewById(R.id.subTotal)).setText(String.valueOf(CONSULTATION_FEE));
         ((TextView) root.findViewById(R.id.discount)).setText(String.valueOf(discount));
+        ((TextView) root.findViewById(R.id.savings)).setText(
+                MessageFormat.format("{0} {1}",
+                        "Your Savings : ₹",
+                        discount)
+        );
         ((TextView) root.findViewById(R.id.total)).setText(String.valueOf(CONSULTATION_FEE - discount));
         ((TextView) root.findViewById(R.id.couponHeader)).setText(String.valueOf(coupon));
     }

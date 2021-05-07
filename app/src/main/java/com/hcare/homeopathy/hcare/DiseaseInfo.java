@@ -72,13 +72,13 @@ public class DiseaseInfo {
             case diabetes:
                 return R.drawable.diabetes;
             case skin:
-                return R.drawable.newacne;
+                return R.drawable.skin;
             case female:
-                return R.drawable.newwomen;
+                return R.drawable.female;
             case renalProblems:
                 return R.drawable.renal;
             case weightLossAndGain:
-                return R.drawable.diabetes;
+                return R.drawable.weight;
             case headache:
                 return R.drawable.diabetes;
             case hair:

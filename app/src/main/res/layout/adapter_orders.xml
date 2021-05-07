@@ -1,79 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
-    android:padding="10dp">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/orderBtn"
-        android:layout_width="64dp"
-        android:layout_height="64dp"/>
+    android:background="@color/colorPrimary"
+    android:paddingTop="5dp"
+    android:paddingBottom="10dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp">
 
     <TextView
-        android:id="@+id/doctor_single_name"
+        android:id="@+id/doctorName"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="@string/doctor"
+        android:layout_marginTop="5dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date" />
+
+    <TextView
+        android:id="@+id/orderID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:text="Order ID"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="14sp" />
+        android:textColor="?android:textColorPrimary"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/experience"
-        android:layout_width="wrap_content"
+        android:id="@+id/date"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/doctor_single_name"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/textView23"
-        android:text="dd/mm/yy" />
+        android:text="@string/date"
+        android:paddingStart="10dp"
+        android:gravity="end"
+        android:paddingEnd="10dp"
+        android:textSize="13sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/doctorName"
+        app:layout_constraintStart_toEndOf="@+id/orderID" />
 
     <TextView
-        android:id="@+id/doctor_degree"
-        android:layout_width="wrap_content"
+        android:id="@+id/viewPrescription"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/textView23"
-        android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/textView24"
-        android:autoLink="all"
-        android:clickable="true"
-        android:text="Order Updating"
-        android:textColor="@android:color/holo_green_dark"
-        android:textColorHighlight="#24B606"
-        android:textColorLink="#24B606" />
+        android:padding="12dp"
+        android:background="@drawable/background_ripple_view_prescription"
+        android:layout_marginTop="17dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginEnd="9dp"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:text="VIEW PRESCRIPTION"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/doctorName"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/totalAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/orderBtn"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="15dp"
-        android:layout_toEndOf="@+id/orderBtn"
-        android:text="Order ID:- "
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:padding="10dp"
+        android:text="Total Amount"
+        android:textSize="16sp"
+        android:textColor="?android:textColorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPrescription"
+        tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/textView23"
+        android:id="@+id/orderStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView2"
-        android:layout_below="@id/doctor_single_name"
-        android:layout_marginTop="10dp"
-        android:text="Date : "
-        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:text="@string/status"
+        android:textColor="@color/colorSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPrescription" />
 
     <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/textView23"
-        android:layout_alignTop="@+id/doctor_degree"
-        android:text="AWB : "
-        android:textColor="@color/common_google_signin_btn_text_dark_focused" />
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalAmount" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -67,29 +67,49 @@
                 android:orientation="vertical"
                 android:paddingBottom="75dp">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:orientation="vertical"
                     android:background="@color/colorPrimary"
                     android:layout_width="match_parent"
-                    android:padding="13dp"
+                    android:padding="15dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:layout_height="wrap_content">
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/mainImage"
+                        app:cardCornerRadius="15dp"
+                        app:cardElevation="0dp"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:foreground="?selectableItemBackground"
-                        android:padding="2dp"
-                        android:textAlignment="center"
-                        app:cardCornerRadius="10dp">
+                        android:layout_height="wrap_content">
 
                         <ImageView
+                            android:src="@drawable/main_banner"
+                            android:scaleType="centerCrop"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:scaleType="fitXY"
-                            app:srcCompat="@drawable/main3" />
+                            android:layout_height="175dp"
+                            android:contentDescription="@string/todo">
+                        </ImageView>
+
                     </androidx.cardview.widget.CardView>
 
-                </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/searchDisease"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp" android:background="@drawable/background_view_prescription"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
+                        android:textSize="16sp"
+                        android:text="Search for a disease ..."
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/doctorName"
+                        tools:ignore="HardcodedText"/>
+                </LinearLayout>
 
                 <TextView
                     android:layout_marginTop="5dp"
@@ -123,7 +143,8 @@
                         android:layout_marginStart="7dp"
                         android:textColor="?android:textColorPrimary"
                         android:text="Top Issues"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/line"
@@ -135,7 +156,8 @@
                         android:background="@color/colorSecondary"
                         app:layout_constraintEnd_toEndOf="@+id/textView54"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView54" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView54"
+                        tools:ignore="HardcodedText" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/topIssuesRecycler"
@@ -177,7 +199,8 @@
                         android:text="@string/consultations"
                         android:letterSpacing="0.02"
                         android:textColor="?android:textColorPrimary"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp"
+                        tools:ignore="RelativeOverlap" />
 
                     <TextView
                         android:id="@+id/line4"
@@ -201,7 +224,8 @@
                         android:layout_marginStart="2dp"
                         android:text="View your consultations"
                         android:textStyle="bold"
-                        android:textSize="14sp"/>
+                        android:textSize="14sp"
+                        tools:ignore="HardcodedText" />
 
                     <ImageView
                         android:src="@drawable/vector_back"
@@ -212,7 +236,6 @@
                         android:layout_alignParentEnd="true"
                         app:tint="@color/colorSecondary"
                         android:contentDescription="@string/todo" />
-
 
                 </RelativeLayout>
 
@@ -235,7 +258,8 @@
                         android:layout_marginStart="7dp"
                         android:textColor="?android:textColorPrimary"
                         android:text="All categories"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:ignore="HardcodedText" />
 
                     <TextView
                         android:id="@+id/line1"
@@ -247,7 +271,8 @@
                         android:background="@color/colorSecondary"
                         app:layout_constraintEnd_toEndOf="@+id/textView54"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView54" />
+                        app:layout_constraintTop_toBottomOf="@+id/textView54"
+                        tools:ignore="HardcodedText" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/allIssuesRecycler"
@@ -277,6 +302,12 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/searchFragment"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 

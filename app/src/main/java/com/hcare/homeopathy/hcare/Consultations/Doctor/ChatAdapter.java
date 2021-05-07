@@ -1,6 +1,8 @@
 package com.hcare.homeopathy.hcare.Consultations.Doctor;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -58,6 +60,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         } else
             viewHolder.messageTime.setVisibility(View.GONE);
 
+        if(c.getSeen() && (i == mMessageList.size()-1) && c.getFrom().equals(userID))
+            viewHolder.seen.setVisibility(View.VISIBLE);
+        else
+            viewHolder.seen.setVisibility(View.GONE);
+
         switch (c.getType()) {
 
             case "text":
@@ -103,6 +110,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                     lp.addRule(RelativeLayout.ALIGN_PARENT_START);
 
                 }
+
                 viewHolder.imageCard.setLayoutParams(lp);
                 viewHolder.imageCard.setVisibility(View.VISIBLE);
 
@@ -191,7 +199,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView userMessage , doctorMessage, messageTime, header;
+        public TextView userMessage , doctorMessage, messageTime, header, seen;
         public CardView treatmentCard, imageCard;
         public ImageView chatImage;
 
@@ -204,6 +212,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
             treatmentCard = view.findViewById(R.id.treatmentCard);
             imageCard = view.findViewById(R.id.imageCard);
             chatImage = view.findViewById(R.id.chatImage);
+            seen = itemView.findViewById(R.id.seen);
         }
 
     }

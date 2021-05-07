@@ -10,6 +10,23 @@
     android:paddingEnd="10dp"
     tools:context="com.hcare.homeopathy.hcare.Start.LoginActivity">
 
+    <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
+        android:id="@+id/circleLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trailingcircular_animDelay="0"
+        app:trailingcircular_animDuration="1100"
+        app:trailingcircular_bigCircleRadius="50dp"
+        app:trailingcircular_dotsColor="@color/colorSecondary"
+        app:trailingcircular_dotsRadius="8dp"
+        app:trailingcircular_noOfTrailingDots="6" />
+
     <TextView
         android:id="@+id/header"
         android:layout_width="wrap_content"
@@ -28,7 +45,7 @@
         android:layout_height="2dp"
         android:background="@color/colorSecondary"
         android:text="Enter OTP to login"
-        app:layout_constraintVertical_bias="0.4"
+        app:layout_constraintVertical_bias="0.35"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/confirm"

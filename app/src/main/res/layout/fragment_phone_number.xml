@@ -10,6 +10,8 @@
     android:paddingEnd="10dp"
     tools:context="com.hcare.homeopathy.hcare.Start.LoginActivity">
 
+
+
     <TextView
         android:id="@+id/header"
         android:layout_width="wrap_content"
@@ -58,7 +60,7 @@
         android:autofillHints=""
         android:background="@color/colorPrimary"
         android:gravity="bottom"
-        android:hint="@string/enterPhoneNumber"
+        android:hint="@string/enterMobileNumber"
         android:inputType="phone"
         android:letterSpacing="0.06"
         android:paddingTop="10dp"
@@ -224,6 +226,22 @@
 
     </LinearLayout>
 
+    <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
+        android:id="@+id/circleLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trailingcircular_animDelay="0"
+        app:trailingcircular_animDuration="1100"
+        app:trailingcircular_bigCircleRadius="50dp"
+        app:trailingcircular_dotsColor="@color/colorSecondary"
+        app:trailingcircular_dotsRadius="8dp"
+        app:trailingcircular_noOfTrailingDots="6" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/submit"

@@ -239,7 +239,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="@string/phoneNumber"
+                        android:text="@string/mobileNumber"
                         android:textColor="#BABABA"
                         android:textSize="17sp"
                         android:textStyle="bold"/>
@@ -252,7 +252,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_marginTop="8dp"
                         android:background="@color/colorSecondary"
-                        android:text="@string/phoneNumber" />
+                        android:text="@string/mobileNumber" />
 
                     <TextView
                         android:id="@+id/pre"

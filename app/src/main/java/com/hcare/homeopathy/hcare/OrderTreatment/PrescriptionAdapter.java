@@ -12,7 +12,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.hcare.homeopathy.hcare.R;
 
-class PrescriptionAdapter extends FirebaseRecyclerAdapter<
+public class PrescriptionAdapter extends FirebaseRecyclerAdapter<
         PrescriptionObject, PrescriptionAdapter.DoctorsViewHolder>  {
 
     public PrescriptionAdapter(@NonNull FirebaseRecyclerOptions<PrescriptionObject> options) {

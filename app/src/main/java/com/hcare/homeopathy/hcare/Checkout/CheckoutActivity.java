@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hcare.homeopathy.hcare.Diseases;
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.PaymentResultListener;
 
@@ -27,7 +27,7 @@ import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.Checkout.Constants.DISEASE_OBJECT;
 
-public class CheckoutActivity extends AppCompatActivity implements PaymentResultListener {
+public class CheckoutActivity extends BaseActivity implements PaymentResultListener {
 
     String userID;
     Boolean paymentSuccessful = false;
@@ -37,7 +37,8 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
-        Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
+        Objects.requireNonNull(
+                getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
@@ -52,17 +53,19 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
                             if(paymentSuccessful)
-                                transaction.replace(R.id.frameLayout, new CheckoutSuccessfulFragment())
+                                transaction.replace(R.id.frameLayout,
+                                        new CheckoutSuccessfulFragment())
                                         .commit();
                             else {
-                                if (!dataSnapshot.hasChild(userID))
-                                    transaction.replace(R.id.frameLayout, new CheckoutDisableFragment())
+                                if (dataSnapshot.hasChild(userID))
+                                    transaction.replace(R.id.frameLayout,
+                                            new CheckoutDisableFragment())
                                             .commit();
                                 else {
                                     CheckoutFragment fragment = new CheckoutFragment();
                                     Bundle args = new Bundle();
                                     args.putSerializable(DISEASE_OBJECT,
-                                            (Diseases) getIntent().getSerializableExtra(DISEASE_OBJECT));
+                                            getIntent().getSerializableExtra(DISEASE_OBJECT));
                                     args.putString("details1", getIntent().getStringExtra("details1"));
                                     args.putString("name", getIntent().getStringExtra("name"));
                                     args.putString("age", getIntent().getStringExtra("age"));
@@ -102,8 +105,7 @@ public class CheckoutActivity extends AppCompatActivity implements PaymentResult
                 .getCurrentUser()).getUid();
         String patientName = getIntent().getStringExtra("name");
         String patientIssue = getIntent().getStringExtra("details1");
-        DatabaseReference userRef = FirebaseDatabase.getInstance()
-                .getReference().child("Users").child(userID);
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
 
         HashMap<String, String> notifyData = new HashMap<>();
         notifyData.put("details1", patientIssue);

@@ -128,5 +128,20 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/seen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:visibility="gone"
+        android:letterSpacing="0.02"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text="@string/seen"
+        android:textSize="12sp" />
+
+
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.hcare.homeopathy.hcare.Consultations;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -25,6 +26,7 @@ import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+
 import java.util.Objects;
 
 class ConsultationsAdapter extends FirebaseRecyclerAdapter<
@@ -32,7 +34,7 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
 
     private final Context context;
     private final DatabaseReference mDoctorDatabase, messageArrived;
-    private final String mCurrentUserId;
+    private final String userID;
     String userName = "";
 
     public ConsultationsAdapter(@NonNull FirebaseRecyclerOptions<ConsultationsObject> options,
@@ -42,7 +44,7 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
         super(options);
         this.messageArrived = messageArrived;
         this.context = context;
-        this.mCurrentUserId = userID;
+        this.userID = userID;
         this.mDoctorDatabase = mDoctorDatabase;
     }
 
@@ -56,20 +58,31 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
     @Override
     protected void onBindViewHolder(@NonNull DoctorsViewHolder holder, int position
             , @NonNull ConsultationsObject model) {
-
         getRef(position).getKey();
-        final String user_ids = getRef(position).getKey();
-        DatabaseReference h = messageArrived.child("messages").child(mCurrentUserId).
-                child(Objects.requireNonNull(user_ids));
+
+        String doctorID = Objects.requireNonNull(getRef(position).getKey());
+
+        DatabaseReference h =
+                messageArrived.child("messages")
+                        .child(userID)
+                        .child(doctorID);
 
         h.limitToLast(1).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.hasChild("seen")) {
                     try {
+
                         boolean data = (boolean) dataSnapshot.child("seen").getValue();
-                        holder.setSeen(data);
-                    } catch (Exception e) {e.printStackTrace();}
+                        if(Objects.requireNonNull(dataSnapshot.child("from").getValue())
+                                .toString().equals(userID))
+                            holder.setSeen(true);
+                        else
+                            holder.setSeen(data);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -91,7 +104,7 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
 
         h.keepSynced(true);
 
-        mDoctorDatabase.child(user_ids).addValueEventListener(new ValueEventListener() {
+        mDoctorDatabase.child(doctorID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
@@ -112,8 +125,9 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
         holder.mView.setOnClickListener(v -> {
             Intent docprofileIntent =
                     new Intent(context, MainDoctorActivity.class);
-            docprofileIntent.putExtra("user_id", user_ids);
+            docprofileIntent.putExtra("user_id", doctorID);
             context.startActivity(docprofileIntent);
+
         });
     }
 
@@ -135,7 +149,10 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
                 messageView.setVisibility(View.INVISIBLE);
                 messageTextView.setText("No new messages");
             }
-            else messageView.setVisibility(View.VISIBLE);
+            else {
+                messageTextView.setText("Unread Messages");
+                messageView.setVisibility(View.VISIBLE);
+            }
         }
 
         public void setName(String name) {

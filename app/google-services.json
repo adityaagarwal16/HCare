@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1053059612819-rmv8ihck4h54kb5vjin527hj094ik3fm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hcare.backend",
+            "certificate_hash": "efc0faacdfa1b530e0b4af6e3798150fcb43a67b"
+          }
+        },
+        {
           "client_id": "1053059612819-lgau63lg71ac7ggmkv9lq2630g0fgia0.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -68,11 +76,11 @@
           }
         },
         {
-          "client_id": "1053059612819-pvmgqvhg3osv2d5o9mpba2eectdbtp1s.apps.googleusercontent.com",
+          "client_id": "1053059612819-9qjqbrej7qm30t75qhot75v0uq9l6uft.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.hcare.homeopathy.hcare",
-            "certificate_hash": "3d1c82805ee642900eadf2d241671b8c56cc6278"
+            "certificate_hash": "efc0faacdfa1b530e0b4af6e3798150fcb43a67b"
           }
         },
         {

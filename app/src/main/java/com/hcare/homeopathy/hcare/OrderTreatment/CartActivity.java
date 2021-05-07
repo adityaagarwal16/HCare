@@ -18,12 +18,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.text.MessageFormat;
 import java.util.Objects;
 
-public class CartActivity extends AppCompatActivity {
+public class CartActivity extends BaseActivity {
 
     DatabaseReference userRef;
     String doctorID, medicine_id, userID;
@@ -144,7 +145,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void setRecycler() {
-        DatabaseReference mDoctorsDatabase = FirebaseDatabase.getInstance().getReference()
+        DatabaseReference mDoctorsDatabase = FirebaseDatabase
+                .getInstance().getReference()
                 .child("PrescribedMedicine")
                 .child(doctorID)
                 .child(Objects.requireNonNull(FirebaseAuth.getInstance()

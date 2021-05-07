@@ -1,12 +1,15 @@
 package com.hcare.homeopathy.hcare.NavigationItems;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
@@ -41,29 +45,35 @@ import java.util.Objects;
 import id.zelory.compressor.Compressor;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
     private DatabaseReference mUserDatabase;
     Spinner spinner;
     private static final int GALLERY_PICK = 1;
 
     private StorageReference imageStorage;
-    private DatabaseReference loggedin;
-    String current_uid;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         spinner = findViewById(R.id.genderSpinner);
+        userID = Objects.requireNonNull(FirebaseAuth
+                .getInstance().getCurrentUser()).getUid();
 
         imageStorage = FirebaseStorage.getInstance().getReference();
-        current_uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        mUserDatabase = FirebaseDatabase.getInstance()
+                .getReference().child("Users").child(userID);
 
-        loggedin = FirebaseDatabase.getInstance().getReference().child("loggedin").child(current_uid);
+        newUser();
 
-        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
-        mUserDatabase.addValueEventListener(new ValueEventListener() {
+        mUserDatabase.addValueEventListener(
+                new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
@@ -80,6 +90,51 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         setCrosses();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    void newUser() {
+        if(getIntent().getBooleanExtra("newUser", false)) {
+            ((EditText) findViewById(R.id.patientName))
+                    .setText(getIntent().getStringExtra("name"));
+            ((EditText) findViewById(R.id.email))
+                    .setText(getIntent().getStringExtra("email"));
+            ((EditText) findViewById(R.id.contact))
+                    .setText(getIntent().getStringExtra("phoneNumber"));
+
+            String patientName = ((EditText)
+                    findViewById(R.id.patientName)).getText().toString();
+            String email = ((EditText)
+                    findViewById(R.id.email)).getText().toString();
+            String contactNumber = ((EditText)
+                    findViewById(R.id.contact)).getText().toString();
+
+            mUserDatabase.child("name").setValue(patientName);
+            mUserDatabase.child("phone number")
+                    .setValue(contactNumber);
+            mUserDatabase.child("email").setValue(email);
+
+            HashMap<String, String> notifyData = new HashMap<>();
+            notifyData.put("phone_number", contactNumber);
+            notifyData.put("email", email);
+            notifyData.put("name", patientName);
+
+            FirebaseDatabase.getInstance()
+                    .getReference()
+                    .child("loggedin")
+                    .child(userID)
+                    .setValue(notifyData);
+
+        }
     }
 
     void setImage(String image) {
@@ -186,8 +241,10 @@ public class ProfileActivity extends AppCompatActivity {
     String getSpinnerString() {
         if(spinner.getSelectedItemPosition() == 0)
             return "Male";
-        else
+        else if(spinner.getSelectedItemPosition() == 1)
             return "Female";
+        else
+            return "Others";
     }
 
     public void saveButton (View view) {
@@ -214,7 +271,12 @@ public class ProfileActivity extends AppCompatActivity {
                         notifyData.put("name", patientName);
                         notifyData.put("age", age);
                         notifyData.put("sex", gender);
-                        loggedin.setValue(notifyData);
+
+                        FirebaseDatabase.getInstance()
+                                .getReference()
+                                .child("loggedin")
+                                .child(userID)
+                                .setValue(notifyData);
 
                         Intent regIntent = new Intent(this, MainActivity.class);
                         regIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -234,6 +296,7 @@ public class ProfileActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter your name",
                     Toast.LENGTH_LONG).show();
     }
+
 
     @Override
     protected void onStart() {
@@ -274,9 +337,9 @@ public class ProfileActivity extends AppCompatActivity {
                 final byte[] thumb_byte = baos.toByteArray();
 
                 final StorageReference filepath =
-                        imageStorage.child("profile_images").child(current_uid+".jpg");
+                        imageStorage.child("profile_images").child(userID +".jpg");
                 final StorageReference thumb_filepath =
-                        imageStorage.child("profile_images").child("thumbs").child(current_uid+"jpg");
+                        imageStorage.child("profile_images").child("thumbs").child(userID +"jpg");
 
                 filepath.putFile(resultUri).addOnCompleteListener(
                         task -> filepath.getDownloadUrl().addOnSuccessListener(uri -> {

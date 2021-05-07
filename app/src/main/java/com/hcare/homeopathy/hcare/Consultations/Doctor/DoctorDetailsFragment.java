@@ -21,9 +21,7 @@ import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-
 import java.util.Objects;
-
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class DoctorDetailsFragment extends Fragment {
@@ -71,7 +69,7 @@ public class DoctorDetailsFragment extends Fragment {
                 .setText(dataSnapshot.child("about yourself").getValue().toString());
         ((TextView) root.findViewById(R.id.registration))
                 .setText(dataSnapshot.child("register id").getValue().toString());
-        ((TextView) root.findViewById(R.id.experience))
+        ((TextView) root.findViewById(R.id.date))
                 .setText(dataSnapshot.child("experience").getValue().toString());
         ((TextView) root.findViewById(R.id.languages))
                 .setText(dataSnapshot.child("languages").getValue().toString());
@@ -83,9 +81,11 @@ public class DoctorDetailsFragment extends Fragment {
     }
 
     void setImage(String image) {
-        Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE)
+        Picasso.get().load(image)
+                .networkPolicy(NetworkPolicy.OFFLINE)
                 .placeholder(R.drawable.vector_person)
-                .into(root.findViewById(R.id.profilePicture), new Callback() {
+                .into(root.findViewById(R.id.profilePicture),
+                        new Callback() {
             @Override
             public void onSuccess() { }
 
@@ -98,9 +98,11 @@ public class DoctorDetailsFragment extends Fragment {
 
         Picasso.get()
                 .load(image)
-                .transform(new BlurTransformation(requireContext(), 25, 1))
+                .transform(new BlurTransformation
+                        (requireContext(), 25, 1))
                 .networkPolicy(NetworkPolicy.OFFLINE)
-                .into(root.findViewById(R.id.background), new Callback() {
+                .into(root.findViewById(R.id.background),
+                        new Callback() {
 
                     @Override
                     public void onSuccess() {

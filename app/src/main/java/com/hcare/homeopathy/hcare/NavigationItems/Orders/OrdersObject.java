@@ -1,59 +1,52 @@
 package com.hcare.homeopathy.hcare.NavigationItems.Orders;
 
-/**
- * Created by Vinith pc on 2/21/2018.
- */
+public class OrdersObject {
 
-public class Orders {
+    private String OrderStatus, orderId, Ordertime, Doctor, Amount;
+
+    public String getDoctor() {
+        return Doctor;
+    }
+
+    public void setDoctor(String doctor) {
+        Doctor = doctor;
+    }
+
+    public String getAmount() {
+        return Amount;
+    }
+
+    public void setAmount(String amount) {
+        Amount = amount;
+    }
+
     public String getOrderStatus() {
         return OrderStatus;
     }
-public Orders(){
 
-    }
+    public OrdersObject() { }
+
     public void setOrderStatus(String orderStatus) {
         OrderStatus = orderStatus;
     }
 
-    public Orders(String orderStatus) {
-
+    public OrdersObject(String orderStatus) {
         OrderStatus = orderStatus;
     }
-
-    private String OrderStatus;
-    private String orderId;
 
     public String getOrdertime() {
         return Ordertime;
     }
 
     public void setOrdertime(String ordertime) {
-        Ordertime = ordertime;
-    }
-
-    private String Ordertime;
-
-    public Orders(String orderId, String time) {
-        this.orderId = orderId;
-        this.time = time;
+        this.Ordertime = ordertime;
     }
 
     public String getOrderId() {
-
         return orderId;
     }
 
     public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    private String time;
 }

@@ -5,6 +5,36 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/nothingHereLayout"
+        android:layout_width="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@drawable/nothing_found_here"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
+            android:paddingBottom="120dp"
+            android:contentDescription="@string/todo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:layout_marginBottom="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="Oops!\nThere's nothing here"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:paddingTop="10dp"

@@ -10,6 +10,8 @@ import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -35,6 +37,7 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -59,7 +62,7 @@ import java.util.Random;
 import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.GALLERY_PICK;
 import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.PICK_PDF_CODE;
 
-public class MainDoctorActivity extends AppCompatActivity implements PaymentResultListener {
+public class MainDoctorActivity extends BaseActivity implements PaymentResultListener {
 
     private String doctorID, userID;
     int lastDay = 0;
@@ -87,6 +90,7 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
 
         loadMessages();
         setConsultAgainButton();
+
     }
 
     @Override
@@ -101,50 +105,59 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
+        if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null)
             showOrHideFragment();
-        }
         else
             super.onBackPressed();
     }
 
     private void showOrHideFragment() {
-        FragmentTransaction transaction = getSupportFragmentManager()
+        FragmentTransaction transaction =
+                getSupportFragmentManager()
                 .beginTransaction();
+
         View chatBar = findViewById(R.id.chatBar);
         View consultAgain = findViewById(R.id.consultAgain);
         int fromDelta, toDelta;
 
-        if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
-            transaction.remove(Objects.requireNonNull(getSupportFragmentManager()
-                    .findFragmentById(R.id.fragment))).commit();
+        try {
+            if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
+                transaction.remove(Objects.requireNonNull
+                        (getSupportFragmentManager()
+                                .findFragmentById(R.id.fragment))).commit();
 
-            fromDelta = chatBar.getHeight();
-            toDelta = 0;
+                fromDelta = chatBar.getHeight();
+                toDelta = 0;
 
-            ((TextView) findViewById(R.id.getUserMessage)).setFocusable(true);
-        } else {
-            DoctorDetailsFragment fragment = new DoctorDetailsFragment();
-            Bundle args = new Bundle();
-            args.putString("user_id", doctorID);
-            fragment.setArguments(args);
+                findViewById(R.id.getUserMessage).setFocusableInTouchMode(true);
+                findViewById(R.id.getUserMessage).setFocusable(true);
 
-            fragment.setEnterTransition(new Fade().setDuration(300));
-            fragment.setExitTransition(new Fade().setDuration(300));
+            } else {
+                DoctorDetailsFragment fragment = new DoctorDetailsFragment();
+                Bundle args = new Bundle();
+                args.putString("user_id", doctorID);
+                fragment.setArguments(args);
 
-            transaction.replace(R.id.fragment, fragment).commit();
+                fragment.setEnterTransition(new Fade().setDuration(300));
+                fragment.setExitTransition(new Fade().setDuration(300));
 
-            toDelta = chatBar.getHeight();
-            fromDelta = 0;
+                transaction.replace(R.id.fragment, fragment)
+                        .commit();
 
-            ((TextView) findViewById(R.id.getUserMessage)).setFocusable(false);
-        }
+                toDelta = chatBar.getHeight();
+                fromDelta = 0;
 
-        TranslateAnimation animate = new TranslateAnimation(0, 0, fromDelta, toDelta);
-        animate.setDuration(400);
-        animate.setFillAfter(true);
-        chatBar.startAnimation(animate);
-        consultAgain.startAnimation(animate);
+                findViewById(R.id.getUserMessage).setFocusable(false);
+            }
+
+            TranslateAnimation animate =
+                    new TranslateAnimation(0, 0, fromDelta, toDelta);
+            animate.setDuration(400);
+            animate.setFillAfter(true);
+            chatBar.startAnimation(animate);
+            consultAgain.startAnimation(animate);
+
+        } catch(Exception ignored) { }
     }
 
     @Override
@@ -245,8 +258,7 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
                         message.setTime(0);
                     else
                         lastDay = new GetTime(message.getTime()).getDays();
-
-                   /* Log.i("from", message.getFrom());
+                    /* Log.i("from", message.getFrom());
                     Log.i("message", message.getMessage());
                     Log.i("order", message.getOrdering());
                     Log.i("type", message.getType());
@@ -283,7 +295,8 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
 
             DatabaseReference user_message_push = databaseRootReference
                     .child("messages")
-                    .child(userID).child(doctorID).push();
+                    .child(userID).child(doctorID)
+                    .push();
 
             String push_id = user_message_push.getKey();
 
@@ -300,23 +313,9 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
 
             ((EditText) findViewById(R.id.getUserMessage)).setText("");
             databaseRootReference.updateChildren(messageUserMap,
-                    (databaseError, databaseReference) -> {
-                notification();
-                messagesReference.orderByChild("seen").equalTo(false).addListenerForSingleValueEvent(
-                        new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    child.getRef().child("seen").setValue(true);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) { }
-                        });
-
-            });
+                    (databaseError, databaseReference) -> notification());
         }
+        loadMessages();
 
         userReference.child("time").setValue(ServerValue.TIMESTAMP);
         doctorReference.child("time").setValue(ServerValue.TIMESTAMP);
@@ -404,21 +403,7 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
 
 
                             databaseRootReference.updateChildren(messageUserMap,
-                                    (databaseError, databaseReference) -> {
-                                notification();
-                                messagesReference.orderByChild("seen").equalTo(false)
-                                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                                    child.getRef().child("seen").setValue(true);
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) { }
-                                        });
-                            });
+                                    (databaseError, databaseReference) -> notification());
                         }));
             }
         }
@@ -466,21 +451,7 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
 
 
                     databaseRootReference.updateChildren(messageUserMap,
-                            (databaseError, databaseReference) -> {
-                        notification();
-                        messagesReference.orderByChild("seen").equalTo(false)
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    child.getRef().child("seen").setValue(true);
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) { }
-                        });
-                    });
+                            (databaseError, databaseReference) -> notification());
                 }));
     }
 
@@ -493,19 +464,6 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
         databaseRootReference.child("notifications").child(userID).removeValue();
         databaseRootReference.child("Accepting")
                 .child(userID).removeValue();
-
-        messagesReference.orderByChild("seen").equalTo(false)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    child.getRef().child("seen").setValue(true);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
     }
 
     @Override
@@ -513,22 +471,6 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
         super.onStop();
         doctorReference.child("list").setValue("offline");
         userRef.child("status").setValue("offline");
-
-        messagesReference.orderByChild("seen").equalTo(false)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-
-                    child.getRef().child("seen").setValue(true);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     public void notification() {
@@ -629,21 +571,8 @@ public class MainDoctorActivity extends AppCompatActivity implements PaymentResu
                 .child(userID).setValue(messageMap);
         doctorReference.child("nextConsultdate").setValue(getCalculatedDate("dd-MM-yyyy", 10));
         // mChatMessageView.setText("");
-        databaseRootReference.updateChildren(messageUserMap, (databaseError, databaseReference) -> {
-            notification();
-            messagesReference.orderByChild("seen").equalTo(false).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        child.getRef().child("seen").setValue(true);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) { }
-
-            });
-        });
+        databaseRootReference.updateChildren(messageUserMap,
+                (databaseError, databaseReference) -> notification());
     }
 
     @Override

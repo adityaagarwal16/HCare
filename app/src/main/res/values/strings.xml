@@ -39,6 +39,7 @@
     <string-array name="genderArray">
         <item><b>Male</b>    </item>
         <item><b>Female</b>    </item>
+        <item><b>Others</b>    </item>
     </string-array>
 
 
@@ -52,7 +53,6 @@
     <string name="customerCare">Customer care</string>
     <string name="logout">Logout</string>
     <string name="rateUs">Rate us</string>
-
 
     <string name="doctor">Doctor</string>
     <string name="time">time</string>
@@ -69,12 +69,14 @@
     <string name="username">Username</string>
     <string name="phone">Phone</string>
     <string name="orderNow">Order Now</string>
-    <string name="phoneNumber">Phone number</string>
     <string name="address">Address</string>
     <string name="city">City</string>
     <string name="patient">Patient</string>
     <string name="pinCode">PIN code</string>
     <string name="state">State</string>
-    <string name="enterPhoneNumber"><font size="20">Enter your phone number</font></string>
+    <string name="mobileNumber">Mobile Number</string>
+    <string name="enterMobileNumber"><font size="21"> Enter number here</font></string>
+    <string name="seen">Seen</string>
+    <string name="date">Date</string>
 
 </resources>

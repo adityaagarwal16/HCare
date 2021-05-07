@@ -62,10 +62,10 @@ public class PhoneNumberFragment extends Fragment {
     private void submitButton() {
         root.findViewById(R.id.submit).setOnClickListener(v -> {
             if (phoneNumber.getText().length() == 10) {
-
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                        "+91" + phoneNumber.getText().toString(),
-                        10,
+                        "+91" +
+                                phoneNumber.getText().toString(),
+                        60,
                         TimeUnit.SECONDS,
                         requireActivity(),
                         mCallbacks);
@@ -75,7 +75,7 @@ public class PhoneNumberFragment extends Fragment {
 
             } else {
                 Toast.makeText(requireActivity(),
-                        "Please enter 10 digit Phone number",
+                        "Please enter 10 digit Mobile number",
                         Toast.LENGTH_LONG).show();
             }
         });
@@ -93,6 +93,7 @@ public class PhoneNumberFragment extends Fragment {
                 GoogleSignIn.getClient(requireContext(), gso);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        root.findViewById(R.id.circleLoader).setVisibility(View.VISIBLE);
     }
 
     void setCross() {
@@ -129,15 +130,16 @@ public class PhoneNumberFragment extends Fragment {
         });
     }
 
-    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks
-            = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+    PhoneAuthProvider.OnVerificationStateChangedCallbacks
+            mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) { }
 
         @SuppressLint("SetTextI18n")
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-            TextView otpFailedLayout =  root.findViewById(R.id.otpFailedText);
+            TextView otpFailedLayout =
+                    root.findViewById(R.id.otpFailedText);
             if (e instanceof FirebaseAuthInvalidCredentialsException)
                 otpFailedLayout.setText("INVALID NUMBER");
             else
@@ -148,23 +150,28 @@ public class PhoneNumberFragment extends Fragment {
         @Override
         public void onCodeSent(@NonNull String verificationId,
                                @NonNull PhoneAuthProvider.ForceResendingToken token) {
-            root.findViewById(R.id.otpSentLayout).setVisibility(View.VISIBLE);
+            root.findViewById(R.id.otpSentLayout)
+                    .setVisibility(View.VISIBLE);
 
             LoginActivity.token = token;
 
             OTPFragment fragment = new OTPFragment();
             Bundle args = new Bundle();
-            args.putString("phoneNumber", phoneNumber.getText().toString());
+            args.putString("phoneNumber",
+                    phoneNumber.getText().toString());
             args.putString("verificationId", verificationId);
             fragment.setArguments(args);
 
-            fragment.setEnterTransition(new Slide(Gravity.END).setDuration(200));
+            fragment.setEnterTransition(new
+                    Slide(Gravity.END).setDuration(200));
 
-            new Handler(Looper.getMainLooper()).postDelayed(() ->
-                    requireActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.frameLayout, fragment)
-                            .commit(), 700);
+            try {
+                new Handler(Looper.getMainLooper()).postDelayed(() ->
+                        requireActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.frameLayout, fragment)
+                                .commit(), 700);
+            } catch (Exception ignored) {}
         }
     };
 }

@@ -7,9 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.R;
 
-public class FaqActivity extends AppCompatActivity {
+public class FaqActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

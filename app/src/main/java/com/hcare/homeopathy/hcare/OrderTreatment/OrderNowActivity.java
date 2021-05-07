@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -38,7 +39,7 @@ import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.CITY;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.PIN_CODE;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.STATE;
 
-public class OrderNowActivity extends AppCompatActivity implements PaymentResultListener {
+public class OrderNowActivity extends BaseActivity implements PaymentResultListener {
 
     private DatabaseReference reference, userRef;
     private String doctorID, userID;
