@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -156,7 +157,7 @@ public class MainActivity extends BaseActivity
         publicConsult.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final TextView consultReq = findViewById(R.id.requestText);
+                final RelativeLayout consultReq = findViewById(R.id.requestText);
                 if (dataSnapshot.hasChild("name"))
                     consultReq.setVisibility(View.VISIBLE);
                 else

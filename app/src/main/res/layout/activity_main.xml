@@ -111,18 +111,52 @@
                         tools:ignore="HardcodedText"/>
                 </LinearLayout>
 
-                <TextView
-                    android:layout_marginTop="5dp"
+                <RelativeLayout
                     android:id="@+id/requestText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="15dp"
+                    android:paddingStart="20dp"
+                    android:foreground="?selectableItemBackground"
+                    android:paddingEnd="20dp"
+                    android:onClick="consultations"
+                    android:layout_marginTop="5dp"
                     android:background="@color/colorPrimary"
-                    android:text="Consultation booked\nDoctor will be here soon"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    tools:visibility="gone"
-                    tools:ignore="HardcodedText" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/bookedHeading"
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Consultation booked"
+                        android:letterSpacing="0.02"
+                        android:textColor="?android:textColorPrimary"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/bookedSubHeading"
+                        android:layout_below="@id/bookedHeading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:text="Doctor will be here soon"
+                        android:textStyle="bold"
+                        android:textSize="15sp"
+                        tools:ignore="HardcodedText" />
+
+                    <ImageView
+                        android:contentDescription="@string/todo"
+                        android:src="@drawable/vector_doctor"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_width="60dp"
+                        android:layout_height="75dp"
+                        app:tint="@color/colorSecondary" />
+
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_marginTop="5dp"

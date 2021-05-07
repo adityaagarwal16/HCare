@@ -16,7 +16,8 @@ public class RateUs {
 
     public RateUs(Context context) {
         this.context = context;
-        createDialog();
+        openPlayStore();
+        //createDialog();
     }
 
     void createDialog() {

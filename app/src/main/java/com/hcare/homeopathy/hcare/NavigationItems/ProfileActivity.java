@@ -357,7 +357,7 @@ public class ProfileActivity extends BaseActivity {
 
                                 new Handler(Looper.getMainLooper()).postDelayed(()
                                         -> findViewById(R.id.loader).setVisibility(View.GONE),
-                                        4000);
+                                        3900);
                                 mUserDatabase.updateChildren(update_haspMap);
 
                             }));

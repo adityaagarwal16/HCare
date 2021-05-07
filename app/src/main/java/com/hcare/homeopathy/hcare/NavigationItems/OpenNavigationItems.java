@@ -66,8 +66,6 @@ public class OpenNavigationItems {
 
             case R.id.logout:
                 intent = null;
-                ((DrawerLayout) ((Activity) context).findViewById(R.id.drawer))
-                        .closeDrawer(Gravity.LEFT);
                 new LogoutDialog(context);
                 break;
             default:
