@@ -10,22 +10,7 @@
     android:paddingEnd="10dp"
     tools:context="com.hcare.homeopathy.hcare.Start.LoginActivity">
 
-    <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
-        android:id="@+id/circleLoader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/confirm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:trailingcircular_animDelay="0"
-        app:trailingcircular_animDuration="1100"
-        app:trailingcircular_bigCircleRadius="50dp"
-        app:trailingcircular_dotsColor="@color/colorSecondary"
-        app:trailingcircular_dotsRadius="8dp"
-        app:trailingcircular_noOfTrailingDots="6" />
+
 
     <TextView
         android:id="@+id/header"
@@ -61,7 +46,7 @@
         android:background="@color/colorPrimary"
         android:gravity="bottom"
         android:hint="Enter code here"
-        android:inputType="phone"
+        android:inputType="number"
         android:layout_marginEnd="10dp"
         android:letterSpacing="0.05"
         android:paddingTop="8dp"
@@ -86,6 +71,55 @@
         app:layout_constraintBottom_toBottomOf="@+id/otp"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <RelativeLayout
+        android:id="@+id/otpFailedLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf=
+            "@+id/confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageCard"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_centerVertical="true"
+        app:cardBackgroundColor="#F78080"
+        app:cardCornerRadius="50dp"
+        app:cardElevation="0dp">
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/todo"
+            android:padding="5dp"
+            android:src="@drawable/vector_close"
+            app:tint="@color/colorPrimary" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/otpFailedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@id/imageCard"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="3dp"
+        android:text="OTP Failed"
+        android:textAllCaps="true"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/otpNotReceived"
@@ -122,5 +156,23 @@
             tools:ignore="HardcodedText" />
 
     </androidx.cardview.widget.CardView>
+
+
+    <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
+        android:id="@+id/circleLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trailingcircular_animDelay="0"
+        app:trailingcircular_animDuration="1100"
+        app:trailingcircular_bigCircleRadius="50dp"
+        app:trailingcircular_dotsColor="@color/colorSecondary"
+        app:trailingcircular_dotsRadius="8dp"
+        app:trailingcircular_noOfTrailingDots="6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

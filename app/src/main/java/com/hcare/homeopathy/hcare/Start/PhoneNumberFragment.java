@@ -61,7 +61,8 @@ public class PhoneNumberFragment extends Fragment {
 
     private void submitButton() {
         root.findViewById(R.id.submit).setOnClickListener(v -> {
-            if (phoneNumber.getText().length() == 10) {
+            if (phoneNumber.getText().length() == 10 && phoneNumber.getText()
+                    .toString().matches("[0-9]+")) {
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(
                         "+91" +
                                 phoneNumber.getText().toString(),

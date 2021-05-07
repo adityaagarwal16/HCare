@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('F:\\Tech\\App Dev\\hcare.jks')
+            storePassword 'keystore'
+            keyPassword 'keystore'
+            keyAlias 'key0'
+        }
+    }
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.hcare.homeopathy.hcare"
@@ -10,6 +18,7 @@ android {
         versionName '1.108'
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
     buildTypes {
