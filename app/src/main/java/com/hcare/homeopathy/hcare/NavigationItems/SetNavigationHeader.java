@@ -55,14 +55,14 @@ public class SetNavigationHeader {
 
     void setFields(DataSnapshot dataSnapshot) {
         try {
-
             ((TextView) headerView.findViewById(R.id.username))
-                    .setText(Objects.requireNonNull(
-                            dataSnapshot.child("name").getValue()).toString());
-
+                    .setText(Objects.requireNonNull(dataSnapshot.child("name")
+                            .getValue()).toString());
+        } catch (Exception ignored) { }
+        try {
             ((TextView) headerView.findViewById(R.id.phoneNum))
-                    .setText(Objects.requireNonNull(
-                            dataSnapshot.child("phone number").getValue()).toString());
+                    .setText(Objects.requireNonNull(dataSnapshot.child("phone number")
+                            .getValue()).toString());
 
          } catch (Exception ignored) { }
     }

@@ -46,7 +46,7 @@
     <!--navigation items -->
     <string name="profile">Profile</string>
     <string name="chat">Chat with doctor</string>
-    <string name="orders">Orders</string>
+    <string name="orders">Your Orders</string>
     <string name="helpSupport"><![CDATA[Help & support]]></string>
     <string name="consultations">Consultations</string>
     <string name="invite">Invite your friends"</string>

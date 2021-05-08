@@ -1,8 +1,6 @@
 package com.hcare.homeopathy.hcare.Consultations.Doctor;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -100,7 +98,8 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                         });
 
 
-                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)
+                RelativeLayout.LayoutParams lp =
+                        (RelativeLayout.LayoutParams)
                         viewHolder.imageCard.getLayoutParams();
                 if(c.getFrom().equals(userID)) {
                     lp.removeRule(RelativeLayout.ALIGN_PARENT_START);
@@ -170,11 +169,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                 viewHolder.imageCard.setVisibility(View.GONE);
                 viewHolder.doctorMessage.setVisibility(View.VISIBLE);
                 viewHolder.doctorMessage
-                        .setText("Here's your header, please press the following button to get it.");
+                        .setText("Here's your Treatment, please press the following button to get it.");
 
                 if (c.getOrdering().equals("ordered")) {
                     viewHolder.header.setText("Ordered");
-                }
+                } else
+                    viewHolder.header.setText("Treatment");
 
                 viewHolder.treatmentCard.setOnClickListener(v -> {
                     if (c.getOrdering().equals("ordered")) {

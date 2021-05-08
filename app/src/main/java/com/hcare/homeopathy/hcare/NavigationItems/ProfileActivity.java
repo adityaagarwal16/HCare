@@ -110,7 +110,6 @@ public class ProfileActivity extends BaseActivity {
                     .setText(getIntent().getStringExtra("email"));
             ((EditText) findViewById(R.id.contact))
                     .setText(getIntent().getStringExtra("phoneNumber"));
-
             String patientName = ((EditText)
                     findViewById(R.id.patientName)).getText().toString();
             String email = ((EditText)
@@ -185,24 +184,32 @@ public class ProfileActivity extends BaseActivity {
     }
 
     void setFields(DataSnapshot dataSnapshot) {
-        try{
+        try {
             ((EditText) findViewById(R.id.patientName))
-                    .setText(Objects.requireNonNull(
-                            dataSnapshot.child("name").getValue()).toString());
+                    .setText(Objects.requireNonNull(dataSnapshot.child("name")
+                            .getValue()).toString());
+        } catch (Exception ignored) {}
+        try {
             ((EditText) findViewById(R.id.email))
-                    .setText(Objects.requireNonNull(
-                            dataSnapshot.child("email").getValue()).toString());
+                    .setText(Objects.requireNonNull(dataSnapshot.child("email")
+                            .getValue()).toString());
+        } catch (Exception ignored) {}
+        try {
             ((EditText) findViewById(R.id.age))
-                    .setText(Objects.requireNonNull(
-                            dataSnapshot.child("age").getValue()).toString());
+                    .setText(Objects.requireNonNull(dataSnapshot.child("age")
+                            .getValue()).toString());
+        } catch (Exception ignored) {}
+        try {
             ((EditText) findViewById(R.id.contact))
-                    .setText(Objects.requireNonNull(
-                            dataSnapshot.child("phone number").getValue()).toString());
+                    .setText(Objects.requireNonNull(dataSnapshot.child("phone number")
+                            .getValue()).toString());
+        } catch (Exception ignored) {}
+        try {
             spinner.setSelection(getSpinnerNum(
                     Objects.requireNonNull(dataSnapshot.child("sex")
                             .getValue()).toString())
             );
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {}
     }
 
     public void imageButton(View view) {

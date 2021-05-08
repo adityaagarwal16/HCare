@@ -69,6 +69,7 @@
                 <TextView
                     android:id="@+id/diseaseNameLine"
                     android:layout_marginTop="8dp"
+                    android:layout_marginStart="3dp"
                     android:layout_alignStart="@id/diseaseName"
                     android:layout_below="@id/diseaseName"
                     android:layout_width="wrap_content"
@@ -80,6 +81,7 @@
                     android:id="@+id/patientIssue"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="3dp"
                     android:layout_below="@id/diseaseNameLine"
                     android:layout_alignStart="@id/diseaseName"
                     android:layout_marginEnd="10dp"

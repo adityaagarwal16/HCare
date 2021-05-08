@@ -13,7 +13,6 @@ import android.widget.AbsListView;
 import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +27,7 @@ import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
 import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.MainActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
@@ -71,7 +71,7 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
                                     intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
 
-                                    //intent = new Intent(getApplicationContext(), FaqActivity.class);
+                                    intent = new Intent(getApplicationContext(), FaqActivity.class);
                                     //intent = new Intent(getApplicationContext(), OrdersActivity.class);
 
 
@@ -80,7 +80,7 @@ public class SplashScreenActivity extends BaseActivity {
 //                                    intent.putExtra("discount", 360);
 //                                    intent.putExtra("price", 600);
 //
-                                    intent = new Intent(getApplicationContext(), MainActivity.class);
+                                   intent = new Intent(getApplicationContext(), MainActivity.class);
                                 }
                                 startActivity(intent);
                                 finish();

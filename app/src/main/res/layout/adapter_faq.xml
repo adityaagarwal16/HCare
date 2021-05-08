@@ -18,7 +18,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/disease"
         android:textColor="?android:textColorPrimary"
-        android:textSize="16sp"
+        android:textSize="17sp"
         android:textStyle="bold" />
 
 
@@ -43,9 +43,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingTop="15dp"
+        android:paddingTop="10dp"
         android:text="@string/disease"
         android:textStyle="bold"
-        android:textSize="14sp"/>
+        android:textSize="15sp"/>
 
 </RelativeLayout>

@@ -1,7 +1,6 @@
 package com.hcare.homeopathy.hcare.Start;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -22,22 +21,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.hcare.homeopathy.hcare.MainActivity;
-import com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity;
 import com.hcare.homeopathy.hcare.R;
 
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -164,7 +151,7 @@ public class OTPFragment extends Fragment {
                         @Override
                         public void onFinish() {
                             timerOn = false;
-                            //on finish the count down timer finsih
+                            //on finish the count down timer finish
                         }
 
                     }.start();

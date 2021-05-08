@@ -70,6 +70,7 @@ public class SignIn {
                                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                                 });
                     else {
+                        root.findViewById(R.id.circleLoader).setVisibility(View.GONE);
                         if (task.getException()
                                 instanceof FirebaseAuthInvalidCredentialsException)
                             Toast.makeText(context,
