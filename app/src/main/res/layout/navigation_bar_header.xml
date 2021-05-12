@@ -5,17 +5,36 @@
     android:orientation="vertical"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:paddingTop="5dp"
-        android:paddingBottom="8dp"
-        android:textColor="@color/colorSecondary"
-        android:paddingStart="25dp"
-        android:paddingEnd="25dp"
-        android:textSize="21sp"
-        android:textStyle="bold"
-        android:text="@string/app_name"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/colorSecondary"
+            android:layout_toEndOf="@id/icon"
+            android:textSize="22sp"
+            android:layout_centerVertical="true"
+            android:textStyle="bold"
+            android:text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/icon"
+            android:paddingTop="4dp"
+            android:layout_marginStart="5dp"
+            android:paddingBottom="4dp"
+            android:src="@drawable/logo_white"
+            android:layout_width="50dp"
+            android:layout_height="45dp"
+            android:contentDescription="@string/todo" />
+
+    </RelativeLayout>
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -3,15 +3,12 @@ package com.hcare.homeopathy.hcare;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -63,17 +60,14 @@ public class MainActivity extends BaseActivity
                 .getCurrentUser()).getUid();
         Log.i("userID", userID);
 
-        mUserRef =
-                FirebaseDatabase.getInstance().getReference().child("Users").
-                        child(userID);
+        mUserRef = FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(userID);
 
         new SetNavigationHeader(this);
 
         //drawer and toolbar
         setToolbar();
-
         eventListeners();
-
         setFlipper();
 
         findViewById(R.id.cart).setOnClickListener(v ->
@@ -152,7 +146,6 @@ public class MainActivity extends BaseActivity
         DatabaseReference publicConsult = FirebaseDatabase.getInstance().
                 getReference().child("public_Consulting")
                 .child(userID);
-
 
         publicConsult.addValueEventListener(new ValueEventListener() {
             @Override
