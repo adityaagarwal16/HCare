@@ -40,6 +40,7 @@ public class DoctorDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        assert getArguments() != null;
         final String doctor_id = getArguments().getString("user_id");
 
         DatabaseReference mDoctorsDatabase = FirebaseDatabase.getInstance().getReference()
@@ -50,7 +51,8 @@ public class DoctorDetailsFragment extends Fragment {
         mDoctorsDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                setImage(dataSnapshot.child("image").getValue().toString());
+                setImage(Objects.requireNonNull(
+                        dataSnapshot.child("image").getValue()).toString());
                 setFields(dataSnapshot);
             }
 

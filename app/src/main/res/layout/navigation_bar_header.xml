@@ -11,11 +11,11 @@
 
         <TextView
             android:paddingTop="5dp"
-            android:paddingBottom="10dp"
-            android:layout_marginStart="5dp"
+            android:paddingBottom="7dp"
+            android:layout_marginStart="2dp"
             android:textColor="@color/colorSecondary"
             android:layout_toEndOf="@id/icon"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:layout_centerVertical="true"
             android:textStyle="bold"
             android:text="@string/app_name"
@@ -25,11 +25,11 @@
         <ImageView
             android:id="@+id/icon"
             android:paddingTop="4dp"
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="10dp"
             android:paddingBottom="4dp"
             android:src="@drawable/logo_white"
             android:layout_width="50dp"
-            android:layout_height="45dp"
+            android:layout_height="50dp"
             android:contentDescription="@string/todo" />
 
     </RelativeLayout>

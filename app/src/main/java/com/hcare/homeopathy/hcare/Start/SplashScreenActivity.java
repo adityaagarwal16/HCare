@@ -39,6 +39,7 @@ public class SplashScreenActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
+
         FirebaseDatabase.getInstance().getReference().child("Version")
                 .addValueEventListener(new ValueEventListener() {
             @Override
