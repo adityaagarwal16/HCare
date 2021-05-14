@@ -277,6 +277,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
                     options.put("prefill", preFill);
 
+                    co.setImage(R.drawable.logo_green);
                     co.open(activity, options);
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext() ,

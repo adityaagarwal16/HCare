@@ -46,7 +46,6 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-
     <ImageView
         android:layout_below="@id/toolbar"
         android:background="@color/colorPrimary"
@@ -56,7 +55,8 @@
         android:contentDescription="@string/todo"
         android:src="@drawable/thyroid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:maxHeight="300dp" />
 
     <TextView
         android:id="@+id/aboutDisease"

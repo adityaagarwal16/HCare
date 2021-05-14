@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity;
 import com.hcare.homeopathy.hcare.R;
@@ -120,7 +120,10 @@ public class SignIn {
                 });
     }
 
+    String token = "";
     private void newAccount(String phoneNumber, String name, String email) {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener( task -> token = task.getResult());
+
         HashMap<String, String> userMap = new HashMap<>();
         userMap.put("phone number", phoneNumber);
         userMap.put("name", name);
@@ -129,8 +132,7 @@ public class SignIn {
         userMap.put("thumb_image", "default");
         userMap.put("image", "default");
         userMap.put("email", email);
-        userMap.put("device_token", FirebaseInstanceId
-                .getInstance().getToken());
+        userMap.put("device_token",  token);
         userMap.put("status", "online");
 
         FirebaseDatabase.getInstance().getReference()

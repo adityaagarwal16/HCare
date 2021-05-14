@@ -378,9 +378,9 @@
                 <ViewFlipper
                     android:layout_below="@id/line"
                     android:id="@+id/imageFlipper"
+                    android:layout_centerHorizontal="true"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:scaleType="fitXY"/>
+                    android:layout_height="220dp"/>
 
             </RelativeLayout>
 

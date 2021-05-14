@@ -2,10 +2,6 @@ package com.hcare.homeopathy.hcare.Consultations.Doctor;
 
 import android.content.Context;
 
-/**
- * Created by Vinith pc on 9/10/2017.
- */
-
 public class ChatObject {
 
     private String message, type, image, ordering, medicineId, from;
@@ -27,18 +23,9 @@ public class ChatObject {
         return medicineId;
     }
 
-    public void setMedicineId(String medicineId) {
-        this.medicineId = medicineId;
-    }
-
     public String getOrdering() {
         return ordering;
     }
-
-    public void setOrdering(String ordering) {
-        this.ordering = ordering;
-    }
-
 
     public String getImage() {
         return image;
@@ -46,10 +33,6 @@ public class ChatObject {
 
     public void setImage(Context ctx, String image) {
         this.image = image;
-    }
-
-    public ChatObject(String from) {
-        this.from = from;
     }
 
     public String getMessage() {

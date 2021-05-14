@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/hcare-version-2.iml" filepath="$PROJECT_DIR$/.idea/modules/hcare-version-2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/hcare-version-2.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/hcare-version-2.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HCare.iml" filepath="$PROJECT_DIR$/.idea/modules/HCare.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HCare.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HCare.app.iml" />
     </modules>
   </component>
 </project>

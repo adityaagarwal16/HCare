@@ -67,12 +67,12 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent.putExtra("sex", "male");
 
 
-                                    intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
+                                    //intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
 
-                                    intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
-                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+                                    //intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
+                                    //intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
 
-                                    intent = new Intent(getApplicationContext(), FaqActivity.class);
+                                    //intent = new Intent(getApplicationContext(), FaqActivity.class);
                                     //intent = new Intent(getApplicationContext(), OrdersActivity.class);
 
 

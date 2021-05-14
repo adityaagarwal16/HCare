@@ -51,6 +51,7 @@ public class CheckoutFragment extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_checkout,
                 container, false);
+        flipper();
         return root;
     }
 
@@ -83,7 +84,6 @@ public class CheckoutFragment extends Fragment {
 
         root.findViewById(R.id.payNowButton).setOnClickListener(v -> startPayment());
 
-        flipper();
         setHeaders();
     }
 
@@ -120,22 +120,25 @@ public class CheckoutFragment extends Fragment {
     }
 
     void flipper() {
-        int[] images ={R.drawable.review1,
+        int[] images ={
+               // R.drawable.review1,
                 R.drawable.review2,
                 R.drawable.review3,
-                R.drawable.review4};
+                R.drawable.review4
+        };
         ViewFlipper mFlipper = root.findViewById(R.id.imageFlipper);
 
         for (int image: images) {
-            ImageView imageView = new ImageView(requireContext());
+            ImageView imageView = new ImageView(requireActivity());
             imageView.setBackgroundResource(image);
 
             mFlipper.addView(imageView);
             mFlipper.setFlipInterval(4000);
             mFlipper.setAutoStart(true);
+            mFlipper.startFlipping();
 
-            mFlipper.setOutAnimation(requireContext(), android.R.anim.slide_out_right);
-            mFlipper.setInAnimation(requireContext(), android.R.anim.slide_in_left);
+            mFlipper.setOutAnimation(requireActivity(),android.R.anim.slide_out_right);
+            mFlipper.setInAnimation(requireActivity(),android.R.anim.slide_in_left);
         }
     }
 
@@ -151,7 +154,6 @@ public class CheckoutFragment extends Fragment {
                     options.put("name", "Hcare");
                     options.put("description", "discount applied");
 
-                    //You can omit the image option to fetch the image from dashboard
                     options.put("currency", "INR");
 
                     int RAZORPAY_MULTIPLIER = 100;
@@ -163,6 +165,7 @@ public class CheckoutFragment extends Fragment {
 
                     options.put("prefill", preFill);
 
+                    co.setImage(R.drawable.logo_green);
                     co.open(activity, options);
 
                 } catch (Exception e) { e.printStackTrace(); }
