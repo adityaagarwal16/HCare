@@ -520,7 +520,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             options.put("name", "Hcare");
             options.put("description", "discount applied");
             //You can omit the image option to fetch the image from dashboard
-            options.put("image", R.drawable.hcarehori);
+            options.put("image", R.drawable.logo_green);
             options.put("currency", "INR");
             options.put("amount", "15000");
 

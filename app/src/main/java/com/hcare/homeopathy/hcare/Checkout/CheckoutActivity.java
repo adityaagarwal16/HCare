@@ -45,6 +45,7 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
 
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
+
         FirebaseDatabase.getInstance()
                 .getReference().child("public_Consulting")
                 .addValueEventListener(new ValueEventListener() {
@@ -56,7 +57,7 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                                         new CheckoutSuccessfulFragment())
                                         .commit();
                             else {
-                                if (dataSnapshot.hasChild(userID))
+                                if (!dataSnapshot.hasChild(userID))
                                     transaction.replace(R.id.frameLayout,
                                             new CheckoutDisableFragment())
                                             .commit();

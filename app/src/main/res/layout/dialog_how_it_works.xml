@@ -95,17 +95,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/textView55"
             app:layout_constraintTop_toTopOf="@id/textView55"
-            app:srcCompat="@drawable/call"
-            tools:ignore="HardcodedText" />
+            app:srcCompat="@drawable/vector_call"
+            tools:ignore="HardcodedText"
+            app:tint="@color/colorSecondary" />
 
         <ImageView
             android:id="@+id/imageView11"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            app:tint="@color/colorSecondary"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView55"
-            app:srcCompat="@drawable/blog"
+            app:srcCompat="@drawable/vector_consultations"
             android:contentDescription="@string/todo" />
 
         <TextView
@@ -124,8 +126,9 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
+            app:tint="@color/colorSecondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView11"
-            app:srcCompat="@drawable/orders"
+            app:srcCompat="@drawable/vector_cart"
             android:contentDescription="@string/todo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

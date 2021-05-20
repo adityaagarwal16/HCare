@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/colorPrimary"
@@ -10,7 +11,7 @@
             android:id="@+id/header"
             android:background="@color/colorSecondary"
             android:layout_width="match_parent"
-            android:layout_height="260dp">
+            android:layout_height="275dp">
 
             <ImageView
                 android:id="@+id/background"
@@ -33,48 +34,65 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profilePicture"
                 android:tint="@color/colorPrimary"
-                android:layout_margin="30dp"
+                android:layout_margin="25dp"
                 android:layout_width="120dp"
                 android:layout_centerVertical="true"
                 android:layout_height="120dp"
                 android:src="@drawable/vector_person" />
 
-            <TextView
-                android:id="@+id/aboutTheDoctorHeader"
-                android:layout_width="match_parent"
-                android:layout_marginEnd="30dp"
-                android:layout_alignTop="@id/profilePicture"
-                android:layout_height="wrap_content"
-                android:text="@string/aboutDoctor"
-                android:layout_toEndOf="@id/profilePicture"
-                android:textColor="?android:textColorSecondaryInverse"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/line4"
-                android:layout_marginTop="8dp"
-                android:layout_below="@id/aboutTheDoctorHeader"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
-                android:layout_height="2dp"
-                android:layout_alignStart="@id/aboutTheDoctorHeader"
-                android:background="@color/colorSecondary"
-                android:text="@string/aboutDoctor"/>
-
-            <TextView
-                android:id="@+id/aboutTheDoctor"
-                android:layout_width="wrap_content"
-                android:layout_alignStart="@id/aboutTheDoctorHeader"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/line4"
-                android:textColor="?android:textColorPrimaryInverse"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="5dp"
-                android:maxLines="6"
-                android:layout_marginEnd="30dp"
-                android:textStyle="bold"
-                android:paddingBottom="20dp"
-                android:text="@string/aboutDoctor"
-                android:textSize="15sp"/>
+                android:layout_alignParentTop="true"
+                android:layout_marginEnd="25dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_toEndOf="@id/profilePicture"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/aboutTheDoctorHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/aboutDoctor"
+                    android:textSize="16sp" android:textColor="?android:textColorSecondaryInverse"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/line4"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/line4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/aboutTheDoctorHeader"
+                    android:layout_alignStart="@id/aboutTheDoctorHeader"
+                    android:layout_marginBottom="4dp"
+                    android:background="@color/colorSecondary"
+                    android:text="@string/aboutDoctor"
+                    app:layout_constraintBottom_toTopOf="@+id/aboutTheDoctor"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/aboutTheDoctor"
+                    android:layout_marginTop="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/line4"
+                    android:ellipsize="end"
+                    android:layout_alignStart="@id/aboutTheDoctorHeader"
+                    android:layout_alignParentEnd="true"
+                    android:maxLines="8"
+                    android:text="@string/aboutDoctor" android:textColor="?android:textColorPrimaryInverse"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 

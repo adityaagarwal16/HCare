@@ -1,8 +1,6 @@
 package com.hcare.homeopathy.hcare.Consultations;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -162,7 +160,7 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
 
         public void setDoctorImage(final String thumb_image) {
             Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder(R.drawable.doctor).into(mView.findViewById(R.id.doctorImage),
+                    .placeholder(R.drawable.vector_image_doctor).into(mView.findViewById(R.id.doctorImage),
                     new Callback() {
                 @Override
                 public void onSuccess() { }

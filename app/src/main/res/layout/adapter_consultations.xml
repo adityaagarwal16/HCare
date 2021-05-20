@@ -13,7 +13,7 @@
         android:id="@+id/doctorImage"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:src="@drawable/doctor" />
+        android:src="@drawable/vector_image_doctor" />
 
     <TextView
         android:id="@+id/doctorName"
