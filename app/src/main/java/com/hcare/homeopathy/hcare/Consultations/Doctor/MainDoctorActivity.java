@@ -43,6 +43,7 @@ import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -83,14 +84,38 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         setToolbar();
 
         userRef = databaseRootReference.child("Users").child(userID);
-        messagesReference = databaseRootReference.child("messages").child(userID).child(doctorID);
+        messagesReference = databaseRootReference
+                .child("messages").child(userID).child(doctorID);
 
         userReference = databaseRootReference.child("Private_consult").child(doctorID).child(userID);
         doctorReference = databaseRootReference.child("Private_consult").child(userID).child(doctorID);
 
         loadMessages();
         setConsultAgainButton();
+        setLastSeen();
+    }
 
+    void setLastSeen() {
+        messagesReference.orderByKey().limitToLast(1)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        try {
+                            String key = String.valueOf(
+                                    new JSONObject(Objects.requireNonNull(
+                                            snapshot.getValue()).toString())
+                                            .keys().next());
+                            messagesReference.child(key).child("seen").setValue(true);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     @Override
@@ -251,13 +276,21 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         messagesReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                ChatObject message = dataSnapshot.getValue(ChatObject.class);
                 try {
-                    if(lastDay == new GetTime(Objects.requireNonNull(message)
+                    ChatObject message = dataSnapshot.getValue(ChatObject.class);
+                    Log.i("message", s);
+
+                    if (lastDay == new GetTime(Objects.requireNonNull(message)
                             .getTime()).getDays())
                         message.setTime(0);
                     else
                         lastDay = new GetTime(message.getTime()).getDays();
+
+                    if (!((boolean) message.getSeen()) && message.getFrom().equals(doctorID)) {
+                        messagesReference.child(s).child("seen").setValue(true);
+                        Log.i("set true", messagesReference.child(s).child("seen").toString());
+                        Log.i("message", message.getMessage() + " " + message.getSeen());
+                    }
                     /* Log.i("from", message.getFrom());
                     Log.i("message", message.getMessage());
                     Log.i("order", message.getOrdering());
@@ -265,15 +298,17 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                     Log.i("seen", String.valueOf(message.getSeen()));
                     Log.i("image", message.getImage());
                     Log.i("medicine", message.getMedicineId());*/
+                    list.add(message);
 
-                } catch (Exception ignored) { }
+                    } catch(Exception ignored){ }
 
-                list.add(message);
-                mMessagesList.scrollToPosition(list.size()-1);
+                    mMessagesList.scrollToPosition(list.size() - 1);
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) { }
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
+
+            }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
@@ -293,11 +328,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             String current_user_ref = "messages/" + userID +"/"+ doctorID;
             String chat_user_ref ="messages/" + doctorID +"/" + userID;
 
-            DatabaseReference user_message_push = databaseRootReference
-                    .child("messages")
-                    .child(userID).child(doctorID)
-                    .push();
-
+            DatabaseReference user_message_push = messagesReference.push();
             String push_id = user_message_push.getKey();
 
             Map messageMap = new HashMap();

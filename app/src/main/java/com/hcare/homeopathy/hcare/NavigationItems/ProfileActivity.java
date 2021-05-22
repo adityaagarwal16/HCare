@@ -304,7 +304,6 @@ public class ProfileActivity extends BaseActivity {
                     Toast.LENGTH_LONG).show();
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();

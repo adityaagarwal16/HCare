@@ -53,7 +53,6 @@
             android:layout_marginTop="12dp"
             android:text="Receive a call from the doctor after payment"
             android:textColor="@color/blackcolor"
-            android:textSize="14sp"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toBottomOf="@+id/line"
             tools:ignore="HardcodedText" />
@@ -66,7 +65,6 @@
             android:layout_marginStart="8dp"
             android:text="Get a personalized Treatment plan"
             android:textColor="@color/blackcolor"
-            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/imageView11"
             app:layout_constraintStart_toEndOf="@+id/imageView11"
             app:layout_constraintTop_toTopOf="@+id/imageView11"
@@ -75,14 +73,13 @@
 
         <TextView
             android:id="@+id/textView57"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="8dp"
             android:text="Get medicines delivered to your doorstep"
             android:textColor="@color/blackcolor"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView12"
             app:layout_constraintTop_toTopOf="@+id/imageView12"
             tools:ignore="HardcodedText" />
@@ -101,10 +98,10 @@
 
         <ImageView
             android:id="@+id/imageView11"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             app:tint="@color/colorSecondary"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="13dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView55"
             app:srcCompat="@drawable/vector_consultations"
@@ -123,9 +120,10 @@
 
         <ImageView
             android:id="@+id/imageView12"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="13dp"
+            android:rotationY="180"
             app:tint="@color/colorSecondary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView11"

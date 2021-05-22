@@ -24,7 +24,7 @@
             android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/diabetes"
+            android:src="@drawable/disease_ent"
             android:contentDescription="@string/todo" />
 
         <TextView

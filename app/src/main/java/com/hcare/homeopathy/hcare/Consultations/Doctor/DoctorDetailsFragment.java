@@ -51,9 +51,11 @@ public class DoctorDetailsFragment extends Fragment {
         mDoctorsDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                setImage(Objects.requireNonNull(
-                        dataSnapshot.child("image").getValue()).toString());
-                setFields(dataSnapshot);
+                try {
+                    setImage(Objects.requireNonNull(
+                            dataSnapshot.child("image").getValue()).toString());
+                    setFields(dataSnapshot);
+                } catch(Exception ignored) { }
             }
 
             @Override
@@ -88,15 +90,16 @@ public class DoctorDetailsFragment extends Fragment {
                 .placeholder(R.drawable.vector_person)
                 .into(root.findViewById(R.id.profilePicture),
                         new Callback() {
-            @Override
-            public void onSuccess() { }
+                            @Override
+                            public void onSuccess() {
+                            }
 
-            @Override
-            public void onError(Exception e) {
-                Picasso.get().load(image).placeholder(R.drawable.vector_person)
-                        .into((ImageView) root.findViewById(R.id.profilePicture));
-            }
-        });
+                            @Override
+                            public void onError(Exception e) {
+                                Picasso.get().load(image).placeholder(R.drawable.vector_person)
+                                        .into((ImageView) root.findViewById(R.id.profilePicture));
+                            }
+                        });
 
         Picasso.get()
                 .load(image)
@@ -106,19 +109,19 @@ public class DoctorDetailsFragment extends Fragment {
                 .into(root.findViewById(R.id.background),
                         new Callback() {
 
-                    @Override
-                    public void onSuccess() {
-                        root.findViewById(R.id.tint).setVisibility(View.VISIBLE);
-                    }
+                            @Override
+                            public void onSuccess() {
+                                root.findViewById(R.id.tint).setVisibility(View.VISIBLE);
+                            }
 
-                    @Override
-                    public void onError(Exception e) {
-                        Picasso.get().load(image)
-                                .transform(new BlurTransformation(
-                                        requireContext(), 25, 1))
-                                .into((ImageView) root.findViewById(R.id.background));
-                        root.findViewById(R.id.tint).setVisibility(View.VISIBLE);
-                    }
-                });
+                            @Override
+                            public void onError(Exception e) {
+                                Picasso.get().load(image)
+                                        .transform(new BlurTransformation(
+                                                requireContext(), 25, 1))
+                                        .into((ImageView) root.findViewById(R.id.background));
+                                root.findViewById(R.id.tint).setVisibility(View.VISIBLE);
+                            }
+                        });
     }
 }

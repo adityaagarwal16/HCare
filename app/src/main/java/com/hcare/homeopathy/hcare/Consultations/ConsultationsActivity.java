@@ -83,11 +83,7 @@ public class ConsultationsActivity extends BaseActivity {
 
         mDoctorList.getRecycledViewPool().clear();
 
-        ConsultationsAdapter adapter = new ConsultationsAdapter
-                (options, this,
-                        FirebaseDatabase.getInstance().getReference(),
-                        FirebaseDatabase.getInstance().getReference().child("Doctors"),
-                        userID);
+        ConsultationsAdapter adapter = new ConsultationsAdapter(options, this, userID);
 
         adapter.notifyDataSetChanged();
         mDoctorList.setAdapter(adapter);

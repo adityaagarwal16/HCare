@@ -9,9 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,6 +24,7 @@ import androidx.transition.Slide;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +34,9 @@ import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -77,6 +83,38 @@ public class MainActivity extends BaseActivity
         setAllCategoriesRecycler();
         findViewById(R.id.searchDisease).setOnClickListener(V -> showOrHideFragment());
     }
+
+    /*
+    private void consultations() {
+        DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
+
+        DatabaseReference messages =
+                rootReference.child("messages").child(userID);
+
+        messages.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    Log.i("keys", snapshot.toString());
+                    String key = String.valueOf(
+                            new JSONObject(snapshot);
+
+                    Toast.makeText(getApplicationContext(),key, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                messages.keepSynced(true);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+*/
 
     private void showOrHideFragment() {
         FragmentTransaction transaction =
@@ -191,7 +229,6 @@ public class MainActivity extends BaseActivity
             showOrHideFragment();
         }
     }
-
 
     @Override
     public void onStart() {

@@ -337,8 +337,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="vector_call" />
-                            <entry key="sourceFile" value="F:\illustrator\hcare\finalLogo-01.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="disease_diabetes" />
+                            <entry key="sourceFile" value="F:\HCare\disease_diabetes.svg" />
                           </map>
                         </option>
                       </PersistentState>

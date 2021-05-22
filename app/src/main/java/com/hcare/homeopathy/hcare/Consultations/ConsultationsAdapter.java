@@ -18,6 +18,7 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
 import com.hcare.homeopathy.hcare.R;
@@ -31,19 +32,14 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
         ConsultationsObject, ConsultationsAdapter.DoctorsViewHolder>  {
 
     private final Context context;
-    private final DatabaseReference mDoctorDatabase, messageArrived;
     private final String userID;
     String userName = "";
 
     public ConsultationsAdapter(@NonNull FirebaseRecyclerOptions<ConsultationsObject> options,
-                                Context context,
-                                DatabaseReference messageArrived, DatabaseReference mDoctorDatabase,
-                                String userID) {
+                                Context context, String userID) {
         super(options);
-        this.messageArrived = messageArrived;
         this.context = context;
         this.userID = userID;
-        this.mDoctorDatabase = mDoctorDatabase;
     }
 
     @NonNull
@@ -60,20 +56,21 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
 
         String doctorID = Objects.requireNonNull(getRef(position).getKey());
 
-        DatabaseReference h =
-                messageArrived.child("messages")
-                        .child(userID)
-                        .child(doctorID);
+        DatabaseReference messages =
+                FirebaseDatabase.getInstance().getReference()
+                .child("messages")
+                .child(userID)
+                .child(doctorID);
 
-        h.limitToLast(1).addChildEventListener(new ChildEventListener() {
+        messages.limitToLast(1).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.hasChild("seen")) {
                     try {
-
                         boolean data = (boolean) dataSnapshot.child("seen").getValue();
                         if(Objects.requireNonNull(dataSnapshot.child("from").getValue())
                                 .toString().equals(userID))
+                            //if last text is by user then set seen is true
                             holder.setSeen(true);
                         else
                             holder.setSeen(data);
@@ -100,9 +97,11 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
-        h.keepSynced(true);
+        messages.keepSynced(true);
 
-        mDoctorDatabase.child(doctorID).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance()
+                .getReference().child("Doctors").child(doctorID)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
@@ -140,16 +139,16 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
 
         @SuppressLint("SetTextI18n")
         public void setSeen(boolean seen) {
-            ImageView messageView = mView.findViewById(R.id.newMessage);
+            ImageView unreadDot = mView.findViewById(R.id.newMessage);
             TextView messageTextView = mView.findViewById(R.id.newMessageText);
 
             if(seen) {
-                messageView.setVisibility(View.INVISIBLE);
+                unreadDot.setVisibility(View.INVISIBLE);
                 messageTextView.setText("No new messages");
             }
             else {
                 messageTextView.setText("Unread Messages");
-                messageView.setVisibility(View.VISIBLE);
+                unreadDot.setVisibility(View.VISIBLE);
             }
         }
 
@@ -159,18 +158,25 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
 
 
         public void setDoctorImage(final String thumb_image) {
-            Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder(R.drawable.vector_image_doctor).into(mView.findViewById(R.id.doctorImage),
-                    new Callback() {
-                @Override
-                public void onSuccess() { }
+            if (!thumb_image.equals("doctor image")) {
+                Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
+                        .placeholder(R.drawable.vector_image_doctor)
+                        .into(mView.findViewById(R.id.doctorImage),
+                                new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                    }
 
-                @Override
-                public void onError(Exception e) {
-                    Picasso.get().load(thumb_image)
-                            .into((ImageView) mView.findViewById(R.id.doctorImage));
-                }
-            });
+                                    @Override
+                                    public void onError(Exception e) {
+                                        Picasso.get().load(thumb_image)
+                                                .into((ImageView) mView.findViewById(R.id.doctorImage));
+                                    }
+                                });
+            } else {
+                ((ImageView)  mView.findViewById(R.id.doctorImage))
+                        .setImageResource(R.drawable.vector_image_doctor);
+            }
         }
     }
 }

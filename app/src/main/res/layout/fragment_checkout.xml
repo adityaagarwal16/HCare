@@ -48,7 +48,7 @@
                     android:id="@+id/diseaseImage"
                     android:layout_width="145dp"
                     android:layout_height="150dp"
-                    app:srcCompat="@drawable/diabetes"
+                    app:srcCompat="@drawable/disease_female"
                     android:contentDescription="@string/todo" />
 
                 <TextView

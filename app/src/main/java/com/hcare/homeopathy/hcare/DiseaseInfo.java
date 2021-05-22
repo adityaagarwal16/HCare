@@ -114,47 +114,47 @@ public class DiseaseInfo {
     public int getDrawable() {
         switch(disease) {
             case thyroid:
-                return R.drawable.thyroid;
+                return R.drawable.disease_thyroid;
             case diabetes:
                 return R.drawable.diabetes;
             case skin:
-                return R.drawable.skin;
+                return R.drawable.disease_skin;
             case female:
-                return R.drawable.female;
+                return R.drawable.disease_female;
             case renalProblems:
-                return R.drawable.renal;
+                return R.drawable.disease_renal;
             case weightLossAndGain:
-                return R.drawable.weight;
+                return R.drawable.disease_weight;
             case headache:
-                return R.drawable.diabetes;
+                return R.drawable.disease_headache;
             case hair:
-                return R.drawable.diabetes;
+                return R.drawable.disease_hair;
             case men:
-                return R.drawable.diabetes;
+                return R.drawable.disease_men;
             case piles:
-                return R.drawable.diabetes;
+                return R.drawable.disease_piles;
             case respiratoryProblems:
-                return R.drawable.diabetes;
+                return R.drawable.disease_respiratory;
             case bonesAndJoints:
-                return R.drawable.diabetes;
+                return R.drawable.disease_bone;
             case depression:
-                return R.drawable.diabetes;
+                return R.drawable.disease_depression;
             case growth:
-                return R.drawable.diabetes;
+                return R.drawable.disease_growth;
             case heartProblems:
-                return R.drawable.diabetes;
+                return R.drawable.disease_heart;
             case ENT:
-                return R.drawable.diabetes;
+                return R.drawable.disease_ent;
             case mouthAndTeeth:
-                return R.drawable.diabetes;
+                return R.drawable.disease_mouth_and_teeth;
             case children:
-                return R.drawable.diabetes;
+                return R.drawable.disease_children;
             case nutritionAndHealth:
-                return R.drawable.diabetes;
+                return R.drawable.disease_nutrition_and_health;
             case maternal:
-                return R.drawable.diabetes;
+                return R.drawable.disease_maternal;
             case others:
-                return R.drawable.diabetes;
+                return R.drawable.disease_others;
 
 
             default:

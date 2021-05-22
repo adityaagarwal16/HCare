@@ -57,7 +57,8 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                                         new CheckoutSuccessfulFragment())
                                         .commit();
                             else {
-                                if (!dataSnapshot.hasChild(userID))
+                                //TODO CHECK
+                                if (dataSnapshot.hasChild(userID))
                                     transaction.replace(R.id.frameLayout,
                                             new CheckoutDisableFragment())
                                             .commit();
@@ -105,7 +106,8 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                 .getCurrentUser()).getUid();
         String patientName = getIntent().getStringExtra("name");
         String patientIssue = getIntent().getStringExtra("details1");
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
+        DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference().child("Users").child(userID);
 
         HashMap<String, String> notifyData = new HashMap<>();
         notifyData.put("details1", patientIssue);
