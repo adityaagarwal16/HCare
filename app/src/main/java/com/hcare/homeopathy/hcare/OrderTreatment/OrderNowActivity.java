@@ -44,7 +44,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     private DatabaseReference reference, userRef;
     private String doctorID, userID;
 
-    private String name, email, phoneNumber, pinCode, address, city, state;
+    private String name, email = "example", phoneNumber = "91", pinCode, address, city, state;
     int totalPrice;
 
     @Override
@@ -63,6 +63,21 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
         doctorID = getIntent().getStringExtra("user_id");
         reference = FirebaseDatabase.getInstance().getReference();
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    email = (String) dataSnapshot.child("email").getValue();
+                    phoneNumber = (String) dataSnapshot.child("phone number").getValue();
+                } catch (Exception ignored) { }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         setFields();
         setAddress();
@@ -253,44 +268,30 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         sharedPref.save(CITY, city);
         sharedPref.save(STATE, state);
 
-        final AppCompatActivity activity = this;
+        try {
+            final AppCompatActivity activity = this;
+            final Checkout co = new Checkout();
+            JSONObject options = new JSONObject();
+            options.put("name", "Medicine");
+            options.put("description", "40% discount applied");
 
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    final Checkout co = new Checkout();
-                    email = (String) dataSnapshot.child("email").getValue();
-                    JSONObject options = new JSONObject();
-                    options.put("name", "Medicine");
-                    options.put("description", "40% discount applied");
+            //You can omit the image option to fetch the image from dashboard
+            // options.put("image", R.drawable.logo);
+            int RAZORPAY_MULTIPLIER = 100;
+            options.put("currency", "INR");
+            options.put("amount", totalPrice * RAZORPAY_MULTIPLIER);
 
-                    //You can omit the image option to fetch the image from dashboard
-                    // options.put("image", R.drawable.logo);
-                    int RAZORPAY_MULTIPLIER = 100;
-                    options.put("currency", "INR");
-                    options.put("amount", totalPrice * RAZORPAY_MULTIPLIER);
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", email);
+            preFill.put("contact", phoneNumber);
 
-                    JSONObject preFill = new JSONObject();
-                    preFill.put("email", email);
-                    preFill.put("contact", dataSnapshot.child("phone number").getValue());
+            options.put("prefill", preFill);
 
-                    options.put("prefill", preFill);
-
-                    co.setImage(R.drawable.logo_green);
-                    co.open(activity, options);
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext() ,
-                            "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+            co.setImage(R.drawable.logo_green);
+            co.open(activity, options);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -302,10 +303,13 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         }
     }
 
+    //TODO CHECK
     @Override
     public void onPaymentError(int code, String response) {
-        orderSuccessful();
-        Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
+        try {
+            Toast.makeText(OrderNowActivity.this,
+                    "Payment failed", Toast.LENGTH_SHORT).show();
+        } catch (Exception ignored) { }
     }
 
     private void orderSuccessful() {

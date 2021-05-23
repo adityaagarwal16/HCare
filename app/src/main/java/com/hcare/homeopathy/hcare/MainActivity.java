@@ -208,8 +208,8 @@ public class MainActivity extends BaseActivity
         mRecyclerView.setLayoutManager(new LinearLayoutManager(
                 this, LinearLayoutManager.HORIZONTAL, false));
 
-        Diseases[] list = {diabetes, thyroid, female,
-                piles, men, hair, renalProblems, skin};
+        Diseases[] list = {female,  diabetes, men, thyroid,
+                piles, renalProblems, hair, skin};
         mRecyclerView.setAdapter(new DiseaseAdapter(list,this));
     }
 

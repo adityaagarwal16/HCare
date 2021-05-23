@@ -550,9 +550,8 @@
         android:foreground="?selectableItemBackground"
         android:gravity="center"
         android:onClick="placeOrder"
-        android:padding="17dp"
+        android:padding="16dp"
         android:text="Place your order"
-        android:textStyle="bold"
         android:textColor="?android:textColorPrimaryInverse"
         android:textSize="18sp"
         tools:ignore="HardcodedText" />

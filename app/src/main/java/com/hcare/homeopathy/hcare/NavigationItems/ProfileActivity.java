@@ -264,7 +264,7 @@ public class ProfileActivity extends BaseActivity {
         if (!patientName.isEmpty()) {
             if (!email.isEmpty()) {
                 if (!age.isEmpty()) {
-                    if (!contactNumber.isEmpty()) {
+                    if (contactNumber.length() == 10) {
 
                         mUserDatabase.child("name").setValue(patientName);
                         mUserDatabase.child("phone number").setValue(contactNumber);
@@ -291,7 +291,7 @@ public class ProfileActivity extends BaseActivity {
                         finish();
 
                     } else
-                        Toast.makeText(this, "Please enter your Contact number",
+                        Toast.makeText(this, "Please enter 10 digit Contact number",
                                 Toast.LENGTH_LONG).show();
                 } else
                     Toast.makeText(this, "Please enter your age",

@@ -338,8 +338,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="disease_diabetes" />
-                            <entry key="sourceFile" value="F:\HCare\disease_diabetes.svg" />
+                            <entry key="outputName" value="disease_thyroid" />
+                            <entry key="sourceFile" value="F:\HCare\disease_thyroid.svg" />
                           </map>
                         </option>
                       </PersistentState>

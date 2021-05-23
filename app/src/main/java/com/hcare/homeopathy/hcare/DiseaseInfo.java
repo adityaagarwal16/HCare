@@ -116,7 +116,7 @@ public class DiseaseInfo {
             case thyroid:
                 return R.drawable.disease_thyroid;
             case diabetes:
-                return R.drawable.diabetes;
+                return R.drawable.disease_diabetes;
             case skin:
                 return R.drawable.disease_skin;
             case female:
@@ -130,7 +130,7 @@ public class DiseaseInfo {
             case hair:
                 return R.drawable.disease_hair;
             case men:
-                return R.drawable.disease_men;
+                return R.drawable.disease_male;
             case piles:
                 return R.drawable.disease_piles;
             case respiratoryProblems:
@@ -146,19 +146,16 @@ public class DiseaseInfo {
             case ENT:
                 return R.drawable.disease_ent;
             case mouthAndTeeth:
-                return R.drawable.disease_mouth_and_teeth;
+                return R.drawable.disease_mouth;
             case children:
                 return R.drawable.disease_children;
             case nutritionAndHealth:
-                return R.drawable.disease_nutrition_and_health;
+                return R.drawable.disease_nutrition;
             case maternal:
                 return R.drawable.disease_maternal;
-            case others:
-                return R.drawable.disease_others;
-
 
             default:
-                return 0;
+                return R.drawable.disease_others;
         }
     }
 

@@ -18,6 +18,7 @@
             android:layout_centerInParent="true"
             android:src="@drawable/nothing_found_here"
             android:contentDescription="@string/todo"
+            android:layout_marginEnd="20dp"
             android:layout_width="match_parent"
             android:paddingBottom="75dp"
             android:layout_height="300dp"/>

@@ -1,6 +1,7 @@
 package com.hcare.homeopathy.hcare.Checkout;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
+import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.PaymentResultListener;
 
@@ -67,7 +69,8 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                                     Bundle args = new Bundle();
                                     args.putSerializable(DISEASE_OBJECT,
                                             getIntent().getSerializableExtra(DISEASE_OBJECT));
-                                    args.putString("details1", getIntent().getStringExtra("details1"));
+                                    args.putString("details1",
+                                            getIntent().getStringExtra("details1"));
                                     args.putString("name", getIntent().getStringExtra("name"));
                                     args.putString("age", getIntent().getStringExtra("age"));
                                     args.putString("sex", getIntent().getStringExtra("sex"));
@@ -93,6 +96,7 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     private void sendRequest() {
         paymentSuccessful = true;
@@ -133,8 +137,12 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         } catch (Exception ignored) { }
     }
 
+    //TODO CHECK
     @Override
     public void onPaymentError(int code, String response) {
-        Toast.makeText(this, "Payment failed", Toast.LENGTH_LONG).show();
+        try {
+            Toast.makeText(this, "Payment failed",
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception  ignored) {}
     }
 }

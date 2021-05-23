@@ -5,15 +5,16 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <pl.droidsonroids.gif.GifImageView
+    <ImageView
         android:id="@+id/gif"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_marginTop="50dp"
-        android:src="@drawable/gif_transaction_successful"
+        android:src="@drawable/vector_check_circle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorSecondary" />
 
     <TextView
         android:id="@+id/header"

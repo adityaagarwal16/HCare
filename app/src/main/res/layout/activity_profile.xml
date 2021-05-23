@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity">
 
-
     <ScrollView
         android:layout_above="@id/saveButton"
         android:layout_width="match_parent"
@@ -356,7 +355,7 @@
                     android:text=""
                     android:hint="Enter your contact number"
                     android:autofillHints=""
-                    android:inputType="number"
+                    android:inputType="phone"
                     tools:ignore="HardcodedText" />
 
                 <ImageView

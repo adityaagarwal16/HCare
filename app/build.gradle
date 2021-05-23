@@ -49,7 +49,7 @@ dependencies {
     //facebook data ends
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -73,16 +73,14 @@ dependencies {
     implementation 'com.theartofdev.edmodo:android-image-cropper:2.4.7' exclude group: 'com.android.support'
     implementation 'androidx.exifinterface:exifinterface:1.3.2'
     implementation 'id.zelory:compressor:2.0.0'
-    implementation 'com.commit451:PhotoView:1.2.4'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
     implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
     implementation 'com.google.android.play:core:1.10.0'
 
-    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
-
     implementation 'jp.wasabeef:picasso-transformations:2.2.1'
     implementation 'com.razorpay:checkout:1.6.4'
+
     //external lib ends
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

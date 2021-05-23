@@ -28,6 +28,7 @@ import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
 import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
+import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
@@ -54,11 +55,12 @@ public class SplashScreenActivity extends BaseActivity {
                                 if(FirebaseAuth.getInstance().getCurrentUser() == null)
                                     intent = new Intent(getApplicationContext(), LoginActivity.class);
                                 else {
-
-                                    intent = new Intent(getApplicationContext(), DiseaseActivity.class);
+                                    intent = new Intent(getApplicationContext(),
+                                            DiseaseActivity.class);
                                     intent.putExtra("request_type1", Diseases.thyroid);
 
-                                    intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+                                    intent = new Intent(getApplicationContext(),
+                                            CheckoutActivity.class);
                                     intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
                                     intent.putExtra("details1", "hello");
                                     intent.putExtra("request_type1", "Thyroid");
@@ -73,7 +75,9 @@ public class SplashScreenActivity extends BaseActivity {
                                     //intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
 
                                     //intent = new Intent(getApplicationContext(), FaqActivity.class);
-                                    //intent = new Intent(getApplicationContext(), OrdersActivity.class);
+                                    intent = new Intent(getApplicationContext(),
+                                            OrderNowActivity.class);
+                                    intent.putExtra("price", 200);
 
 
 //                                    intent = new Intent(getApplicationContext(), OrderNowActivity.class);

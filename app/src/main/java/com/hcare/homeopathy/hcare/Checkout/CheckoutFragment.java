@@ -42,7 +42,7 @@ public class CheckoutFragment extends Fragment {
 
     View root;
     private int totalAmount = 0;
-    String patientName, patientIssue;
+    String patientName, patientIssue, email = "example", phoneNumber = "91";
     DatabaseReference userRef;
 
     @Nullable
@@ -59,13 +59,23 @@ public class CheckoutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        patientName = Objects.requireNonNull(getArguments())
-                .getString("name");
-        patientIssue = getArguments().getString("details1");
+        patientName = requireArguments().getString("name");
+        patientIssue = requireArguments().getString("details1");
 
         userRef = FirebaseDatabase.getInstance()
                 .getReference().child("Users").child(Objects.requireNonNull(
                         FirebaseAuth.getInstance().getCurrentUser()).getUid());
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                email = (String) dataSnapshot.child("email").getValue();
+                phoneNumber = (String) dataSnapshot.child("phone number").getValue();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
 
         userRef.child("consultCount").addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -90,7 +100,7 @@ public class CheckoutFragment extends Fragment {
     void setHeaders() {
         try {
             DiseaseInfo disease = new DiseaseInfo((Diseases)
-                    Objects.requireNonNull(getArguments()).getSerializable(DISEASE_OBJECT));
+                    requireArguments().getSerializable(DISEASE_OBJECT));
 
             ((TextView) root.findViewById(R.id.header)).setText
                     (MessageFormat.format("{0} {1}", "Consultation for",
@@ -143,37 +153,29 @@ public class CheckoutFragment extends Fragment {
     }
 
     public void startPayment() {
-        final AppCompatActivity activity = (AppCompatActivity) requireActivity();
+        final AppCompatActivity activity = (AppCompatActivity) requireContext();
         final Checkout co = new Checkout();
 
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    JSONObject options = new JSONObject();
-                    options.put("name", "Hcare");
-                    options.put("description", "discount applied");
+        try {
+            JSONObject options = new JSONObject();
+            options.put("name", "Hcare");
+            options.put("description", "discount applied");
+            options.put("currency", "INR");
 
-                    options.put("currency", "INR");
+            int RAZORPAY_MULTIPLIER = 100;
+            options.put("amount", totalAmount * RAZORPAY_MULTIPLIER);
 
-                    int RAZORPAY_MULTIPLIER = 100;
-                    options.put("amount", totalAmount * RAZORPAY_MULTIPLIER);
+            JSONObject preFill = new JSONObject();
+            preFill.put("email", email);
+            preFill.put("contact", phoneNumber);
 
-                    JSONObject preFill = new JSONObject();
-                    preFill.put("email", dataSnapshot.child("email").getValue());
-                    preFill.put("contact", dataSnapshot.child("phone number").getValue());
+            options.put("prefill", preFill);
 
-                    options.put("prefill", preFill);
+            co.setImage(R.drawable.logo_green);
+            co.open(activity, options);
+        } catch (Exception e) { e.printStackTrace(); }
 
-                    co.setImage(R.drawable.logo_green);
-                    co.open(activity, options);
 
-                } catch (Exception e) { e.printStackTrace(); }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
     }
 
 }

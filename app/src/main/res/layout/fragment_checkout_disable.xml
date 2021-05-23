@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <pl.droidsonroids.gif.GifImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/gif"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="50dp"
-        android:src="@drawable/gif_already_paid"
+        android:layout_height="200dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/vector_image_doctor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +25,7 @@
         android:paddingEnd="30dp"
         android:gravity="center"
         android:text="Looks like you already paid for a consultation !!"
-        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_bias="0.45"
         android:letterSpacing="0.05"
         android:textStyle="bold"
         android:textSize="24sp"
