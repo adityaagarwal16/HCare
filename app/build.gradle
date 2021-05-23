@@ -4,9 +4,9 @@ android {
     signingConfigs {
         release {
             storeFile file('F:\\HCare\\hcare.jks')
-            storePassword 'keystore'
-            keyPassword 'keystore'
-            keyAlias 'key0'
+            storePassword 'Goudaking9986'
+            keyPassword 'Goudaking9986'
+            keyAlias 'hcare'
         }
     }
     compileSdkVersion 30
@@ -14,8 +14,8 @@ android {
         applicationId "com.hcare.homeopathy.hcare"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 39
-        versionName '1.108'
+        versionCode 40
+        versionName '2.0'
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release

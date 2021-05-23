@@ -1,20 +1,22 @@
-package com.hcare.homeopathy.hcare.Checkout;
+package com.hcare.homeopathy.hcare;
 
 import com.razorpay.Checkout;
 
 public class Constants {
 
-    static final int
+    public static final int
             TEST_COUNT =0,
             CONSULTATION_FEE = 199,
             FIRST_100 = 100,
             DISCOUNT = 50;
 
-    static final String
+    public static final String
             FIRST_100_COUPON = "FIRST100",
             RS50_COUPON = "50RS0FF";
 
     public static final String
             DISEASE_OBJECT = "DISEASE_OBJECT";
+
+    public static final String OPEN_FROM_SEARCH = "OPEN_FROM_SEARCH";
 
 }

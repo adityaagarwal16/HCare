@@ -115,6 +115,7 @@
                     android:id="@+id/requestText"
                     android:paddingTop="10dp"
                     android:paddingBottom="15dp"
+                    android:visibility="gone"
                     android:paddingStart="20dp"
                     android:foreground="?selectableItemBackground"
                     android:paddingEnd="20dp"

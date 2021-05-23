@@ -2,8 +2,9 @@ package com.hcare.homeopathy.hcare;
 
 public enum Diseases {
 
-    diabetes,
     nutritionAndHealth,
+    maternal,
+    diabetes,
     growth,
     weightLossAndGain,
     female,
@@ -21,7 +22,6 @@ public enum Diseases {
     hair,
     ENT,
     mouthAndTeeth,
-    maternal,
     others,
 
 }

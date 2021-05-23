@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
+import static com.hcare.homeopathy.hcare.Constants.OPEN_FROM_SEARCH;
 
 public class SearchFragment extends Fragment {
 
@@ -58,6 +59,8 @@ public class SearchFragment extends Fragment {
             manager.hideSoftInputFromWindow(search.getRootView().getWindowToken(), 0);
             requireActivity().onBackPressed();
         });
+        listView.setAdapter(new ArrayAdapter<>(requireContext(),
+                R.layout.view_search_text, new ArrayList<String>()));
 
         ArrayList<Diseases> list = new ArrayList<>(EnumSet.allOf(Diseases.class));
         search.addTextChangedListener(new TextWatcher() {
@@ -75,33 +78,38 @@ public class SearchFragment extends Fragment {
                 ArrayList<String> searchList = new ArrayList<>();
                 ArrayList<Diseases> diseaseList = new ArrayList<>();
 
-                if(text.length() > 0) {
-                    for(int i =0; i < list.size(); i++) {
-                        DiseaseInfo disease = new DiseaseInfo(list.get(i));
-                        if(disease.getDiseaseName().contains(text)) {
-                            diseaseList.add(list.get(i));
-                            searchList.add(disease.getDiseaseName());
+                try {
+                    if (text.length() > 0) {
+                        for (int i = 0; i < list.size(); i++) {
+                            DiseaseInfo disease = new DiseaseInfo(list.get(i));
+                            if (disease.getDiseaseName().contains(text)) {
+                                diseaseList.add(list.get(i));
+                                searchList.add(disease.getDiseaseName());
+                            }
                         }
+
+                        if (searchList.isEmpty()) {
+                            empty = true;
+                            searchList.add
+                                    ("Couldn't find the disease you're looking for, tap here.");
+                        }
+
+                        boolean finalEmpty = empty;
+                        listView.setOnItemClickListener((parent, view1, position, id) -> {
+                            Intent intent = new Intent(requireContext(), DiseaseActivity.class);
+                            if (finalEmpty)
+                                intent.putExtra("request_type1", Diseases.others);
+                            else
+                                intent.putExtra("request_type1", diseaseList.get(position));
+
+                            intent.putExtra(OPEN_FROM_SEARCH, true);
+                            requireActivity().startActivity(intent);
+                        });
                     }
 
-                    if(searchList.isEmpty()) {
-                        empty = true;
-                        searchList.add("Couldn't find the disease you're looking for, tap here.");
-                    }
-
-                    boolean finalEmpty = empty;
-                    listView.setOnItemClickListener((parent, view1, position, id) -> {
-                        Intent intent = new Intent(requireContext(), DiseaseActivity.class);
-                        if(finalEmpty)
-                            intent.putExtra("request_type1", Diseases.others);
-                        else
-                            intent.putExtra("request_type1", diseaseList.get(position));
-                        requireActivity().startActivity(intent);
-                    });
-                }
-
-                listView.setAdapter(new ArrayAdapter<>(requireContext(),
-                        R.layout.view_search_text, searchList));
+                    listView.setAdapter(new ArrayAdapter<>(requireContext(),
+                            R.layout.view_search_text, searchList));
+                } catch(Exception ignored) { }
             }
         });
 

@@ -176,7 +176,8 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             }
 
             TranslateAnimation animate =
-                    new TranslateAnimation(0, 0, fromDelta, toDelta);
+                    new TranslateAnimation(0, 0,
+                            fromDelta * 1.5f, toDelta * 1.5f);
             animate.setDuration(400);
             animate.setFillAfter(true);
             chatBar.startAnimation(animate);

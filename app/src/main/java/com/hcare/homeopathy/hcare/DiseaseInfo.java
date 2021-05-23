@@ -17,7 +17,7 @@ public class DiseaseInfo {
             case skin:
                 return "Skin";
             case female:
-                return "Female";
+                return "Female Issues";
             case renalProblems:
                 return "Renal Problems";
             case weightLossAndGain:
@@ -27,7 +27,7 @@ public class DiseaseInfo {
             case hair:
                 return "Hair";
             case men:
-                return "Men";
+                return "Male Issues";
             case piles:
                 return "Piles";
             case respiratoryProblems:

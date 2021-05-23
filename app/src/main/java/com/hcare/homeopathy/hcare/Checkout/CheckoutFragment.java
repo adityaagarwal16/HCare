@@ -30,13 +30,13 @@ import org.json.JSONObject;
 import java.text.MessageFormat;
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.Checkout.Constants.CONSULTATION_FEE;
-import static com.hcare.homeopathy.hcare.Checkout.Constants.DISCOUNT;
-import static com.hcare.homeopathy.hcare.Checkout.Constants.DISEASE_OBJECT;
-import static com.hcare.homeopathy.hcare.Checkout.Constants.FIRST_100;
-import static com.hcare.homeopathy.hcare.Checkout.Constants.FIRST_100_COUPON;
-import static com.hcare.homeopathy.hcare.Checkout.Constants.RS50_COUPON;
-import static com.hcare.homeopathy.hcare.Checkout.Constants.TEST_COUNT;
+import static com.hcare.homeopathy.hcare.Constants.CONSULTATION_FEE;
+import static com.hcare.homeopathy.hcare.Constants.DISCOUNT;
+import static com.hcare.homeopathy.hcare.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.Constants.FIRST_100;
+import static com.hcare.homeopathy.hcare.Constants.FIRST_100_COUPON;
+import static com.hcare.homeopathy.hcare.Constants.RS50_COUPON;
+import static com.hcare.homeopathy.hcare.Constants.TEST_COUNT;
 
 public class CheckoutFragment extends Fragment {
 
