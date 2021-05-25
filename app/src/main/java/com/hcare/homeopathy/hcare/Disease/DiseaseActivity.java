@@ -25,13 +25,11 @@ import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.DiseaseInfo;
 import com.hcare.homeopathy.hcare.Diseases;
-import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.Constants.DISEASE_OBJECT;
-import static com.hcare.homeopathy.hcare.Constants.OPEN_FROM_SEARCH;
 
 public class DiseaseActivity extends BaseActivity {
 
@@ -40,9 +38,6 @@ public class DiseaseActivity extends BaseActivity {
     private DatabaseReference userRef;
     private EditText mChatMessageView;
 
-    //remove view error workaround
-    boolean openFromSearch = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +45,6 @@ public class DiseaseActivity extends BaseActivity {
 
         disease = new DiseaseInfo((Diseases)
                 getIntent().getSerializableExtra("request_type1"));
-        openFromSearch = getIntent().getBooleanExtra(OPEN_FROM_SEARCH, false);
 
         setToolbar();
 
@@ -119,15 +113,6 @@ public class DiseaseActivity extends BaseActivity {
         findViewById(R.id.howItWorks).setOnClickListener(v -> showHowToUseDialog());
     }
 
-    @Override
-    public void onBackPressed() {
-        if(openFromSearch) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        }
-        else
-            super.onBackPressed();
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

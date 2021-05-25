@@ -36,10 +36,26 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/cross"
                 app:layout_constraintStart_toEndOf="@+id/back"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="HardcodedText" />
+
+            <ImageView
+                android:id="@+id/cross"
+                android:focusable="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="13dp"
+                android:clickable="true"
+                android:visibility="invisible"
+                android:layout_marginEnd="20dp"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackgroundBorderless"
+                android:contentDescription="@string/todo"
+                android:src="@drawable/vector_close"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageView
                 android:layout_marginTop="16dp"
@@ -61,11 +77,10 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
+        android:background="@color/colorPrimary"
         android:layout_below="@id/toolbar"
-        android:divider="@null"
-        android:dividerHeight="0dp"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

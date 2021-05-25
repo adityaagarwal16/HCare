@@ -49,7 +49,8 @@ public class SignIn {
         ((Activity) context).finish();
     }
 
-    public void signInWithPhoneAuthCredential(View root, String phoneNumber, PhoneAuthCredential credential) {
+    public void signInWithPhoneAuthCredential(View root, String phoneNumber,
+                                              PhoneAuthCredential credential) {
         FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener((Activity) context, task -> {
                     if (task.isSuccessful())
@@ -63,7 +64,8 @@ public class SignIn {
                                             login();
                                         else
                                             newAccount(phoneNumber,"", "");
-                                        root.findViewById(R.id.circleLoader).setVisibility(View.VISIBLE);
+                                        root.findViewById(R.id.circleLoader)
+                                                .setVisibility(View.VISIBLE);
                                     }
 
                                     @Override

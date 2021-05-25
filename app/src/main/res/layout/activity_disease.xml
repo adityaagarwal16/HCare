@@ -49,7 +49,7 @@
         android:layout_below="@id/toolbar"
         android:background="@color/colorPrimary"
         android:id="@+id/diseaseImage"
-        android:paddingTop="20dp"
+        android:paddingTop="25dp"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/todo"
         android:src="@drawable/disease_diabetes"

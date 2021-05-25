@@ -54,8 +54,8 @@ public class OTPFragment extends Fragment {
                 assert getArguments() != null;
                 PhoneAuthCredential credential =
                         PhoneAuthProvider.getCredential(
-                                        Objects.requireNonNull(getArguments()
-                                                .getString("verificationId")),
+                                Objects.requireNonNull(requireArguments()
+                                        .getString("verificationId")),
                                         otp.getText().toString());
                 root.findViewById(R.id.circleLoader).setVisibility(View.VISIBLE);
                 new SignIn(requireContext()).signInWithPhoneAuthCredential(

@@ -77,7 +77,7 @@ public class PhoneNumberFragment extends Fragment {
             } else {
                 Toast.makeText(requireActivity(),
                         "Please enter 10 digit Mobile number",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -143,8 +143,12 @@ public class PhoneNumberFragment extends Fragment {
                     root.findViewById(R.id.otpFailedText);
             if (e instanceof FirebaseAuthInvalidCredentialsException)
                 otpFailedLayout.setText("INVALID NUMBER");
-            else
+            else {
                 otpFailedLayout.setText("OTP FAILED");
+                Toast.makeText(requireActivity(),
+                        "Try re-installing the app if you're not able to receive the OTP",
+                        Toast.LENGTH_SHORT).show();
+            }
             root.findViewById(R.id.otpFailedLayout).setVisibility(View.VISIBLE);
         }
 

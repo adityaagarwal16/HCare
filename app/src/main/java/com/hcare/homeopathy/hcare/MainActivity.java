@@ -20,6 +20,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.transition.Explode;
+import androidx.transition.Fade;
 import androidx.transition.Slide;
 
 import com.google.android.material.navigation.NavigationView;
@@ -133,8 +135,8 @@ public class MainActivity extends BaseActivity
             } else {
                 SearchFragment fragment = new SearchFragment();
 
-                fragment.setEnterTransition(new Slide(Gravity.END).setDuration(300));
-                fragment.setExitTransition(new Slide(Gravity.END).setDuration(300));
+                fragment.setEnterTransition(new Explode().setDuration(200));
+                fragment.setExitTransition(new Explode().setDuration(200));
 
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.searchFragment, fragment)
@@ -220,14 +222,6 @@ public class MainActivity extends BaseActivity
                 this, LinearLayoutManager.HORIZONTAL, false));
         mRecyclerView.setAdapter(new DiseaseAdapter(
                 new ArrayList<>(EnumSet.allOf(Diseases.class)),this));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (getSupportFragmentManager().findFragmentById(R.id.searchFragment) != null) {
-            showOrHideFragment();
-        }
     }
 
     @Override
