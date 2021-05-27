@@ -44,7 +44,8 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     private DatabaseReference reference, userRef;
     private String doctorID, userID;
 
-    private String name, email = "example", phoneNumber = "91", pinCode, address, city, state;
+    private String name, email = "example", phoneNumber = "91",
+            pinCode, address, city, state;
     int totalPrice;
 
     @Override

@@ -36,8 +36,6 @@ public class ConsultationsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setExitTransition(new Fade());
-        getWindow().setEnterTransition(new Fade());
         setContentView(R.layout.activity_recycler);
 
         Objects.requireNonNull(getSupportActionBar())

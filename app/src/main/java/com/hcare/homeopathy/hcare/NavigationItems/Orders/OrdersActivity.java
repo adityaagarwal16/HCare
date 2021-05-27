@@ -35,42 +35,44 @@ public class OrdersActivity extends BaseActivity {
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        userID = Objects.requireNonNull(
-                FirebaseAuth.getInstance().getCurrentUser()).getUid();
-
+        userID = Objects.requireNonNull(FirebaseAuth.getInstance()
+                    .getCurrentUser()).getUid();
         userRef = FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(userID);
-
+                    .child("Users").child(userID);
         setRecycler();
     }
 
     private void setRecycler() {
-        DatabaseReference mDoctorsDatabase =
-                FirebaseDatabase.getInstance().getReference()
-                .child("Orders").child(userID);
+        try {
+            DatabaseReference mDoctorsDatabase =
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Orders").child(userID);
 
-        mDoctorsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()) {
-                    findViewById(R.id.nothingHereLayout).setVisibility(View.VISIBLE);
+            mDoctorsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    try {
+                        if (!dataSnapshot.exists()) {
+                            findViewById(R.id.nothingHereLayout).setVisibility(View.VISIBLE);
+                        }
+                    } catch (Exception ignored) { }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) { }
+            });
 
-        RecyclerView mDoctorList = findViewById(R.id.recycler);
-        mDoctorList.setHasFixedSize(true);
-        mDoctorList.setLayoutManager(new LinearLayoutManager(this));
-        FirebaseRecyclerOptions<OrdersObject> options =
-                new FirebaseRecyclerOptions.Builder<OrdersObject>()
-                        .setQuery(mDoctorsDatabase, OrdersObject.class)
-                        .setLifecycleOwner(this)
-                        .build();
+            RecyclerView mDoctorList = findViewById(R.id.recycler);
+            mDoctorList.setHasFixedSize(true);
+            mDoctorList.setLayoutManager(new LinearLayoutManager(this));
+            FirebaseRecyclerOptions<OrdersObject> options =
+                    new FirebaseRecyclerOptions.Builder<OrdersObject>()
+                            .setQuery(mDoctorsDatabase, OrdersObject.class)
+                            .setLifecycleOwner(this)
+                            .build();
 
-        mDoctorList.setAdapter(new OrdersAdapter(options, this));
+            mDoctorList.setAdapter(new OrdersAdapter(options, this));
+        } catch (Exception ignored) { }
     }
 
     @Override

@@ -36,7 +36,6 @@
 
     </RelativeLayout>
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:paddingTop="10dp"
