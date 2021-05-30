@@ -37,67 +37,74 @@ public class SplashScreenActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
-
         FirebaseDatabase.getInstance().getReference().child("Version")
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChild("Number")) {
-                    if (Objects.requireNonNull(dataSnapshot.child
-                            ("Number").getValue()).toString().equals("update2")) {
-                        new Thread() {
-                            @Override
-                            public void run() {
-                                Intent intent;
-                                if(FirebaseAuth.getInstance().getCurrentUser() == null)
-                                    intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                else {
-                                    intent = new Intent(getApplicationContext(),
-                                            DiseaseActivity.class);
-                                    intent.putExtra("request_type1", Diseases.thyroid);
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild("Number")) {
+                            if (Objects.requireNonNull(dataSnapshot.child
+                                    ("Number").getValue()).toString().equals("update2")) {
+                                new Thread() {
+                                    @Override
+                                    public void run() {
+                                        Intent intent;
+                                        if (FirebaseAuth.getInstance().
+                                                getCurrentUser() == null)
+                                            intent = new Intent(getApplicationContext(),
+                                                    LoginActivity.class);
+                                        else {
+                                            /*intent = new Intent(getApplicationContext(),
+                                                        DiseaseActivity.class);
+                                                intent.putExtra("request_type1", Diseases.thyroid);
 
-                                    intent = new Intent(getApplicationContext(),
-                                            CheckoutActivity.class);
-                                    intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
-                                    intent.putExtra("details1", "hello");
-                                    intent.putExtra("request_type1", "Thyroid");
-                                    intent.putExtra("name", "hello");
-                                    intent.putExtra("age", "19");
-                                    intent.putExtra("sex", "male");
-
-
-                                    //intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
-
-                                    //intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
-                                    //intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
-
-                                    //intent = new Intent(getApplicationContext(), FaqActivity.class);
-                                    intent = new Intent(getApplicationContext(),
-                                            OrderNowActivity.class);
-                                    intent.putExtra("price", 200);
+                                                intent = new Intent(getApplicationContext(),
+                                                        CheckoutActivity.class);
+                                                intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
+                                                intent.putExtra("details1", "hello");
+                                                intent.putExtra("request_type1", "Thyroid");
+                                                intent.putExtra("name", "hello");
+                                                intent.putExtra("age", "19");
+                                                intent.putExtra("sex", "male");
 
 
-//                                    intent = new Intent(getApplicationContext(), OrderNowActivity.class);
-//                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
-//                                    intent.putExtra("discount", 360);
-//                                    intent.putExtra("price", 600);
-//
-                                   intent = new Intent(getApplicationContext(), MainActivity.class);
-                                }
-                                startActivity(intent);
-                                finish();
+                                                intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
+
+                                                intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
+                                                intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+
+                                                intent = new Intent(getApplicationContext(), FaqActivity.class);
+                                                intent = new Intent(getApplicationContext(),
+                                                        OrderNowActivity.class);
+                                                intent.putExtra("price", 200);
+
+
+                                    intent = new Intent(getApplicationContext(), OrderNowActivity.class);
+                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+                                    intent.putExtra("discount", 360);
+                                    intent.putExtra("price", 600);
+*/
+                                            intent = new Intent(
+                                                    getApplicationContext(),
+                                                    MainActivity.class);
+                                        }
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }.start();
+                            } else {
+                                showPopup();
                             }
-                        }.start();
-                    } else {
-                        showPopup();
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        startActivity(new Intent(getApplicationContext(),
+                                LoginActivity.class));
+                        finish();
+                    }
 
-        });
+                });
 
         NotificationManager notifyManager=
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
