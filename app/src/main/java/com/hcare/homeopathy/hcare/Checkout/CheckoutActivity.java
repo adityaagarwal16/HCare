@@ -30,6 +30,7 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
 
     String userID;
     Boolean paymentSuccessful = false;
+    private String patientName = "Username", age = "", sex = "Male";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,27 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
 
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(userID)
+                .addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try { patientName = Objects.requireNonNull(dataSnapshot
+                        .child("name").getValue()).toString(); }
+                catch(Exception ignored) {}
+                try { age = Objects.requireNonNull(dataSnapshot
+                        .child("age").getValue()).toString(); }
+                catch (Exception ignored) {}
+                try { sex = Objects.requireNonNull(dataSnapshot.
+                        child("sex").getValue()).toString(); }
+                catch (Exception ignored) { }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
+
 
         FirebaseDatabase.getInstance()
                 .getReference().child("public_Consulting")
@@ -69,9 +91,9 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                                             getIntent().getSerializableExtra(DISEASE_OBJECT));
                                     args.putString("details1",
                                             getIntent().getStringExtra("details1"));
-                                    args.putString("name", getIntent().getStringExtra("name"));
-                                    args.putString("age", getIntent().getStringExtra("age"));
-                                    args.putString("sex", getIntent().getStringExtra("sex"));
+                                    args.putString("name", patientName);
+                                    args.putString("age", age);
+                                    args.putString("sex", sex);
 
                                     fragment.setArguments(args);
                                     transaction.replace(R.id.frameLayout, fragment).commit();
@@ -100,13 +122,13 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         paymentSuccessful = true;
 
         String date = DateFormat.getDateTimeInstance().format(new Date());
-        @SuppressLint("SimpleDateFormat") DateFormat dateFormat = new SimpleDateFormat("HH");
+        @SuppressLint("SimpleDateFormat") DateFormat dateFormat =
+                new SimpleDateFormat("HH");
         Date date2 = new Date();
         String time = dateFormat.format(date2);
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
-        String patientName = getIntent().getStringExtra("name");
         String patientIssue = getIntent().getStringExtra("details1");
         DatabaseReference userRef = FirebaseDatabase.getInstance()
                 .getReference().child("Users").child(userID);
@@ -116,11 +138,12 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         notifyData.put("request_type1", patientName);
         notifyData.put("date", date);
         notifyData.put("name", patientName);
-        notifyData.put("age", getIntent().getStringExtra("age"));
-        notifyData.put("sex", getIntent().getStringExtra("sex"));
+        notifyData.put("age", age);
+        notifyData.put("sex", sex);
         notifyData.put("Time",time);
 
-        userRef.child("consultCount").push().child(Objects.requireNonNull(patientName))
+        userRef.child("consultCount").push()
+                .child(Objects.requireNonNull(patientName))
                 .setValue(patientName);
 
         DatabaseReference mConsultReqDatabase = FirebaseDatabase.getInstance()

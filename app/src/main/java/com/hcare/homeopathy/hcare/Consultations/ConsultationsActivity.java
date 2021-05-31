@@ -26,6 +26,7 @@ import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
 import com.hcare.homeopathy.hcare.R;
 
+import java.security.spec.ECField;
 import java.util.Objects;
 
 public class ConsultationsActivity extends BaseActivity {
@@ -50,41 +51,45 @@ public class ConsultationsActivity extends BaseActivity {
     }
 
     void setRecycler() {
-        DatabaseReference mDoctorsDatabase = FirebaseDatabase.getInstance()
-                .getReference().child("Private_consult").child(userID);
+        try {
+            DatabaseReference mDoctorsDatabase = FirebaseDatabase.getInstance()
+                    .getReference().child("Private_consult").child(userID);
 
-        mDoctorsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(!dataSnapshot.exists()) {
-                    findViewById(R.id.nothingHereLayout).setVisibility(View.VISIBLE);
+            mDoctorsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (!dataSnapshot.exists()) {
+                        findViewById(R.id.nothingHereLayout).setVisibility(View.VISIBLE);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
 
-        RecyclerView mDoctorList = findViewById(R.id.recycler);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-        mDoctorList.setLayoutManager(linearLayoutManager);
-        mDoctorsDatabase.keepSynced(true);
+            RecyclerView mDoctorList = findViewById(R.id.recycler);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            linearLayoutManager.setReverseLayout(true);
+            linearLayoutManager.setStackFromEnd(true);
+            mDoctorList.setLayoutManager(linearLayoutManager);
+            mDoctorsDatabase.keepSynced(true);
 
-        //list
-        FirebaseRecyclerOptions<ConsultationsObject> options =
-                new FirebaseRecyclerOptions.Builder<ConsultationsObject>()
-                        .setQuery(mDoctorsDatabase.orderByChild("time"), ConsultationsObject.class)
-                        .setLifecycleOwner(this)
-                        .build();
+            //list
+            FirebaseRecyclerOptions<ConsultationsObject> options =
+                    new FirebaseRecyclerOptions.Builder<ConsultationsObject>()
+                            .setQuery(mDoctorsDatabase.orderByChild("time"),
+                                    ConsultationsObject.class)
+                            .setLifecycleOwner(this)
+                            .build();
 
-        mDoctorList.getRecycledViewPool().clear();
+            mDoctorList.getRecycledViewPool().clear();
 
-        ConsultationsAdapter adapter = new ConsultationsAdapter(options, this, userID);
+            ConsultationsAdapter adapter = new ConsultationsAdapter(options, this, userID);
 
-        adapter.notifyDataSetChanged();
-        mDoctorList.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            mDoctorList.setAdapter(adapter);
+        } catch (Exception ignored) { }
     }
 
     @Override

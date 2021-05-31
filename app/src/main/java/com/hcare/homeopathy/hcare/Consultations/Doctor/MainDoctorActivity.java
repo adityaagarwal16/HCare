@@ -87,8 +87,10 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         messagesReference = databaseRootReference
                 .child("messages").child(userID).child(doctorID);
 
-        userReference = databaseRootReference.child("Private_consult").child(doctorID).child(userID);
-        doctorReference = databaseRootReference.child("Private_consult").child(userID).child(doctorID);
+        userReference = databaseRootReference.child("Private_consult")
+                .child(doctorID).child(userID);
+        doctorReference = databaseRootReference.child("Private_consult")
+                .child(userID).child(doctorID);
 
         loadMessages();
         setConsultAgainButton();
@@ -96,26 +98,30 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     }
 
     void setLastSeen() {
-        messagesReference.orderByKey().limitToLast(1)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        try {
-                            String key = String.valueOf(
-                                    new JSONObject(Objects.requireNonNull(
-                                            snapshot.getValue()).toString())
-                                            .keys().next());
-                            messagesReference.child(key).child("seen").setValue(true);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+        try {
+            messagesReference.orderByKey().limitToLast(1)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            try {
+                                if(snapshot.getValue() != null) {
+                                    String key = String.valueOf(
+                                            new JSONObject(Objects.requireNonNull(
+                                                    snapshot.getValue()).toString())
+                                                    .keys().next());
+                                    messagesReference.child(key).child("seen").setValue(true);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
+        } catch (Exception ignored) {}
     }
 
     @Override

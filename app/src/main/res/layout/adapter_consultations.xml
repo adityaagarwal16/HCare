@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@id/pre"
-        android:text="Unread messages"/>
+        android:text="No new messages"/>
 
     <TextView
         android:id="@+id/pre"

@@ -53,79 +53,83 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
     protected void onBindViewHolder(@NonNull DoctorsViewHolder holder, int position
             , @NonNull ConsultationsObject model) {
         getRef(position).getKey();
+        try {
+            String doctorID = Objects.requireNonNull(getRef(position).getKey());
 
-        String doctorID = Objects.requireNonNull(getRef(position).getKey());
+            DatabaseReference messages =
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("messages")
+                            .child(userID)
+                            .child(doctorID);
 
-        DatabaseReference messages =
-                FirebaseDatabase.getInstance().getReference()
-                .child("messages")
-                .child(userID)
-                .child(doctorID);
+            messages.limitToLast(1).addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
+                    if (dataSnapshot.hasChild("seen")) {
+                        try {
+                            boolean data = (boolean) dataSnapshot.child("seen").getValue();
+                            if (Objects.requireNonNull(dataSnapshot.child("from").getValue())
+                                    .toString().equals(userID))
+                                //if last text is by user then set seen is true
+                                holder.setSeen(true);
+                            else
+                                holder.setSeen(data);
 
-        messages.limitToLast(1).addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                if (dataSnapshot.hasChild("seen")) {
-                    try {
-                        boolean data = (boolean) dataSnapshot.child("seen").getValue();
-                        if(Objects.requireNonNull(dataSnapshot.child("from").getValue())
-                                .toString().equals(userID))
-                            //if last text is by user then set seen is true
+                        } catch (Exception e) {
                             holder.setSeen(true);
-                        else
-                            holder.setSeen(data);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
-                //mDoctorList.scrollToPosition(1);
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) { }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
-
-        messages.keepSynced(true);
-
-        FirebaseDatabase.getInstance()
-                .getReference().child("Doctors").child(doctorID)
-                .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    userName = Objects.requireNonNull(
-                            dataSnapshot.child("name").getValue()).toString();
-                    String userImage = Objects.requireNonNull(
-                            dataSnapshot.child("thumb_image").getValue()).toString();
-                    holder.setName(userName);
-                    holder.setDoctorImage(userImage);
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
+                    //mDoctorList.scrollToPosition(1);
+                    notifyDataSetChanged();
                 }
-                catch (Exception ignored) { }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                }
 
-        holder.mView.setOnClickListener(v -> {
-            Intent docprofileIntent =
-                    new Intent(context, MainDoctorActivity.class);
-            docprofileIntent.putExtra("user_id", doctorID);
-            context.startActivity(docprofileIntent);
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
+                }
 
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+
+            messages.keepSynced(true);
+
+            FirebaseDatabase.getInstance()
+                    .getReference().child("Doctors").child(doctorID)
+                    .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            try {
+                                userName = Objects.requireNonNull(
+                                        dataSnapshot.child("name").getValue()).toString();
+                                String userImage = Objects.requireNonNull(
+                                        dataSnapshot.child("thumb_image").getValue()).toString();
+                                holder.setName(userName);
+                                holder.setDoctorImage(userImage);
+                            }
+                            catch (Exception ignored) { }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) { }
+                    });
+
+            holder.mView.setOnClickListener(v -> {
+                Intent docprofileIntent =
+                        new Intent(context, MainDoctorActivity.class);
+                docprofileIntent.putExtra("user_id", doctorID);
+                context.startActivity(docprofileIntent);
+
+            });
+        } catch (Exception ignored) {}
     }
 
     public static class DoctorsViewHolder extends RecyclerView.ViewHolder{
