@@ -1,6 +1,5 @@
 package com.hcare.homeopathy.hcare.NavigationItems;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,7 +8,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,7 +15,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -263,7 +260,7 @@ public class ProfileActivity extends BaseActivity {
 
         if (!patientName.isEmpty()) {
             if (!email.isEmpty()) {
-                if (!age.isEmpty()) {
+                if (age.length() <= 3) {
                     if (contactNumber.length() == 10) {
 
                         mUserDatabase.child("name").setValue(patientName);
@@ -294,7 +291,7 @@ public class ProfileActivity extends BaseActivity {
                         Toast.makeText(this, "Please enter 10 digit Contact number",
                                 Toast.LENGTH_LONG).show();
                 } else
-                    Toast.makeText(this, "Please enter your age",
+                    Toast.makeText(this, "Please enter valid age",
                             Toast.LENGTH_LONG).show();
             } else
                 Toast.makeText(this, "Please enter your Email",

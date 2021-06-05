@@ -1,12 +1,10 @@
-package com.hcare.homeopathy.hcare.NavigationItems.Orders;
+package com.hcare.homeopathy.hcare.Orders;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +20,7 @@ import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 
-public class OrdersActivity extends BaseActivity {
+public class AllOrdersActivity extends BaseActivity {
 
     private DatabaseReference userRef;
     String userID;
@@ -65,13 +63,13 @@ public class OrdersActivity extends BaseActivity {
             RecyclerView mDoctorList = findViewById(R.id.recycler);
             mDoctorList.setHasFixedSize(true);
             mDoctorList.setLayoutManager(new LinearLayoutManager(this));
-            FirebaseRecyclerOptions<OrdersObject> options =
-                    new FirebaseRecyclerOptions.Builder<OrdersObject>()
-                            .setQuery(mDoctorsDatabase, OrdersObject.class)
+            FirebaseRecyclerOptions<AllOrdersObject> options =
+                    new FirebaseRecyclerOptions.Builder<AllOrdersObject>()
+                            .setQuery(mDoctorsDatabase, AllOrdersObject.class)
                             .setLifecycleOwner(this)
                             .build();
 
-            mDoctorList.setAdapter(new OrdersAdapter(options, this));
+            mDoctorList.setAdapter(new AllOrdersAdapter(options, this));
         } catch (Exception ignored) { }
     }
 

@@ -1,16 +1,10 @@
 package com.hcare.homeopathy.hcare.Consultations;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Fade;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,11 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.MainActivity;
-import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
 import com.hcare.homeopathy.hcare.R;
 
-import java.security.spec.ECField;
 import java.util.Objects;
 
 public class ConsultationsActivity extends BaseActivity {

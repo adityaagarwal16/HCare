@@ -16,7 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
+import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 import com.hcare.homeopathy.hcare.OrderTreatment.CartActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
@@ -178,7 +178,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
 
                 viewHolder.treatmentCard.setOnClickListener(v -> {
                     if (c.getOrdering().equals("ordered")) {
-                        context.startActivity(new Intent(v.getContext(), OrdersActivity.class));
+                        context.startActivity(new Intent(v.getContext(), AllOrdersActivity.class));
                     } else {
                         Intent intent = new Intent(context, CartActivity.class);
                         intent.putExtra("user_id", c.getFrom());

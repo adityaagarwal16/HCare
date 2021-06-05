@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.NavigationItems.Orders;
+package com.hcare.homeopathy.hcare.Orders;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,20 +18,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.R;
 
-import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-public class OrdersAdapter extends FirebaseRecyclerAdapter<
-        OrdersObject, OrdersAdapter.DoctorsViewHolder> {
+public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
+        AllOrdersObject, AllOrdersAdapter.DoctorsViewHolder> {
 
     private final Context context;
 
-    public OrdersAdapter(@NonNull FirebaseRecyclerOptions<OrdersObject> options,
-                         Context context) {
+    public AllOrdersAdapter(@NonNull FirebaseRecyclerOptions<AllOrdersObject> options,
+                            Context context) {
         super(options);
         this.context = context;
     }
@@ -45,7 +44,7 @@ public class OrdersAdapter extends FirebaseRecyclerAdapter<
 
     @Override
     protected void onBindViewHolder(@NonNull DoctorsViewHolder viewHolder,
-                                    int position, @NonNull OrdersObject model) {
+                                    int position, @NonNull AllOrdersObject model) {
         try { viewHolder.orderID(model.getOrderId()); } catch(Exception ignored) {}
         try { viewHolder.orderStatus(model.getOrderStatus()); } catch(Exception ignored) {}
         try {

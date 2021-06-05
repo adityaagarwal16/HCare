@@ -14,8 +14,8 @@ android {
         applicationId "com.hcare.homeopathy.hcare"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 48
-        versionName '2.1'
+        versionCode 53
+        versionName '2.1.4'
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
@@ -42,11 +42,11 @@ repositories {
     mavenCentral()
 }
 dependencies {
-    //facebook
-    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
-    implementation 'com.facebook.android:facebook-core:5.15.3'
-    implementation 'com.facebook.android:facebook-marketing:5.15.3'
-    //facebook data ends
+
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.3.0'
@@ -65,6 +65,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:20.0.0'
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.firebase:firebase-firestore:23.0.0'
+    implementation 'com.google.firebase:firebase-invites:17.0.0'
     implementation 'com.firebaseui:firebase-ui:6.2.0'
 
     //external lib starts

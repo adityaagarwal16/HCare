@@ -43,7 +43,7 @@ public class SplashScreenActivity extends BaseActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.hasChild("Number")) {
                             if (Objects.requireNonNull(dataSnapshot.child
-                                    ("Number").getValue()).toString().equals("update2")) {
+                                    ("Number").getValue()).toString().equals("update3")) {
                                 new Thread() {
                                     @Override
                                     public void run() {

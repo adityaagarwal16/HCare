@@ -71,10 +71,13 @@
             android:label="Checkout">
         </activity>
 
-        <activity android:name=".NavigationItems.Orders.PrescriptionActivity"
+        <activity android:name=".Orders.PrescriptionActivity"
             android:label="Prescription">
         </activity>
 
+        <activity android:name=".Orders.OrderActivity"
+            android:label="Order">
+        </activity>
 
         <activity android:name=".NavigationItems.Faq.FaqActivity"
             android:theme="@style/splashScreen"
@@ -88,7 +91,7 @@
 
 
         <activity
-            android:name=".NavigationItems.Orders.OrdersActivity"
+            android:name=".Orders.AllOrdersActivity"
             android:label="Your Orders"/>
 
 

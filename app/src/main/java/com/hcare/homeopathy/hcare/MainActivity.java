@@ -4,16 +4,13 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -21,27 +18,24 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.Explode;
-import androidx.transition.Fade;
-import androidx.transition.Slide;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
-import com.hcare.homeopathy.hcare.NavigationItems.Orders.OrdersActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.Diseases.diabetes;
@@ -66,7 +60,14 @@ public class MainActivity extends BaseActivity
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
-        Log.i("userID", userID);
+
+        final String[] token = {""};
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if(task.isComplete()){
+                token[0] = task.getResult();
+                Log.i("AppConstants", "onComplete: new Token got: "+token[0] );
+            }
+        });
 
         mUserRef = FirebaseDatabase.getInstance().getReference()
                 .child("Users").child(userID);
@@ -79,13 +80,88 @@ public class MainActivity extends BaseActivity
         setFlipper();
 
         findViewById(R.id.cart).setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, OrdersActivity.class)));
+                startActivity(new Intent(MainActivity.this, AllOrdersActivity.class)));
 
         setTopIssuesRecycler();
         setAllCategoriesRecycler();
         findViewById(R.id.searchDisease).setOnClickListener(V -> showOrHideFragment());
+        updateUserDetails();
     }
 
+    private void updateUserDetails() {
+        final String[] token = {""};
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if(task.isComplete()){
+                token[0] = task.getResult();
+            }
+        });
+
+        FirebaseDatabase.getInstance()
+                .getReference().child("Users").child(userID)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            try{
+                                if(Objects.requireNonNull(
+                                        dataSnapshot.child("device_token").getValue())
+                                        .toString().equals(token[0])) {
+                                    Log.i("updated", "done");
+                                } else {
+                                    updateFirebase(dataSnapshot, token[0]);
+                                }
+                            } catch (Exception e) {
+                                updateFirebase(dataSnapshot, token[0]);
+                                e.printStackTrace();
+                            }
+
+                        } catch(Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
+
+    }
+
+    private void updateFirebase(DataSnapshot dataSnapshot, String token) {
+        Map userMap = new HashMap();
+        userMap.put("phone number", Objects.requireNonNull(
+                dataSnapshot.child("phone number").getValue()));
+        userMap.put("name", Objects.requireNonNull(dataSnapshot.child("name")
+                .getValue()));
+        userMap.put("age", Objects.requireNonNull(dataSnapshot.child("age")
+                .getValue()));
+        userMap.put("sex", Objects.requireNonNull(dataSnapshot.child("sex")
+                .getValue()));
+        userMap.put("email", Objects.requireNonNull(dataSnapshot.child("email")
+                .getValue()));
+        try {
+            userMap.put("thumb_image", Objects.requireNonNull(dataSnapshot
+                    .child("thumb_image").getValue()));
+        } catch (Exception ignored) {
+        }
+        try {
+            userMap.put("image", Objects.requireNonNull(dataSnapshot
+                    .child("image").getValue()));
+        } catch (Exception ignored) {
+        }
+        try {
+            userMap.put("consultCount", Objects.requireNonNull(dataSnapshot
+                    .child("consultCount").getValue()));
+        } catch (Exception ignored) {
+        }
+
+        userMap.put("device_token", token);
+        userMap.put("status", "online");
+
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users")
+                .child(userID)
+                .setValue(userMap);
+    }
     /*
     private void consultations() {
         DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();

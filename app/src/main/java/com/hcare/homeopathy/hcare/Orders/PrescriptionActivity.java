@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.NavigationItems.Orders;
+package com.hcare.homeopathy.hcare.Orders;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -53,24 +53,25 @@ public class PrescriptionActivity extends BaseActivity {
     }
 
     private void setRecycler() {
+        try {
+            DatabaseReference mDoctorsDatabase = FirebaseDatabase
+                    .getInstance().getReference()
+                    .child("PrescribedMedicine")
+                    .child(getIntent().getStringExtra("user_id"))
+                    .child(Objects.requireNonNull(FirebaseAuth.getInstance()
+                            .getCurrentUser()).getUid());
 
-        DatabaseReference mDoctorsDatabase = FirebaseDatabase
-                .getInstance().getReference()
-                .child("PrescribedMedicine")
-                .child(getIntent().getStringExtra("user_id"))
-                .child(Objects.requireNonNull(FirebaseAuth.getInstance()
-                        .getCurrentUser()).getUid());
-
-        RecyclerView medicineRecycler = findViewById(R.id.recycler);
-        medicineRecycler.setLayoutManager
-                (new LinearLayoutManager(this));
-        medicineRecycler.setHasFixedSize(true);
-        FirebaseRecyclerOptions<PrescriptionObject> options =
-                new FirebaseRecyclerOptions.Builder<PrescriptionObject>()
-                        .setQuery(mDoctorsDatabase, PrescriptionObject.class)
-                        .setLifecycleOwner(this)
-                        .build();
-        medicineRecycler.setAdapter(new PrescriptionAdapter(options));
+            RecyclerView medicineRecycler = findViewById(R.id.recycler);
+            medicineRecycler.setLayoutManager
+                    (new LinearLayoutManager(this));
+            medicineRecycler.setHasFixedSize(true);
+            FirebaseRecyclerOptions<PrescriptionObject> options =
+                    new FirebaseRecyclerOptions.Builder<PrescriptionObject>()
+                            .setQuery(mDoctorsDatabase, PrescriptionObject.class)
+                            .setLifecycleOwner(this)
+                            .build();
+            medicineRecycler.setAdapter(new PrescriptionAdapter(options));
+        } catch(Exception ignored) {}
     }
 
     @Override

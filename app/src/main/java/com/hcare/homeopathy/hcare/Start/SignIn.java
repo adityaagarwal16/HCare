@@ -10,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -122,25 +124,30 @@ public class SignIn {
                 });
     }
 
-    String token = "";
     private void newAccount(String phoneNumber, String name, String email) {
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener( task -> token = task.getResult());
+        final String[] token = {""};
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if(task.isComplete()){
+                token[0] = task.getResult();
+                HashMap<String, String> userMap = new HashMap<>();
+                userMap.put("phone number", phoneNumber);
+                userMap.put("name", name);
+                userMap.put("age", "");
+                userMap.put("sex", "Male");
+                userMap.put("thumb_image", "default");
+                userMap.put("image", "default");
+                userMap.put("email", email);
+                userMap.put("device_token", token[0]);
+                userMap.put("status", "online");
 
-        HashMap<String, String> userMap = new HashMap<>();
-        userMap.put("phone number", phoneNumber);
-        userMap.put("name", name);
-        userMap.put("age", "");
-        userMap.put("sex", "Male");
-        userMap.put("thumb_image", "default");
-        userMap.put("image", "default");
-        userMap.put("email", email);
-        userMap.put("device_token",  token);
-        userMap.put("status", "online");
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Users")
+                        .child(userID)
+                        .setValue(userMap);
+            }
+        });
 
-        FirebaseDatabase.getInstance().getReference()
-                .child("Users")
-                .child(userID).push()
-                .setValue(userMap);
+
 
         HashMap<String, String> loggedInData = new HashMap<>();
         loggedInData.put("phone_number", phoneNumber);
@@ -151,7 +158,6 @@ public class SignIn {
         FirebaseDatabase.getInstance().getReference()
                 .child("loggedin")
                 .child(userID)
-                .push()
                 .setValue(loggedInData);
 
         Intent intent = new Intent(context, MainActivity.class);
@@ -170,4 +176,5 @@ public class SignIn {
 
         ((Activity) context).finish();
     }
+
 }
