@@ -128,8 +128,8 @@ public class MainActivity extends BaseActivity
 
     private void updateFirebase(DataSnapshot dataSnapshot, String token) {
         Map userMap = new HashMap();
-        userMap.put("phone number", Objects.requireNonNull(
-                dataSnapshot.child("phone number").getValue()));
+        userMap.put("phone number", Objects.requireNonNull(dataSnapshot.child("phone number")
+                .getValue()));
         userMap.put("name", Objects.requireNonNull(dataSnapshot.child("name")
                 .getValue()));
         userMap.put("age", Objects.requireNonNull(dataSnapshot.child("age")
@@ -141,18 +141,15 @@ public class MainActivity extends BaseActivity
         try {
             userMap.put("thumb_image", Objects.requireNonNull(dataSnapshot
                     .child("thumb_image").getValue()));
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
         try {
             userMap.put("image", Objects.requireNonNull(dataSnapshot
                     .child("image").getValue()));
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
         try {
             userMap.put("consultCount", Objects.requireNonNull(dataSnapshot
                     .child("consultCount").getValue()));
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
 
         userMap.put("device_token", token);
         userMap.put("status", "online");
