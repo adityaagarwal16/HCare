@@ -15,13 +15,15 @@
 
                 <TextView
                     android:id="@+id/header"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginStart="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:text="Message"
                     android:textColor="?android:textColorPrimary"
-                    android:textSize="18sp"
+                    android:textSize="19sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:ignore="HardcodedText" />
@@ -46,16 +48,33 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:padding="10dp"
-                    android:paddingStart="20dp"
+                    android:paddingStart="22dp"
                     android:paddingEnd="20dp"
-                    android:foreground="?selectableItemBackground"
-                    android:layout_marginStart="1dp"
+                    android:textStyle="bold" android:foreground="?selectableItemBackground"
                     android:layout_marginTop="15dp"
                     android:text="Copy"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/line"
                     tools:ignore="HardcodedText" />
+
+<!--
+                <TextView
+                    android:id="@+id/delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:foreground="?selectableItemBackground"
+                    android:padding="10dp"
+                    android:paddingStart="22dp"
+                    android:paddingEnd="20dp"
+                    android:text="Delete"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/copy"
+                    tools:ignore="HardcodedText" />
+-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

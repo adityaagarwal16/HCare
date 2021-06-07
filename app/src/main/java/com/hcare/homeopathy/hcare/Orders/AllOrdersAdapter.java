@@ -48,12 +48,12 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
         try { viewHolder.orderID(model.getOrderId()); } catch(Exception ignored) {}
         try { viewHolder.orderStatus(model.getOrderStatus()); } catch(Exception ignored) {}
         try {
-            Date date = new SimpleDateFormat("dd-MMM-yy", Locale.ENGLISH).
+            Date date = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss a", Locale.ENGLISH).
                     parse(model.getOrdertime());
             assert date != null;
-            viewHolder.date(new SimpleDateFormat("MMM dd, yyyy\n hh:mm",
+            viewHolder.date(new SimpleDateFormat("MMM dd, yyyy\n HH:mm",
                     Locale.ENGLISH).format(date));
-        } catch(Exception ignored) { }
+        } catch(Exception e) { e.printStackTrace(); }
         if(model.getAmount() != null)
             viewHolder.totalAmount(MessageFormat.format(
                     "{0} {1}",

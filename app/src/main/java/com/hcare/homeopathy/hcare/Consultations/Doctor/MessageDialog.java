@@ -59,5 +59,8 @@ public class MessageDialog {
             clipboard.setPrimaryClip(clip);
             dialog.dismiss();
         });
+      /*  root.findViewById(R.id.delete).setOnClickListener(v -> {
+            dialog.dismiss();
+        });*/
     }
 }

@@ -65,6 +65,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     private DatabaseReference databaseRootReference, userRef,
             doctorReference, messagesReference, userReference;
     ProgressDialog mProgressDialog;
+    List<ChatObject> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +108,6 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                                         key = supportItem.getKey();
                                     }
                                     assert key != null;
-                                    Log.i("key", key);
                                     ChatObject message = snapshot.child(key)
                                             .getValue(ChatObject.class);
                                     if (!Objects.requireNonNull(message).getFrom().equals(userID))
@@ -285,7 +285,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
 
     private void loadMessages() {
         RecyclerView mMessagesList = findViewById(R.id.messages_list);
-        List<ChatObject> list = new ArrayList<>();
+        list = new ArrayList<>();
         LinearLayoutManager mLinearLayout = new LinearLayoutManager(this);
 
         mLinearLayout.setStackFromEnd(true);
@@ -293,11 +293,15 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         ChatAdapter adapter = new ChatAdapter(list, this);
         mMessagesList.setAdapter(adapter);
 
-        messagesReference.addChildEventListener(new ChildEventListener() {
+        DatabaseReference chat = databaseRootReference
+                .child("messages").child(userID).child(doctorID);
+        chat.keepSynced(true);
+        chat.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 try {
                     ChatObject message = dataSnapshot.getValue(ChatObject.class);
+                    assert message != null;
 
                     if (lastDay == new GetTime(Objects.requireNonNull(message)
                             .getTime()).getDays())
@@ -305,7 +309,8 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                     else
                         lastDay = new GetTime(message.getTime()).getDays();
 
-                    /* if (!((boolean) message.getSeen()) && message.getFrom().equals(doctorID)) {
+                    /* Log.i("message", message.getSeen()+"\n" +message.getImage()+"\n" +message.getMedicineId()+"\n" +message.getMessage()+"\n" +message.getFrom()+"\n" +message.getOrdering()+"\n" +message.getType()+"\n"+message.getTime()+"\n");
+                    if (!((boolean) message.getSeen()) && message.getFrom().equals(doctorID)) {
                         messagesReference.child(s).child("seen").setValue(true);
                         Log.i("set true", messagesReference.child(s).child("seen").toString());
                         Log.i("message", message.getMessage() + " " + message.getSeen());
@@ -318,7 +323,6 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                     Log.i("image", message.getImage());
                     Log.i("medicine", message.getMedicineId());*/
                     list.add(message);
-
                 } catch(Exception ignored){ }
                 mMessagesList.scrollToPosition(list.size() - 1);
             }
@@ -335,6 +339,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+
     }
 
     public void sendMessage(View view) {

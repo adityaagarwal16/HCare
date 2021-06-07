@@ -56,7 +56,7 @@ public class SplashScreenActivity extends BaseActivity {
                                             intent = new Intent(getApplicationContext(),
                                                     LoginActivity.class);
                                         else {
-                                            intent = new Intent(getApplicationContext(),
+                                            /*intent = new Intent(getApplicationContext(),
                                                     DiseaseActivity.class);
                                             intent.putExtra("request_type1", Diseases.thyroid);
 
@@ -78,21 +78,22 @@ public class SplashScreenActivity extends BaseActivity {
                                             intent.putExtra("user_id",
                                                     "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
 
-                                           /* intent = new Intent(getApplicationContext(),
+                                            intent = new Intent(getApplicationContext(),
                                                     FaqActivity.class);
                                             intent = new Intent(getApplicationContext(),
                                                     OrderNowActivity.class);
                                             intent.putExtra("price", 200);
+
 
                                             intent = new Intent(getApplicationContext(),
                                                     OrderNowActivity.class);
                                             intent.putExtra("user_id",
                                                     "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
                                             intent.putExtra("discount", 360);
-                                            intent.putExtra("price", 600);
+                                            intent.putExtra("price", 600);*/
                                             intent = new Intent(
                                                     getApplicationContext(),
-                                                    MainActivity.class);*/
+                                                    MainActivity.class);
                                         }
                                         startActivity(intent);
                                         finish();
