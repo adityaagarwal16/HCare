@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,7 @@ import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -103,13 +105,10 @@ public class MainActivity extends BaseActivity
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
                             try{
-                                if(Objects.requireNonNull(
+                                if(!Objects.requireNonNull(
                                         dataSnapshot.child("device_token").getValue())
-                                        .toString().equals(token[0])) {
-                                    Log.i("updated", "done");
-                                } else {
+                                        .toString().equals(token[0]))
                                     updateFirebase(dataSnapshot, token[0]);
-                                }
                             } catch (Exception e) {
                                 updateFirebase(dataSnapshot, token[0]);
                                 e.printStackTrace();
@@ -138,10 +137,6 @@ public class MainActivity extends BaseActivity
                 .getValue()));
         userMap.put("email", Objects.requireNonNull(dataSnapshot.child("email")
                 .getValue()));
-        try {
-            userMap.put("thumb_image", Objects.requireNonNull(dataSnapshot
-                    .child("thumb_image").getValue()));
-        } catch (Exception ignored) { }
         try {
             userMap.put("image", Objects.requireNonNull(dataSnapshot
                     .child("image").getValue()));
@@ -256,14 +251,41 @@ public class MainActivity extends BaseActivity
     }
 
     void eventListeners() {
+        final String[] consultationID = {""};
         DatabaseReference publicConsult = FirebaseDatabase.getInstance().
                 getReference().child("public_Consulting")
                 .child(userID);
+
+        FirebaseDatabase.getInstance().
+                getReference().child("Consultations")
+                .child(userID).orderByKey().limitToFirst(1)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()) {
+                            try {
+                                for (DataSnapshot supportItem: snapshot.getChildren()) {
+                                    consultationID[0] = String.valueOf(
+                                            supportItem.child("consultationID").getValue());
+                                }
+                            } catch(Exception ignored) {}
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
         publicConsult.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final RelativeLayout consultReq = findViewById(R.id.requestText);
+                final TextView consultationText = findViewById(R.id.consultationText);
+                consultationText.setText(MessageFormat
+                        .format("You will be contacted by our doctor." +
+                                "\nConsultation ID : {0}", consultationID[0]));
                 if (dataSnapshot.hasChild("name"))
                     consultReq.setVisibility(View.VISIBLE);
                 else
@@ -300,13 +322,12 @@ public class MainActivity extends BaseActivity
     @Override
     public void onStart() {
         super.onStart();
-        ///phone authentication
         mUserRef.child("status").setValue("online");
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         mUserRef.child("status").setValue("offline");
     }
 

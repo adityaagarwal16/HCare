@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Random;
 
 import static com.hcare.homeopathy.hcare.Constants.DISEASE_OBJECT;
 
@@ -66,7 +67,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-
 
         FirebaseDatabase.getInstance()
                 .getReference().child("public_Consulting")
@@ -129,11 +129,14 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
+        String consultationID = generateConsultationID();
+
         String patientIssue = getIntent().getStringExtra("details1");
         DatabaseReference userRef = FirebaseDatabase.getInstance()
                 .getReference().child("Users").child(userID);
 
         HashMap<String, String> notifyData = new HashMap<>();
+        notifyData.put("consultationID", consultationID);
         notifyData.put("details1", patientIssue);
         notifyData.put("request_type1", patientName);
         notifyData.put("date", date);
@@ -146,10 +149,26 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                 .child(Objects.requireNonNull(patientName))
                 .setValue(patientName);
 
-        DatabaseReference mConsultReqDatabase = FirebaseDatabase.getInstance()
-                .getReference().child("public_Consulting").child(userID);
-        mConsultReqDatabase.setValue(notifyData);
+        //temporary store
+        FirebaseDatabase.getInstance().getReference().child("public_Consulting")
+                .child(userID).setValue(notifyData);
+
+        //permanent store
+        FirebaseDatabase.getInstance().getReference().child("Consultations")
+                .child(userID).child(consultationID).setValue(notifyData);
     }
+
+    @SuppressLint("DefaultLocale")
+    public String generateConsultationID() {
+        // It will generate 6 digit random Number.
+        // from 0 to 999999
+        Random rnd = new Random();
+        int number = rnd.nextInt(9999999);
+
+        // this will convert any number sequence into 6 character.
+        return "CN" + String.format("%07d", number);
+    }
+
 
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {

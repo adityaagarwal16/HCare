@@ -115,7 +115,7 @@
                     android:id="@+id/requestText"
                     android:paddingTop="10dp"
                     android:paddingBottom="15dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:paddingStart="20dp"
                     android:foreground="?selectableItemBackground"
                     android:paddingEnd="20dp"
@@ -138,12 +138,12 @@
                         tools:ignore="HardcodedText" />
 
                     <TextView
-                        android:id="@+id/bookedSubHeading"
+                        android:id="@+id/consultationText"
                         android:layout_below="@id/bookedHeading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="1dp"
-                        android:text="Doctor will be here soon"
+                        android:text="You will be contacted by our doctor. \nYour consultation ID is"
                         android:textStyle="bold"
                         android:textSize="15sp"
                         tools:ignore="HardcodedText" />

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +25,6 @@ import java.util.Objects;
 
 public class CartActivity extends BaseActivity {
 
-    DatabaseReference userRef;
     String doctorID, medicine_id, userID;
 
     static final int ONE_MEDICINE_COST = 240, DELIVERY_FEE = 0;
@@ -45,9 +43,6 @@ public class CartActivity extends BaseActivity {
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
-
-        userRef = FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(userID);
 
         FirebaseDatabase.getInstance()
                 .getReference().child("PrescribedMedicine")
@@ -162,19 +157,6 @@ public class CartActivity extends BaseActivity {
                         .build();
         medicineRecycler.setAdapter(new PrescriptionAdapter(options));
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        userRef.child("status").setValue("online");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        userRef.child("status").setValue("offline");
-    }
-
 }
 
 

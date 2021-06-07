@@ -13,10 +13,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.DiseaseInfo;
@@ -30,7 +26,6 @@ import static com.hcare.homeopathy.hcare.Constants.DISEASE_OBJECT;
 public class DiseaseActivity extends BaseActivity {
 
     DiseaseInfo disease;
-    private DatabaseReference userRef;
     private EditText mChatMessageView;
 
     @Override
@@ -42,13 +37,7 @@ public class DiseaseActivity extends BaseActivity {
                 getIntent().getSerializableExtra("request_type1"));
 
         setToolbar();
-
         setContent();
-
-        FirebaseUser mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String current_uid = Objects.requireNonNull(mCurrentUser).getUid();
-
-        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
         mChatMessageView = findViewById(R.id.diseases);
     }
 
@@ -105,18 +94,6 @@ public class DiseaseActivity extends BaseActivity {
         int height = ViewGroup.LayoutParams.WRAP_CONTENT;
         Objects.requireNonNull(dialog.getWindow()).setLayout(width, height);
         dialog.show();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        userRef.child("status").setValue("online");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        userRef.child("status").setValue("offline");
     }
 
 

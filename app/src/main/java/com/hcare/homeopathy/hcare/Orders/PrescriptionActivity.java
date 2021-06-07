@@ -20,8 +20,7 @@ import java.util.Objects;
 
 public class PrescriptionActivity extends BaseActivity {
 
-    DatabaseReference userRef;
-    String userID;
+    String userID, doctorID = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +32,11 @@ public class PrescriptionActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        try {
+            doctorID = getIntent().getStringExtra("user_id");
+        } catch(Exception ignored) {}
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
-
-        userRef = FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(userID);
-
         setRecycler();
     }
 
@@ -57,7 +55,7 @@ public class PrescriptionActivity extends BaseActivity {
             DatabaseReference mDoctorsDatabase = FirebaseDatabase
                     .getInstance().getReference()
                     .child("PrescribedMedicine")
-                    .child(getIntent().getStringExtra("user_id"))
+                    .child(doctorID)
                     .child(Objects.requireNonNull(FirebaseAuth.getInstance()
                             .getCurrentUser()).getUid());
 
@@ -73,19 +71,6 @@ public class PrescriptionActivity extends BaseActivity {
             medicineRecycler.setAdapter(new PrescriptionAdapter(options));
         } catch(Exception ignored) {}
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        userRef.child("status").setValue("online");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        userRef.child("status").setValue("offline");
-    }
-
 }
 
 

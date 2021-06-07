@@ -302,18 +302,6 @@ public class ProfileActivity extends BaseActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        mUserDatabase.child("status").setValue("online");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        mUserDatabase.child("status").setValue("offline");
-    }
-
-    @Override
     protected void onActivityResult(int requestCode,int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
@@ -356,7 +344,6 @@ public class ProfileActivity extends BaseActivity {
 
                                 Map update_haspMap = new HashMap<String, String>();
                                 update_haspMap.put("image", download_Url);
-                                update_haspMap.put("thumb_image", uri1.toString());
 
                                 new Handler(Looper.getMainLooper()).postDelayed(()
                                         -> findViewById(R.id.loader).setVisibility(View.GONE),

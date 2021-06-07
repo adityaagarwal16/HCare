@@ -14,7 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/colorSecondary" />
+        app:tint="@color/colorSecondary"
+        android:contentDescription="@string/todo" />
 
     <TextView
         android:id="@+id/header"
@@ -62,6 +63,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

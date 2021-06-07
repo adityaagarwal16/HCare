@@ -22,9 +22,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.Constants;
+import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
+import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
 import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
 import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.MainActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
 import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
 import com.hcare.homeopathy.hcare.R;
 
@@ -53,39 +56,43 @@ public class SplashScreenActivity extends BaseActivity {
                                             intent = new Intent(getApplicationContext(),
                                                     LoginActivity.class);
                                         else {
-                                            /*intent = new Intent(getApplicationContext(),
-                                                        DiseaseActivity.class);
-                                                intent.putExtra("request_type1", Diseases.thyroid);
+                                            intent = new Intent(getApplicationContext(),
+                                                    DiseaseActivity.class);
+                                            intent.putExtra("request_type1", Diseases.thyroid);
 
-                                                intent = new Intent(getApplicationContext(),
-                                                        CheckoutActivity.class);
-                                                intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
-                                                intent.putExtra("details1", "hello");
-                                                intent.putExtra("request_type1", "Thyroid");
-                                                intent.putExtra("name", "hello");
-                                                intent.putExtra("age", "19");
-                                                intent.putExtra("sex", "male");
-
-
-                                                intent = new Intent(getApplicationContext(), ConsultationsActivity.class);
-
-                                                intent = new Intent(getApplicationContext(), MainDoctorActivity.class);
-                                                intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
-
-                                                intent = new Intent(getApplicationContext(), FaqActivity.class);
-                                                intent = new Intent(getApplicationContext(),
-                                                        OrderNowActivity.class);
-                                                intent.putExtra("price", 200);
+                                            intent = new Intent(getApplicationContext(),
+                                                    CheckoutActivity.class);
+                                            intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
+                                            intent.putExtra("details1", "hello");
+                                            intent.putExtra("request_type1", "Thyroid");
+                                            intent.putExtra("name", "hello");
+                                            intent.putExtra("age", "19");
+                                            intent.putExtra("sex", "male");
 
 
-                                    intent = new Intent(getApplicationContext(), OrderNowActivity.class);
-                                    intent.putExtra("user_id", "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
-                                    intent.putExtra("discount", 360);
-                                    intent.putExtra("price", 600);
-*/
+                                            intent = new Intent(getApplicationContext(),
+                                                    ConsultationsActivity.class);
+
+                                            intent = new Intent(getApplicationContext(),
+                                                    MainDoctorActivity.class);
+                                            intent.putExtra("user_id",
+                                                    "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+
+                                           /* intent = new Intent(getApplicationContext(),
+                                                    FaqActivity.class);
+                                            intent = new Intent(getApplicationContext(),
+                                                    OrderNowActivity.class);
+                                            intent.putExtra("price", 200);
+
+                                            intent = new Intent(getApplicationContext(),
+                                                    OrderNowActivity.class);
+                                            intent.putExtra("user_id",
+                                                    "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+                                            intent.putExtra("discount", 360);
+                                            intent.putExtra("price", 600);
                                             intent = new Intent(
                                                     getApplicationContext(),
-                                                    MainActivity.class);
+                                                    MainActivity.class);*/
                                         }
                                         startActivity(intent);
                                         finish();
@@ -105,10 +112,6 @@ public class SplashScreenActivity extends BaseActivity {
                     }
 
                 });
-
-        NotificationManager notifyManager=
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notifyManager.cancelAll();
     }
 
     private void showPopup() {

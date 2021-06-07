@@ -26,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -143,6 +144,8 @@ public class PhoneNumberFragment extends Fragment {
                     root.findViewById(R.id.otpFailedText);
             if (e instanceof FirebaseAuthInvalidCredentialsException)
                 otpFailedLayout.setText("INVALID NUMBER");
+            else if (e instanceof FirebaseNetworkException)
+                otpFailedLayout.setText("NO INTERNET");
             else {
                 otpFailedLayout.setText("OTP FAILED");
                 Toast.makeText(requireActivity(),

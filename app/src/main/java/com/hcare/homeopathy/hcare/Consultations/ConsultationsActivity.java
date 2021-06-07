@@ -22,7 +22,6 @@ import java.util.Objects;
 
 public class ConsultationsActivity extends BaseActivity {
 
-    private DatabaseReference userRef;
     String userID;
 
     @Override
@@ -36,7 +35,6 @@ public class ConsultationsActivity extends BaseActivity {
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         userID = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
 
         setRecycler();
     }
@@ -91,18 +89,6 @@ public class ConsultationsActivity extends BaseActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        userRef.child("status").setValue("online");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        userRef.child("status").setValue("offline");
     }
 }
 

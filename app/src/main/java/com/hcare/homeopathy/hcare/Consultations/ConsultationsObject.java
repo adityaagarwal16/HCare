@@ -1,9 +1,5 @@
 package com.hcare.homeopathy.hcare.Consultations;
 
-/**
- * Created by Vinith pc on 9/6/2017.
- */
-
 public class ConsultationsObject {
 
     public String name;

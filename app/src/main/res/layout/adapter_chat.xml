@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/background_chat_user"
+            android:background="@drawable/background_ripple_chat_user"
             android:layout_marginStart="100dp"
             android:paddingTop="7dp"
             android:paddingBottom="10dp"
@@ -60,7 +60,7 @@
             android:textStyle="bold"
             android:gravity="center_vertical"
             android:textSize="17sp"
-            android:background="@drawable/background_chat_doctor"
+            android:background="@drawable/background_ripple_chat_doctor"
             android:text="hello there, what's up?"
             tools:ignore="HardcodedText,RelativeOverlap" />
 

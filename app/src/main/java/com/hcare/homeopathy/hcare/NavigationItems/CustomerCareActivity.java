@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +12,6 @@ import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,7 +27,7 @@ import com.google.firebase.storage.StorageReference;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Consultations.Doctor.ChatAdapter;
 import com.hcare.homeopathy.hcare.Consultations.Doctor.ChatObject;
-import com.hcare.homeopathy.hcare.MainActivity;
+import com.hcare.homeopathy.hcare.Consultations.Doctor.GetTime;
 import com.hcare.homeopathy.hcare.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -43,12 +43,13 @@ public class CustomerCareActivity extends BaseActivity {
     private DatabaseReference mRootref;
     private String mCurrentUserId;
 
+    int lastDay = 0;
+
     final static int PICK_PDF_CODE = 2342;
     private RecyclerView mMessagesList;
     private final List<ChatObject> messageList= new ArrayList<>();
     private ChatAdapter mAdapter;
     private static final int GALLERY_PICK =1;
-    private DatabaseReference userRef;
     private DatabaseReference h;
 
     private StorageReference mimagestorage;
@@ -79,10 +80,7 @@ public class CustomerCareActivity extends BaseActivity {
         mMessagesList.setLayoutManager(mLinearLayout);
         mMessagesList.setAdapter(mAdapter);
 
-        userRef = FirebaseDatabase.getInstance().
-                getReference().child("Users").child(mAuth.getCurrentUser().getUid());
         h = mRootref.child("Customercare").child(mCurrentUserId);
-
         loadMessage();
     }
 
@@ -113,8 +111,8 @@ public class CustomerCareActivity extends BaseActivity {
                 Intent intent = new Intent();
                 intent.setType("application/pdf");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_PDF_CODE);
-
+                startActivityForResult(Intent.createChooser
+                        (intent, "Select Picture"), PICK_PDF_CODE);
             }
             return false;
         });
@@ -243,25 +241,23 @@ public class CustomerCareActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        userRef.child("status").setValue("online");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        userRef.child("status").setValue("online");
-    }
-
     private void loadMessage() {
         h.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
-                ChatObject message = dataSnapshot.getValue(ChatObject.class);
-                messageList.add(message);
-                mAdapter.notifyDataSetChanged();
+                try {
+                    ChatObject message = dataSnapshot.getValue(ChatObject.class);
+                    Log.i("message", s);
+
+                    if (lastDay == new GetTime(Objects.requireNonNull(message)
+                            .getTime()).getDays())
+                        message.setTime(0);
+                    else
+                        lastDay = new GetTime(message.getTime()).getDays();
+                    messageList.add(message);
+                    mAdapter.notifyDataSetChanged();
+                } catch(Exception ignored){ }
+
                 mMessagesList.scrollToPosition(messageList.size()-1);
             }
 

@@ -72,10 +72,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                     viewHolder.doctorMessage.setVisibility(View.GONE);
                     viewHolder.userMessage.setText(c.getMessage());
                     viewHolder.userMessage.setVisibility(View.VISIBLE);
-                }else {
+                    viewHolder.userMessage.setOnLongClickListener(v -> {
+                        new MessageDialog(context, c);
+                        return false;
+                    });
+                } else {
                     viewHolder.userMessage.setVisibility(View.GONE);
                     viewHolder.doctorMessage.setText(c.getMessage());
                     viewHolder.doctorMessage.setVisibility(View.VISIBLE);
+                    viewHolder.doctorMessage.setOnLongClickListener(v -> {
+                        new MessageDialog(context, c);
+                        return false;
+                    });
                 }
                 break;
 
@@ -190,12 +198,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         }
     }
 
-
     @Override
     public int getItemCount() {
         return mMessageList.size();
     }
-
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
 
@@ -216,7 +222,5 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         }
 
     }
-
-
 
 }

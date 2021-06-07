@@ -10,8 +10,6 @@ import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -42,10 +40,7 @@ import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import com.theartofdev.edmodo.cropper.CropImage;
-
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.File;
 import java.text.DateFormat;
 import java.text.MessageFormat;
@@ -69,6 +64,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     int lastDay = 0;
     private DatabaseReference databaseRootReference, userRef,
             doctorReference, messagesReference, userReference;
+    ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +72,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         setContentView(R.layout.activity_main_doctor);
 
         doctorID = getIntent().getStringExtra("user_id");
+
         databaseRootReference = FirebaseDatabase.getInstance().getReference();
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
@@ -104,14 +101,19 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             try {
-                                if(snapshot.getValue() != null) {
-                                    String key = String.valueOf(
-                                            new JSONObject(Objects.requireNonNull(
-                                                    snapshot.getValue()).toString())
-                                                    .keys().next());
-                                    messagesReference.child(key).child("seen").setValue(true);
+                                if(snapshot.exists()) {
+                                    String key = "";
+                                    for (DataSnapshot supportItem : snapshot.getChildren()) {
+                                        key = supportItem.getKey();
+                                    }
+                                    assert key != null;
+                                    Log.i("key", key);
+                                    ChatObject message = snapshot.child(key)
+                                            .getValue(ChatObject.class);
+                                    if (!Objects.requireNonNull(message).getFrom().equals(userID))
+                                        messagesReference.child(key).child("seen").setValue(true);
                                 }
-                            } catch (JSONException e) {
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
@@ -192,12 +194,21 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         } catch(Exception ignored) { }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (getSupportFragmentManager().findFragmentById(R.id.fragment) != null) {
-            showOrHideFragment();
-        }
+    private void checkoutSuccessfulFragment() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        View consultAgain = findViewById(R.id.consultAgain);
+        View chatBar = findViewById(R.id.chatBar);
+        TranslateAnimation animate =
+                new TranslateAnimation(0, 0,
+                        0,
+                        300);
+        animate.setDuration(0);
+        animate.setFillAfter(true);
+        consultAgain.startAnimation(animate);
+        chatBar.startAnimation(animate);
+        transaction
+                .replace(R.id.fragment, new CheckoutSuccessfulFragment())
+                .commit();
     }
 
     private void setToolbar() {
@@ -246,12 +257,14 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                         Log.e("TEST", "Exception", e);
                     }
 
-                    int number = 864000000;
-                    if (consultdate.equals(getCalculatedDate("dd-MM-yyyy",0))
-                            || diff > number)
+                    //consult date already set 10 days after
+                    if (diff<0)
                         consultAgain.setVisibility(View.VISIBLE);
                     else
                         consultAgain.setVisibility(View.GONE);
+                } else {
+                    doctorReference.child("nextConsultdate")
+                            .setValue(getCalculatedDate("dd-MM-yyyy", 10));
                 }
             }
 
@@ -260,10 +273,9 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         });
 
         consultAgain.setOnClickListener(v -> {
-            ProgressDialog mProgressDialog =
-                    new ProgressDialog(this);
-            mProgressDialog.setTitle(" Payment Loading ");
-            mProgressDialog.setMessage("Please wait ");
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setTitle("Payment Loading");
+            mProgressDialog.setMessage("Please wait");
             mProgressDialog.setCanceledOnTouchOutside(false);
             mProgressDialog.show();
 
@@ -278,14 +290,14 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
 
         mLinearLayout.setStackFromEnd(true);
         mMessagesList.setLayoutManager(mLinearLayout);
-        mMessagesList.setAdapter(new ChatAdapter(list, this));
+        ChatAdapter adapter = new ChatAdapter(list, this);
+        mMessagesList.setAdapter(adapter);
 
         messagesReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 try {
                     ChatObject message = dataSnapshot.getValue(ChatObject.class);
-                    Log.i("message", s);
 
                     if (lastDay == new GetTime(Objects.requireNonNull(message)
                             .getTime()).getDays())
@@ -293,12 +305,12 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                     else
                         lastDay = new GetTime(message.getTime()).getDays();
 
-                    if (!((boolean) message.getSeen()) && message.getFrom().equals(doctorID)) {
+                    /* if (!((boolean) message.getSeen()) && message.getFrom().equals(doctorID)) {
                         messagesReference.child(s).child("seen").setValue(true);
                         Log.i("set true", messagesReference.child(s).child("seen").toString());
                         Log.i("message", message.getMessage() + " " + message.getSeen());
                     }
-                    /* Log.i("from", message.getFrom());
+                    Log.i("from", message.getFrom());
                     Log.i("message", message.getMessage());
                     Log.i("order", message.getOrdering());
                     Log.i("type", message.getType());
@@ -307,15 +319,12 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                     Log.i("medicine", message.getMedicineId());*/
                     list.add(message);
 
-                    } catch(Exception ignored){ }
-
-                    mMessagesList.scrollToPosition(list.size() - 1);
+                } catch(Exception ignored){ }
+                mMessagesList.scrollToPosition(list.size() - 1);
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) { }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
@@ -497,7 +506,6 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     protected void onStart() {
         super.onStart();
         doctorReference.child("list").setValue("online");
-        userRef.child("status").setValue("online");
 
         databaseRootReference.child("notifications").child(userID).removeValue();
         databaseRootReference.child("Accepting")
@@ -508,13 +516,12 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     protected void onStop() {
         super.onStop();
         doctorReference.child("list").setValue("offline");
-        userRef.child("status").setValue("offline");
     }
 
     public void notification() {
         HashMap<String,String> notificationData = new HashMap<>();
         notificationData.put("from", userID);
-        notificationData.put("type","text");
+        notificationData.put("type", "text");
         databaseRootReference.child("notifications").child(doctorID)
                 .push().setValue(notificationData);
     }
@@ -555,19 +562,18 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             });
 
             JSONObject options = new JSONObject();
-            options.put("name", "Hcare");
+            options.put("name", "HCare");
             options.put("description", "discount applied");
             //You can omit the image option to fetch the image from dashboard
-            options.put("image", R.drawable.logo_green);
             options.put("currency", "INR");
-            options.put("amount", "15000");
+            options.put("amount", "14900");
 
             JSONObject preFill = new JSONObject();
             preFill.put("email", eMail);
             preFill.put("contact", phoneNumber);
 
             options.put("prefill", preFill);
-
+            co.setImage(R.drawable.logo_green);
             co.open(activity, options);
         }
         catch (Exception e) {
@@ -579,8 +585,9 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
+            mProgressDialog.dismiss();
             sendRequest();
-            Toast.makeText(this, "Payment Successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Payment Successful! You can now consult your doctor again for follow-ups.", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
         }
@@ -605,17 +612,25 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         Map messageUserMap = new HashMap();
         messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
         messageUserMap.put(chat_user_ref +"/" + push_id,messageMap);
+
         databaseRootReference.child("Followup").child(doctorID)
                 .child(userID).setValue(messageMap);
-        doctorReference.child("nextConsultdate").setValue(getCalculatedDate("dd-MM-yyyy", 10));
+        doctorReference.child("nextConsultdate")
+                .setValue(getCalculatedDate("dd-MM-yyyy", 10));
         // mChatMessageView.setText("");
         databaseRootReference.updateChildren(messageUserMap,
                 (databaseError, databaseReference) -> notification());
     }
 
+    //TODO
     @Override
     public void onPaymentError(int code, String response) {
-        Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
+        try {
+            mProgressDialog.dismiss();
+            Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

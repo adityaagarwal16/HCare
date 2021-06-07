@@ -41,7 +41,7 @@ import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.STATE;
 
 public class OrderNowActivity extends BaseActivity implements PaymentResultListener {
 
-    private DatabaseReference reference, userRef;
+    private DatabaseReference reference;
     private String doctorID, userID;
 
     private String name, email = "example", phoneNumber = "91",
@@ -59,13 +59,12 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
 
-        userRef = FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(userID);
-
         doctorID = getIntent().getStringExtra("user_id");
         reference = FirebaseDatabase.getInstance().getReference();
 
-        userRef.addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(userID)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
@@ -242,18 +241,6 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        userRef.child("status").setValue("online");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        userRef.child("status").setValue("offline");
-    }
-
     private void showOrderSuccessfulFragment() {
         findViewById(R.id.placeOrder).setVisibility(View.GONE);
         getSupportFragmentManager()
@@ -377,10 +364,10 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         // It will generate 6 digit random Number.
         // from 0 to 999999
         Random rnd = new Random();
-        int number = rnd.nextInt(999999);
+        int number = rnd.nextInt(9999999);
 
         // this will convert any number sequence into 6 character.
-        return String.format("%06d", number);
+        return String.format("%07d", number);
     }
 
 

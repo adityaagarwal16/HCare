@@ -134,7 +134,6 @@ public class SignIn {
                 userMap.put("name", name);
                 userMap.put("age", "");
                 userMap.put("sex", "Male");
-                userMap.put("thumb_image", "default");
                 userMap.put("image", "default");
                 userMap.put("email", email);
                 userMap.put("device_token", token[0]);
