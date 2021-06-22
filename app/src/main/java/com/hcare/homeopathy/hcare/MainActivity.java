@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
+import com.hcare.homeopathy.hcare.Coronavirus.CoronaVirusActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
@@ -80,6 +81,7 @@ public class MainActivity extends BaseActivity
         setToolbar();
         eventListeners();
         setFlipper();
+        setCoronaFlipper();
 
         findViewById(R.id.cart).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AllOrdersActivity.class)));
@@ -240,6 +242,32 @@ public class MainActivity extends BaseActivity
         for (int image: images) {
             ImageView imageView = new ImageView(this);
             imageView.setBackgroundResource(image);
+
+            mFlipper.addView(imageView);
+            mFlipper.setFlipInterval(4000);
+            mFlipper.setAutoStart(true);
+
+            mFlipper.setOutAnimation(this,android.R.anim.slide_out_right);
+            mFlipper.setInAnimation(this,android.R.anim.slide_in_left);
+        }
+    }
+
+    void setCoronaFlipper() {
+
+        int[] images = {
+                R.drawable.ban1,
+                R.drawable.ban2,
+                R.drawable.ban3
+        };
+
+        ViewFlipper mFlipper = findViewById(R.id.imageView10);
+
+        for (int image: images) {
+            ImageView imageView = new ImageView(this);
+            imageView.setBackgroundResource(image);
+            imageView.setClickable(true);
+
+            imageView.setOnClickListener(v-> startActivity(new Intent(MainActivity.this, CoronaVirusActivity.class)));
 
             mFlipper.addView(imageView);
             mFlipper.setFlipInterval(4000);
