@@ -1,121 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.hcare.homeopathy.hcare">
+    package="com.hcare.homeopathy.hcare" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-    <uses-permission android:name="android.permission.INSTALL_SHORTCUT"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".Start.SplashScreenApp"
         android:allowBackup="true"
+        android:exported="false"
         android:icon="@mipmap/launcher"
         android:label="@string/app_name"
-        android:screenOrientation="sensorPortrait"
+        android:protectionLevel="signature"
         android:roundIcon="@mipmap/launcher_round"
+        android:screenOrientation="sensorPortrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:exported="false"
-        android:protectionLevel="signature"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning" >
+        <activity android:name=".Coronavirus.CoronaVirusActivity" >
+        </activity>
         <activity
             android:name=".Start.SplashScreenActivity"
-            android:theme="@style/splashScreen">
+            android:theme="@style/splashScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-        <activity android:name=".Start.LoginActivity"
-            android:theme="@style/splashScreen"/>
-
-
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".Start.LoginActivity"
+            android:theme="@style/splashScreen" />
+        <activity
+            android:name=".MainActivity"
             android:label="HCare"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:theme="@style/splashScreen"/>
-
-
+            android:theme="@style/splashScreen"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".Disease.DiseaseActivity"
             android:theme="@style/splashScreen" />
-
         <activity
             android:name=".Consultations.Doctor.MainDoctorActivity"
             android:label="Consultation"
             android:theme="@style/splashScreen" />
-
-
-        <activity android:name=".Consultations.ConsultationsActivity"
-            android:label="Consultations">
+        <activity
+            android:name=".Consultations.ConsultationsActivity"
+            android:label="Consultations" >
             <intent-filter>
                 <action android:name="com.hcare.homeopathy.hcare_TARGET_NOTIFICATION" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
-        <activity android:name=".Checkout.CheckoutActivity"
-            android:label="Checkout">
+        <activity
+            android:name=".Checkout.CheckoutActivity"
+            android:label="Checkout" >
         </activity>
-
-        <activity android:name=".Orders.PrescriptionActivity"
-            android:label="Prescription">
+        <activity
+            android:name=".Orders.PrescriptionActivity"
+            android:label="Prescription" >
         </activity>
-
-        <activity android:name=".Orders.OrderActivity"
-            android:label="Order">
+        <activity
+            android:name=".Orders.OrderActivity"
+            android:label="Order" >
         </activity>
-
-        <activity android:name=".NavigationItems.Faq.FaqActivity"
-            android:theme="@style/splashScreen"
-            android:label="FAQ" />
-
-
+        <activity
+            android:name=".NavigationItems.Faq.FaqActivity"
+            android:label="FAQ"
+            android:theme="@style/splashScreen" />
         <activity
             android:name=".NavigationItems.CustomerCareActivity"
-            android:label="Customer care">
+            android:label="Customer care" >
         </activity>
-
-
         <activity
             android:name=".Orders.AllOrdersActivity"
-            android:label="Your Orders"/>
-
-
+            android:label="Your Orders" />
         <activity
             android:name=".NavigationItems.ProfileActivity"
             android:label="Profile"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
-
-        <activity android:name=".OrderTreatment.CartActivity"
-            android:label="My Cart"/>
-
-
-        <activity android:name=".OrderTreatment.OrderNowActivity"
+        <activity
+            android:name=".OrderTreatment.CartActivity"
+            android:label="My Cart" />
+        <activity
+            android:name=".OrderTreatment.OrderNowActivity"
             android:label="Order now"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
-
-
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity" />
 
         <service
             android:name=".Consultations.FirebaseMessagingService"
             android:enabled="true"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -124,32 +111,23 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/notification" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorSecondary" />
-
-
-
         <meta-data
-            android:exported="false"
             android:name="com.razorpay.ApiKey"
+            android:exported="false"
             android:value="rzp_live_SzHvbklFoHMBtv" />
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
             tools:replace="android:value" />
-
         <meta-data
             android:name="com.facebook.sdk.CodelessDebugLogEnabled"
             android:value="true" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-
     </application>
 
 </manifest>

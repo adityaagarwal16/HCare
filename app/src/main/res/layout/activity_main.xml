@@ -272,6 +272,25 @@
                         app:tint="@color/colorSecondary"
                         android:contentDescription="@string/todo" />
 
+                    <FrameLayout
+                        android:id="@+id/searchFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:padding="13dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ViewFlipper
+                        android:id="@+id/imageView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="145dp" />
+
                 </RelativeLayout>
 
                 <LinearLayout
@@ -337,12 +356,6 @@
             </LinearLayout>
 
         </ScrollView>
-
-        <FrameLayout
-            android:id="@+id/searchFragment"
-            android:layout_centerInParent="true"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 
