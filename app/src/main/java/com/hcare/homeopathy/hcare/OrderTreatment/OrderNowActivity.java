@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
+import static com.hcare.homeopathy.hcare.FirebaseConstants.newOrder;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.ADDRESS;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.CITY;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.PIN_CODE;
@@ -47,6 +48,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     private String name, email = "example", phoneNumber = "91",
             pinCode, address, city, state;
     int totalPrice;
+    boolean paymentSuccessful = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,9 +211,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
                         if (!address.isEmpty()) {
                             if (!city.isEmpty()) {
                                 if (!state.isEmpty())
-
                                     startPayment();
-
                                 else
                                     Toast.makeText(this, "Please enter your State",
                                             Toast.LENGTH_LONG).show();
@@ -239,6 +239,13 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         } catch (Exception e){
             Toast.makeText(this, "Error, please try again", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(paymentSuccessful)
+            showOrderSuccessfulFragment();
     }
 
     private void showOrderSuccessfulFragment() {
@@ -285,6 +292,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
+            paymentSuccessful = true;
             orderSuccessful();
         } catch (Exception e) {
             Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
@@ -297,47 +305,61 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         try {
             Toast.makeText(OrderNowActivity.this,
                     "Payment failed", Toast.LENGTH_SHORT).show();
-        } catch (Exception ignored) { }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void orderSuccessful() {
-        String OrderId ="Hcr" + getRandomNumberString();
-        String time = DateFormat.getDateTimeInstance().format(new Date());
+        try {
+            String OrderId = "Hcr" + getRandomNumberString();
+            String time = DateFormat.getDateTimeInstance().format(new Date());
 
-        HashMap<String, String> userMap = new HashMap<>();
-        userMap.put("FullName", name);
-        userMap.put("PhoneNumber", phoneNumber);
-        userMap.put("PinCode", pinCode);
-        userMap.put("Address", address);
-        userMap.put("PatientId", userID);
-        userMap.put("City", city);
-        userMap.put("State", state);
-        userMap.put("Doctor", doctorID);
-        userMap.put("emailId", email);
-        userMap.put("Amount", String.valueOf(totalPrice));
-        userMap.put("OrderStatus", "Recieved");
-        userMap.put("orderId", OrderId);
-        userMap.put("Ordertime", time);
+            HashMap<String, String> userMap = new HashMap<>();
+            try {
+                userMap.put("FullName", name);
+                userMap.put("PhoneNumber", phoneNumber);
+                userMap.put("PinCode", pinCode);
+                userMap.put("Address", address);
+                userMap.put("PatientId", userID);
+                userMap.put("City", city);
+                userMap.put("State", state);
+                userMap.put("Doctor", doctorID);
+                userMap.put("emailId", email);
+                userMap.put("Amount", String.valueOf(totalPrice));
+                userMap.put("OrderStatus", "Recieved");
+                userMap.put("orderId", OrderId);
+                userMap.put("Ordertime", time);
+            } catch (Exception ignored) {}
 
-        reference.child("neworder").child(OrderId).setValue(userMap);
-        reference.child("Orders").child(userID)
-                .child(OrderId).setValue(userMap).addOnCompleteListener(task -> {
-            reference.child("Doctors").child(doctorID)
-                    .child("count").push().setValue(userID);
 
-           // userRef.child("consultCount").removeValue();
-            reference.child("messages").child(userID).child(doctorID)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                        child.getRef().child("ordering").setValue("ordered");
-                        reference.child("messages").child(doctorID).child(userID)
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
+            reference.child(newOrder).child(OrderId).setValue(userMap);
+            reference.child("Orders").child(userID).child(OrderId)
+                    .setValue(userMap).addOnCompleteListener(task -> {
+                reference.child("Doctors").child(doctorID)
+                        .child("count").push().setValue(userID);
+
+                // userRef.child("consultCount").removeValue();
+                reference.child("messages").child(userID).child(doctorID)
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                                     child.getRef().child("ordering").setValue("ordered");
+                                    reference.child("messages").child(doctorID).child(userID)
+                                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                                        child.getRef().child("ordering").setValue("ordered");
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
                                 }
                             }
 
@@ -346,17 +368,11 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
                             }
                         });
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
             });
-        });
 
-        showOrderSuccessfulFragment();
+        } catch (Exception  e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressLint("DefaultLocale")
@@ -369,6 +385,5 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         // this will convert any number sequence into 6 character.
         return String.format("%07d", number);
     }
-
 
 }

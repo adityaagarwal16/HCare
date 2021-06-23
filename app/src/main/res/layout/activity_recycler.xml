@@ -38,7 +38,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
-        android:paddingTop="10dp"
+        android:paddingTop="15dp"
         android:paddingBottom="20dp"
         android:layout_centerInParent="true"
         android:clipToPadding="false"

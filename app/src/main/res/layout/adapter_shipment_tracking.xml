@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:paddingStart="7dp"
+    android:paddingEnd="7dp">
+
+    <TextView
+        android:id="@+id/date"
+        android:gravity="end"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:text="Time"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="22dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/date"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/newMessage"
+        android:layout_width="9dp"
+        android:layout_height="9dp"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/todo"
+        android:src="@color/colorSecondary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/activity"
+        app:layout_constraintStart_toEndOf="@+id/date"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/activity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="8dp"
+        android:layout_marginStart="22dp"
+        android:text="@string/disease"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/line"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@string/todo"
+        android:src="@drawable/vector_location"
+        app:layout_constraintBottom_toBottomOf="@+id/location"
+        app:layout_constraintStart_toStartOf="@+id/activity"
+        app:layout_constraintTop_toTopOf="@id/location"
+        app:tint="@color/colorSecondary" />
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="8dp"
+        android:text="@string/disease"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@id/activity" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

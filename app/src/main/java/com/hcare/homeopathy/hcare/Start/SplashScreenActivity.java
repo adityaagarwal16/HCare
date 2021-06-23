@@ -4,8 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +32,9 @@ import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.MainActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
 import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
+import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
+import com.hcare.homeopathy.hcare.Orders.AllOrdersObject;
+import com.hcare.homeopathy.hcare.Orders.OrderActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
@@ -46,7 +52,7 @@ public class SplashScreenActivity extends BaseActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.hasChild("Number")) {
                             if (Objects.requireNonNull(dataSnapshot.child
-                                    ("Number").getValue()).toString().equals("update3")) {
+                                    ("Number").getValue()).toString().equals("update6")) {
                                 new Thread() {
                                     @Override
                                     public void run() {
@@ -56,7 +62,7 @@ public class SplashScreenActivity extends BaseActivity {
                                             intent = new Intent(getApplicationContext(),
                                                     LoginActivity.class);
                                         else {
-                                            /*intent = new Intent(getApplicationContext(),
+                                            /* intent = new Intent(getApplicationContext(),
                                                     DiseaseActivity.class);
                                             intent.putExtra("request_type1", Diseases.thyroid);
 
@@ -84,11 +90,14 @@ public class SplashScreenActivity extends BaseActivity {
                                                     OrderNowActivity.class);
                                             intent.putExtra("price", 200);
 
-
+                                            intent = new Intent(
+                                                    getApplicationContext(),
+                                                    AllOrdersActivity.class);
                                             intent = new Intent(getApplicationContext(),
-                                                    OrderNowActivity.class);
-                                            intent.putExtra("user_id",
-                                                    "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+                                                    OrderActivity.class);
+                                            AllOrdersObject object =  new AllOrdersObject();
+                                            object.setOrderId("Hcr409803");
+                                            intent.putExtra("order", object);
                                             intent.putExtra("discount", 360);
                                             intent.putExtra("price", 600);*/
                                             intent = new Intent(
@@ -99,9 +108,14 @@ public class SplashScreenActivity extends BaseActivity {
                                         finish();
                                     }
                                 }.start();
+
                             } else {
                                 showPopup();
                             }
+                        }
+                        else {
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
                         }
                     }
 
@@ -143,8 +157,4 @@ public class SplashScreenActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
 }

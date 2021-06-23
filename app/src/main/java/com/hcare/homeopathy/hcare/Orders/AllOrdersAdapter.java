@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.R;
+import com.joestelmach.natty.Parser;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
@@ -46,42 +48,44 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
     protected void onBindViewHolder(@NonNull DoctorsViewHolder viewHolder,
                                     int position, @NonNull AllOrdersObject model) {
         try { viewHolder.orderID(model.getOrderId()); } catch(Exception ignored) {}
-        try { viewHolder.orderStatus(model.getOrderStatus()); } catch(Exception ignored) {}
+
         try {
-            Date date = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss a", Locale.ENGLISH).
-                    parse(model.getOrdertime());
-            assert date != null;
-            viewHolder.date(new SimpleDateFormat("MMM dd, yyyy\n HH:mm",
+            if(model.getOrdertime() == null)
+                model.setOrdertime(model.getTime());
+            Parser parser = new Parser();
+            Date date = parser.parse(model.getOrdertime()).get(0).getDates().get(0);
+            viewHolder.date(new SimpleDateFormat("MMM dd, yyyy\n hh:mm a",
                     Locale.ENGLISH).format(date));
         } catch(Exception e) { e.printStackTrace(); }
+
         if(model.getAmount() != null)
             viewHolder.totalAmount(MessageFormat.format(
                     "{0} {1}",
-                    "Total Amount : ₹", model.getAmount()));
+                    "₹", model.getAmount()));
 
-        viewHolder.openPrescription(context, model.getDoctor());
+        viewHolder.openOrder(context, model);
 
         try {
-            FirebaseDatabase.getInstance().getReference()
-                    .child("Doctors").child(model.getDoctor())
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            try {
-                                String name = MessageFormat.format("{0} {1}",
-                                        "Dr.",
-                                        Objects.requireNonNull(
-                                                dataSnapshot.child("name")
-                                                        .getValue()).toString());
-                                viewHolder.doctorName(name);
-                            } catch (Exception ignored) {
+            if(model.getDoctor() != null)
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Doctors").child(model.getDoctor())
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                try {
+                                    String name = MessageFormat.format("{0} {1}",
+                                            "Dr.",
+                                            Objects.requireNonNull(
+                                                    dataSnapshot.child("name")
+                                                            .getValue()).toString());
+                                    viewHolder.doctorName(name);
+                                } catch (Exception ignored) { }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                        }
-                    });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
         } catch (Exception e) {e.printStackTrace();}
     }
 
@@ -93,21 +97,18 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
             mView = itemView;
         }
 
-        public void openPrescription(Context context, String doctorID) {
-            mView.findViewById(R.id.viewPrescription)
-                    .setOnClickListener(v -> {
-                        Intent intent = new Intent(context, PrescriptionActivity.class);
-                        intent.putExtra("user_id", doctorID);
-                        context.startActivity(intent);
-                    });
+        public void openOrder(Context context, AllOrdersObject object) {
+            mView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, OrderActivity.class);
+                intent.putExtra("order", object);
+                intent.putExtra("doctorName",
+                        ((TextView) mView.findViewById(R.id.doctorName)).getText().toString());
+                context.startActivity(intent);
+            });
         }
 
         public void totalAmount(String name) {
             ((TextView) mView.findViewById(R.id.totalAmount)).setText(name);
-        }
-
-        public void orderStatus(String name) {
-            ((TextView) mView.findViewById(R.id.orderStatus)).setText(name);
         }
 
         public void date(String name) {
@@ -115,11 +116,7 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
         }
 
         public void orderID(String name) {
-            ((TextView) mView.findViewById(R.id.orderID)).setText(
-                    MessageFormat.format(
-                            "{0} {1}",
-                            "Order ID :", name)
-            );
+            ((TextView) mView.findViewById(R.id.orderID)).setText(name);
         }
 
         public void doctorName(String doctorName) {

@@ -31,9 +31,8 @@ public class PrescriptionActivity extends BaseActivity {
                 .setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         try {
-            doctorID = getIntent().getStringExtra("user_id");
+            doctorID = getIntent().getStringExtra("doctorID");
         } catch(Exception ignored) {}
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();

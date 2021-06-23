@@ -245,14 +245,14 @@
                 app:cardBackgroundColor="@color/colorSecondary">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:padding="15dp"
+                    android:textSize="18sp"
+                    android:gravity="center"
                     android:text="Proceed"
                     android:textColor="?android:textColorPrimaryInverse"
-                    android:textSize="18sp"
+                    android:layout_width="match_parent"
                     android:textStyle="bold"
+                    android:layout_height="wrap_content"
                     tools:ignore="HardcodedText" />
 
             </androidx.cardview.widget.CardView>
