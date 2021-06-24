@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary">
 
     <RelativeLayout
@@ -34,15 +34,32 @@
             android:textSize="24sp"
             tools:ignore="HardcodedText" />
 
+
+
     </RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
-        android:paddingTop="15dp"
-        android:paddingBottom="20dp"
-        android:layout_centerInParent="true"
-        android:clipToPadding="false"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:paddingTop="15dp"
+            android:paddingBottom="20dp"
+            android:layout_centerInParent="true"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
+            android:id="@+id/loader"
+            android:layout_width="391dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:visibility="visible"
+            app:trailingcircular_animDelay="0"
+            app:trailingcircular_animDuration="1100"
+            app:trailingcircular_bigCircleRadius="50dp"
+            app:trailingcircular_dotsColor="@color/bottomgreen"
+            app:trailingcircular_dotsRadius="8dp"
+            app:trailingcircular_noOfTrailingDots="6" />
 
 </RelativeLayout>
+

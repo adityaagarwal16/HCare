@@ -383,7 +383,8 @@
                     app:loader_secondShadowColor="#59CC8B"
                     app:loader_selectedColor="#2CAF67"
                     app:loader_selectedRadius="10dp"
-                    app:loader_showRunningShadow="true" />
+                    app:loader_showRunningShadow="true"
+                    android:visibility="visible"/>
 
                 <TextView
                     android:layout_marginTop="10dp"

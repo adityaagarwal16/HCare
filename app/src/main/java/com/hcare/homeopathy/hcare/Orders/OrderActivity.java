@@ -158,6 +158,7 @@ public class OrderActivity extends BaseActivity {
                             Log.d("TAG", "onResponseCode: " + response.code());
                             Log.d("TAG", "onResponseErrorBody: " + response.errorBody());
                         }
+                        findViewById(R.id.loader).setVisibility(View.GONE);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

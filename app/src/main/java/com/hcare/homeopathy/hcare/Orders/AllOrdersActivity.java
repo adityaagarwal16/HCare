@@ -51,6 +51,7 @@ public class AllOrdersActivity extends BaseActivity {
                             findViewById(R.id.nothingHereLayout).setVisibility(View.VISIBLE);
                         }
                     } catch (Exception ignored) { }
+                    findViewById(R.id.loader).setVisibility(View.GONE);
                 }
 
                 @Override
