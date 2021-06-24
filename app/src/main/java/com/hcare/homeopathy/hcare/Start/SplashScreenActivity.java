@@ -31,6 +31,7 @@ import java.util.Objects;
 public class SplashScreenActivity extends BaseActivity {
 
     int versionCode = 0;
+    boolean signInOpen = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +116,7 @@ public class SplashScreenActivity extends BaseActivity {
                                                     MainActivity.class);
                                         }
                                         startActivity(intent);
+                                        signInOpen = true;
                                         finish();
                                     }
                                 }.start();
@@ -132,9 +134,11 @@ public class SplashScreenActivity extends BaseActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        startActivity(new Intent(getApplicationContext(),
-                                LoginActivity.class));
-                        finish();
+                        if(!signInOpen) {
+                            startActivity(new Intent(getApplicationContext(),
+                                    LoginActivity.class));
+                            finish();
+                        }
                     }
 
                 });
