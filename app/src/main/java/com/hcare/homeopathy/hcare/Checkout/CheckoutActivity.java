@@ -26,6 +26,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import static com.hcare.homeopathy.hcare.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.FirebaseConstants.activeConsultations;
 
 public class CheckoutActivity extends BaseActivity implements PaymentResultListener {
 
@@ -45,8 +46,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
 
-        FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction();
 
         FirebaseDatabase.getInstance().getReference()
                 .child("Users").child(userID)
@@ -69,17 +68,17 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         });
 
         FirebaseDatabase.getInstance()
-                .getReference().child("public_Consulting")
+                .getReference().child(activeConsultations)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
                             if(paymentSuccessful)
-                                transaction.replace(R.id.frameLayout,
-                                        new CheckoutSuccessfulFragment())
-                                        .commit();
+                                showCheckoutSuccessfulFragment();
                             else {
                                 //TODO CHECK
+                                FragmentTransaction transaction = getSupportFragmentManager()
+                                        .beginTransaction();
                                 if (dataSnapshot.hasChild(userID))
                                     transaction.replace(R.id.frameLayout,
                                             new CheckoutDisableFragment())
@@ -107,6 +106,20 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                 });
     }
 
+    private void showCheckoutSuccessfulFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frameLayout, new CheckoutSuccessfulFragment())
+                .commit();
+    }
+
+    @Override
+    protected void onResume() {
+        if(paymentSuccessful)
+            showCheckoutSuccessfulFragment();
+        super.onResume();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -119,8 +132,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
 
 
     private void sendRequest() {
-        paymentSuccessful = true;
-
         String date = DateFormat.getDateTimeInstance().format(new Date());
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat =
                 new SimpleDateFormat("HH");
@@ -131,31 +142,38 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                 .getCurrentUser()).getUid();
         String consultationID = generateConsultationID();
 
-        String patientIssue = getIntent().getStringExtra("details1");
+        String patientIssue = "";
+        try {
+            patientIssue = getIntent().getStringExtra("details1");
+        } catch (Exception ignored) {}
+
         DatabaseReference userRef = FirebaseDatabase.getInstance()
                 .getReference().child("Users").child(userID);
 
         HashMap<String, String> notifyData = new HashMap<>();
-        notifyData.put("consultationID", consultationID);
-        notifyData.put("details1", patientIssue);
-        notifyData.put("request_type1", patientName);
-        notifyData.put("date", date);
-        notifyData.put("name", patientName);
-        notifyData.put("age", age);
-        notifyData.put("sex", sex);
-        notifyData.put("Time",time);
+        try {
+            notifyData.put("consultationID", consultationID);
+            notifyData.put("details1", patientIssue);
+            notifyData.put("request_type1", patientName);
+            notifyData.put("date", date);
+            notifyData.put("name", patientName);
+            notifyData.put("age", age);
+            notifyData.put("sex", sex);
+            notifyData.put("Time", time);
+        } catch (Exception ignored) { }
 
         userRef.child("consultCount").push()
                 .child(Objects.requireNonNull(patientName))
                 .setValue(patientName);
 
         //temporary store
-        FirebaseDatabase.getInstance().getReference().child("public_Consulting")
+        FirebaseDatabase.getInstance().getReference().child(activeConsultations)
                 .child(userID).setValue(notifyData);
 
         //permanent store
         FirebaseDatabase.getInstance().getReference().child("Consultations")
                 .child(userID).child(consultationID).setValue(notifyData);
+
     }
 
     @SuppressLint("DefaultLocale")
@@ -173,6 +191,7 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
+            paymentSuccessful = true;
             sendRequest();
         } catch (Exception ignored) { }
     }
@@ -183,6 +202,8 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         try {
             Toast.makeText(this, "Payment failed",
                     Toast.LENGTH_LONG).show();
-        } catch (Exception  ignored) {}
+        } catch (Exception  e) {
+            e.printStackTrace();
+        }
     }
 }

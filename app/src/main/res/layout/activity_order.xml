@@ -2,92 +2,405 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="10dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:paddingTop="5dp"
-    android:paddingBottom="10dp"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <TextView
-        android:id="@+id/doctorName"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="@string/doctor"
-        android:layout_marginTop="5dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderID" />
-
-    <TextView
-        android:id="@+id/orderID"
+        android:id="@+id/header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="ID not found"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/date"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="Date not found"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="@+id/doctorName"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/totalAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Amount Unavailable"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText"
-        tools:layout_editor_absoluteY="108dp" />
-
-    <TextView
-        android:id="@+id/orderStatus"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:maxLines="3"
-        android:padding="10dp"
-        android:text="Status Unavailable"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:gravity="start"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:paddingBottom="4dp"
+        android:text="Track Order"
         android:textColor="@color/colorSecondary"
-        android:textSize="16sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/totalAmount"
-        tools:ignore="HardcodedText"
-        tools:layout_editor_absoluteY="108dp" />
+        app:layout_constraintStart_toEndOf="@+id/back"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/line1"
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:padding="2dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/todo"
+        android:onClick="Back"
+        android:src="@drawable/vector_back"
+        app:layout_constraintBottom_toBottomOf="@+id/header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/colorPrimaryInverse" />
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorSecondary"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/orderStatus" />
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@+id/header">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:paddingStart="27dp"
+            android:paddingEnd="27dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_marginStart="7dp"
+                android:text="Order date"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/orderID"
+                android:layout_below="@id/date"
+                android:textStyle="bold"
+                android:textIsSelectable="true"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="3dp"
+                android:text="Order ID"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/totalAmount"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/totalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/orderID"
+                android:layout_alignParentEnd="true"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:background="@color/colorSecondary"
+                android:gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="Rs. 0"
+                android:textColor="?android:textColorPrimaryInverse"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/DeliveryImage"
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/orderID"
+                android:src="@drawable/vector_home"
+                android:contentDescription="@string/todo"
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                app:tint="@color/colorSecondary" />
+
+            <TextView
+                android:id="@+id/DeliveryDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/orderID"
+                android:layout_marginStart="10dp"
+                android:paddingTop="3dp"
+                android:layout_alignTop="@id/DeliveryImage"
+                android:layout_alignBottom="@id/DeliveryImage"
+                android:gravity="center_vertical"
+                android:layout_toEndOf="@id/DeliveryImage"
+                android:text="Delivery Details"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/customerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginStart="7dp"
+                android:textColor="?android:textColorPrimary"
+                android:layout_below="@id/DeliveryImage"
+                android:gravity="center_vertical"
+                android:text="Customer Name"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/phoneEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:textIsSelectable="true"
+                android:layout_below="@id/customerName"
+                android:gravity="center_vertical"
+                android:textSize="15sp"
+                android:text="phone || email"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="7dp"
+                android:layout_below="@id/phoneEmail"
+                android:gravity="center_vertical"
+                android:textSize="16sp"
+                android:text="Address"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/state"
+                android:layout_width="wrap_content"
+                android:textIsSelectable="true"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_below="@id/address"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:text="State"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/pinCode"
+                android:layout_width="wrap_content"
+                android:textIsSelectable="true"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_below="@id/state"
+                android:textSize="16sp"
+                android:gravity="center_vertical"
+                android:text="Pin code"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_below="@id/pinCode"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:id="@+id/doctor"
+                android:foreground="?selectableItemBackground"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/doctorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:textSize="17sp"
+                    android:textColor="?android:textColorPrimary"
+                    android:gravity="center_vertical"
+                    android:text="Doctor Not Found"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/viewPrescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:textSize="16sp"
+                    android:layout_below="@id/doctorName"
+                    android:gravity="center_vertical"
+                    android:text="View Prescription"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_alignParentEnd="true"
+                    android:rotation="-90"
+                    android:src="@drawable/vector_down_arrow"
+                    android:contentDescription="@string/todo"
+                    android:layout_centerVertical="true"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    app:tint="@color/colorSecondary" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/trackingLayout"
+                android:layout_below="@id/doctor"
+                android:layout_width="match_parent"
+                android:paddingBottom="10dp"
+                android:minHeight="300dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/TrackingImage"
+                    android:src="@drawable/vector_shipping"
+                    android:contentDescription="@string/todo"
+                    android:layout_width="35dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="40dp"
+                    app:tint="@color/colorSecondary" />
+
+                <TextView
+                    android:id="@+id/TrackingDetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:paddingTop="2dp"
+                    android:layout_alignTop="@id/TrackingImage"
+                    android:layout_alignBottom="@id/TrackingImage"
+                    android:gravity="center_vertical"
+                    android:layout_toEndOf="@id/TrackingImage"
+                    android:text="Tracking Details"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/orderStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/TrackingImage"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="7dp"
+                    android:gravity="center_vertical"
+                    android:text="Order status"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/awbCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="true"
+                    android:layout_below="@id/orderStatus"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="7dp"
+                    android:gravity="center_vertical"
+                    android:text="AWB code"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="25dp"
+                    android:id="@+id/shipmentTrackRecycler"
+                    android:layout_below="@id/awbCode"
+                    android:layout_centerHorizontal="true"
+                    android:paddingBottom="20dp"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/trackLinkButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/shipmentTrackRecycler"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/background_ripple_chat_user"
+                    android:gravity="center"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:text="Track Link"
+                    android:textColor="?android:textColorPrimaryInverse"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText" />
+
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:visibility="gone"
+                android:id="@+id/trackingUnavailable"
+                android:background="@color/colorPrimary"
+                android:layout_alignTop="@id/trackingLayout"
+                android:layout_alignBottom="@id/trackingLayout"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:src="@drawable/vector_order_unavailable"
+                    android:layout_height="0dp"
+                    android:padding="30dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/todo" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="Sorry, Tracking is unavailable for this order at the moment. Please check again in some time"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="HardcodedText" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loadingTracking"
+                android:visibility="visible"
+                android:background="@color/colorPrimary"
+                android:layout_alignTop="@id/trackingLayout"
+                android:layout_alignBottom="@id/trackingLayout"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.agrawalsuneet.dotsloader.loaders.LinearDotsLoader
+                    android:id="@+id/loader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:loader_animDur="250"
+                    app:loader_circleRadius="7dp"
+                    app:loader_defaultColor="@color/colorSecondary"
+                    app:loader_dotsDist="5dp"
+                    app:loader_expandOnSelect="false"
+                    app:loader_firstShadowColor="#40AC6F"
+                    app:loader_isSingleDir="false"
+                    app:loader_noOfDots="5"
+                    app:loader_secondShadowColor="#59CC8B"
+                    app:loader_selectedColor="#2CAF67"
+                    app:loader_selectedRadius="10dp"
+                    app:loader_showRunningShadow="true" />
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tracking your Package"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/loader" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

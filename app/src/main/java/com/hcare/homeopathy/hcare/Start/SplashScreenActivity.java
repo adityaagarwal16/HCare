@@ -1,11 +1,13 @@
 package com.hcare.homeopathy.hcare.Start;
 
 import android.annotation.SuppressLint;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.AbsListView;
 import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.pm.PackageInfoCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -20,33 +23,43 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
-import com.hcare.homeopathy.hcare.Constants;
-import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
-import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
-import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
-import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.MainActivity;
-import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
-import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 
 public class SplashScreenActivity extends BaseActivity {
 
+    int versionCode = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
+
+        Context context = getApplicationContext();
+        PackageManager manager = context.getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            versionCode = (int) PackageInfoCompat.getLongVersionCode(info);
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Log.i("version", String.valueOf(versionCode));
 
         FirebaseDatabase.getInstance().getReference().child("Version")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.hasChild("Number")) {
-                            if (Objects.requireNonNull(dataSnapshot.child
-                                    ("Number").getValue()).toString().equals("update3")) {
+                            int firebaseVersion = 0;
+                            try {
+                                firebaseVersion = (int) Objects.requireNonNull(dataSnapshot.child
+                                        ("Number").getValue());
+                            } catch(Exception ignored) { }
+                            if (versionCode >= firebaseVersion) {
                                 new Thread() {
                                     @Override
                                     public void run() {
@@ -56,7 +69,7 @@ public class SplashScreenActivity extends BaseActivity {
                                             intent = new Intent(getApplicationContext(),
                                                     LoginActivity.class);
                                         else {
-                                            /*intent = new Intent(getApplicationContext(),
+                                            /* intent = new Intent(getApplicationContext(),
                                                     DiseaseActivity.class);
                                             intent.putExtra("request_type1", Diseases.thyroid);
 
@@ -84,14 +97,20 @@ public class SplashScreenActivity extends BaseActivity {
                                                     OrderNowActivity.class);
                                             intent.putExtra("price", 200);
 
-
-                                            intent = new Intent(getApplicationContext(),
-                                                    OrderNowActivity.class);
-                                            intent.putExtra("user_id",
-                                                    "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
-                                            intent.putExtra("discount", 360);
-                                            intent.putExtra("price", 600);*/
                                             intent = new Intent(
+                                                    getApplicationContext(),
+                                                    AllOrdersActivity.class);
+                                            intent = new Intent(getApplicationContext(),
+                                                    OrderActivity.class);
+                                            AllOrdersObject object =  new AllOrdersObject();
+                                            object.setOrderId("Hcr409803");
+                                            intent.putExtra("order", object);
+                                            intent.putExtra("discount", 360);
+                                            intent.putExtra("price", 600);
+                                            intent = new Intent(
+                                                    getApplicationContext(),
+                                                    CoronaVirusActivity.class);*/
+                                           intent = new Intent(
                                                     getApplicationContext(),
                                                     MainActivity.class);
                                         }
@@ -99,9 +118,15 @@ public class SplashScreenActivity extends BaseActivity {
                                         finish();
                                     }
                                 }.start();
-                            } else {
+
+                            }
+                            else {
                                 showPopup();
                             }
+                        }
+                        else {
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
                         }
                     }
 
@@ -143,8 +168,4 @@ public class SplashScreenActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-
-    }
 }

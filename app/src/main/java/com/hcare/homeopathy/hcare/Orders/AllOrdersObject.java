@@ -5,7 +5,16 @@ import java.io.Serializable;
 public class AllOrdersObject implements Serializable {
 
     private String OrderStatus, orderId, FullName, PatientId, Ordertime, Doctor,
-            Amount, Address, City, State, emailId, PinCode, PhoneNumber ;
+            Amount, Address, City, State, emailId, PinCode, PhoneNumber, time ;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     private long shipRocketOrderID, shipmentID;
 
     public String getFullName() {

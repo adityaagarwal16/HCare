@@ -206,6 +206,24 @@
                 </LinearLayout>
 
                 <RelativeLayout
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorSecondary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ViewFlipper
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:foreground="?selectableItemBackground"
+                        android:id="@+id/imageView10"
+                        android:layout_width="match_parent"
+                        android:layout_height="175dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:paddingTop="20dp"
                     android:paddingBottom="15dp"
                     android:paddingStart="18dp"
@@ -272,25 +290,6 @@
                         app:tint="@color/colorSecondary"
                         android:contentDescription="@string/todo" />
 
-                    <FrameLayout
-                        android:id="@+id/searchFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:padding="13dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ViewFlipper
-                        android:id="@+id/imageView10"
-                        android:layout_width="match_parent"
-                        android:layout_height="145dp" />
-
                 </RelativeLayout>
 
                 <LinearLayout
@@ -340,13 +339,16 @@
                 </LinearLayout>
 
                 <RelativeLayout
-                    android:padding="13dp"
                     android:layout_marginTop="5dp"
                     android:background="@color/colorPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ViewFlipper
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
                         android:id="@+id/imageView9"
                         android:layout_width="match_parent"
                         android:layout_height="145dp" />
@@ -356,6 +358,12 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/searchFragment"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </RelativeLayout>
 

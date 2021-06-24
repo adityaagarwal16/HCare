@@ -250,7 +250,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                     try {
                         @SuppressLint("SimpleDateFormat") DateFormat df =
                                 new SimpleDateFormat("dd-MM-yyyy");
-                        Date date1 = new java.util.Date();
+                        Date date1 = new Date();
                         Date date2 = df.parse(consultdate);
                         diff = (int) (Objects.requireNonNull(date2).getTime() - date1.getTime());
                     } catch (ParseException e) {
@@ -592,7 +592,9 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         try {
             mProgressDialog.dismiss();
             sendRequest();
-            Toast.makeText(this, "Payment Successful! You can now consult your doctor again for follow-ups.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,
+                    "Payment Successful! You can now consult your doctor again for follow-ups.",
+                    Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
         }

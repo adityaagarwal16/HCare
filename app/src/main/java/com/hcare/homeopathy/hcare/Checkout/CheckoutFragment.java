@@ -158,8 +158,8 @@ public class CheckoutFragment extends Fragment {
 
         try {
             JSONObject options = new JSONObject();
-            options.put("name", "Hcare");
-            options.put("description", "discount applied");
+            options.put("name", "HCare");
+            options.put("description", "Discount applied");
             options.put("currency", "INR");
 
             int RAZORPAY_MULTIPLIER = 100;

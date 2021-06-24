@@ -57,6 +57,7 @@ public class AllOrdersActivity extends BaseActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) { }
             });
 
+
             RecyclerView mDoctorList = findViewById(R.id.recycler);
             mDoctorList.setHasFixedSize(true);
             mDoctorList.setLayoutManager(new LinearLayoutManager(this));

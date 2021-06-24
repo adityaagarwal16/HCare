@@ -29,7 +29,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
-import com.hcare.homeopathy.hcare.Coronavirus.CoronaVirusActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
@@ -49,6 +48,7 @@ import static com.hcare.homeopathy.hcare.Diseases.piles;
 import static com.hcare.homeopathy.hcare.Diseases.renalProblems;
 import static com.hcare.homeopathy.hcare.Diseases.skin;
 import static com.hcare.homeopathy.hcare.Diseases.thyroid;
+import static com.hcare.homeopathy.hcare.FirebaseConstants.activeConsultations;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -82,6 +82,7 @@ public class MainActivity extends BaseActivity
         eventListeners();
         setFlipper();
         setCoronaFlipper();
+
 
         findViewById(R.id.cart).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AllOrdersActivity.class)));
@@ -244,7 +245,7 @@ public class MainActivity extends BaseActivity
             imageView.setBackgroundResource(image);
 
             mFlipper.addView(imageView);
-            mFlipper.setFlipInterval(4000);
+            mFlipper.setFlipInterval(3000);
             mFlipper.setAutoStart(true);
 
             mFlipper.setOutAnimation(this,android.R.anim.slide_out_right);
@@ -255,33 +256,34 @@ public class MainActivity extends BaseActivity
     void setCoronaFlipper() {
 
         int[] images = {
-                R.drawable.ban1,
-                R.drawable.ban2,
-                R.drawable.ban3
+                R.drawable.corona_banner_1,
+                R.drawable.corona_banner_2,
+                R.drawable.corona_banner_3
         };
 
         ViewFlipper mFlipper = findViewById(R.id.imageView10);
+        mFlipper.setOnClickListener(v-> startActivity(new Intent(
+                MainActivity.this,
+                CoronaVirusActivity.class)));
 
         for (int image: images) {
             ImageView imageView = new ImageView(this);
             imageView.setBackgroundResource(image);
-            imageView.setClickable(true);
-
-            imageView.setOnClickListener(v-> startActivity(new Intent(MainActivity.this, CoronaVirusActivity.class)));
 
             mFlipper.addView(imageView);
-            mFlipper.setFlipInterval(4000);
+            mFlipper.setFlipInterval(3500);
             mFlipper.setAutoStart(true);
 
-            mFlipper.setOutAnimation(this,android.R.anim.slide_out_right);
-            mFlipper.setInAnimation(this,android.R.anim.slide_in_left);
+            mFlipper.setOutAnimation(this,android.R.anim.fade_out);
+            mFlipper.setInAnimation(this,android.R.anim.fade_in);
         }
     }
+
 
     void eventListeners() {
         final String[] consultationID = {""};
         DatabaseReference publicConsult = FirebaseDatabase.getInstance().
-                getReference().child("public_Consulting")
+                getReference().child(activeConsultations)
                 .child(userID);
 
         FirebaseDatabase.getInstance().
