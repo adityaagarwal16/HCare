@@ -99,13 +99,14 @@
                         android:layout_toEndOf="@id/image1"
                         android:layout_marginStart="10dp"
                         android:paddingBottom="3dp"
-                        android:text="Improve overall systemic balance and cellular health"
+                        android:text="Improves overall systemic balance and cellular health"
                         android:textColor="?android:textColorPrimary"
                         android:textSize="16sp"
                         tools:ignore="HardcodedText" />
 
                 </RelativeLayout>
                 <RelativeLayout
+                    android:layout_marginTop="3dp"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:layout_width="match_parent"
