@@ -119,10 +119,10 @@ public class OrderActivity extends BaseActivity {
     }
 
     void getTrackingDetails() {
-        if(order.getShipmentID() != 0) {
+        //if(order.getShipmentID() != 0) {
             RetrofitInterface retrofitInterface = RetrofitClient.getInstance()
                     .create(RetrofitInterface.class);
-            Call<ShipRocketData> call = retrofitInterface.getDetails(order.getShipmentID());
+            Call<ShipRocketData> call = retrofitInterface.getDetails(113647512);
             call.enqueue(new Callback<ShipRocketData>() {
                 @Override
                 public void onResponse(@NonNull Call<ShipRocketData> call,
@@ -169,7 +169,7 @@ public class OrderActivity extends BaseActivity {
                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
             });
-        } else trackingUnavailable();
+       // } else trackingUnavailable();
     }
 
     private void setTrackingRecycler(List<ShipmentTrackActivity> list) {

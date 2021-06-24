@@ -38,11 +38,13 @@
                     android:layout_marginStart="20dp"
                     android:gravity="start"
                     android:paddingBottom="4dp"
-                    android:text="Covid - 19 Immunity Booster Kit"
+                    android:text=
+                        "Covid - 19 Immunity Booster Kit"
                     android:textColor="@color/colorSecondary"
                     android:textSize="24sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf
+                        ="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/back"
                     app:layout_constraintTop_toTopOf="parent"

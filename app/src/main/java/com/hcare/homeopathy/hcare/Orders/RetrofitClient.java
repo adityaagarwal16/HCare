@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit;
-    private static final String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjk2NzQ3MSwiaXNzIjoiaHR0cHM6Ly9hcGl2Mi5zaGlwcm9ja2V0LmluL3YxL2V4dGVybmFsL2F1dGgvbG9naW4iLCJpYXQiOjE2MjI3MTY3NzMsImV4cCI6MTYyMzU4MDc3MywibmJmIjoxNjIyNzE2NzczLCJqdGkiOiI1TGhiZ0l2SjNuOXZNU3FLIn0.7zTQAI_JijbINg1DZJmLeaC2R-RdvirhgxJtezxHmBw";
+    private static final String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjU1OTQ0NiwiaXNzIjoiaHR0cHM6Ly9hcGl2Mi5zaGlwcm9ja2V0LmluL3YxL2V4dGVybmFsL2F1dGgvbG9naW4iLCJpYXQiOjE2MjQ1NTA0NTMsImV4cCI6MTYyNTQxNDQ1MywibmJmIjoxNjI0NTUwNDUzLCJqdGkiOiJmU0g0VW5XaWpSc09tTkZwIn0.x7W92tD_9twmPlFzvm9SSpgruDRVCj0r652NWZtJ7r8";
 
     private static final String Url = "https://apiv2.shiprocket.in/v1/external/";
 
