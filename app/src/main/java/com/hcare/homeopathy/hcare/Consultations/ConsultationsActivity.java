@@ -79,6 +79,7 @@ public class ConsultationsActivity extends BaseActivity {
             adapter.notifyDataSetChanged();
             mDoctorList.setAdapter(adapter);
         } catch (Exception ignored) { }
+        findViewById(R.id.loader).setVisibility(View.GONE);
     }
 
     @Override
