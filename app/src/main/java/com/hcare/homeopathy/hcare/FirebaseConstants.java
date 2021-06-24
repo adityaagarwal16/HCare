@@ -6,4 +6,6 @@ public class FirebaseConstants {
             activeConsultations = "ActiveConsultations",
             newOrder = "neworder";
 
+
+    public static final String coronaVirus = "coronaVirus";
 }

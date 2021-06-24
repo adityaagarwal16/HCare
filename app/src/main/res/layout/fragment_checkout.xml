@@ -46,15 +46,15 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@id/header"
                     android:id="@+id/diseaseImage"
-                    android:layout_width="145dp"
-                    android:layout_height="150dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     app:srcCompat="@drawable/disease_female"
                     android:contentDescription="@string/todo" />
 
                 <TextView
                     android:id="@+id/diseaseName"
                     android:textStyle="bold"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginStart="20dp"
                     android:gravity="center_vertical"
                     android:layout_alignTop="@id/diseaseImage"
@@ -80,6 +80,7 @@
                 <TextView
                     android:id="@+id/patientIssue"
                     android:layout_width="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_height="match_parent"
                     android:layout_marginStart="3dp"
                     android:layout_below="@id/diseaseNameLine"
@@ -87,6 +88,7 @@
                     android:layout_marginEnd="10dp"
                     android:background="@color/colorPrimary"
                     android:maxLines="5"
+                    android:ellipsize="end"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="@string/yourIssue"
@@ -95,7 +97,6 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:id="@+id/features"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -141,45 +142,6 @@
 
                 </RelativeLayout>
 
-            <!--    <RelativeLayout
-                    android:layout_marginTop="7dp"
-                    android:id="@+id/layout2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/image2"
-                        android:contentDescription="@string/todo"
-                        android:src="@drawable/vector_check_circle"
-                        android:layout_width="wrap_content"
-                        android:paddingStart="10dp"
-                        android:paddingTop="5dp"
-                        android:paddingEnd="15dp"
-                        android:layout_height="40dp"
-                        app:tint="@color/colorSecondary" />
-
-                    <TextView
-                        android:id="@+id/heading2"
-                        android:layout_toEndOf="@id/image2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="?android:textColorPrimary"
-                        android:text="Consultation through phone"
-                        tools:ignore="HardcodedText" />
-
-                    <TextView
-                        android:id="@+id/subHeading2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/heading2"
-                        android:layout_marginStart="1dp"
-                        android:layout_toEndOf="@id/image2"
-                        android:text="Distance doesn't matter. Our team is trained to understand your needs the best way possible."
-                        tools:ignore="HardcodedText" />
-
-                    </RelativeLayout>-->
-
                 <RelativeLayout
                     android:layout_marginTop="7dp"
                     android:id="@+id/layout5"
@@ -219,6 +181,58 @@
                         tools:ignore="HardcodedText" />
 
                 </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimary"
+                android:paddingTop="15dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+                    android:textSize="16sp"
+                    android:textColor="?android:textColorPrimary"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="22dp"
+                    android:layout_height="wrap_content"
+                    tools:ignore="HardcodedText"
+                    android:text="What customers say about us" />
+
+                <TextView
+                    android:id="@+id/line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/title"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@color/colorSecondary"
+                    tools:ignore="HardcodedText"
+                    android:text="What customers say about us"/>
+
+                <ViewFlipper
+                    android:layout_below="@id/line"
+                    android:id="@+id/imageFlipper"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorPrimary"
+                android:padding="20dp">
 
                 <RelativeLayout
                     android:layout_marginTop="7dp"
@@ -342,47 +356,6 @@
 
 
             </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@color/colorPrimary"
-                android:paddingTop="15dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
-
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignParentTop="true"
-                    android:textSize="16sp"
-                    android:textColor="?android:textColorPrimary"
-                    android:layout_width="match_parent"
-                    android:layout_marginStart="22dp"
-                    android:layout_height="wrap_content"
-                    tools:ignore="HardcodedText"
-                    android:text="What customers say about us" />
-
-                <TextView
-                    android:id="@+id/line"
-                    android:layout_width="wrap_content"
-                    android:layout_height="2dp"
-                    android:layout_below="@id/title"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="7dp"
-                    android:background="@color/colorSecondary"
-                    tools:ignore="HardcodedText"
-                    android:text="What customers say about us"/>
-
-                <ViewFlipper
-                    android:layout_below="@id/line"
-                    android:id="@+id/imageFlipper"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="220dp"/>
-
-            </RelativeLayout>
 
         </LinearLayout>
 

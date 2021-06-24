@@ -25,7 +25,7 @@ import java.util.Objects;
 
 public class CartActivity extends BaseActivity {
 
-    String doctorID, medicine_id, userID;
+    String doctorID, userID;
 
     static final int ONE_MEDICINE_COST = 240, DELIVERY_FEE = 0;
     int total, discount;
@@ -39,7 +39,6 @@ public class CartActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         doctorID = getIntent().getStringExtra("user_id");
-        medicine_id = getIntent().getStringExtra("medicine_id");
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
@@ -72,7 +71,6 @@ public class CartActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     public void setHeader() {
         FirebaseDatabase.getInstance().getReference()
@@ -120,7 +118,6 @@ public class CartActivity extends BaseActivity {
     public void proceedButton(View view) {
         Intent regIntent = new Intent(this, OrderNowActivity.class);
         regIntent.putExtra("user_id" , doctorID);
-        regIntent.putExtra("medicine_id", medicine_id);
         regIntent.putExtra("price", total);
         regIntent.putExtra("discount", discount);
         startActivity(regIntent);

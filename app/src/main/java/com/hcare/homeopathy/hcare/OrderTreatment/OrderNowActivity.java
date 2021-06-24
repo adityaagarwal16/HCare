@@ -330,7 +330,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
                 userMap.put("OrderStatus", "Recieved");
                 userMap.put("orderId", OrderId);
                 userMap.put("Ordertime", time);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) { }
 
 
             reference.child(newOrder).child(OrderId).setValue(userMap);
@@ -339,7 +339,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
                 reference.child("Doctors").child(doctorID)
                         .child("count").push().setValue(userID);
 
-                // userRef.child("consultCount").removeValue();
+                //userRef.child("consultCount").removeValue();
                 reference.child("messages").child(userID).child(doctorID)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -370,7 +370,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
                         });
             });
 
-        } catch (Exception  e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -190,7 +190,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
                     } else {
                         Intent intent = new Intent(context, CartActivity.class);
                         intent.putExtra("user_id", c.getFrom());
-                        intent.putExtra("medicine_id", c.getMedicineId());
                         context.startActivity(intent);
                     }
                 });

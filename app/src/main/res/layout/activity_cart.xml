@@ -62,7 +62,8 @@
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:orientation="vertical"
@@ -117,7 +118,7 @@
                     android:layout_marginTop="4dp"
                     android:letterSpacing="0.03"
                     android:text="Discount"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/colorSecondary"
                     android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
@@ -128,7 +129,7 @@
                     android:layout_below="@id/subtotalHeader"
                     android:layout_marginTop="5dp"
                     android:text="Discount"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/colorSecondary"
                     tools:ignore="HardcodedText" />
 
                 <TextView
@@ -186,7 +187,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_toStartOf="@id/discount"
                     android:text="- ₹"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/colorSecondary"
                     android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
@@ -245,21 +246,18 @@
                 app:cardBackgroundColor="@color/colorSecondary">
 
                 <TextView
-                    android:padding="15dp"
-                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:padding="15dp"
                     android:text="Proceed"
                     android:textColor="?android:textColorPrimaryInverse"
-                    android:layout_width="match_parent"
+                    android:textSize="18sp"
                     android:textStyle="bold"
-                    android:layout_height="wrap_content"
                     tools:ignore="HardcodedText" />
 
             </androidx.cardview.widget.CardView>
-
-
         </LinearLayout>
-
 
     </androidx.cardview.widget.CardView>
 

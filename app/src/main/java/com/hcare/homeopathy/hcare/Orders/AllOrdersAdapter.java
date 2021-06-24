@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,6 +24,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
+
+import static com.hcare.homeopathy.hcare.FirebaseConstants.coronaVirus;
 
 public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
         AllOrdersObject, AllOrdersAdapter.DoctorsViewHolder> {
@@ -73,11 +74,17 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 try {
-                                    String name = MessageFormat.format("{0} {1}",
-                                            "Dr.",
-                                            Objects.requireNonNull(
-                                                    dataSnapshot.child("name")
-                                                            .getValue()).toString());
+                                    String name = "";
+                                    if(model.getDoctor().equals(coronaVirus))
+                                        name = Objects.requireNonNull(
+                                                dataSnapshot.child("name")
+                                                        .getValue()).toString();
+                                    else
+                                        name = MessageFormat.format("{0} {1}",
+                                                "Dr.",
+                                                Objects.requireNonNull(
+                                                        dataSnapshot.child("name")
+                                                                .getValue()).toString());
                                     viewHolder.doctorName(name);
                                 } catch (Exception ignored) { }
                             }

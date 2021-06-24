@@ -153,6 +153,13 @@
 
             </RelativeLayout>
 
+            <ImageView
+                android:background="@color/colorSecondary"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/banner_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="175dp"/>
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
