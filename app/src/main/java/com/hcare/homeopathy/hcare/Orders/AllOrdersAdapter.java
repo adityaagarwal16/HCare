@@ -74,7 +74,7 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 try {
-                                    String name = "";
+                                    String name;
                                     if(model.getDoctor().equals(coronaVirus))
                                         name = Objects.requireNonNull(
                                                 dataSnapshot.child("name")
