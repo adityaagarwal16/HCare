@@ -2,6 +2,7 @@ package com.hcare.homeopathy.hcare.Orders;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -69,6 +70,7 @@ public class PrescriptionActivity extends BaseActivity {
                             .build();
             medicineRecycler.setAdapter(new PrescriptionAdapter(options));
         } catch(Exception ignored) {}
+        findViewById(R.id.loader).setVisibility(View.GONE);
     }
 }
 
