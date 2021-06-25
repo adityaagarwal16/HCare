@@ -2,6 +2,7 @@ package com.hcare.homeopathy.hcare.Orders;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ public class PrescriptionActivity extends BaseActivity {
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
         setRecycler();
+        findViewById(R.id.loader).setVisibility(View.GONE);
     }
 
     @Override
