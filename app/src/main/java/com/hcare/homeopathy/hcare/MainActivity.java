@@ -387,7 +387,7 @@ public class MainActivity extends BaseActivity
     public void consultations(View view) {
         startActivity(new Intent(this, ConsultationsActivity.class));
     }
-    // add
+    // sub
 }
 
 
