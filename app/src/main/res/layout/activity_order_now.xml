@@ -66,7 +66,7 @@
                     android:layout_alignParentEnd="true"
                     android:letterSpacing="0.03"
                     android:text="Delivery"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/colorSecondary"
                     android:textSize="15sp"
                     tools:ignore="HardcodedText" />
 
@@ -78,7 +78,7 @@
                     android:layout_marginEnd="3dp"
                     android:layout_toStartOf="@id/deliveryCharge"
                     android:text="₹"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/colorSecondary"
                     android:textSize="16sp"
                     tools:ignore="HardcodedText" />
 
@@ -89,7 +89,7 @@
                     android:layout_below="@id/subTotal"
                     android:layout_marginTop="5dp"
                     android:text="Delivery Charge"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/colorSecondary"
                     tools:ignore="HardcodedText" />
 
                 <TextView

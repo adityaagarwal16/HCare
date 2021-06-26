@@ -119,10 +119,10 @@ public class OrderActivity extends BaseActivity {
     }
 
     void getTrackingDetails() {
-        //if(order.getShipmentID() != 0) {
+        if(order.getShipmentID() != 0) {
             RetrofitInterface retrofitInterface = RetrofitClient.getInstance()
                     .create(RetrofitInterface.class);
-            Call<ShipRocketData> call = retrofitInterface.getDetails(113647512);
+            Call<ShipRocketData> call = retrofitInterface.getDetails(order.getShipmentID());
             call.enqueue(new Callback<ShipRocketData>() {
                 @Override
                 public void onResponse(@NonNull Call<ShipRocketData> call,
@@ -130,26 +130,28 @@ public class OrderActivity extends BaseActivity {
                     try {
                         if (response.body() != null) {
                             TrackingData object = response.body().getTracking_data();
-
+                            Log.i("track", object.toString());
                             if(object.getTrack_status() != 0) {
                                 try {
                                     setTrackingRecycler(object.getShipment_track_activities());
-                                } catch (Exception ignored) {
-                                }
+                                } catch (Exception ignored) { }
                                 try {
                                     ShipmentTrack shipmentTrack = object.getShipment_track().get(0);
                                     setTrackDetails(shipmentTrack.current_status, shipmentTrack.awb_code);
-                                } catch (Exception ignored) {
-                                }
+                                } catch (Exception ignored) { }
                                 try {
                                     findViewById(R.id.trackLinkButton).setOnClickListener(v -> {
-                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                                                Uri.parse(object.getTrack_url()));
-                                        startActivity(browserIntent);
+                                        if (object.getTrack_url() != null) {
+                                            Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                                                    Uri.parse(object.getTrack_url()));
+                                            startActivity(browserIntent);
+                                        } else {
+                                            Toast.makeText(getApplicationContext(),
+                                                    "Tracking unavailable", Toast.LENGTH_SHORT).show();
+                                        }
                                     });
-                                } catch (Exception ignored) {
-                                }
 
+                                } catch (Exception ignored) { }
                                 showTrackDetails();
                             } else
                                 trackingUnavailable();
@@ -158,8 +160,8 @@ public class OrderActivity extends BaseActivity {
                             Log.d("TAG", "onResponseCode: " + response.code());
                             Log.d("TAG", "onResponseErrorBody: " + response.errorBody());
                         }
-                        findViewById(R.id.loader).setVisibility(View.GONE);
                     } catch (Exception e) {
+                        trackingUnavailable();
                         e.printStackTrace();
                     }
                 }
@@ -169,7 +171,7 @@ public class OrderActivity extends BaseActivity {
                     Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                 }
             });
-       // } else trackingUnavailable();
+        } else trackingUnavailable();
     }
 
     private void setTrackingRecycler(List<ShipmentTrackActivity> list) {

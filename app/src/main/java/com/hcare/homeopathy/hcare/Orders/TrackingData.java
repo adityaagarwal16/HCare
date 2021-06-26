@@ -1,5 +1,7 @@
 package com.hcare.homeopathy.hcare.Orders;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 
 public class TrackingData {
@@ -39,5 +41,16 @@ public class TrackingData {
 
     public String getTrack_url() {
         return track_url;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "TrackingData{" +
+                "shipment_track=" + shipment_track +
+                ", shipment_track_activities=" + shipment_track_activities +
+                ", track_url='" + track_url + '\'' +
+                ", track_status=" + track_status +
+                '}';
     }
 }

@@ -19,6 +19,8 @@ import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 
+import static com.hcare.homeopathy.hcare.FirebaseConstants.coronaVirus;
+
 public class PrescriptionActivity extends BaseActivity {
 
     String userID, doctorID = "";
@@ -52,12 +54,19 @@ public class PrescriptionActivity extends BaseActivity {
 
     private void setRecycler() {
         try {
-            DatabaseReference mDoctorsDatabase = FirebaseDatabase
-                    .getInstance().getReference()
-                    .child("PrescribedMedicine")
-                    .child(doctorID)
-                    .child(Objects.requireNonNull(FirebaseAuth.getInstance()
-                            .getCurrentUser()).getUid());
+            DatabaseReference mDoctorsDatabase;
+            if(doctorID.equals(coronaVirus))
+                mDoctorsDatabase = FirebaseDatabase
+                        .getInstance().getReference()
+                        .child("PrescribedMedicine")
+                        .child(doctorID);
+            else
+                mDoctorsDatabase = FirebaseDatabase
+                        .getInstance().getReference()
+                        .child("PrescribedMedicine")
+                        .child(doctorID)
+                        .child(Objects.requireNonNull(FirebaseAuth.getInstance()
+                                .getCurrentUser()).getUid());
 
             RecyclerView medicineRecycler = findViewById(R.id.recycler);
             medicineRecycler.setLayoutManager
