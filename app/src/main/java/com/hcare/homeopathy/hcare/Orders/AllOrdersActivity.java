@@ -58,13 +58,12 @@ public class AllOrdersActivity extends BaseActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) { }
             });
 
-
             RecyclerView mDoctorList = findViewById(R.id.recycler);
             mDoctorList.setHasFixedSize(true);
             mDoctorList.setLayoutManager(new LinearLayoutManager(this));
             FirebaseRecyclerOptions<AllOrdersObject> options =
                     new FirebaseRecyclerOptions.Builder<AllOrdersObject>()
-                            .setQuery(mDoctorsDatabase, AllOrdersObject.class)
+                            .setQuery(mDoctorsDatabase.orderByChild("time"), AllOrdersObject.class)
                             .setLifecycleOwner(this)
                             .build();
 

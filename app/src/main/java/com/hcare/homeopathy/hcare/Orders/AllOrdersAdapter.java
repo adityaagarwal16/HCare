@@ -51,8 +51,8 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
         try { viewHolder.orderID(model.getOrderId()); } catch(Exception ignored) {}
 
         try {
-            if(model.getOrdertime() == null)
-                model.setOrdertime(model.getTime());
+            if(model.getTime() == null)
+                model.setTime(model.getOrdertime());
             Parser parser = new Parser();
             Date date = parser.parse(model.getOrdertime()).get(0).getDates().get(0);
             viewHolder.date(new SimpleDateFormat("MMM dd, yyyy\n hh:mm a",

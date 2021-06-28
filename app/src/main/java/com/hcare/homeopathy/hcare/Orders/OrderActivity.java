@@ -14,13 +14,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.Orders;
 import com.hcare.homeopathy.hcare.R;
 import com.joestelmach.natty.Parser;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -29,10 +36,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hcare.homeopathy.hcare.FirebaseConstants.newOrder;
+
 public class OrderActivity extends BaseActivity {
 
     String userID, doctorName;
     AllOrdersObject order;
+    private DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +57,6 @@ public class OrderActivity extends BaseActivity {
             doctorName = getIntent().getStringExtra("doctorName");
             setDeliveryDetails();
         } catch (Exception e) {e.printStackTrace();}
-
         getTrackingDetails();
     }
 
