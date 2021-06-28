@@ -21,13 +21,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.Orders;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,12 +43,8 @@ import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.STATE;
 public class OrderNowActivity extends BaseActivity implements PaymentResultListener {
 
     private DatabaseReference reference;
-    private String doctorID, userID;
-
-    private String name, email = "example", phoneNumber = "91",
-            pinCode, address, city, state;
-    int totalPrice;
     boolean paymentSuccessful = false;
+    Orders orderClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,20 +54,20 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        userID = Objects.requireNonNull(FirebaseAuth.getInstance()
+        orderClass.userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
 
-        doctorID = getIntent().getStringExtra("user_id");
+        orderClass.doctorID = getIntent().getStringExtra("user_id");
         reference = FirebaseDatabase.getInstance().getReference();
 
         FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(userID)
+                .child("Users").child(orderClass.userID)
                 .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    email = (String) dataSnapshot.child("email").getValue();
-                    phoneNumber = (String) dataSnapshot.child("phone number").getValue();
+                    orderClass.email = (String) dataSnapshot.child("email").getValue();
+                    orderClass.phoneNumber = (String) dataSnapshot.child("phone number").getValue();
                 } catch (Exception ignored) { }
             }
 
@@ -98,10 +94,10 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     }
 
     private void setFields() {
-        totalPrice = getIntent().getIntExtra("price", 0);
+        orderClass.totalPrice = getIntent().getIntExtra("price", 0);
 
-        ((TextView) findViewById(R.id.total)).setText(String.valueOf(totalPrice));
-        ((TextView) findViewById(R.id.subTotal)).setText(String.valueOf(totalPrice));
+        ((TextView) findViewById(R.id.total)).setText(String.valueOf(orderClass.totalPrice));
+        ((TextView) findViewById(R.id.subTotal)).setText(String.valueOf(orderClass.totalPrice));
         ((TextView) findViewById(R.id.deliveryCharge)).setText(String.valueOf(0));
 
         ((TextView) findViewById(R.id.savings))
@@ -110,20 +106,20 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
                         getIntent().getIntExtra("discount", 0))
                 );
 
-        reference.child("Users").child(userID)
+        reference.child("Users").child(orderClass.userID)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
-                            name = Objects.requireNonNull(
+                            orderClass.name = Objects.requireNonNull(
                                     dataSnapshot.child("name").getValue()).toString();
                             ((EditText) findViewById(R.id.name))
-                                    .setText(name);
+                                    .setText(orderClass.name);
 
-                            phoneNumber = Objects.requireNonNull(
+                            orderClass.phoneNumber = Objects.requireNonNull(
                                     dataSnapshot.child("phone number").getValue()).toString();
                             ((EditText) findViewById(R.id.phoneNumber))
-                                    .setText(phoneNumber);
+                                    .setText(orderClass.phoneNumber);
 
                         } catch (Exception ignored) { }
                     }
@@ -197,20 +193,20 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     }
 
     public void placeOrder(View view) {
-        name = ((EditText) findViewById(R.id.name)).getText().toString();
-        phoneNumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
-        pinCode = ((EditText) findViewById(R.id.pinCode)).getText().toString();
-        address = ((EditText) findViewById(R.id.address)).getText().toString();
-        city = ((EditText) findViewById(R.id.city)).getText().toString();
-        state = ((TextView) findViewById(R.id.state)).getText().toString();
+        orderClass.name = ((EditText) findViewById(R.id.name)).getText().toString();
+        orderClass.phoneNumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
+        orderClass.pinCode = ((EditText) findViewById(R.id.pinCode)).getText().toString();
+        orderClass.address = ((EditText) findViewById(R.id.address)).getText().toString();
+        orderClass.city = ((EditText) findViewById(R.id.city)).getText().toString();
+        orderClass.state = ((TextView) findViewById(R.id.state)).getText().toString();
 
         try {
-            if (!name.isEmpty()) {
-                if (phoneNumber.length() == 10) {
-                    if (pinCode.length() == 6) {
-                        if (!address.isEmpty()) {
-                            if (!city.isEmpty()) {
-                                if (!state.isEmpty())
+            if (!orderClass.name.isEmpty()) {
+                if (orderClass.phoneNumber.length() == 10) {
+                    if (orderClass.pinCode.length() == 6) {
+                        if (!orderClass.address.isEmpty()) {
+                            if (!orderClass.city.isEmpty()) {
+                                if (!orderClass.state.isEmpty())
                                     startPayment();
                                 else
                                     Toast.makeText(this, "Please enter your State",
@@ -239,6 +235,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         } catch (Exception e){
             Toast.makeText(this, "Error, please try again", Toast.LENGTH_LONG).show();
         }
+        orderClass.time = new Date().getTime();
     }
 
     @Override
@@ -258,10 +255,10 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
     public void startPayment() {
         AddressSharedPref sharedPref = new AddressSharedPref(this);
-        sharedPref.save(PIN_CODE, pinCode);
-        sharedPref.save(ADDRESS, address);
-        sharedPref.save(CITY, city);
-        sharedPref.save(STATE, state);
+        sharedPref.save(PIN_CODE, orderClass.pinCode);
+        sharedPref.save(ADDRESS, orderClass.address);
+        sharedPref.save(CITY, orderClass.city);
+        sharedPref.save(STATE, orderClass.state);
 
         try {
             final AppCompatActivity activity = this;
@@ -274,11 +271,11 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
             // options.put("image", R.drawable.logo);
             int RAZORPAY_MULTIPLIER = 100;
             options.put("currency", "INR");
-            options.put("amount", totalPrice * RAZORPAY_MULTIPLIER);
+            options.put("amount", orderClass.totalPrice * RAZORPAY_MULTIPLIER);
 
             JSONObject preFill = new JSONObject();
-            preFill.put("email", email);
-            preFill.put("contact", phoneNumber);
+            preFill.put("email", orderClass.email);
+            preFill.put("contact", orderClass.phoneNumber);
 
             options.put("prefill", preFill);
 
@@ -313,40 +310,28 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     private void orderSuccessful() {
         try {
             String OrderId = "Hcr" + getRandomNumberString();
-            String time = DateFormat.getDateTimeInstance().format(new Date());
+            orderClass.OrderID = OrderId;
 
-            HashMap<String, String> userMap = new HashMap<>();
+            HashMap<String, Orders> userMap = new HashMap<>();
             try {
-                userMap.put("FullName", name);
-                userMap.put("PhoneNumber", phoneNumber);
-                userMap.put("PinCode", pinCode);
-                userMap.put("Address", address);
-                userMap.put("PatientId", userID);
-                userMap.put("City", city);
-                userMap.put("State", state);
-                userMap.put("Doctor", doctorID);
-                userMap.put("emailId", email);
-                userMap.put("Amount", String.valueOf(totalPrice));
-                userMap.put("OrderStatus", "Recieved");
-                userMap.put("orderId", OrderId);
-                userMap.put("Ordertime", time);
+                userMap.put(orderClass.OrderID, orderClass);
             } catch (Exception ignored) { }
 
 
             reference.child(newOrder).child(OrderId).setValue(userMap);
-            reference.child("Orders").child(userID).child(OrderId)
+            reference.child("Orders").child(orderClass.userID).child(OrderId)
                     .setValue(userMap).addOnCompleteListener(task -> {
-                reference.child("Doctors").child(doctorID)
-                        .child("count").push().setValue(userID);
+                reference.child("Doctors").child(orderClass.doctorID)
+                        .child("count").push().setValue(orderClass.userID);
 
                 //userRef.child("consultCount").removeValue();
-                reference.child("messages").child(userID).child(doctorID)
+                reference.child("messages").child(orderClass.userID).child(orderClass.doctorID)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                                     child.getRef().child("ordering").setValue("ordered");
-                                    reference.child("messages").child(doctorID).child(userID)
+                                    reference.child("messages").child(orderClass.doctorID).child(orderClass.userID)
                                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

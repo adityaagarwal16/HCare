@@ -14,13 +14,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.Orders;
 import com.hcare.homeopathy.hcare.R;
 import com.joestelmach.natty.Parser;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -29,10 +36,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.hcare.homeopathy.hcare.FirebaseConstants.newOrder;
+
 public class OrderActivity extends BaseActivity {
 
     String userID, doctorName;
     AllOrdersObject order;
+    private DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +57,55 @@ public class OrderActivity extends BaseActivity {
             doctorName = getIntent().getStringExtra("doctorName");
             setDeliveryDetails();
         } catch (Exception e) {e.printStackTrace();}
-
+        updateFirebase();
         getTrackingDetails();
+    }
+
+    void updateFirebase() {
+        FirebaseDatabase.getInstance().getReference()
+                .child("Users").child(userID)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try{
+                                if(dataSnapshot.child("Ordertime").getValue() instanceof String){
+                                    reference = FirebaseDatabase.getInstance().getReference();
+                                    Orders orderClass = null;
+                                    orderClass.name = order.getFullName();
+                                    orderClass.address = order.getAddress();
+                                    orderClass.city = order.getCity();
+                                    orderClass.doctorID = order.getDoctor();
+                                    orderClass.email = order.getEmailId();
+                                    orderClass.OrderID = order.getOrderId();
+                                    orderClass.phoneNumber = order.getPhoneNumber();
+                                    orderClass.time = Date.parse(order.getOrdertime());
+                                    orderClass.state = order.getState();
+                                    orderClass.totalPrice = Integer.parseInt(order.getAmount());
+                                    orderClass.userID = order.getPatientId();
+
+                                    HashMap<String, Orders> userMap = new HashMap<>();
+                                    try {
+                                        userMap.put(orderClass.OrderID, orderClass);
+                                    } catch (Exception ignored) { }
+
+                                    String OrderId = order.getOrderId();
+                                    reference.child(newOrder).child(OrderId).setValue(userMap);
+                                    reference.child("Orders").child(orderClass.userID).child(OrderId)
+                                            .setValue(userMap).addOnCompleteListener(task -> {
+                                        reference.child("Doctors").child(orderClass.doctorID)
+                                                .child("count").push().setValue(orderClass.userID);
+                                    });
+                                }
+
+                        } catch (Exception ignored) { }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
     }
 
     void setDeliveryDetails() {

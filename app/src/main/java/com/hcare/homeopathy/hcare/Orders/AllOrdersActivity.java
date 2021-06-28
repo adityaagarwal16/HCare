@@ -58,13 +58,21 @@ public class AllOrdersActivity extends BaseActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) { }
             });
 
+//              :/
+            String timeSort = null;
+            if(mDoctorsDatabase.child("time")!=null) {
+                timeSort = "time";
+            }
+            else {
+                timeSort = "Ordertime";
+            }
 
             RecyclerView mDoctorList = findViewById(R.id.recycler);
             mDoctorList.setHasFixedSize(true);
             mDoctorList.setLayoutManager(new LinearLayoutManager(this));
             FirebaseRecyclerOptions<AllOrdersObject> options =
                     new FirebaseRecyclerOptions.Builder<AllOrdersObject>()
-                            .setQuery(mDoctorsDatabase, AllOrdersObject.class)
+                            .setQuery(mDoctorsDatabase.orderByChild(timeSort), AllOrdersObject.class)
                             .setLifecycleOwner(this)
                             .build();
 
