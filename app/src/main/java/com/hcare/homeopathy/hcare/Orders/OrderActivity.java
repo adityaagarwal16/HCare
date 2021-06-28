@@ -57,55 +57,7 @@ public class OrderActivity extends BaseActivity {
             doctorName = getIntent().getStringExtra("doctorName");
             setDeliveryDetails();
         } catch (Exception e) {e.printStackTrace();}
-        updateFirebase();
         getTrackingDetails();
-    }
-
-    void updateFirebase() {
-        FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(userID)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try{
-                                if(dataSnapshot.child("Ordertime").getValue() instanceof String){
-                                    reference = FirebaseDatabase.getInstance().getReference();
-                                    Orders orderClass = null;
-                                    orderClass.name = order.getFullName();
-                                    orderClass.address = order.getAddress();
-                                    orderClass.city = order.getCity();
-                                    orderClass.doctorID = order.getDoctor();
-                                    orderClass.email = order.getEmailId();
-                                    orderClass.OrderID = order.getOrderId();
-                                    orderClass.phoneNumber = order.getPhoneNumber();
-                                    orderClass.time = Date.parse(order.getOrdertime());
-                                    orderClass.state = order.getState();
-                                    orderClass.totalPrice = Integer.parseInt(order.getAmount());
-                                    orderClass.userID = order.getPatientId();
-
-                                    HashMap<String, Orders> userMap = new HashMap<>();
-                                    try {
-                                        userMap.put(orderClass.OrderID, orderClass);
-                                    } catch (Exception ignored) { }
-
-                                    String OrderId = order.getOrderId();
-                                    reference.child(newOrder).child(OrderId).setValue(userMap);
-                                    reference.child("Orders").child(orderClass.userID).child(OrderId)
-                                            .setValue(userMap).addOnCompleteListener(task -> {
-                                        reference.child("Doctors").child(orderClass.doctorID)
-                                                .child("count").push().setValue(orderClass.userID);
-                                    });
-                                }
-
-                        } catch (Exception ignored) { }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
     }
 
     void setDeliveryDetails() {
