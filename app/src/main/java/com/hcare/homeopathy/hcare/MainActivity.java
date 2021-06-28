@@ -48,7 +48,7 @@ import static com.hcare.homeopathy.hcare.Diseases.piles;
 import static com.hcare.homeopathy.hcare.Diseases.renalProblems;
 import static com.hcare.homeopathy.hcare.Diseases.skin;
 import static com.hcare.homeopathy.hcare.Diseases.thyroid;
-import static com.hcare.homeopathy.hcare.FirebaseConstants.activeConsultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -254,7 +254,6 @@ public class MainActivity extends BaseActivity
     }
 
     void setCoronaFlipper() {
-
         int[] images = {
                 R.drawable.corona_banner_1,
                 R.drawable.corona_banner_2,
@@ -262,15 +261,18 @@ public class MainActivity extends BaseActivity
         };
 
         ViewFlipper mFlipper = findViewById(R.id.imageView10);
-        mFlipper.setOnClickListener(v-> startActivity(new Intent(
+        findViewById(R.id.coronaBanner).setOnClickListener(v-> startActivity(new Intent(
                 MainActivity.this,
                 CoronaVirusActivity.class)));
 
+
         for (int image: images) {
             ImageView imageView = new ImageView(this);
-            imageView.setBackgroundResource(image);
+            imageView.setImageResource(image);
+            imageView.setAdjustViewBounds(true);
 
             mFlipper.addView(imageView);
+
             mFlipper.setFlipInterval(3500);
             mFlipper.setAutoStart(true);
 
@@ -278,7 +280,6 @@ public class MainActivity extends BaseActivity
             mFlipper.setInAnimation(this,android.R.anim.fade_in);
         }
     }
-
 
     void eventListeners() {
         final String[] consultationID = {""};

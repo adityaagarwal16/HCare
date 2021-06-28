@@ -21,7 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.FirebaseClasses.Orders;
+import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -29,12 +29,12 @@ import com.razorpay.PaymentResultListener;
 import org.json.JSONObject;
 
 import java.text.MessageFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
-import static com.hcare.homeopathy.hcare.FirebaseConstants.newOrder;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.customerOrders;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.newOrder;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.ADDRESS;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.CITY;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.PIN_CODE;
@@ -44,7 +44,9 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
     private DatabaseReference reference;
     boolean paymentSuccessful = false;
-    Orders orderClass;
+    String userID, doctorID;
+    OrderObject orderObject;
+    String username, phoneNumber, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,28 +56,12 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        orderClass.userID = Objects.requireNonNull(FirebaseAuth.getInstance()
+        userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
 
-        orderClass.doctorID = getIntent().getStringExtra("user_id");
+        doctorID = getIntent().getStringExtra("user_id");
         reference = FirebaseDatabase.getInstance().getReference();
-
-        FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(orderClass.userID)
-                .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    orderClass.email = (String) dataSnapshot.child("email").getValue();
-                    orderClass.phoneNumber = (String) dataSnapshot.child("phone number").getValue();
-                } catch (Exception ignored) { }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        orderObject = new OrderObject();
 
         setFields();
         setAddress();
@@ -94,10 +80,10 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     }
 
     private void setFields() {
-        orderClass.totalPrice = getIntent().getIntExtra("price", 0);
+        orderObject.setAmount(getIntent().getIntExtra("price", 0));
 
-        ((TextView) findViewById(R.id.total)).setText(String.valueOf(orderClass.totalPrice));
-        ((TextView) findViewById(R.id.subTotal)).setText(String.valueOf(orderClass.totalPrice));
+        ((TextView) findViewById(R.id.total)).setText(String.valueOf(orderObject.getAmount()));
+        ((TextView) findViewById(R.id.subTotal)).setText(String.valueOf(orderObject.getAmount()));
         ((TextView) findViewById(R.id.deliveryCharge)).setText(String.valueOf(0));
 
         ((TextView) findViewById(R.id.savings))
@@ -106,20 +92,16 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
                         getIntent().getIntExtra("discount", 0))
                 );
 
-        reference.child("Users").child(orderClass.userID)
+        reference.child("Users").child(userID)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
-                            orderClass.name = Objects.requireNonNull(
-                                    dataSnapshot.child("name").getValue()).toString();
-                            ((EditText) findViewById(R.id.name))
-                                    .setText(orderClass.name);
-
-                            orderClass.phoneNumber = Objects.requireNonNull(
-                                    dataSnapshot.child("phone number").getValue()).toString();
-                            ((EditText) findViewById(R.id.phoneNumber))
-                                    .setText(orderClass.phoneNumber);
+                            username = (String) dataSnapshot.child("name").getValue();
+                            ((EditText) findViewById(R.id.name)).setText(username);
+                            phoneNumber = (String) dataSnapshot.child("phone number").getValue();
+                            ((EditText) findViewById(R.id.phoneNumber)).setText(phoneNumber);
+                            email = (String) dataSnapshot.child("email").getValue();
 
                         } catch (Exception ignored) { }
                     }
@@ -193,20 +175,23 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     }
 
     public void placeOrder(View view) {
-        orderClass.name = ((EditText) findViewById(R.id.name)).getText().toString();
-        orderClass.phoneNumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
-        orderClass.pinCode = ((EditText) findViewById(R.id.pinCode)).getText().toString();
-        orderClass.address = ((EditText) findViewById(R.id.address)).getText().toString();
-        orderClass.city = ((EditText) findViewById(R.id.city)).getText().toString();
-        orderClass.state = ((TextView) findViewById(R.id.state)).getText().toString();
+        username = ((EditText) findViewById(R.id.name)).getText().toString();
+        phoneNumber = ((EditText) findViewById(R.id.phoneNumber)).getText().toString();
+        try {
+            orderObject.setPinCode(Integer.parseInt(((EditText) findViewById(R.id.pinCode))
+                    .getText().toString()));
+        } catch(Exception e) { orderObject.setPinCode(0);}
+        orderObject.setAddress(((EditText) findViewById(R.id.address)).getText().toString());
+        orderObject.setCity(((EditText) findViewById(R.id.city)).getText().toString());
+        orderObject.setState(((TextView) findViewById(R.id.state)).getText().toString());
 
         try {
-            if (!orderClass.name.isEmpty()) {
-                if (orderClass.phoneNumber.length() == 10) {
-                    if (orderClass.pinCode.length() == 6) {
-                        if (!orderClass.address.isEmpty()) {
-                            if (!orderClass.city.isEmpty()) {
-                                if (!orderClass.state.isEmpty())
+            if (!username.isEmpty()) {
+                if (phoneNumber.length() == 10) {
+                    if (orderObject.getPinCode() >= 100000 && orderObject.getPinCode() <= 999999) {
+                        if (!orderObject.getAddress().isEmpty()) {
+                            if (!orderObject.getCity().isEmpty()) {
+                                if (!orderObject.getState().isEmpty())
                                     startPayment();
                                 else
                                     Toast.makeText(this, "Please enter your State",
@@ -235,7 +220,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         } catch (Exception e){
             Toast.makeText(this, "Error, please try again", Toast.LENGTH_LONG).show();
         }
-        orderClass.time = new Date().getTime();
+        orderObject.setTime(System.currentTimeMillis());
     }
 
     @Override
@@ -255,10 +240,10 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
     public void startPayment() {
         AddressSharedPref sharedPref = new AddressSharedPref(this);
-        sharedPref.save(PIN_CODE, orderClass.pinCode);
-        sharedPref.save(ADDRESS, orderClass.address);
-        sharedPref.save(CITY, orderClass.city);
-        sharedPref.save(STATE, orderClass.state);
+        sharedPref.save(PIN_CODE, String.valueOf(orderObject.getPinCode()));
+        sharedPref.save(ADDRESS, orderObject.getAddress());
+        sharedPref.save(CITY, orderObject.getCity());
+        sharedPref.save(STATE, orderObject.getState());
 
         try {
             final AppCompatActivity activity = this;
@@ -271,11 +256,11 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
             // options.put("image", R.drawable.logo);
             int RAZORPAY_MULTIPLIER = 100;
             options.put("currency", "INR");
-            options.put("amount", orderClass.totalPrice * RAZORPAY_MULTIPLIER);
+            options.put("amount", orderObject.getAmount() * RAZORPAY_MULTIPLIER);
 
             JSONObject preFill = new JSONObject();
-            preFill.put("email", orderClass.email);
-            preFill.put("contact", orderClass.phoneNumber);
+            preFill.put("email", email);
+            preFill.put("contact", phoneNumber);
 
             options.put("prefill", preFill);
 
@@ -309,29 +294,28 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
     private void orderSuccessful() {
         try {
-            String OrderId = "Hcr" + getRandomNumberString();
-            orderClass.OrderID = OrderId;
+            orderObject.setOrderID("Hcr" + getRandomNumberString());
+            orderObject.setUserID(userID);
+            orderObject.setDoctorID(doctorID);
 
-            HashMap<String, Orders> userMap = new HashMap<>();
-            try {
-                userMap.put(orderClass.OrderID, orderClass);
-            } catch (Exception ignored) { }
+            reference.child(newOrder)
+                    .child(orderObject.getOrderID())
+                    .setValue(orderObject);
 
+            reference.child(customerOrders).child(userID)
+                    .child(orderObject.getOrderID())
+                    .setValue(orderObject).addOnCompleteListener(task -> {
 
-            reference.child(newOrder).child(OrderId).setValue(userMap);
-            reference.child("Orders").child(orderClass.userID).child(OrderId)
-                    .setValue(userMap).addOnCompleteListener(task -> {
-                reference.child("Doctors").child(orderClass.doctorID)
-                        .child("count").push().setValue(orderClass.userID);
+                reference.child("Doctors").child(doctorID)
+                        .child("count").push().setValue(userID);
 
-                //userRef.child("consultCount").removeValue();
-                reference.child("messages").child(orderClass.userID).child(orderClass.doctorID)
+                reference.child("messages").child(userID).child(doctorID)
                         .addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                                     child.getRef().child("ordering").setValue("ordered");
-                                    reference.child("messages").child(orderClass.doctorID).child(orderClass.userID)
+                                    reference.child("messages").child(doctorID).child(userID)
                                             .addListenerForSingleValueEvent(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -353,6 +337,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
                             }
                         });
+
             });
 
         } catch (Exception e) {

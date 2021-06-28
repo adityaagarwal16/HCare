@@ -72,7 +72,7 @@
             android:label="Prescription">
         </activity>
 
-        <activity android:name=".Orders.OrderActivity"
+        <activity android:name=".Orders.TrackOrderActivity"
             android:theme="@style/splashScreen"
             android:label="Order">
         </activity>

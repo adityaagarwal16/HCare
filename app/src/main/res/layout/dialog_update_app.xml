@@ -37,7 +37,7 @@
 
     <ImageView
         android:id="@+id/close"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_alignParentEnd="true"

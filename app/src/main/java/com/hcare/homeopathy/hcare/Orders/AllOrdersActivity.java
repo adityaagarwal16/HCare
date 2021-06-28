@@ -14,11 +14,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
+
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.customerOrders;
 
 public class AllOrdersActivity extends BaseActivity {
 
@@ -39,9 +43,10 @@ public class AllOrdersActivity extends BaseActivity {
 
     private void setRecycler() {
         try {
-            DatabaseReference mDoctorsDatabase =
+            Query mDoctorsDatabase =
                     FirebaseDatabase.getInstance().getReference()
-                            .child("Orders").child(userID);
+                            .child(customerOrders).child(userID)
+                            .orderByChild("time");
 
             mDoctorsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -60,10 +65,15 @@ public class AllOrdersActivity extends BaseActivity {
 
             RecyclerView mDoctorList = findViewById(R.id.recycler);
             mDoctorList.setHasFixedSize(true);
-            mDoctorList.setLayoutManager(new LinearLayoutManager(this));
-            FirebaseRecyclerOptions<AllOrdersObject> options =
-                    new FirebaseRecyclerOptions.Builder<AllOrdersObject>()
-                            .setQuery(mDoctorsDatabase.orderByChild("time"), AllOrdersObject.class)
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+
+            linearLayoutManager.setReverseLayout(true);
+            linearLayoutManager.setStackFromEnd(true);
+
+            mDoctorList.setLayoutManager(linearLayoutManager);
+            FirebaseRecyclerOptions<OrderObject> options =
+                    new FirebaseRecyclerOptions.Builder<OrderObject>()
+                            .setQuery(mDoctorsDatabase, OrderObject.class)
                             .setLifecycleOwner(this)
                             .build();
 

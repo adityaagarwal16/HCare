@@ -62,7 +62,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
 
     private String doctorID, userID;
     int lastDay = 0;
-    private DatabaseReference databaseRootReference, userRef,
+    private DatabaseReference databaseRootReference,
             doctorReference, messagesReference, userReference;
     ProgressDialog mProgressDialog;
     List<ChatObject> list;
@@ -81,7 +81,6 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
 
         setToolbar();
 
-        userRef = databaseRootReference.child("Users").child(userID);
         messagesReference = databaseRootReference
                 .child("messages").child(userID).child(doctorID);
 
@@ -258,10 +257,23 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                     }
 
                     //consult date already set 10 days after
-                    if (diff<0)
+                    if (diff<0) {
+                        databaseRootReference.child("Users").child(userID)
+                                .addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        phoneNumber =  (String)
+                                                dataSnapshot.child("phone number").getValue();
+                                        eMail  = (String) dataSnapshot.child("email").getValue();
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                                });
                         consultAgain.setVisibility(View.VISIBLE);
+                    }
                     else
-                        consultAgain.setVisibility(View.GONE);
+                    consultAgain.setVisibility(View.GONE);
                 } else {
                     doctorReference.child("nextConsultdate")
                             .setValue(getCalculatedDate("dd-MM-yyyy", 10));
@@ -555,16 +567,6 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         final AppCompatActivity activity = this;
         final Checkout co = new Checkout();
         try {
-            userRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    phoneNumber =  (String) dataSnapshot.child("phone number").getValue();
-                    eMail  = (String) dataSnapshot.child("email").getValue();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) { }
-            });
 
             JSONObject options = new JSONObject();
             options.put("name", "HCare");

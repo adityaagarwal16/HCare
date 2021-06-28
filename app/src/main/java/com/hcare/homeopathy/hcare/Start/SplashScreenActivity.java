@@ -20,6 +20,7 @@ import androidx.core.content.pm.PackageInfoCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
@@ -32,6 +33,8 @@ public class SplashScreenActivity extends BaseActivity {
 
     int versionCode = 0;
     boolean signInOpen = false;
+    DatabaseReference versionReference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,29 +51,27 @@ public class SplashScreenActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        Log.i("version", String.valueOf(versionCode));
-
-        FirebaseDatabase.getInstance().getReference().child("Version")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.hasChild("Number")) {
-                            int firebaseVersion = 0;
-                            try {
-                                firebaseVersion = (int) Objects.requireNonNull(dataSnapshot.child
-                                        ("Number").getValue());
-                            } catch(Exception ignored) { }
-                            if (versionCode >= firebaseVersion) {
-                                new Thread() {
-                                    @Override
-                                    public void run() {
-                                        Intent intent;
-                                        if (FirebaseAuth.getInstance().
-                                                getCurrentUser() == null)
-                                            intent = new Intent(getApplicationContext(),
-                                                    LoginActivity.class);
-                                        else {
-                                            /* intent = new Intent(getApplicationContext(),
+        versionCode = 40;
+        versionReference = FirebaseDatabase.getInstance().getReference().child("Version");
+        versionReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.i("firebase", dataSnapshot.toString());
+                try {
+                    long firebaseVersion  = (long) Objects.requireNonNull(
+                            dataSnapshot.child("Number").getValue());
+                    Log.i("firebase", firebaseVersion + "");
+                    if (versionCode >= firebaseVersion)
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                Intent intent;
+                                if (FirebaseAuth.getInstance().
+                                        getCurrentUser() == null)
+                                    intent = new Intent(getApplicationContext(),
+                                            LoginActivity.class);
+                                else {
+                                    /* intent = new Intent(getApplicationContext(),
                                                     DiseaseActivity.class);
                                             intent.putExtra("request_type1", Diseases.thyroid);
 
@@ -111,37 +112,34 @@ public class SplashScreenActivity extends BaseActivity {
                                             intent = new Intent(
                                                     getApplicationContext(),
                                                     CoronaVirusActivity.class);*/
-                                           intent = new Intent(
-                                                    getApplicationContext(),
-                                                    MainActivity.class);
-                                        }
-                                        startActivity(intent);
-                                        signInOpen = true;
-                                        finish();
-                                    }
-                                }.start();
-
+                                    intent = new Intent(
+                                            getApplicationContext(),
+                                            MainActivity.class);
+                                }
+                                startActivity(intent);
+                                signInOpen = true;
+                                finish();
                             }
-                            else {
-                                showPopup();
-                            }
-                        }
-                        else {
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                            finish();
-                        }
-                    }
+                        }.start();
+                    else
+                        showPopup();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        if(!signInOpen) {
-                            startActivity(new Intent(getApplicationContext(),
-                                    LoginActivity.class));
-                            finish();
-                        }
-                    }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                if(!signInOpen) {
+                    startActivity(new Intent(getApplicationContext(),
+                            LoginActivity.class));
+                    finish();
+                }
+            }
 
-                });
+        });
     }
 
     private void showPopup() {
@@ -153,6 +151,26 @@ public class SplashScreenActivity extends BaseActivity {
             PopupWindow pw = new PopupWindow(layout, AbsListView.LayoutParams.MATCH_PARENT,
                     AbsListView.LayoutParams.MATCH_PARENT);
             pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+
+            versionReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    boolean crossVisible;
+                    try {
+                        crossVisible = (Boolean) Objects.requireNonNull(
+                                dataSnapshot.child("crossVisible").getValue());
+                    } catch(Exception e) {crossVisible = true;}
+                    if(crossVisible)
+                        layout.findViewById(R.id.close).setVisibility(View.VISIBLE);
+                    else
+                        layout.findViewById(R.id.close).setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) { }
+
+            });
+
 
             layout.findViewById(R.id.updateButton).setOnClickListener(v -> {
                 Intent updateIntent =new Intent(Intent.ACTION_VIEW,

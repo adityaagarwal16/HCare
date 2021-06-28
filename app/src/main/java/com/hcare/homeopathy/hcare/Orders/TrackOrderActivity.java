@@ -16,18 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.FirebaseClasses.Orders;
+import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
 import com.hcare.homeopathy.hcare.R;
-import com.joestelmach.natty.Parser;
 
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -36,52 +33,69 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.hcare.homeopathy.hcare.FirebaseConstants.newOrder;
-
-public class OrderActivity extends BaseActivity {
+public class TrackOrderActivity extends BaseActivity {
 
     String userID, doctorName;
-    AllOrdersObject order;
-    private DatabaseReference reference;
+    OrderObject order;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order);
+        setContentView(R.layout.activity_track_order);
 
         userID = Objects.requireNonNull(FirebaseAuth
                 .getInstance().getCurrentUser()).getUid();
+        setUserDetails();
 
         try {
-            order = (AllOrdersObject) getIntent().getSerializableExtra("order");
-            doctorName = getIntent().getStringExtra("doctorName");
-            setDeliveryDetails();
+            order = (OrderObject) getIntent().getSerializableExtra("order");
         } catch (Exception e) {e.printStackTrace();}
+        try {
+            doctorName = getIntent().getStringExtra("doctorName");
+        } catch (Exception ignored) {}
+
+        setDeliveryDetails();
         getTrackingDetails();
     }
 
+    void setUserDetails() {
+        FirebaseDatabase.getInstance()
+                .getReference().child("Users").child(userID)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            String username = (String) dataSnapshot.child("name").getValue();
+                            if(!Objects.requireNonNull(username).isEmpty())
+                                ((TextView) findViewById(R.id.customerName)).setText(username);
+                        } catch (Exception ignored) { }
+                        try {
+                            setPhoneEmail((String) dataSnapshot.child("phone number").getValue(),
+                                    (String) dataSnapshot.child("email").getValue());
+                        } catch (Exception ignored) { }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    @SuppressLint("SetTextI18n")
     void setDeliveryDetails() {
         ((TextView) findViewById(R.id.orderID))
-                .setText(MessageFormat.format("Order ID: {0}", order.getOrderId()));
+                .setText(MessageFormat.format("Order ID: {0}", order.getOrderID()));
 
         try {
-            Parser parser = new Parser();
-            Date date = parser.parse(order.getOrdertime()).get(0).getDates().get(0);
+            Date date = new Date(order.getTime());
             ((TextView) findViewById(R.id.date)).setText
                     (new SimpleDateFormat("MMM dd, yyyy - hh:mm a",
                             Locale.ENGLISH).format(date));
         } catch(Exception e) { e.printStackTrace(); }
 
-        if(order.getAmount() == null)
-            order.setAmount("0");
         ((TextView) findViewById(R.id.totalAmount))
                 .setText(MessageFormat.format("₹ {0}", order.getAmount()));
-
-        //delivery
-        if(!order.getFullName().isEmpty())
-            ((TextView) findViewById(R.id.customerName)).setText(order.getFullName());
-
-        setPhoneEmail(order.getPhoneNumber(), order.getEmailId());
 
         if(order.getAddress().equals(""))
             order.setAddress("Address Unavailable");
@@ -91,28 +105,30 @@ public class OrderActivity extends BaseActivity {
             order.setAddress("State not found");
         ((TextView) findViewById(R.id.state)).setText(order.getState());
 
-        if(order.getPinCode().length() != 6)
-            order.setAddress("Pin code Unavailable");
-        ((TextView) findViewById(R.id.pinCode)).setText(order.getPinCode());
+        if (order.getPinCode() < 100000 || order.getPinCode() > 999999)
+            ((TextView) findViewById(R.id.pinCode)).setText("Pin code Unavailable");
+        else
+            ((TextView) findViewById(R.id.pinCode)).setText(String.valueOf(order.getPinCode()));
 
         ((TextView) findViewById(R.id.doctorName)).setText(doctorName);
         findViewById(R.id.doctor).setOnClickListener(v -> {
             Intent intent = new Intent(this, PrescriptionActivity.class);
-            intent.putExtra("doctorID", order.getDoctor());
+            intent.putExtra("doctorID", order.getDoctorID());
             startActivity(intent);
         });
     }
 
     @SuppressLint("SetTextI18n")
-    void setPhoneEmail(String phone, String email) {
+    void setPhoneEmail(String phoneNumber, String email) {
         TextView phoneEmail = findViewById(R.id.phoneEmail);
-        if(phone!=null  && phone.length() == 10 && email!=null && email.contains("@"))
+        if(phoneNumber!=null  && phoneNumber.length() == 10
+                && email!=null && email.contains("@"))
            phoneEmail.setText(MessageFormat.format("{0} || {1}",
-                            order.getPhoneNumber(), order.getEmailId()));
+                            phoneNumber, email));
         else if(email!= null && email.contains("@"))
-            phoneEmail.setText(order.getEmailId());
-        else if(phone!=null && phone.length() == 10)
-            phoneEmail.setText(order.getPhoneNumber());
+            phoneEmail.setText(email);
+        else if(phoneNumber!=null && phoneNumber.length() == 10)
+            phoneEmail.setText(phoneNumber);
         else
             phoneEmail.setText("Contact Unavailable");
     }

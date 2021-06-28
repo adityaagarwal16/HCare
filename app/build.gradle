@@ -14,8 +14,8 @@ android {
         applicationId "com.hcare.homeopathy.hcare"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 59
-        versionName '3.2.0'
+        versionCode 60
+        versionName '3.2.1'
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release

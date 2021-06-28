@@ -26,7 +26,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import static com.hcare.homeopathy.hcare.Constants.DISEASE_OBJECT;
-import static com.hcare.homeopathy.hcare.FirebaseConstants.activeConsultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
 
 public class CheckoutActivity extends BaseActivity implements PaymentResultListener {
 

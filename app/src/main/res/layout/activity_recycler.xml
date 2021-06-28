@@ -38,28 +38,37 @@
 
     </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:paddingTop="15dp"
-            android:paddingBottom="20dp"
-            android:layout_centerInParent="true"
-            android:clipToPadding="false"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:paddingTop="15dp"
+        android:paddingBottom="20dp"
+        android:layout_centerInParent="true"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-        <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
-            android:id="@+id/loader"
-            android:layout_width="391dp"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:visibility="visible"
-            app:trailingcircular_animDelay="0"
-            app:trailingcircular_animDuration="1100"
-            app:trailingcircular_bigCircleRadius="50dp"
-            app:trailingcircular_dotsColor="@color/bottomgreen"
-            app:trailingcircular_dotsRadius="8dp"
-            app:trailingcircular_noOfTrailingDots="6" />
+    <com.agrawalsuneet.dotsloader.loaders.LinearDotsLoader
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:loader_animDur="250"
+        app:loader_circleRadius="10dp"
+        app:loader_defaultColor="@color/colorSecondary"
+        app:loader_dotsDist="10dp"
+        app:loader_expandOnSelect="false"
+        app:loader_firstShadowColor="#40AC6F"
+        app:loader_isSingleDir="false"
+        app:loader_noOfDots="5"
+        app:loader_secondShadowColor="#59CC8B"
+        app:loader_selectedColor="#2CAF67"
+        app:loader_selectedRadius="10dp"
+        app:loader_showRunningShadow="true"
+        android:visibility="visible"/>
 
 </RelativeLayout>
 

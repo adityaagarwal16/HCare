@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
 import com.hcare.homeopathy.hcare.R;
 import com.joestelmach.natty.Parser;
 
@@ -25,14 +26,14 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.FirebaseConstants.coronaVirus;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.coronaVirus;
 
 public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
-        AllOrdersObject, AllOrdersAdapter.DoctorsViewHolder> {
+        OrderObject, AllOrdersAdapter.DoctorsViewHolder> {
 
     private final Context context;
 
-    public AllOrdersAdapter(@NonNull FirebaseRecyclerOptions<AllOrdersObject> options,
+    public AllOrdersAdapter(@NonNull FirebaseRecyclerOptions<OrderObject> options,
                             Context context) {
         super(options);
         this.context = context;
@@ -47,35 +48,31 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
 
     @Override
     protected void onBindViewHolder(@NonNull DoctorsViewHolder viewHolder,
-                                    int position, @NonNull AllOrdersObject model) {
-        try { viewHolder.orderID(model.getOrderId()); } catch(Exception ignored) {}
+                                    int position, @NonNull OrderObject model) {
+        try { viewHolder.orderID(model.getOrderID()); } catch(Exception ignored) {}
 
         try {
-            if(model.getTime() == null)
-                model.setTime(model.getOrdertime());
-            Parser parser = new Parser();
-            Date date = parser.parse(model.getOrdertime()).get(0).getDates().get(0);
+            Date date = new Date(model.getTime());
             viewHolder.date(new SimpleDateFormat("MMM dd, yyyy\n hh:mm a",
                     Locale.ENGLISH).format(date));
         } catch(Exception e) { e.printStackTrace(); }
 
-        if(model.getAmount() != null)
-            viewHolder.totalAmount(MessageFormat.format(
-                    "{0} {1}",
-                    "₹", model.getAmount()));
+        viewHolder.totalAmount(MessageFormat.format(
+                "{0} {1}",
+                "₹", model.getAmount()));
 
         viewHolder.openOrder(context, model);
 
         try {
-            if(model.getDoctor() != null)
+            if(model.getDoctorID() != null)
                 FirebaseDatabase.getInstance().getReference()
-                        .child("Doctors").child(model.getDoctor())
+                        .child("Doctors").child(model.getDoctorID())
                         .addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 try {
                                     String name;
-                                    if(model.getDoctor().equals(coronaVirus))
+                                    if(model.getDoctorID().equals(coronaVirus))
                                         name = Objects.requireNonNull(
                                                 dataSnapshot.child("name")
                                                         .getValue()).toString();
@@ -104,9 +101,9 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
             mView = itemView;
         }
 
-        public void openOrder(Context context, AllOrdersObject object) {
+        public void openOrder(Context context, OrderObject object) {
             mView.setOnClickListener(v -> {
-                Intent intent = new Intent(context, OrderActivity.class);
+                Intent intent = new Intent(context, TrackOrderActivity.class);
                 intent.putExtra("order", object);
                 intent.putExtra("doctorName",
                         ((TextView) mView.findViewById(R.id.doctorName)).getText().toString());

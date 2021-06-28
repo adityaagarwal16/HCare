@@ -23,7 +23,7 @@ import com.hcare.homeopathy.hcare.OrderTreatment.PrescriptionObject;
 
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.FirebaseConstants.coronaVirus;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.coronaVirus;
 
 public class CoronaVirusActivity extends AppCompatActivity {
 

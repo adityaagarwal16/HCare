@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +18,7 @@ import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.FirebaseConstants.coronaVirus;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.coronaVirus;
 
 public class PrescriptionActivity extends BaseActivity {
 
