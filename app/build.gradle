@@ -9,6 +9,7 @@ android {
             keyAlias 'hcare'
         }
     }
+
     compileSdkVersion 30
     defaultConfig {
         applicationId "com.hcare.homeopathy.hcare"
