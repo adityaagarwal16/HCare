@@ -208,23 +208,21 @@
 
                 </LinearLayout>
 
-<!--
-                <RelativeLayout
+                <!--<RelativeLayout
                     android:background="@color/colorSecondary"
                     android:layout_marginTop="5dp"
-                    android:padding="10dp"
+                    android:padding="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/doctor_1"
+                        android:adjustViewBounds="true"
+                        android:layout_alignParentEnd="true" android:src="@drawable/consultation_banner"
                         android:contentDescription="@string/todo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="100dp"/>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
-                </RelativeLayout>
--->
+                </RelativeLayout>-->
 
                 <RelativeLayout
                     android:paddingTop="20dp"

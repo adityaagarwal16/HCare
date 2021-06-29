@@ -5,9 +5,17 @@ import java.io.Serializable;
 public class OrderObject implements Serializable {
 
     String  address, userID, city, state, doctorID, OrderID;
-    long time, shipRocketOrderID, shipmentID;
+    long time, shipRocketOrderID, shipmentID, status;
     int pinCode;
     float amount;
+
+    public long getStatus() {
+        return status;
+    }
+
+    public void setStatus(long status) {
+        this.status = status;
+    }
 
     public int getPinCode() {
         return pinCode;
