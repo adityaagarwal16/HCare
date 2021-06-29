@@ -136,7 +136,7 @@
                         android:layout_height="wrap_content"
                         android:text="Consultation booked"
                         android:letterSpacing="0.02"
-                        android:textColor="?android:textColorPrimary"
+                        android:textColor="@color/colorSecondary"
                         android:textStyle="bold"
                         android:textSize="18sp"
                         tools:ignore="HardcodedText" />
@@ -146,7 +146,7 @@
                         android:layout_below="@id/bookedHeading"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
+                        android:layout_marginTop="2dp"
                         android:text="You will be contacted by our doctor. \nYour consultation ID is"
                         android:textStyle="bold"
                         android:textSize="15sp"
@@ -154,12 +154,11 @@
 
                     <ImageView
                         android:contentDescription="@string/todo"
-                        android:src="@drawable/vector_doctor"
+                        android:src="@drawable/doctor_1"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_width="60dp"
-                        android:layout_height="75dp"
-                        app:tint="@color/colorSecondary" />
+                        android:layout_height="100dp" />
 
                 </RelativeLayout>
 
@@ -209,6 +208,7 @@
 
                 </LinearLayout>
 
+<!--
                 <RelativeLayout
                     android:background="@color/colorSecondary"
                     android:layout_marginTop="5dp"
@@ -224,6 +224,7 @@
                         android:layout_height="100dp"/>
 
                 </RelativeLayout>
+-->
 
                 <RelativeLayout
                     android:paddingTop="20dp"

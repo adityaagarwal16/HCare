@@ -1,26 +1,21 @@
-package com.hcare.homeopathy.hcare.Orders;
+package com.hcare.homeopathy.hcare.Orders.ShipRocket;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqObject;
 import com.hcare.homeopathy.hcare.R;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
-class ShipmentTrackingAdapter extends RecyclerView.Adapter<ShipmentTrackingAdapter.MyViewHolder> {
+public class ShipmentTrackingAdapter extends RecyclerView.Adapter<ShipmentTrackingAdapter.MyViewHolder> {
 
     private final List<ShipmentTrackActivity> list;
 
