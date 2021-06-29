@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Disease;
+package com.hcare.homeopathy.hcare.NewConsultation;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,9 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.Checkout.CheckoutActivity;
-import com.hcare.homeopathy.hcare.DiseaseInfo;
-import com.hcare.homeopathy.hcare.Diseases;
+import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;

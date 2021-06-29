@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare;
+package com.hcare.homeopathy.hcare.Main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
 import com.hcare.homeopathy.hcare.OrderTreatment.PrescriptionAdapter;
 import com.hcare.homeopathy.hcare.OrderTreatment.PrescriptionObject;
+import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 

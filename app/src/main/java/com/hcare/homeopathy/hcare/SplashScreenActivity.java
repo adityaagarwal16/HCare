@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Start;
+package com.hcare.homeopathy.hcare;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.MainActivity;
+import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.R;
+import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
 import java.util.Objects;
 
@@ -34,7 +34,6 @@ public class SplashScreenActivity extends BaseActivity {
     int versionCode = 0;
     boolean signInOpen = false;
     DatabaseReference versionReference;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,16 +50,13 @@ public class SplashScreenActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        versionCode = 40;
         versionReference = FirebaseDatabase.getInstance().getReference().child("Version");
         versionReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i("firebase", dataSnapshot.toString());
                 try {
                     long firebaseVersion  = (long) Objects.requireNonNull(
                             dataSnapshot.child("Number").getValue());
-                    Log.i("firebase", firebaseVersion + "");
                     if (versionCode >= firebaseVersion)
                         new Thread() {
                             @Override

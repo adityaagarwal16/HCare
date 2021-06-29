@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Checkout;
+package com.hcare.homeopathy.hcare.NewConsultation.Checkout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,19 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.hcare.homeopathy.hcare.MainActivity;
+import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 
-public class CheckoutDisableFragment extends Fragment {
+public class CheckoutSuccessfulFragment extends Fragment {
 
     View root;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_checkout_disable, container, false);
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.fragment_checkout_successful, container, false);
         return root;
     }
 

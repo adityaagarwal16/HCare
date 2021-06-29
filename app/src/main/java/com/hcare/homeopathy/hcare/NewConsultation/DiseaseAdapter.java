@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Disease;
+package com.hcare.homeopathy.hcare.NewConsultation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,25 +12,23 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.hcare.homeopathy.hcare.DiseaseInfo;
-import com.hcare.homeopathy.hcare.Diseases;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.ArrayList;
 
-class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHolder> {
+public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
 
     private final Diseases[] list;
     private final ArrayList<Diseases> arrayList;
     Context context;
 
-    public ReviewAdapter(Diseases[] list, Context context) {
+    public DiseaseAdapter(Diseases[] list, Context context) {
         this.list = list;
         this.arrayList = null;
         this.context = context;
     }
 
-    public ReviewAdapter(ArrayList<Diseases> list, Context context) {
+    public DiseaseAdapter(ArrayList<Diseases> list, Context context) {
         this.arrayList = list;
         this.list = null;
         this.context = context;
@@ -40,7 +38,7 @@ class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHolder> {
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.adapter_reviews, parent, false);
+                inflate(R.layout.adapter_disease, parent, false);
         return new MyViewHolder(itemView);
     }
 

@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare;
+package com.hcare.homeopathy.hcare.NewConsultation;
 
 public enum Diseases {
 

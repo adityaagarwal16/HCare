@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare;
+package com.hcare.homeopathy.hcare.Main;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +14,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.hcare.homeopathy.hcare.NewConsultation.DiseaseInfo;
+import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
+import com.hcare.homeopathy.hcare.R;
 
 import java.util.ArrayList;
 import java.util.EnumSet;

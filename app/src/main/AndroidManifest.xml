@@ -29,7 +29,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
 
         <activity
-            android:name=".Start.SplashScreenActivity"
+            android:name=".SplashScreenActivity"
             android:theme="@style/splashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,14 +40,14 @@
         <activity android:name=".Start.LoginActivity"
             android:theme="@style/splashScreen"/>
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".Main.MainActivity"
             android:label="HCare"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/splashScreen"/>
 
 
         <activity
-            android:name=".Disease.DiseaseActivity"
+            android:name=".NewConsultation.DiseaseActivity"
             android:theme="@style/splashScreen" />
 
         <activity
@@ -64,7 +64,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Checkout.CheckoutActivity"
+        <activity android:name=".NewConsultation.Checkout.CheckoutActivity"
             android:label="Checkout">
         </activity>
 
@@ -102,7 +102,7 @@
             android:label="Order now"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
 
-        <activity android:name=".CoronaVirusActivity"
+        <activity android:name=".Main.CoronaVirusActivity"
             android:theme="@style/splashScreen"
             android:label="CoronaVirus"/>
 

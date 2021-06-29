@@ -1,4 +1,6 @@
-package com.hcare.homeopathy.hcare;
+package com.hcare.homeopathy.hcare.NewConsultation;
+
+import com.hcare.homeopathy.hcare.R;
 
 public class DiseaseInfo {
 

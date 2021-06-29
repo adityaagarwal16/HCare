@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Checkout;
+package com.hcare.homeopathy.hcare.NewConsultation.Checkout;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

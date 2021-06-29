@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     android:id="@+id/frameLayout"
     android:background="@color/colorPrimary"
-    tools:context=".Checkout.CheckoutActivity">
+    tools:context=".NewConsultation.Checkout.CheckoutActivity">
 
 </FrameLayout>

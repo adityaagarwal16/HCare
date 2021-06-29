@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Disease;
+package com.hcare.homeopathy.hcare.NewConsultation.Reviews;
 
 import android.content.Context;
 import android.view.LayoutInflater;

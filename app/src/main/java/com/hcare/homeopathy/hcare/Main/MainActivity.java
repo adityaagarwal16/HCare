@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare;
+package com.hcare.homeopathy.hcare.Main;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -31,7 +31,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
+import com.hcare.homeopathy.hcare.NewConsultation.DiseaseAdapter;
+import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
+import com.hcare.homeopathy.hcare.R;
+import com.hcare.homeopathy.hcare.BaseActivity;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -40,14 +44,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.Diseases.diabetes;
-import static com.hcare.homeopathy.hcare.Diseases.female;
-import static com.hcare.homeopathy.hcare.Diseases.hair;
-import static com.hcare.homeopathy.hcare.Diseases.men;
-import static com.hcare.homeopathy.hcare.Diseases.piles;
-import static com.hcare.homeopathy.hcare.Diseases.renalProblems;
-import static com.hcare.homeopathy.hcare.Diseases.skin;
-import static com.hcare.homeopathy.hcare.Diseases.thyroid;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.diabetes;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.female;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.hair;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.men;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.piles;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.renalProblems;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.skin;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.thyroid;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
 
 public class MainActivity extends BaseActivity

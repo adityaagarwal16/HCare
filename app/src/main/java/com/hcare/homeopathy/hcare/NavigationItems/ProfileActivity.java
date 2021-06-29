@@ -26,7 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.MainActivity;
+import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;

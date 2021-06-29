@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare;
+package com.hcare.homeopathy.hcare.Main;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,7 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.hcare.homeopathy.hcare.Disease.DiseaseActivity;
+import com.hcare.homeopathy.hcare.NewConsultation.DiseaseActivity;
+import com.hcare.homeopathy.hcare.NewConsultation.DiseaseInfo;
+import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
+import com.hcare.homeopathy.hcare.R;
+
 import java.util.ArrayList;
 
 class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
