@@ -56,7 +56,7 @@ public class SplashScreenActivity extends BaseActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
                     long firebaseVersion  = (long) Objects.requireNonNull(
-                            dataSnapshot.child("Number").getValue());
+                            dataSnapshot.child("VersionNum").getValue());
                     if (versionCode >= firebaseVersion)
                         new Thread() {
                             @Override
