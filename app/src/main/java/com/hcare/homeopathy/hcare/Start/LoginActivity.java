@@ -22,8 +22,8 @@ import java.util.Objects;
 
 public class LoginActivity extends BaseActivity {
 
-    public static boolean OTP_FRAGMENT_OPEN = false;
-    public static PhoneAuthProvider.ForceResendingToken token;
+//    public static boolean OTP_FRAGMENT_OPEN = false;
+//    public static PhoneAuthProvider.ForceResendingToken token;
     CarouselView customCarouselView;
     int carousel_Num_of_pages = 3;
 
@@ -35,20 +35,21 @@ public class LoginActivity extends BaseActivity {
         try {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.frameLayout, new PhoneNumberFragment())
+//                    .replace(R.id.frameLayout, new PhoneNumberFragment())
+                    .replace(R.id.frameLayout, new LoginHomeFragment())
                     .commit();
         } catch (Exception ignored) {}
         carouselView();
 
     }
 
-    @Override
-    public void onBackPressed() {
-        if(OTP_FRAGMENT_OPEN)
-            openPhoneFragment();
-        else
-            super.onBackPressed();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if(OTP_FRAGMENT_OPEN)
+//            openPhoneFragment();
+//        else
+//            super.onBackPressed();
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -64,17 +65,17 @@ public class LoginActivity extends BaseActivity {
             }
     }
 
-    void openPhoneFragment() {
-        try {
-            PhoneNumberFragment fragment = new PhoneNumberFragment();
-            fragment.setEnterTransition(new
-                    Slide(Gravity.START).setDuration(200));
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.frameLayout, fragment)
-                    .commit();
-        } catch (Exception ignored) {}
-    }
+//    void openPhoneFragment() {
+//        try {
+//            PhoneNumberFragment fragment = new PhoneNumberFragment();
+//            fragment.setEnterTransition(new
+//                    Slide(Gravity.START).setDuration(200));
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.frameLayout, fragment)
+//                    .commit();
+//        } catch (Exception ignored) {}
+//    }
 
     public void carouselView() {
         customCarouselView = (CarouselView) findViewById(R.id.carouselView);
