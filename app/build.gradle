@@ -15,8 +15,8 @@ android {
         applicationId "com.hcare.homeopathy.hcare"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 60
-        versionName '3.2.1'
+        versionCode 61
+        versionName '3.2.2'
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
@@ -64,6 +64,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.google.firebase:firebase-database:20.0.0'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation "com.google.firebase:firebase-inappmessaging:20.0.0"
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     implementation 'com.google.firebase:firebase-firestore:23.0.1'
     implementation 'com.google.firebase:firebase-invites:17.0.0'
