@@ -46,7 +46,7 @@ public class OTPFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LoginActivity.OTP_FRAGMENT_OPEN = true;
+        PhoneNumberVerificationActivity.OTP_FRAGMENT_OPEN = true;
         otp = root.findViewById(R.id.otp);
 
         root.findViewById(R.id.confirm).setOnClickListener(v -> {
@@ -81,7 +81,7 @@ public class OTPFragment extends Fragment {
                 TimeUnit.SECONDS,   // Unit of timeout
                 requireActivity(),               // Activity (for callback binding)
                 mCallbacks,         // OnVerificationStateChangedCallbacks
-                LoginActivity.token);             // ForceResendingToken from callbacks
+                PhoneNumberVerificationActivity.token);             // ForceResendingToken from callbacks
     }
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks

@@ -38,6 +38,16 @@
 
     </style>
 
+    <style name="loginTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/colorSecondary</item>
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:statusBarColor">@color/colorSecondary</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="fontFamily">@font/quicksand</item>
+    </style>
+
     <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/bottomgreen</item>
         <item name="fontFamily">@font/quicksand</item>

@@ -38,7 +38,10 @@
         </activity>
 
         <activity android:name=".Start.LoginActivity"
-            android:theme="@style/splashScreen"/>
+            android:theme="@style/loginTheme"/>
+
+        <activity android:name=".Start.PhoneNumberVerificationActivity"
+            android:theme="@style/loginTheme"/>
 
         <activity android:name=".Main.MainActivity"
             android:label="HCare"

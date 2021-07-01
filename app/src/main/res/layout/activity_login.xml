@@ -3,53 +3,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
-    android:paddingBottom="20dp"
-    android:paddingStart="20dp"
-    android:paddingEnd="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="0dp"
+    android:paddingBottom="0dp"
+    android:paddingStart="0dp"
+    android:paddingEnd="0dp"
     tools:context="com.hcare.homeopathy.hcare.Start.LoginActivity">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/logo_white"
-        android:layout_width="100dp"
-        android:layout_alignTop="@id/appName"
-        android:layout_alignBottom="@id/tagLine"
-        android:layout_height="0dp"
-        android:contentDescription="@string/todo" />
-
-    <TextView
-        android:id="@+id/appName"
+    <RelativeLayout
+        android:id="@+id/relLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:text="@string/app_name"
-        android:textColor="@color/colorSecondary"
-        android:textSize="36sp"
-        android:textStyle="bold" />
+        android:layout_height="440dp"
+        android:background="@color/colorSecondary">
 
-    <TextView
-        android:id="@+id/tagLine"
-        android:layout_below="@id/appName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:paddingStart="10dp"
-        android:paddingBottom="15dp"
-        android:paddingEnd="10dp"
-        android:text="Your health Our Care"
-        android:textSize="20sp"
-        tools:ignore="HardcodedText" />
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/logo_green"
+            android:paddingEnd="20dp"
+            android:layout_width="100dp"
+            android:layout_alignTop="@id/appName"
+            android:layout_alignBottom="@id/tagLine"
+            android:layout_height="0dp"
+            android:contentDescription="@string/todo" />
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_below="@id/tagLine"
-        android:layout_centerInParent="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="30dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/app_name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tagLine"
+            android:layout_below="@id/appName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:paddingStart="30dp"
+            android:paddingBottom="15dp"
+            android:paddingEnd="10dp"
+            android:text="Your health Our Care"
+            android:textSize="20sp"
+            tools:ignore="HardcodedText" />
+
+        <com.synnapps.carouselview.CarouselView
+            android:id="@+id/carouselView"
+            android:layout_width="match_parent"
+            android:layout_height="330dp"
+            android:layout_below="@id/tagLine"
+            app:fillColor="#FFFFFFFF"
+            app:pageColor="#d3d3d3"
+            app:radius="3.5dp"
+            app:slideInterval="3000"
+            app:strokeColor="#d3d3d3"
+            app:strokeWidth="0dp" />
+
+    </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relLayout"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:paddingTop="50dp"/>
 
 
 </RelativeLayout>
