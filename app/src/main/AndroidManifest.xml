@@ -40,6 +40,9 @@
         <activity android:name=".Start.LoginActivity"
             android:theme="@style/loginTheme"/>
 
+        <activity android:name=".Start.PhoneNumberVerificationActivity"
+            android:theme="@style/loginTheme"/>
+
         <activity android:name=".Main.MainActivity"
             android:label="HCare"
             android:windowSoftInputMode="stateHidden|adjustPan"

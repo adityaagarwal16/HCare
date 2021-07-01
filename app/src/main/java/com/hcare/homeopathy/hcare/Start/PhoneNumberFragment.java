@@ -30,6 +30,7 @@ import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.hcare.homeopathy.hcare.Constants;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.concurrent.TimeUnit;
@@ -50,11 +51,12 @@ public class PhoneNumberFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LoginActivity.OTP_FRAGMENT_OPEN = false;
+        PhoneNumberVerificationActivity.OTP_FRAGMENT_OPEN = false;
         phoneNumber = root.findViewById(R.id.phoneNumber);
 
         root.findViewById(R.id.googleSignIn).setOnClickListener
                 (v -> signInWithGoogle());
+
 
         submitButton();
         setCross();
@@ -161,7 +163,7 @@ public class PhoneNumberFragment extends Fragment {
             root.findViewById(R.id.otpSentLayout)
                     .setVisibility(View.VISIBLE);
 
-            LoginActivity.token = token;
+            PhoneNumberVerificationActivity.token = token;
 
             OTPFragment fragment = new OTPFragment();
             Bundle args = new Bundle();

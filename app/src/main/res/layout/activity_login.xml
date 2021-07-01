@@ -66,13 +66,14 @@
 
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relLayout"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true" />
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relLayout"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:paddingTop="50dp"/>
 
 
 </RelativeLayout>
