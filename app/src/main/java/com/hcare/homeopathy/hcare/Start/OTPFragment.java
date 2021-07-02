@@ -39,14 +39,13 @@ public class OTPFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_otp, container, false);
+        root = inflater.inflate(R.layout.fragment_signup_otp, container, false);
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        PhoneNumberVerificationActivity.OTP_FRAGMENT_OPEN = true;
         otp = root.findViewById(R.id.otp);
 
         root.findViewById(R.id.confirm).setOnClickListener(v -> {
@@ -57,7 +56,7 @@ public class OTPFragment extends Fragment {
                                 Objects.requireNonNull(requireArguments()
                                         .getString("verificationId")),
                                         otp.getText().toString());
-                root.findViewById(R.id.circleLoader).setVisibility(View.VISIBLE);
+                requireActivity().findViewById(R.id.circleLoader).setVisibility(View.VISIBLE);
                 new SignIn(requireContext()).signInWithPhoneAuthCredential(
                         root,
                         getArguments().getString("phoneNumber"),
@@ -75,13 +74,13 @@ public class OTPFragment extends Fragment {
     private void resendVerificationCode() {
         assert getArguments() != null;
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                Objects.requireNonNull(getArguments()
+                Objects.requireNonNull(requireArguments()
                         .getString("phoneNumber")),        // Phone number to verify
                 30,                 // Timeout duration
                 TimeUnit.SECONDS,   // Unit of timeout
                 requireActivity(),               // Activity (for callback binding)
                 mCallbacks,         // OnVerificationStateChangedCallbacks
-                PhoneNumberVerificationActivity.token);             // ForceResendingToken from callbacks
+                PhoneNumberFragment.token);             // ForceResendingToken from callbacks
     }
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks

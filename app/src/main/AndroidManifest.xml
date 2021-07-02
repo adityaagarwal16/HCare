@@ -40,14 +40,10 @@
         <activity android:name=".Start.LoginActivity"
             android:theme="@style/loginTheme"/>
 
-        <activity android:name=".Start.PhoneNumberVerificationActivity"
-            android:theme="@style/loginTheme"/>
-
         <activity android:name=".Main.MainActivity"
             android:label="HCare"
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/splashScreen"/>
-
 
         <activity
             android:name=".NewConsultation.DiseaseActivity"
@@ -137,10 +133,6 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
             tools:replace="android:value" />
-
-        <meta-data
-            android:name="com.facebook.sdk.CodelessDebugLogEnabled"
-            android:value="true" />
 
         <meta-data
             android:name="preloaded_fonts"

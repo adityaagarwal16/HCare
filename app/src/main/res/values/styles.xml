@@ -44,7 +44,7 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:statusBarColor">@color/colorSecondary</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightStatusBar">false</item>
         <item name="fontFamily">@font/quicksand</item>
     </style>
 

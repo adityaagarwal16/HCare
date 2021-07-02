@@ -65,15 +65,14 @@ public class SignIn {
                                             login();
                                         else
                                             newAccount(phoneNumber,"", "");
-                                        root.findViewById(R.id.circleLoader)
-                                                .setVisibility(View.VISIBLE);
                                     }
 
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                                 });
                     else {
-                        root.findViewById(R.id.circleLoader).setVisibility(View.GONE);
+                        ((Activity) context)
+                                .findViewById(R.id.circleLoader).setVisibility(View.GONE);
                         if (task.getException()
                                 instanceof FirebaseAuthInvalidCredentialsException)
                             Toast.makeText(context,

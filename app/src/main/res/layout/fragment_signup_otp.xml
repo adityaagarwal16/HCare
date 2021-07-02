@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
-    android:paddingStart="10dp"
-    android:paddingEnd="10dp">
+    android:padding="30dp">
 
     <TextView
         android:id="@+id/header"
@@ -38,7 +36,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:autofillHints=""
         android:background="@color/colorPrimary"
         android:gravity="bottom"
         android:hint="Enter code here"
@@ -84,7 +81,7 @@
         android:id="@+id/confirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:foreground="?selectableItemBackground"
         app:cardBackgroundColor="@color/colorSecondary"
         app:cardCornerRadius="10dp"
@@ -102,23 +99,5 @@
             tools:ignore="HardcodedText" />
 
     </androidx.cardview.widget.CardView>
-
-
-    <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
-        android:id="@+id/circleLoader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/confirm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:trailingcircular_animDelay="0"
-        app:trailingcircular_animDuration="1100"
-        app:trailingcircular_bigCircleRadius="50dp"
-        app:trailingcircular_dotsColor="@color/colorSecondary"
-        app:trailingcircular_dotsRadius="8dp"
-        app:trailingcircular_noOfTrailingDots="6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.hcare.homeopathy.hcare.Orders.ShipRocket;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,8 @@ public class ShipmentTrackingAdapter extends RecyclerView.Adapter<ShipmentTracki
         ShipmentTrackActivity order  = list.get(position);
 
         try {
-            Date date = new SimpleDateFormat("yyyy-dd-MM HH:mm:ss", Locale.ENGLISH).
+            Log.i("date", order.date);
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).
                     parse(order.date);
             assert date != null;
             holder.date.setText(new SimpleDateFormat("dd MMM\nhh:mm a",

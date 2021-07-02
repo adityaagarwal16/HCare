@@ -30,7 +30,6 @@ import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.hcare.homeopathy.hcare.Constants;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.concurrent.TimeUnit;
@@ -40,23 +39,18 @@ public class PhoneNumberFragment extends Fragment {
 
     EditText phoneNumber;
     View root;
-    public static final int RC_SIGN_IN = 0;
+    public static PhoneAuthProvider.ForceResendingToken token;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_phone_number, container, false);
+        root = inflater.inflate(R.layout.fragment_signup_phone, container, false);
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        PhoneNumberVerificationActivity.OTP_FRAGMENT_OPEN = false;
         phoneNumber = root.findViewById(R.id.phoneNumber);
-
-        root.findViewById(R.id.googleSignIn).setOnClickListener
-                (v -> signInWithGoogle());
-
 
         submitButton();
         setCross();
@@ -84,20 +78,6 @@ public class PhoneNumberFragment extends Fragment {
             }
         });
 
-    }
-
-    protected void signInWithGoogle() {
-        GoogleSignInOptions gso = new GoogleSignInOptions
-                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        GoogleSignInClient mGoogleSignInClient =
-                GoogleSignIn.getClient(requireContext(), gso);
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-        root.findViewById(R.id.circleLoader).setVisibility(View.VISIBLE);
     }
 
     void setCross() {
@@ -163,7 +143,7 @@ public class PhoneNumberFragment extends Fragment {
             root.findViewById(R.id.otpSentLayout)
                     .setVisibility(View.VISIBLE);
 
-            PhoneNumberVerificationActivity.token = token;
+            PhoneNumberFragment.token = token;
 
             OTPFragment fragment = new OTPFragment();
             Bundle args = new Bundle();
@@ -179,6 +159,7 @@ public class PhoneNumberFragment extends Fragment {
                 new Handler(Looper.getMainLooper()).postDelayed(() ->
                         requireActivity().getSupportFragmentManager()
                                 .beginTransaction()
+                                .addToBackStack(null)
                                 .replace(R.id.frameLayout, fragment)
                                 .commit(), 700);
             } catch (Exception ignored) {}

@@ -151,6 +151,7 @@ public class TrackOrderActivity extends BaseActivity {
     }
 
     void getTrackingDetails() {
+        Log.i("orderID", order.getShipmentID() + "");
         if(order.getShipmentID() != 0) {
             RetrofitInterface retrofitInterface = RetrofitClient.getInstance()
                     .create(RetrofitInterface.class);

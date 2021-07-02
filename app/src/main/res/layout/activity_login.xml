@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="0dp"
-    android:paddingBottom="0dp"
-    android:paddingStart="0dp"
-    android:paddingEnd="0dp"
     tools:context="com.hcare.homeopathy.hcare.Start.LoginActivity">
 
     <RelativeLayout
         android:id="@+id/relLayout"
         android:layout_width="match_parent"
-        android:layout_height="440dp"
-        android:background="@color/colorSecondary">
+        android:layout_height="0dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"
+        android:background="@color/colorSecondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/icon"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/logo_green"
-            android:paddingEnd="20dp"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
             android:layout_alignTop="@id/appName"
             android:layout_alignBottom="@id/tagLine"
-            android:layout_height="0dp"
-            android:contentDescription="@string/todo" />
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/logo_green"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/appName"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="30dp"
-            android:paddingEnd="10dp"
-            android:paddingTop="10dp"
             android:text="@string/app_name"
             android:textColor="@color/colorPrimary"
             android:textSize="36sp"
@@ -41,39 +41,58 @@
 
         <TextView
             android:id="@+id/tagLine"
-            android:layout_below="@id/appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:paddingStart="30dp"
-            android:paddingBottom="15dp"
-            android:paddingEnd="10dp"
+            android:layout_below="@id/appName"
+            android:textColor="#808080"
             android:text="Your health Our Care"
             android:textSize="20sp"
+            android:textStyle="bold"
             tools:ignore="HardcodedText" />
-
-        <com.synnapps.carouselview.CarouselView
-            android:id="@+id/carouselView"
-            android:layout_width="match_parent"
-            android:layout_height="330dp"
-            android:layout_below="@id/tagLine"
-            app:fillColor="#FFFFFFFF"
-            app:pageColor="#d3d3d3"
-            app:radius="3.5dp"
-            app:slideInterval="3000"
-            app:strokeColor="#d3d3d3"
-            app:strokeWidth="0dp" />
 
     </RelativeLayout>
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@id/relLayout"
+        android:layout_centerInParent="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relLayout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/circleLoader"
+        android:layout_width="match_parent"
+        android:background="#68000000"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true">
+
+        <com.agrawalsuneet.dotsloader.loaders.TrailingCircularDotsLoader
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/relLayout"
-            android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
-            android:paddingTop="50dp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:trailingcircular_animDelay="0"
+            app:trailingcircular_animDuration="1100"
+            app:trailingcircular_bigCircleRadius="50dp"
+            app:trailingcircular_dotsColor="@color/colorSecondary"
+            app:trailingcircular_dotsRadius="8dp"
+            app:trailingcircular_noOfTrailingDots="6" />
 
 
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
