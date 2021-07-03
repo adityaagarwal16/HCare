@@ -117,18 +117,8 @@ public class OTPFragment extends Fragment {
         SmsRetrieverClient client = SmsRetriever.getClient(this.getActivity());
         Task<Void> task = client.startSmsRetriever();
 
-        task.addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getActivity(), "OTP auto verified successfully", Toast.LENGTH_SHORT).show();
-            }
-        });
-        task.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "Could not auto retrieve OTP", Toast.LENGTH_SHORT).show();
-            }
-        });
+        task.addOnSuccessListener(aVoid -> Toast.makeText(getActivity(), "OTP auto verified successfully", Toast.LENGTH_SHORT).show());
+        task.addOnFailureListener(e -> Toast.makeText(getActivity(), "Could not auto retrieve OTP", Toast.LENGTH_SHORT).show());
     }
 
     void setCross() {
