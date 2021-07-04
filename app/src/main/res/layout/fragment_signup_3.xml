@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="30dp"
+    android:paddingTop="15dp"
+    android:paddingStart="40dp"
+    android:paddingEnd="40dp"
     android:layout_height="match_parent"
     android:background="@color/colorSecondary">
 
     <ImageView
         android:id="@+id/image"
-        android:src="@drawable/ban1"
+        android:src="@drawable/signup_3"
+        android:layout_marginEnd="15dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
@@ -23,8 +27,10 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"
+        android:paddingTop="15dp"
         android:textColor="@color/colorPrimary"
-        android:text="medicines le lo frandzz \nhello"
-        android:textSize="20sp"/>
+        android:text="Most reliable Homeopathy Consultancy with low cost and\nquality consultations."
+        android:textSize="17sp"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

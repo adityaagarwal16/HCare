@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:paddingTop="15dp"
-    android:paddingBottom="15dp"
-    android:paddingStart="40dp"
-    android:paddingEnd="40dp"
     android:layout_height="match_parent"
     android:background="@color/colorSecondary">
 
     <ImageView
         android:id="@+id/image"
         android:adjustViewBounds="true"
-        android:src="@drawable/ban1"
+        android:src="@drawable/signup_1"
+        android:paddingBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
@@ -26,9 +25,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:paddingTop="15dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         android:layout_marginBottom="10dp"
         android:textColor="@color/colorPrimary"
-        android:text="medicines le lo frandzz \nhello"
-        android:textSize="20sp"/>
+        android:text="Best Homeopathy Doctors from around India, assigned based on your needs."
+        android:textSize="17sp"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>

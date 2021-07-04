@@ -22,8 +22,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.auth.api.phone.SmsRetriever;
 import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
@@ -54,7 +52,7 @@ public class OTPFragment extends Fragment {
         otp = root.findViewById(R.id.otp);
 
         //autGetOTP fn toasts if the message has been received or not
-        autoGetOTP();
+        //autoGetOTP();
 
         //setting the otp in the edittext
         if(getArguments()!=null) {
@@ -95,7 +93,7 @@ public class OTPFragment extends Fragment {
                 requireActivity(),               // Activity (for callback binding)
                 mCallbacks,                      // OnVerificationStateChangedCallbacks
                 PhoneNumberFragment.token);      // ForceResendingToken from callbacks
-        autoGetOTP();
+        //autoGetOTP();
     }
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks
@@ -114,7 +112,7 @@ public class OTPFragment extends Fragment {
     };
 
     private void autoGetOTP() {
-        SmsRetrieverClient client = SmsRetriever.getClient(this.getActivity());
+        SmsRetrieverClient client = SmsRetriever.getClient(requireActivity());
         Task<Void> task = client.startSmsRetriever();
 
         task.addOnSuccessListener(aVoid -> Toast.makeText(getActivity(), "OTP auto verified successfully", Toast.LENGTH_SHORT).show());
