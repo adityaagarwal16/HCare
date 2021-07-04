@@ -40,6 +40,13 @@
         <activity android:name=".Start.LoginActivity"
             android:theme="@style/loginTheme"/>
 
+        <receiver android:name=".Start.SMSBroadcastReceiver" android:exported="true"
+            android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED"/>
+            </intent-filter>
+        </receiver>
+
         <activity android:name=".Main.MainActivity"
             android:label="HCare"
             android:windowSoftInputMode="stateHidden|adjustPan"

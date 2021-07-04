@@ -20,6 +20,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -47,6 +52,15 @@ public class OTPFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         otp = root.findViewById(R.id.otp);
+
+        //autGetOTP fn toasts if the message has been received or not
+        autoGetOTP();
+
+        //setting the otp in the edittext
+        if(getArguments()!=null) {
+            String SMSotpMessage = getArguments().getString("SMS OTP Message");
+            otp.setText(SMSotpMessage);
+        }
 
         root.findViewById(R.id.confirm).setOnClickListener(v -> {
             if (!otp.getText().toString().isEmpty()) {
@@ -76,11 +90,12 @@ public class OTPFragment extends Fragment {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 Objects.requireNonNull(requireArguments()
                         .getString("phoneNumber")),        // Phone number to verify
-                30,                 // Timeout duration
-                TimeUnit.SECONDS,   // Unit of timeout
+                30,                       // Timeout duration
+                TimeUnit.SECONDS,                // Unit of timeout
                 requireActivity(),               // Activity (for callback binding)
-                mCallbacks,         // OnVerificationStateChangedCallbacks
-                PhoneNumberFragment.token);             // ForceResendingToken from callbacks
+                mCallbacks,                      // OnVerificationStateChangedCallbacks
+                PhoneNumberFragment.token);      // ForceResendingToken from callbacks
+        autoGetOTP();
     }
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks
@@ -97,6 +112,14 @@ public class OTPFragment extends Fragment {
                                @NonNull PhoneAuthProvider.ForceResendingToken token) {
         }
     };
+
+    private void autoGetOTP() {
+        SmsRetrieverClient client = SmsRetriever.getClient(this.getActivity());
+        Task<Void> task = client.startSmsRetriever();
+
+        task.addOnSuccessListener(aVoid -> Toast.makeText(getActivity(), "OTP auto verified successfully", Toast.LENGTH_SHORT).show());
+        task.addOnFailureListener(e -> Toast.makeText(getActivity(), "Could not auto retrieve OTP", Toast.LENGTH_SHORT).show());
+    }
 
     void setCross() {
         ImageView cross = root.findViewById(R.id.cross);
