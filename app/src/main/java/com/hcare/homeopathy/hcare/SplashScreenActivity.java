@@ -24,6 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Main.MainActivity;
+import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
+import com.hcare.homeopathy.hcare.NewConsultation.Constants;
+import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.R;
 import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
@@ -70,7 +73,7 @@ public class SplashScreenActivity extends BaseActivity {
                                     /* intent = new Intent(getApplicationContext(),
                                                     DiseaseActivity.class);
                                             intent.putExtra("request_type1", Diseases.thyroid);
-
+                                            */
                                             intent = new Intent(getApplicationContext(),
                                                     CheckoutActivity.class);
                                             intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
@@ -79,8 +82,8 @@ public class SplashScreenActivity extends BaseActivity {
                                             intent.putExtra("name", "hello");
                                             intent.putExtra("age", "19");
                                             intent.putExtra("sex", "male");
-
-
+                                            
+                                            /*
                                             intent = new Intent(getApplicationContext(),
                                                     ConsultationsActivity.class);
 

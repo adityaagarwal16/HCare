@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
-import com.hcare.homeopathy.hcare.NavigationItems.Faq.FaqActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.CustomerCare.HelpSupportActivity;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 import com.hcare.homeopathy.hcare.R;
 
@@ -30,8 +30,8 @@ public class OpenNavigationItems {
             case R.id.orders:
                 intent = new Intent(context, AllOrdersActivity.class);
                 break;
-            case R.id.help:
-                intent = new Intent(context, FaqActivity.class);
+            case R.id.helpSupport:
+                intent = new Intent(context, HelpSupportActivity.class);
                 break;
             case R.id.consultations:
                 intent = new Intent(context, ConsultationsActivity.class);
@@ -48,10 +48,6 @@ public class OpenNavigationItems {
                     shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
                     context.startActivity(Intent.createChooser(shareIntent, "choose one"));
                 } catch(Exception e) { e.printStackTrace(); }
-                break;
-
-            case R.id.customerCare:
-                intent = new Intent(context, CustomerCareActivity.class);
                 break;
 
             case R.id.rateUs:

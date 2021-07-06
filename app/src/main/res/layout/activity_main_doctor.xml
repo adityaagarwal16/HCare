@@ -104,7 +104,6 @@
                 android:id="@+id/getUserMessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:autofillHints=""
                 android:background="@android:color/transparent"
                 android:inputType="textMultiLine"
                 android:maxLines="5"

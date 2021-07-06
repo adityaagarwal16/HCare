@@ -24,7 +24,7 @@
     <group android:id="@+id/group3">
 
         <item
-            android:id="@+id/help"
+            android:id="@+id/helpSupport"
             android:icon="@drawable/vector_help"
             android:title="@string/helpSupport" />
 
@@ -32,11 +32,6 @@
             android:id="@+id/invite"
             android:icon="@drawable/vector_share"
             android:title="@string/invite" />
-
-        <item
-            android:id="@+id/customerCare"
-            android:icon="@drawable/vector_chat"
-            android:title="@string/customerCare" />
 
         <item
             android:id="@+id/rateUs"

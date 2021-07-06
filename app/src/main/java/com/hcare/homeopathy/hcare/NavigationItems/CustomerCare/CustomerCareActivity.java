@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.NavigationItems;
+package com.hcare.homeopathy.hcare.NavigationItems.CustomerCare;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -40,7 +40,7 @@ import java.util.Random;
 
 public class CustomerCareActivity extends BaseActivity {
 
-    private DatabaseReference mRootref;
+    private DatabaseReference rootReference;
     private String mCurrentUserId;
 
     int lastDay = 0;
@@ -52,7 +52,7 @@ public class CustomerCareActivity extends BaseActivity {
     private static final int GALLERY_PICK =1;
     private DatabaseReference h;
 
-    private StorageReference mimagestorage;
+    private StorageReference imageStorage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +62,10 @@ public class CustomerCareActivity extends BaseActivity {
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mRootref = FirebaseDatabase.getInstance().getReference();
+        rootReference = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mCurrentUserId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
-        mimagestorage = FirebaseStorage.getInstance().getReference();
+        imageStorage = FirebaseStorage.getInstance().getReference();
 
       //  mCallBtn =(ImageButton) findViewById(R.id.CallBtn);
 
@@ -80,7 +80,7 @@ public class CustomerCareActivity extends BaseActivity {
         mMessagesList.setLayoutManager(mLinearLayout);
         mMessagesList.setAdapter(mAdapter);
 
-        h = mRootref.child("Customercare").child(mCurrentUserId);
+        h = rootReference.child("Customercare").child(mCurrentUserId);
         loadMessage();
     }
 
@@ -127,7 +127,7 @@ public class CustomerCareActivity extends BaseActivity {
 
 
             DatabaseReference user_message_push =
-                    mRootref.child("Customercare").child(mCurrentUserId).push();
+                    rootReference.child("Customercare").child(mCurrentUserId).push();
 
             String push_id = user_message_push.getKey();
 
@@ -143,7 +143,7 @@ public class CustomerCareActivity extends BaseActivity {
             messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
 
             ((EditText) findViewById(R.id.getUserMessage)).setText("");
-            mRootref.updateChildren(messageUserMap);
+            rootReference.updateChildren(messageUserMap);
         }
     }
 
@@ -171,7 +171,7 @@ public class CustomerCareActivity extends BaseActivity {
             CropImage.ActivityResult result =CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK){
                 Uri resultUri = result.getUri();
-                StorageReference filepath = mimagestorage.child("Customercare")
+                StorageReference filepath = imageStorage.child("Customercare")
                         .child(mCurrentUserId).child(random()+".jpg");
                 filepath.putFile(resultUri).addOnCompleteListener(task -> {
 
@@ -182,7 +182,7 @@ public class CustomerCareActivity extends BaseActivity {
 
                         String current_user_ref = "Customercare/" + mCurrentUserId;
 
-                        DatabaseReference user_message_push = mRootref.child("Customercare").child(mCurrentUserId).push();
+                        DatabaseReference user_message_push = rootReference.child("Customercare").child(mCurrentUserId).push();
 
                         String push_id = user_message_push.getKey();
 
@@ -198,7 +198,7 @@ public class CustomerCareActivity extends BaseActivity {
                         messageUserMap.put(current_user_ref + "/" + push_id, messageMap);
 
 
-                        mRootref.updateChildren(messageUserMap);
+                        rootReference.updateChildren(messageUserMap);
 
                     }
                 });
@@ -211,7 +211,7 @@ public class CustomerCareActivity extends BaseActivity {
 
     private void uploadFile(final Uri data) {
 
-        StorageReference sRef =mimagestorage.child("Files").child(mCurrentUserId).child(random()+ ".pdf");
+        StorageReference sRef = imageStorage.child("Files").child(mCurrentUserId).child(random()+ ".pdf");
         sRef.putFile(data).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 Uri downloadUri = Objects.requireNonNull(task.getResult()).getUploadSessionUri();
@@ -220,7 +220,7 @@ public class CustomerCareActivity extends BaseActivity {
 
                 String current_user_ref = "Customercare/" + mCurrentUserId ;
 
-                DatabaseReference user_message_push = mRootref.child("Customercare").child(mCurrentUserId).push();
+                DatabaseReference user_message_push = rootReference.child("Customercare").child(mCurrentUserId).push();
 
                 String push_id = user_message_push.getKey();
 
@@ -235,7 +235,7 @@ public class CustomerCareActivity extends BaseActivity {
                 Map messageUserMap = new HashMap();
                 messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
 
-                mRootref.updateChildren(messageUserMap);
+                rootReference.updateChildren(messageUserMap);
             }
         });
 

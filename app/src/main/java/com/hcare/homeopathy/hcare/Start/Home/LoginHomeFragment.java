@@ -41,7 +41,9 @@ public class LoginHomeFragment extends Fragment {
         TabLayout tabLayout =  root.findViewById(R.id.tabLayoutSignUp);
 
         FragmentManager manager = getChildFragmentManager();
-        ViewPagerTabsAdapter adapter = new ViewPagerTabsAdapter(manager,getLifecycle());
+        ViewPagerTabsAdapter adapter =
+                new ViewPagerTabsAdapter(manager,getLifecycle());
+
         adapter.addFrag(new SignUp3Fragment());
         adapter.addFrag(new SignUp1Fragment());
         adapter.addFrag(new SignUp2Fragment());

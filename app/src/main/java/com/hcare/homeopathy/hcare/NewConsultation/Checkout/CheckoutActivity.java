@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
@@ -25,14 +24,15 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
-import static com.hcare.homeopathy.hcare.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.consultations;
 
 public class CheckoutActivity extends BaseActivity implements PaymentResultListener {
 
     String userID;
     Boolean paymentSuccessful = false;
-    private String patientName = "Username", age = "", sex = "Male";
+    static String patientName = "userName", age = "", sex = "Male", email = "", phoneNumber = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
-
 
         FirebaseDatabase.getInstance().getReference()
                 .child("Users").child(userID)
@@ -60,6 +59,12 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                 catch (Exception ignored) {}
                 try { sex = Objects.requireNonNull(dataSnapshot.
                         child("sex").getValue()).toString(); }
+                catch (Exception ignored) { }
+                try {email = (String) dataSnapshot
+                        .child("email").getValue(); }
+                catch (Exception ignored) { }
+                try { phoneNumber = (String) dataSnapshot
+                        .child("phone number").getValue(); }
                 catch (Exception ignored) { }
             }
 
@@ -90,9 +95,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                                             getIntent().getSerializableExtra(DISEASE_OBJECT));
                                     args.putString("details1",
                                             getIntent().getStringExtra("details1"));
-                                    args.putString("name", patientName);
-                                    args.putString("age", age);
-                                    args.putString("sex", sex);
 
                                     fragment.setArguments(args);
                                     transaction.replace(R.id.frameLayout, fragment).commit();
@@ -130,7 +132,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         return super.onOptionsItemSelected(item);
     }
 
-
     private void sendRequest() {
         String date = DateFormat.getDateTimeInstance().format(new Date());
         @SuppressLint("SimpleDateFormat") DateFormat dateFormat =
@@ -147,8 +148,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
             patientIssue = getIntent().getStringExtra("details1");
         } catch (Exception ignored) {}
 
-        DatabaseReference userRef = FirebaseDatabase.getInstance()
-                .getReference().child("Users").child(userID);
 
         HashMap<String, String> notifyData = new HashMap<>();
         try {
@@ -162,16 +161,19 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
             notifyData.put("Time", time);
         } catch (Exception ignored) { }
 
+       /* DatabaseReference userRef = FirebaseDatabase.getInstance()
+                .getReference().child("Users").child(userID);
+
         userRef.child("consultCount").push()
                 .child(Objects.requireNonNull(patientName))
-                .setValue(patientName);
+                .setValue(patientName);*/
 
         //temporary store
         FirebaseDatabase.getInstance().getReference().child(activeConsultations)
                 .child(userID).setValue(notifyData);
 
         //permanent store
-        FirebaseDatabase.getInstance().getReference().child("Consultations")
+        FirebaseDatabase.getInstance().getReference().child(consultations)
                 .child(userID).child(consultationID).setValue(notifyData);
 
     }
@@ -186,7 +188,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         // this will convert any number sequence into 6 character.
         return "CN" + String.format("%07d", number);
     }
-
 
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {

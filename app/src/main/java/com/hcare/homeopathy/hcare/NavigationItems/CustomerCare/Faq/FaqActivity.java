@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.NavigationItems.Faq;
+package com.hcare.homeopathy.hcare.NavigationItems.CustomerCare.Faq;
 
 import android.os.Bundle;
 import android.view.View;

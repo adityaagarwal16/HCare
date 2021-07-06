@@ -19,7 +19,7 @@ import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
 
 public class DiseaseActivity extends BaseActivity {
 
