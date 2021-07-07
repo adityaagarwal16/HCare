@@ -39,7 +39,7 @@ public class AllOrdersAdapter extends FirebaseRecyclerAdapter<
         this.context = context;
     }
 
-    @NonNull
+//    @NonNull
     @Override
     public DoctorsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new DoctorsViewHolder(LayoutInflater.from(parent.getContext())
