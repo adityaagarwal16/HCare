@@ -42,6 +42,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.shipRocket;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.shipRocketAuthToken;
 
 public class TrackOrderActivity extends BaseActivity {
 
@@ -66,26 +67,29 @@ public class TrackOrderActivity extends BaseActivity {
 
         setDeliveryDetails();
 
-        FirebaseDatabase.getInstance().getReference().child(shipRocket)
-                .addValueEventListener(new ValueEventListener() {
+        //tracking
+        if(order.getShipmentID() != 0)
+            FirebaseDatabase.getInstance().getReference().child(shipRocket)
+                    .child(shipRocketAuthToken)
+                    .addValueEventListener(new ValueEventListener() {
 
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        try {
-                            Token.authToken = Objects.requireNonNull(
-                                    snapshot.getValue(String.class));
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            try {
+                                Token.authToken = Objects.requireNonNull(
+                                        snapshot.getValue(String.class));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            getTrackingDetails();
                         }
-                        getTrackingDetails();
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
-
+                        }
+                    });
+        else trackingUnavailable();
     }
 
     void setUserDetails() {
@@ -174,60 +178,57 @@ public class TrackOrderActivity extends BaseActivity {
     }
 
     void getTrackingDetails() {
-        Log.i("orderID", order.getShipmentID() + "");
-        if(order.getShipmentID() != 0) {
-            RetrofitInterface retrofitInterface = RetrofitClient.getInstance()
-                    .create(RetrofitInterface.class);
-            Call<ShipRocketData> call = retrofitInterface.getDetails(order.getShipmentID());
-            call.enqueue(new Callback<ShipRocketData>() {
-                @Override
-                public void onResponse(@NonNull Call<ShipRocketData> call,
-                                       @NonNull Response<ShipRocketData> response) {
-                    try {
-                        if (response.body() != null) {
-                            TrackingData object = response.body().getTracking_data();
-                            Log.i("track", object.toString());
-                            if(object.getTrack_status() != 0) {
-                                try {
-                                    setTrackingRecycler(object.getShipment_track_activities());
-                                } catch (Exception ignored) { }
-                                try {
-                                    ShipmentTrack shipmentTrack = object.getShipment_track().get(0);
-                                    setTrackDetails(shipmentTrack.current_status, shipmentTrack.awb_code);
-                                } catch (Exception ignored) { }
-                                try {
-                                    findViewById(R.id.trackLinkButton).setOnClickListener(v -> {
-                                        if (object.getTrack_url() != null) {
-                                            Intent browserIntent = new Intent(Intent.ACTION_VIEW,
-                                                    Uri.parse(object.getTrack_url()));
-                                            startActivity(browserIntent);
-                                        } else {
-                                            Toast.makeText(getApplicationContext(),
-                                                    "Tracking unavailable", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+        RetrofitInterface retrofitInterface = RetrofitClient.getInstance()
+                .create(RetrofitInterface.class);
+        Call<ShipRocketData> call = retrofitInterface.getDetails(order.getShipmentID());
+        call.enqueue(new Callback<ShipRocketData>() {
+            @Override
+            public void onResponse(@NonNull Call<ShipRocketData> call,
+                                   @NonNull Response<ShipRocketData> response) {
+                try {
+                    if (response.body() != null) {
+                        TrackingData object = response.body().getTracking_data();
+                        Log.i("track", object.toString());
+                        if(object.getTrack_status() != 0) {
+                            try {
+                                setTrackingRecycler(object.getShipment_track_activities());
+                            } catch (Exception ignored) { }
+                            try {
+                                ShipmentTrack shipmentTrack = object.getShipment_track().get(0);
+                                setTrackDetails(shipmentTrack.current_status, shipmentTrack.awb_code);
+                            } catch (Exception ignored) { }
+                            try {
+                                findViewById(R.id.trackLinkButton).setOnClickListener(v -> {
+                                    if (object.getTrack_url() != null) {
+                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                                                Uri.parse(object.getTrack_url()));
+                                        startActivity(browserIntent);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(),
+                                                "Tracking unavailable", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
 
-                                } catch (Exception ignored) { }
-                                showTrackDetails();
-                            } else
-                                trackingUnavailable();
-                        } else {
+                            } catch (Exception ignored) { }
+                            showTrackDetails();
+                        } else
                             trackingUnavailable();
-                            Log.d("TAG", "onResponseCode: " + response.code());
-                            Log.d("TAG", "onResponseErrorBody: " + response.errorBody().string());
-                        }
-                    } catch (Exception e) {
+                    } else {
                         trackingUnavailable();
-                        e.printStackTrace();
+                        Log.d("TAG", "onResponseCode: " + response.code());
+                        Log.d("TAG", "onResponseErrorBody: " + response.errorBody());
                     }
+                } catch (Exception e) {
+                    trackingUnavailable();
+                    e.printStackTrace();
                 }
+            }
 
-                @Override
-                public void onFailure(@NonNull Call<ShipRocketData> call, @NonNull Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else trackingUnavailable();
+            @Override
+            public void onFailure(@NonNull Call<ShipRocketData> call, @NonNull Throwable t) {
+                Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setTrackingRecycler(List<ShipmentTrackActivity> list) {
