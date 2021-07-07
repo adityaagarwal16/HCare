@@ -44,7 +44,7 @@ public class AllOrdersActivity extends BaseActivity {
         try {
             Query mDoctorsDatabase =
                     FirebaseDatabase.getInstance().getReference()
-                            .child(customerOrders).child("J1D3n17pWLS9rfv6ql5vCpNgdTx2")
+                            .child(customerOrders).child(userID)
                             .orderByChild("time");
 
             mDoctorsDatabase.addListenerForSingleValueEvent(new ValueEventListener() {

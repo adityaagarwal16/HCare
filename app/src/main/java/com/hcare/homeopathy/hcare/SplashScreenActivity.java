@@ -27,7 +27,6 @@ import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Constants;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
-import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
@@ -115,9 +114,6 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent = new Intent(
                                             getApplicationContext(),
                                             MainActivity.class);
-                                    intent = new Intent(
-                                            getApplicationContext(),
-                                            AllOrdersActivity.class);
                                 }
                                 startActivity(intent);
                                 signInOpen = true;
