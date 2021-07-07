@@ -29,6 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
+import com.hcare.homeopathy.hcare.Main.Doctors.DoctorsActivity;
+import com.hcare.homeopathy.hcare.Main.Doctors.LimitedDoctorsAdapter;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
 import com.hcare.homeopathy.hcare.NewConsultation.DiseaseAdapter;
@@ -87,11 +90,14 @@ public class MainActivity extends BaseActivity
         setFlipper();
         setCoronaFlipper();
 
+        findViewById(R.id.viewMore).setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, DoctorsActivity.class)));
 
         findViewById(R.id.cart).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AllOrdersActivity.class)));
 
         setTopIssuesRecycler();
+        setDoctorsRecycler();
         setAllCategoriesRecycler();
         findViewById(R.id.searchDisease).setOnClickListener(V -> showOrHideFragment());
         updateUserDetails();
@@ -344,6 +350,45 @@ public class MainActivity extends BaseActivity
                 piles, skin, hair};
         mRecyclerView.setAdapter(new DiseaseAdapter(list,this));
     }
+
+    void setDoctorsRecycler() {
+        //Know your doctors
+        try {
+            ArrayList<DoctorObject> arrayList = new ArrayList<>();
+
+            DatabaseReference mDoctorsDatabase =
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Doctors");
+
+            RecyclerView mDoctorList = findViewById(R.id.doctorsRecycler);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            mDoctorList.setLayoutManager(linearLayoutManager);
+            mDoctorList.hasFixedSize();
+            String[] list = {"sCBWYaI75xZmIk8fXIaxFBJ4v2s2", "ZwthiKA5aDaXf6DNYVWVinzm0XP2", "w7sQhwsRFjN7sXBKt0Fy0p65r4o1"};
+
+            LimitedDoctorsAdapter adapter = new LimitedDoctorsAdapter(arrayList, this, list);
+
+            for(int i=0; i<list.length; i++){
+
+                mDoctorsDatabase.child(list[i]).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            arrayList.add(dataSnapshot.getValue(DoctorObject.class));
+                            adapter.notifyDataSetChanged();
+                        } catch(Exception ignored) { }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
+            }
+
+            mDoctorList.setAdapter(adapter);
+
+        } catch (Exception ignored) { }
+    }
+
 
     void setAllCategoriesRecycler() {
         //top categories
