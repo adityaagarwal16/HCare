@@ -59,7 +59,7 @@
 
         <activity
             android:name=".NavigationItems.CustomerCare.HelpSupportActivity"
-            android:theme="@style/splashScreen" />
+            android:theme="@style/loginTheme" />
 
         <activity
             android:name=".Consultations.Doctor.MainDoctorActivity"

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
+import com.hcare.homeopathy.hcare.Main.CoronaVirusActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.CustomerCare.HelpSupportActivity;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 import com.hcare.homeopathy.hcare.R;
@@ -29,6 +30,9 @@ public class OpenNavigationItems {
                 break;
             case R.id.orders:
                 intent = new Intent(context, AllOrdersActivity.class);
+                break;
+            case R.id.covid:
+                intent = new Intent(context, CoronaVirusActivity.class);
                 break;
             case R.id.helpSupport:
                 intent = new Intent(context, HelpSupportActivity.class);

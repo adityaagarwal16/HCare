@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,15 +8,60 @@
     tools:context=".NavigationItems.CustomerCare.HelpSupportActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/colorSecondary"
+        android:paddingTop="30dp"
+        app:layout_constraintBottom_toBottomOf="@+id/anchor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/todo"
+            android:src="@drawable/help_support_bg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="18dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/todo"
+            android:onClick="Back"
+            android:src="@drawable/vector_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#ffffff" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/anchor"
+        app:layout_constraintVertical_bias="0.25"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_above="@id/footer"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/back"
-        android:padding="25dp">
+        android:padding="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
+        app:layout_constraintTop_toBottomOf="@+id/anchor">
 
         <TextView
-            android:id="@+id/header"
+            android:id="@+id/hello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -37,42 +82,42 @@
             android:textSize="21sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header"
+            app:layout_constraintTop_toBottomOf="@+id/hello"
             tools:ignore="HardcodedText" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/customerCareCard"
-            android:onClick="customerCareCard"
-            android:foreground="?selectableItemBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_width="0dp"
+            android:foreground="?selectableItemBackground"
+            android:onClick="customerCareCard"
             app:cardCornerRadius="10dp"
-            android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/center"
             app:layout_constraintEnd_toStartOf="@+id/center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/subHeader">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:background="#FFC107"
-                android:padding="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#FFC107"
+                android:padding="10dp">
 
                 <ImageView
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    android:contentDescription="@string/todo"
                     android:padding="10dp"
                     android:src="@drawable/vector_customer_care"
                     app:layout_constraintBottom_toTopOf="@+id/header1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="#ffffff"
-                    android:contentDescription="@string/todo" />
+                    app:tint="#ffffff" />
 
                 <TextView
                     android:id="@+id/header1"
@@ -80,8 +125,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Customer Care"
-                    android:textSize="16sp"
                     android:textColor="?android:textColorPrimaryInverse"
+                    android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/subHeader1"
                     app:layout_constraintStart_toStartOf="parent"
@@ -92,7 +137,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Chat with us"
-                    android:textStyle="bold"                    android:textColor="?android:textColorSecondaryInverse"
+                    android:textColor="?android:textColorSecondaryInverse"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="HardcodedText" />
@@ -104,13 +150,13 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/faqCard"
-            android:onClick="faqCard"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="5dp"
             android:foreground="?selectableItemBackground"
+            android:onClick="faqCard"
             app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toTopOf="@+id/center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -141,7 +187,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="FAQs" android:textColor="?android:textColorPrimaryInverse"
+                    android:text="FAQs"
+                    android:textColor="?android:textColorPrimaryInverse"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@+id/subHeader2"
@@ -153,7 +200,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Frequently asked questions"
-                    android:textStyle="bold"                    android:textColor="?android:textColorSecondaryInverse"
+                    android:textColor="?android:textColorSecondaryInverse"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="HardcodedText" />
@@ -165,14 +213,14 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/whatsappCard"
-            android:onClick="whatsappCard"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
             android:foreground="?selectableItemBackground"
+            android:onClick="whatsappCard"
             app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/center"
@@ -195,7 +243,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/header3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/header3"
@@ -229,15 +277,15 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/callCard"
-            android:onClick="callCard"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="5dp"
-            android:foreground="?selectableItemBackground"
-            app:cardCornerRadius="10dp"
             android:layout_marginBottom="5dp"
+            android:foreground="?selectableItemBackground"
+            android:onClick="callCard"
+            app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/center"
@@ -281,7 +329,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Talk to us directly"
-                    android:textStyle="bold" android:textColor="?android:textColorSecondaryInverse"
+                    android:textColor="?android:textColorSecondaryInverse"
+                    android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="HardcodedText" />
@@ -303,29 +352,20 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:layout_margin="16dp"
-        android:id="@+id/back"
-        android:onClick="Back"
-        android:background="?selectableItemBackgroundBorderless"
-        android:src="@drawable/vector_back"
-        android:contentDescription="@string/todo"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:tint="@color/colorPrimaryInverse" />
-
     <TextView
         android:id="@+id/footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:autoLink="email"
         android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp"
         android:text="@string/emailLink"
         android:textColorLink="#989898"
-        android:autoLink="email"
-        android:layout_centerInParent="true"
         android:textStyle="bold"
-        android:padding="20dp"
-        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="HardcodedText" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

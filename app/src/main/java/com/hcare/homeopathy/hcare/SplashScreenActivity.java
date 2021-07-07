@@ -74,16 +74,16 @@ public class SplashScreenActivity extends BaseActivity {
                                                     DiseaseActivity.class);
                                             intent.putExtra("request_type1", Diseases.thyroid);
                                             */
-                                            intent = new Intent(getApplicationContext(),
-                                                    CheckoutActivity.class);
-                                            intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
-                                            intent.putExtra("details1", "hello");
-                                            intent.putExtra("request_type1", "Thyroid");
-                                            intent.putExtra("name", "hello");
-                                            intent.putExtra("age", "19");
-                                            intent.putExtra("sex", "male");
+                                    intent = new Intent(getApplicationContext(),
+                                            CheckoutActivity.class);
+                                    intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
+                                    intent.putExtra("details1", "hello");
+                                    intent.putExtra("request_type1", "Thyroid");
+                                    intent.putExtra("name", "hello");
+                                    intent.putExtra("age", "19");
+                                    intent.putExtra("sex", "male");
                                             
-                                            /*
+                                    /*
                                             intent = new Intent(getApplicationContext(),
                                                     ConsultationsActivity.class);
 

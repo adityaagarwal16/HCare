@@ -1,5 +1,6 @@
 package com.hcare.homeopathy.hcare.OrderTreatment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -23,11 +24,14 @@ import com.hcare.homeopathy.hcare.R;
 import java.text.MessageFormat;
 import java.util.Objects;
 
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.orderMedicineCost;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.pricing;
+
 public class CartActivity extends BaseActivity {
 
     String doctorID, userID;
 
-    static final int ONE_MEDICINE_COST = 240, DELIVERY_FEE = 0;
+    int ONE_MEDICINE_COST = 240, DELIVERY_FEE = 0;
     int total, discount;
 
     @Override
@@ -43,20 +47,38 @@ public class CartActivity extends BaseActivity {
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
 
-        FirebaseDatabase.getInstance()
-                .getReference().child("PrescribedMedicine")
-                .child(Objects.requireNonNull(doctorID)).child(userID)
-                .addValueEventListener(new ValueEventListener() {
-            @Override
+        DatabaseReference rootReference =  FirebaseDatabase.getInstance()
+                .getReference();
+
+        rootReference.child(pricing)
+                .child(orderMedicineCost).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                setFields(dataSnapshot);
+                try {
+                    int val = Objects.requireNonNull(
+                            dataSnapshot.getValue(Integer.class));
+                    if(val > 150 && val < 1000)
+                        ONE_MEDICINE_COST = val;
+                } catch(NullPointerException ignored) {}
+                rootReference.child("PrescribedMedicine")
+                        .child(Objects.requireNonNull(doctorID)).child(userID)
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                setFields(dataSnapshot);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
+
 
         setRecycler();
         setHeader();

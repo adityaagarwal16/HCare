@@ -3,7 +3,6 @@ package com.hcare.homeopathy.hcare.NewConsultation;
 public class Constants {
 
     public static final int
-            CONSULTATION_FEE = 199,
             FIRST_100 = 100,
             DISCOUNT = 50;
 

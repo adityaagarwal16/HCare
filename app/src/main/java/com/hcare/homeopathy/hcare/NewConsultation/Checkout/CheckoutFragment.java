@@ -1,18 +1,13 @@
 package com.hcare.homeopathy.hcare.NewConsultation.Checkout;
 
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -24,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.NewConsultation.DiseaseInfo;
@@ -36,24 +32,25 @@ import org.json.JSONObject;
 import java.text.MessageFormat;
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.CONSULTATION_FEE;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.consultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.pricing;
+import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.email;
+import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.patientName;
+import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.phoneNumber;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISCOUNT;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.FIRST_100;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.FIRST_100_COUPON;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.RS50_COUPON;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.consultations;
-import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.email;
-import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.patientName;
-import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.phoneNumber;
 
 public class CheckoutFragment extends Fragment {
 
     View root;
     private int totalAmount = 0;
     String patientIssue;
-    String userID = "";
-    View summaryBoxExp;
+
+
+    int CONSULTATION_FEE = 199;
 
     @Nullable
     @Override
@@ -71,29 +68,46 @@ public class CheckoutFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         patientIssue = requireArguments().getString("details1");
 
-        userID = Objects.requireNonNull(
+        String userID = Objects.requireNonNull(
                 FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        FirebaseDatabase.getInstance()
-                .getReference().child(consultations).child(userID)
-                .addValueEventListener(new ValueEventListener() {
+        DatabaseReference rootReference = FirebaseDatabase.getInstance()
+                .getReference();
+
+        rootReference.child(pricing)
+                .child(consultations).addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if ((int) dataSnapshot.getChildrenCount() < 1) {
-                    setFields(FIRST_100, FIRST_100_COUPON);
-                    totalAmount = CONSULTATION_FEE - FIRST_100;
-                } else {
-                    setFields(DISCOUNT, RS50_COUPON);
-                    totalAmount = CONSULTATION_FEE - DISCOUNT;
-                }
-            }
+                        try {
+                            int val = Objects.requireNonNull(
+                                    dataSnapshot.getValue(Integer.class));
+                            if(val > 100 && val < 500)
+                                CONSULTATION_FEE = val;
+                        } catch(NullPointerException ignored) {}
+                        rootReference.child(consultations).child(userID)
+                                .addValueEventListener(new ValueEventListener() {
+                                    @SuppressLint("SetTextI18n")
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        if ((int) dataSnapshot.getChildrenCount() < 1) {
+                                            setFields(FIRST_100, FIRST_100_COUPON);
+                                            totalAmount = CONSULTATION_FEE - FIRST_100;
+                                        } else {
+                                            setFields(DISCOUNT, RS50_COUPON);
+                                            totalAmount = CONSULTATION_FEE - DISCOUNT;
+                                        }
+                                    }
 
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
-        });
+                                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                                });
+
+                    }
+
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
 
         root.findViewById(R.id.payNowButton).setOnClickListener(v -> startPayment());
 
-        summaryBoxExp = root.findViewById(R.id.summaryBoxExpanded);
+        View summaryBoxExp = root.findViewById(R.id.summaryBoxExpanded);
         TextView breakup = root.findViewById(R.id.viewBreakupText);
 
         root.findViewById(R.id.summaryLayout).setOnTouchListener((v, event) -> {

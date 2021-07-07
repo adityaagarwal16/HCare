@@ -1,5 +1,6 @@
 package com.hcare.homeopathy.hcare.Main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,11 +25,13 @@ import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.coronaMedicineCost;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.coronaVirus;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.pricing;
 
 public class CoronaVirusActivity extends AppCompatActivity {
 
-    static final int ONE_MEDICINE_COST = 300, DELIVERY_FEE = 0;
+    int ONE_MEDICINE_COST = 300, DELIVERY_FEE = 0;
     int total, discount;
 
     @Override
@@ -36,24 +39,40 @@ public class CoronaVirusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_corona_virus);
 
-        FirebaseDatabase.getInstance()
-                .getReference().child("PrescribedMedicine")
-                .child(Objects.requireNonNull(coronaVirus))
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                            Log.i("data", child.toString());
-                        }
-                        setFields(dataSnapshot);
-                    }
+        DatabaseReference rootReference =  FirebaseDatabase.getInstance()
+                .getReference();
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+        rootReference.child(pricing)
+                .child(coronaMedicineCost).addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    int val = Objects.requireNonNull(
+                            dataSnapshot.getValue(Integer.class));
+                    if(val > 150 && val < 1000)
+                        ONE_MEDICINE_COST = val;
+                } catch(NullPointerException ignored) {}
+                rootReference.child("PrescribedMedicine")
+                        .child(coronaVirus)
+                        .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                    Log.i("data", child.toString());
+                                }
+                                setFields(dataSnapshot);
+                            }
 
-                    }
-                });
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                            }
+                        });
+
+            }
+
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
         setRecycler();
     }
 

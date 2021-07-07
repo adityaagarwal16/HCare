@@ -19,6 +19,11 @@
             android:id="@+id/consultations"
             android:icon="@drawable/vector_consultations"
             android:title="@string/consultations" />
+
+        <item
+            android:id="@+id/covid"
+            android:icon="@drawable/vector_corona"
+            android:title="@string/covid" />
     </group>
 
     <group android:id="@+id/group3">

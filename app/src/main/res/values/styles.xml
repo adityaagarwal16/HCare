@@ -43,8 +43,8 @@
         <item name="colorPrimary">#FFFFFF</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:statusBarColor">@color/colorSecondary</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="fontFamily">@font/quicksand</item>
     </style>
 
