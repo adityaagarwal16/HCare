@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcare.homeopathy.hcare.R;
@@ -53,7 +54,10 @@ public class ShipmentTrackingAdapter extends RecyclerView.Adapter<ShipmentTracki
         else if(order.activity.contains("Dispatched  - "))
             order. activity = order.activity.replace("Dispatched - ", "");
 
-        holder.activity.setText(order.activity);
+        if(order.activity.isEmpty())
+            holder.layout.setMaxHeight(0);
+        else
+            holder.activity.setText(order.activity);
     }
 
     @Override
@@ -64,9 +68,11 @@ public class ShipmentTrackingAdapter extends RecyclerView.Adapter<ShipmentTracki
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView date, location, activity;
+        ConstraintLayout layout;
 
         public MyViewHolder(View view) {
             super(view);
+            layout = view.findViewById(R.id.layout);
             date = view.findViewById(R.id.date);
             location = view.findViewById(R.id.location);
             activity = view.findViewById(R.id.activity);

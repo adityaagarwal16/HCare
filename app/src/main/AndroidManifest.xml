@@ -53,6 +53,14 @@
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/splashScreen"/>
 
+     <!--   <activity
+            android:name=".Main.Doctors.DoctorsDetailsActivity"
+            android:theme="@style/splashScreen" />
+
+        <activity
+            android:name=".Main.Doctors.DoctorsActivity"
+            android:theme="@style/splashScreen" />-->
+
         <activity
             android:name=".NewConsultation.DiseaseActivity"
             android:theme="@style/splashScreen" />

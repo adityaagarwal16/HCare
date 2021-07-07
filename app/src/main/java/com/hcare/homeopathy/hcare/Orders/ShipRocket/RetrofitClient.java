@@ -14,9 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit;
-    //FIX token issue
-    private static final String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE1ODUzMjcsImlzcyI6Imh0dHBzOi8vYXBpdjIuc2hpcHJvY2tldC5pbi92MS9leHRlcm5hbC9hdXRoL2xvZ2luIiwiaWF0IjoxNjI0NzI5MDg1LCJleHAiOjE2MjU1OTMwODUsIm5iZiI6MTYyNDcyOTA4NSwianRpIjoiYk9YZmo2aFIwblRVb1pXUyJ9.gLXXL8N28biiNn8tP7TN7_i-T2lJi9VwymI8UJo6_AE";
-
     private static final String Url = "https://apiv2.shiprocket.in/v1/external/";
 
     public static Retrofit getInstance() {
@@ -44,7 +41,7 @@ public class RetrofitClient {
             //rewrite the request to add bearer token
             Request newRequest=chain.request().newBuilder()
                     .header("Authorization",
-                            "Bearer "+ token)
+                            "Bearer "+ Token.authToken)
                     .build();
 
             return chain.proceed(newRequest);

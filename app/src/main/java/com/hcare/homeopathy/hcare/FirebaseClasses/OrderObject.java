@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class OrderObject implements Serializable {
 
-    String  address, userID, city, state, doctorID, OrderID;
-    long time, shipRocketOrderID, shipmentID, status;
+    String  address, userID, city, state, doctorID, OrderID, status;
+    long time, shipRocketOrderID, shipmentID;
     int pinCode;
     float amount;
 
-    public long getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(long status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

@@ -26,6 +26,7 @@ import com.hcare.homeopathy.hcare.Orders.ShipRocket.ShipRocketData;
 import com.hcare.homeopathy.hcare.Orders.ShipRocket.ShipmentTrack;
 import com.hcare.homeopathy.hcare.Orders.ShipRocket.ShipmentTrackActivity;
 import com.hcare.homeopathy.hcare.Orders.ShipRocket.ShipmentTrackingAdapter;
+import com.hcare.homeopathy.hcare.Orders.ShipRocket.Token;
 import com.hcare.homeopathy.hcare.Orders.ShipRocket.TrackingData;
 import com.hcare.homeopathy.hcare.R;
 
@@ -39,6 +40,8 @@ import java.util.Objects;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.shipRocket;
 
 public class TrackOrderActivity extends BaseActivity {
 
@@ -62,7 +65,27 @@ public class TrackOrderActivity extends BaseActivity {
         } catch (Exception ignored) {}
 
         setDeliveryDetails();
-        getTrackingDetails();
+
+        FirebaseDatabase.getInstance().getReference().child(shipRocket)
+                .addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        try {
+                            Token.authToken = Objects.requireNonNull(
+                                    snapshot.getValue(String.class));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        getTrackingDetails();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
     }
 
     void setUserDetails() {
@@ -191,7 +214,7 @@ public class TrackOrderActivity extends BaseActivity {
                         } else {
                             trackingUnavailable();
                             Log.d("TAG", "onResponseCode: " + response.code());
-                            Log.d("TAG", "onResponseErrorBody: " + response.errorBody());
+                            Log.d("TAG", "onResponseErrorBody: " + response.errorBody().string());
                         }
                     } catch (Exception e) {
                         trackingUnavailable();

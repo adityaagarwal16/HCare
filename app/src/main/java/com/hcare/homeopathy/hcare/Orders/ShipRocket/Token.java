@@ -1,0 +1,7 @@
+package com.hcare.homeopathy.hcare.Orders.ShipRocket;
+
+public class Token {
+
+    public static String authToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOjE1ODUzMjcsImlzcyI6Imh0dHBzOi8vYXBpdjIuc2hpcHJvY2tldC5pbi92MS9leHRlcm5hbC9hdXRoL2xvZ2luIiwiaWF0IjoxNjI1NjYzOTQzLCJleHAiOjE2MjY1Mjc5NDMsIm5iZiI6MTYyNTY2Mzk0MywianRpIjoiMnJhMGdsV0Z0VXY0Q0ZZMCJ9.bqUBZr9JiSGFqn3-6H-FQ0XB2HaFVERYYfuL5WOa-R0";
+
+}

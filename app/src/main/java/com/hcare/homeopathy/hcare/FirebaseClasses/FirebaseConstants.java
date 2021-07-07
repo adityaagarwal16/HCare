@@ -7,7 +7,8 @@ public class FirebaseConstants {
             consultations = "Consultations",
             newOrder = "neworder",
             pricing = "Pricing",
-            customerOrders = "CustomerOrders";
+            customerOrders = "CustomerOrders",
+            shipRocket = "ShipRocket";
 
 
     public static final String coronaVirus = "coronaVirus";
@@ -15,4 +16,7 @@ public class FirebaseConstants {
     public static final String
             orderMedicineCost = "OneOrderMedicineCost",
             coronaMedicineCost = "OneCoronaMedicineCost";
+
+    public static final String
+            shipRocketAuthToken = "AuthToken";
 }
