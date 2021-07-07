@@ -337,8 +337,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="vector_faq" />
-                            <entry key="sourceFile" value="C:\Users\adity\Downloads\12429941861537184101.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="vector_doctor_female" />
+                            <entry key="sourceFile" value="F:\HCare\design\Doctor women (1).svg" />
                           </map>
                         </option>
                       </PersistentState>
