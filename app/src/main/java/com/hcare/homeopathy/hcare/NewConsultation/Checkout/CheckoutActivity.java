@@ -2,6 +2,7 @@ package com.hcare.homeopathy.hcare.NewConsultation.Checkout;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 

@@ -16,6 +16,8 @@ import com.hcare.homeopathy.hcare.R;
 
 import java.util.ArrayList;
 
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
+
 public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHolder> {
 
     private final Diseases[] list;
@@ -61,7 +63,7 @@ public class DiseaseAdapter extends RecyclerView.Adapter<DiseaseAdapter.MyViewHo
         Diseases finalDisease = disease;
         holder.card.setOnClickListener(v -> {
             Intent intent = new Intent(context, DiseaseActivity.class);
-            intent.putExtra("request_type1", finalDisease);
+            intent.putExtra(DISEASE_OBJECT, finalDisease);
             context.startActivity(intent);
         });
     }

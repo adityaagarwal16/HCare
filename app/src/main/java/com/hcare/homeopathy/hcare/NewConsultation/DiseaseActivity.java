@@ -32,7 +32,7 @@ public class DiseaseActivity extends BaseActivity {
         setContentView(R.layout.activity_disease);
 
         disease = new DiseaseInfo((Diseases)
-                getIntent().getSerializableExtra("request_type1"));
+                getIntent().getSerializableExtra(DISEASE_OBJECT));
 
         setToolbar();
         setContent();
@@ -48,7 +48,7 @@ public class DiseaseActivity extends BaseActivity {
                 Intent regIntent = new Intent(DiseaseActivity.this,
                         CheckoutActivity.class);
                 regIntent.putExtra(DISEASE_OBJECT,
-                        getIntent().getSerializableExtra("request_type1"));
+                        getIntent().getSerializableExtra(DISEASE_OBJECT));
                 regIntent.putExtra("details1", mChatMessageView.getText().toString());
                 startActivity(regIntent);
             }

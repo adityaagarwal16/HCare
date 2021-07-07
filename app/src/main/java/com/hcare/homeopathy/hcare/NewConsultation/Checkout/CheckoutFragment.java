@@ -74,6 +74,8 @@ public class CheckoutFragment extends Fragment {
         DatabaseReference rootReference = FirebaseDatabase.getInstance()
                 .getReference();
 
+        setHeaders();
+
         rootReference.child(pricing)
                 .child(consultations).addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -127,18 +129,16 @@ public class CheckoutFragment extends Fragment {
             }
             return true;
         });
-        setHeaders();
     }
 
     void setHeaders() {
+        DiseaseInfo disease = new DiseaseInfo((Diseases)
+                requireArguments().getSerializable(DISEASE_OBJECT));
+
+      /*  ((TextView) root.findViewById(R.id.header)).setText
+                (MessageFormat.format("{0} {1}", "Consultation for",
+                        patientName.substring(0, 1).toUpperCase() + patientName.substring(1)));*/
         try {
-            DiseaseInfo disease = new DiseaseInfo((Diseases)
-                    requireArguments().getSerializable(DISEASE_OBJECT));
-
-            ((TextView) root.findViewById(R.id.header)).setText
-                    (MessageFormat.format("{0} {1}", "Consultation for",
-                            patientName.substring(0, 1).toUpperCase() + patientName.substring(1)));
-
             ((TextView) root.findViewById(R.id.diseaseName))
                     .setText(disease.getDiseaseName());
             ((ImageView) root.findViewById(R.id.diseaseImage))
@@ -147,7 +147,8 @@ public class CheckoutFragment extends Fragment {
             if(!patientIssue.equals(""))
                 ((TextView) root.findViewById(R.id.patientIssue))
                         .setText(patientIssue);
-        } catch(Exception ignored) { }
+        } catch(Exception e) { e.printStackTrace(); }
+
     }
 
     void setFields(int discount, String coupon) {

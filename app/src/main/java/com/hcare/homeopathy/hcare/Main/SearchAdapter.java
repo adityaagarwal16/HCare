@@ -18,6 +18,8 @@ import com.hcare.homeopathy.hcare.R;
 
 import java.util.ArrayList;
 
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
+
 class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 
     private final ArrayList<Diseases> arrayList;
@@ -47,7 +49,7 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyViewHolder> {
 
         holder.layout.setOnClickListener(v -> {
             Intent intent = new Intent(context, DiseaseActivity.class);
-            intent.putExtra("request_type1", disease);
+            intent.putExtra(DISEASE_OBJECT, disease);
             context.startActivity(intent);
         });
 
