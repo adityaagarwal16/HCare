@@ -53,21 +53,9 @@
             android:windowSoftInputMode="stateHidden|adjustPan"
             android:theme="@style/splashScreen"/>
 
-     <!--   <activity
-            android:name=".Main.Doctors.DoctorsDetailsActivity"
-            android:theme="@style/splashScreen" />
-
-        <activity
-            android:name=".Main.Doctors.DoctorsActivity"
-            android:theme="@style/splashScreen" />-->
-
         <activity
             android:name=".NewConsultation.DiseaseActivity"
             android:theme="@style/splashScreen" />
-
-        <activity
-            android:name=".NavigationItems.CustomerCare.HelpSupportActivity"
-            android:theme="@style/loginTheme" />
 
         <activity
             android:name=".Consultations.Doctor.MainDoctorActivity"
@@ -94,15 +82,6 @@
         <activity android:name=".Orders.TrackOrderActivity"
             android:theme="@style/splashScreen"
             android:label="Order">
-        </activity>
-
-        <activity android:name=".NavigationItems.CustomerCare.Faq.FaqActivity"
-            android:theme="@style/splashScreen"
-            android:label="FAQ" />
-
-        <activity
-            android:name=".NavigationItems.CustomerCare.CustomerCareActivity"
-            android:label="Customer care">
         </activity>
 
         <activity
