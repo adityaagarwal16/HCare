@@ -55,11 +55,11 @@
 
         <activity
             android:name=".Main.Doctors.DoctorsDetailsActivity"
-            android:theme="@style/splashScreen" />
+            android:label="About the Doctor"/>
 
         <activity
             android:name=".Main.Doctors.DoctorsActivity"
-            android:theme="@style/splashScreen" />
+            android:label="HCare Doctors"/>
 
         <activity
             android:name=".NewConsultation.DiseaseActivity"

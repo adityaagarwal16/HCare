@@ -208,7 +208,6 @@ public class TrackOrderActivity extends BaseActivity {
                                                 "Tracking unavailable", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-
                             } catch (Exception ignored) { }
                             showTrackDetails();
                         } else

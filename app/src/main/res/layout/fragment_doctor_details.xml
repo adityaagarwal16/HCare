@@ -8,7 +8,7 @@
     android:background="@color/colorPrimary"
     android:clipToPadding="false"
     android:paddingBottom="30dp"
-    tools:context="com.hcare.homeopathy.hcare.Consultations.Doctor.DoctorDetailsFragment">
+    tools:context="com.hcare.homeopathy.hcare.Main.Doctors.DoctorDetailsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,12 +16,13 @@
 
         <RelativeLayout
             android:id="@+id/header"
-            android:background="@color/colorSecondary"
             android:layout_width="match_parent"
             android:layout_height="275dp">
 
             <ImageView
                 android:id="@+id/background"
+                android:src="@drawable/vector_doctor_male"
+                android:background="@color/colorSecondary"
                 android:layout_centerInParent="true"
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
@@ -34,7 +35,6 @@
                 android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:background="#3B000000"
-                android:visibility="gone"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/todo" />
 
@@ -45,7 +45,7 @@
                 android:layout_width="120dp"
                 android:layout_centerVertical="true"
                 android:layout_height="120dp"
-                android:src="@drawable/vector_person" />
+                android:src="@drawable/vector_doctor_male" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"

@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Consultations.Doctor;
+package com.hcare.homeopathy.hcare.Main.Doctors;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -17,16 +17,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.text.MessageFormat;
 import java.util.Objects;
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 
 public class DoctorDetailsFragment extends Fragment {
 
     View root;
+    DoctorObject doctor;
 
     @Nullable
     @Override
@@ -52,9 +56,9 @@ public class DoctorDetailsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    setImage(Objects.requireNonNull(
-                            dataSnapshot.child("image").getValue()).toString());
-                    setFields(dataSnapshot);
+                    doctor = dataSnapshot.getValue(DoctorObject.class);
+                    setImage();
+                    setFields();
                 } catch(Exception ignored) { }
             }
 
@@ -65,29 +69,28 @@ public class DoctorDetailsFragment extends Fragment {
     }
 
     @SuppressLint("SetTextI18n")
-    void setFields (DataSnapshot dataSnapshot) {
+    void setFields () {
+        ((TextView) root.findViewById(R.id.degree)).setText(doctor.getQualification());
+        ((TextView) root.findViewById(R.id.aboutTheDoctor)).setText(doctor.getAboutYourself());
+        ((TextView) root.findViewById(R.id.registration)).setText(doctor.getRegisterID());
+        ((TextView) root.findViewById(R.id.date)).setText(MessageFormat.format("{0} years",
+                        doctor.getExperience()));
+        ((TextView) root.findViewById(R.id.languages)).setText(doctor.getLanguages());
 
-        ((TextView) root.findViewById(R.id.degree))
-                .setText(dataSnapshot.child("qualification").getValue().toString());
-        ((TextView) root.findViewById(R.id.aboutTheDoctor))
-                .setText(dataSnapshot.child("about yourself").getValue().toString());
-        ((TextView) root.findViewById(R.id.registration))
-                .setText(dataSnapshot.child("register id").getValue().toString());
-        ((TextView) root.findViewById(R.id.date))
-                .setText(dataSnapshot.child("experience").getValue().toString());
-        ((TextView) root.findViewById(R.id.languages))
-                .setText(dataSnapshot.child("languages").getValue().toString());
-
-        if (dataSnapshot.child("Availabilty")
-                .getValue().toString().equals("NOT AVAILABLE"))
+        if (doctor.getAvailability().equals("NOT AVAILABLE"))
             ((TextView) root.findViewById(R.id.status)).setText("Not available");
 
     }
 
-    void setImage(String image) {
-        Picasso.get().load(image)
+    void setImage() {
+        int drawable = R.drawable.vector_doctor_male;
+        if(doctor.getSex().equals("Female"))
+            drawable = R.drawable.vector_doctor_female;
+
+        int finalDrawable = drawable;
+        Picasso.get().load(doctor.getImage())
                 .networkPolicy(NetworkPolicy.OFFLINE)
-                .placeholder(R.drawable.vector_person)
+                .placeholder(drawable)
                 .into(root.findViewById(R.id.profilePicture),
                         new Callback() {
                             @Override
@@ -96,13 +99,13 @@ public class DoctorDetailsFragment extends Fragment {
 
                             @Override
                             public void onError(Exception e) {
-                                Picasso.get().load(image).placeholder(R.drawable.vector_person)
-                                        .into((ImageView) root.findViewById(R.id.profilePicture));
+                                ((ImageView) root.findViewById(R.id.profilePicture))
+                                        .setImageResource(finalDrawable);
                             }
                         });
 
         Picasso.get()
-                .load(image)
+                .load(doctor.getImage())
                 .transform(new BlurTransformation
                         (requireContext(), 25, 1))
                 .networkPolicy(NetworkPolicy.OFFLINE)
@@ -110,17 +113,12 @@ public class DoctorDetailsFragment extends Fragment {
                         new Callback() {
 
                             @Override
-                            public void onSuccess() {
-                                root.findViewById(R.id.tint).setVisibility(View.VISIBLE);
-                            }
+                            public void onSuccess() { }
 
                             @Override
                             public void onError(Exception e) {
-                                Picasso.get().load(image)
-                                        .transform(new BlurTransformation(
-                                                requireContext(), 25, 1))
-                                        .into((ImageView) root.findViewById(R.id.background));
-                                root.findViewById(R.id.tint).setVisibility(View.VISIBLE);
+                                ((ImageView) root.findViewById(R.id.background))
+                                        .setImageResource(finalDrawable);
                             }
                         });
     }

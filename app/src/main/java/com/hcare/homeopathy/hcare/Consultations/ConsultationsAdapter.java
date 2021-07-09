@@ -164,7 +164,7 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
         public void setDoctorImage(final String thumb_image) {
             if (!thumb_image.equals("doctor image")) {
                 Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
-                        .placeholder(R.drawable.vector_image_doctor)
+                        .placeholder(R.drawable.vector_doctor_male)
                         .into(mView.findViewById(R.id.doctorImage),
                                 new Callback() {
                                     @Override
@@ -179,7 +179,7 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
                                 });
             } else {
                 ((ImageView)  mView.findViewById(R.id.doctorImage))
-                        .setImageResource(R.drawable.vector_image_doctor);
+                        .setImageResource(R.drawable.vector_doctor_male);
             }
         }
     }

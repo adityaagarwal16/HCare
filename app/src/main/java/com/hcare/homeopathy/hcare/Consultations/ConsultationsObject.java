@@ -4,16 +4,14 @@ public class ConsultationsObject {
 
     public String name;
     public String image;
-    public String thumb_image;
 
     public ConsultationsObject() {
 
     }
 
-    public ConsultationsObject(String name, String image, String thumb_image) {
+    public ConsultationsObject(String name, String image) {
         this.name = name;
         this.image = image;
-        this.thumb_image = thumb_image;
     }
 
     public String getName() {

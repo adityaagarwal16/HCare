@@ -26,23 +26,31 @@ import java.util.Objects;
 
 
 public class DoctorsActivity extends BaseActivity {
+
+    int DOCTORS_TO_DISPLAY = 22;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doctors);
+        setContentView(R.layout.activity_recycler);
+
+        Objects.requireNonNull(getSupportActionBar())
+                .setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setRecycler();
-        setToolbar();
     }
 
     private void setRecycler() {
         try {
             Query mDoctorsDatabase =
                     FirebaseDatabase.getInstance().getReference()
-                            .child("Doctors");
+                            .child("Doctors").orderByChild("experience").limitToLast(DOCTORS_TO_DISPLAY);
 
             RecyclerView mDoctorList = findViewById(R.id.recycler);
-            mDoctorList.setLayoutManager(new LinearLayoutManager(this));
+            GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+
+            mDoctorList.setLayoutManager(layoutManager);
             mDoctorList.hasFixedSize();
             FirebaseRecyclerOptions<DoctorObject> options =
                     new FirebaseRecyclerOptions.Builder<DoctorObject>()
@@ -51,16 +59,10 @@ public class DoctorsActivity extends BaseActivity {
                             .build();
 
             mDoctorList.setAdapter(new DoctorsAdapter(options, this));
-        } catch (Exception ignored) {}
-    }
-    private void setToolbar() {
-        Toolbar mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        setTitle("Doctors");
-
-        Objects.requireNonNull(getSupportActionBar())
-                .setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+            findViewById(R.id.loader).setVisibility(View.GONE);
+        } catch (Exception ignored) {
+            findViewById(R.id.loader).setVisibility(View.GONE);
+        }
     }
 
     @Override

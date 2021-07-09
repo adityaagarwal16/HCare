@@ -90,9 +90,6 @@ public class MainActivity extends BaseActivity
         setFlipper();
         setCoronaFlipper();
 
-        findViewById(R.id.viewMore).setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, DoctorsActivity.class)));
-
         findViewById(R.id.cart).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, AllOrdersActivity.class)));
 
@@ -361,26 +358,28 @@ public class MainActivity extends BaseActivity
                             .child("Doctors");
 
             RecyclerView mDoctorList = findViewById(R.id.doctorsRecycler);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
+                    LinearLayoutManager.HORIZONTAL, false);
             mDoctorList.setLayoutManager(linearLayoutManager);
             mDoctorList.hasFixedSize();
-            String[] list = {"sCBWYaI75xZmIk8fXIaxFBJ4v2s2", "ZwthiKA5aDaXf6DNYVWVinzm0XP2", "w7sQhwsRFjN7sXBKt0Fy0p65r4o1"};
+            mDoctorList.setNestedScrollingEnabled(false);
+            String[] list = {"sCBWYaI75xZmIk8fXIaxFBJ4v2s2",
+                    "ZwthiKA5aDaXf6DNYVWVinzm0XP2", "w7sQhwsRFjN7sXBKt0Fy0p65r4o1", "open"};
 
             LimitedDoctorsAdapter adapter = new LimitedDoctorsAdapter(arrayList, this, list);
-
-            for(int i=0; i<list.length; i++){
-
-                mDoctorsDatabase.child(list[i]).addValueEventListener(new ValueEventListener() {
+            for (String s : list) {
+                mDoctorsDatabase.child(s).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
                             arrayList.add(dataSnapshot.getValue(DoctorObject.class));
                             adapter.notifyDataSetChanged();
-                        } catch(Exception ignored) { }
+                        } catch (Exception ignored) { }
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
                 });
             }
 

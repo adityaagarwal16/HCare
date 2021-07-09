@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
+import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.DiseaseAdapter;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
@@ -37,22 +38,26 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
     @Override
     public LimitedDoctorsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new LimitedDoctorsAdapter.MyViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.adapter_doctors, parent, false));
+                .inflate(R.layout.adapter_doctors_limited, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull LimitedDoctorsAdapter.MyViewHolder holder, int position) {
+        if(position == arrayList.size() -1)
+            holder.setViewMore(context);
+        else {
+            holder.hideViewMore();
+            DoctorObject model = arrayList.get(position);
+            String doctorID = list[position];
+            try {
+                holder.doctorName("Dr. " + model.getName());
+                holder.doctorDegree(model.getQualification());
+                holder.doctorExperience(model.getExperience() + " experience");
+            } catch(Exception e) {e.printStackTrace();}
 
-        DoctorObject model = null;
-        model = arrayList.get(position);
-
-        String doctorID = list[position];
-
-        holder.doctorName("Dr. " + model.getName());
-        holder.doctorDegree(model.getQualification());
-        holder.doctorExperience(model.getExperience() + " experience");
-        holder.setImage(model.getThumb_image());
-        holder.showFragment(context, doctorID);
+            holder.setImage(model.getImage(), model.getSex());
+            holder.openDoctorActivity(context, doctorID);
+        }
 
     }
 
@@ -69,6 +74,18 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
             mView = itemView;
         }
 
+        public void setViewMore(Context context) {
+            itemView.findViewById(R.id.viewMore).setVisibility(View.VISIBLE);
+            itemView.findViewById(R.id.info).setVisibility(View.GONE);
+            itemView.findViewById(R.id.viewMore).setOnClickListener( v ->
+                    context.startActivity(new Intent(context, DoctorsActivity.class)));
+        }
+
+        public void hideViewMore() {
+            itemView.findViewById(R.id.viewMore).setVisibility(View.GONE);
+            itemView.findViewById(R.id.info).setVisibility(View.VISIBLE);
+        }
+
         public void doctorName(String doctorName) {
             ((TextView) mView.findViewById(R.id.doctorName))
                     .setText(doctorName);
@@ -80,12 +97,18 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
         public void doctorExperience(String doctorName) {
             ((TextView) mView.findViewById(R.id.doctorExperience))
                     .setText(doctorName);
-
         }
-        public void setImage(String image) {
+
+
+        public void setImage(String image, String sex) {
+            int drawable = R.drawable.vector_doctor_male;
+            if(sex.equals("Female"))
+                drawable = R.drawable.vector_doctor_female;
+            int finalDrawable = drawable;
+
             Picasso.get().load(image)
                     .networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder(R.drawable.vector_person)
+                    .placeholder(drawable)
                     .into(mView.findViewById(R.id.doctorImage),
                             new Callback() {
                                 @Override
@@ -94,12 +117,13 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
 
                                 @Override
                                 public void onError(Exception e) {
-                                    Picasso.get().load(image).placeholder(R.drawable.vector_person)
+                                    Picasso.get().load(image).placeholder(finalDrawable)
                                             .into((ImageView) mView.findViewById(R.id.doctorImage));
                                 }
                             });
         }
-        public void showFragment(Context context, String doctorID) {
+
+        public void openDoctorActivity(Context context, String doctorID) {
             mView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, DoctorsDetailsActivity.class);
                 intent.putExtra("doctorID", doctorID);

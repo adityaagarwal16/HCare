@@ -2,7 +2,7 @@ package com.hcare.homeopathy.hcare.Main.Doctors;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,29 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.Fade;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.hcare.homeopathy.hcare.Consultations.Doctor.DoctorDetailsFragment;
 import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
-import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
-import com.hcare.homeopathy.hcare.Orders.TrackOrderActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.coronaVirus;
@@ -56,14 +44,31 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull DoctorObject model) {
+        model.setDoctorID(Objects.requireNonNull(getRef(position).getKey()));
 
-        String doctorID = Objects.requireNonNull(getRef(position).getKey());
+        try {
+            holder.doctorName("Dr. " + model.getName());
+            holder.doctorDegree(model.getQualification());
+            holder.doctorExperience(model.getExperience());
 
-        holder.doctorName("Dr. " + model.getName());
-        holder.doctorDegree(model.getQualification());
-        holder.doctorExperience(model.getExperience() + " experience");
-        holder.setImage(model.getThumb_image());
-        holder.showFragment(context, doctorID);
+            if(model.getCount() == null && model.getAcceptCount() == null)
+                holder.doctorConsultations(0);
+            else {
+                if(model.getCount() == null)
+                    holder.doctorConsultations(model.getAcceptCount().size());
+                else if(model.getAcceptCount() == null)
+                    holder.doctorConsultations(model.getCount().size());
+                else {
+                    holder.doctorConsultations(model.getCount().size() + model.getAcceptCount().size());
+                }
+            }
+
+        } catch(Exception e) {e.printStackTrace();}
+
+        if(model.getSex() == null)
+            model.setSex("Male");
+        holder.setImage(model.getImage(), model.getSex());
+        holder.openDoctorActivity(context, model);
 
     }
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -82,32 +87,60 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
             ((TextView) mView.findViewById(R.id.doctorDegree))
                     .setText(doctorName);
         }
-        public void doctorExperience(String doctorName) {
+        public void doctorExperience(int years) {
+            String text = String.valueOf(years);
+            if(years == 1)
+                text += " year";
+            else
+                text += " years";
+            String sourceString = "<b> <font color='black'>" + text + "</b> " + " experience";
             ((TextView) mView.findViewById(R.id.doctorExperience))
-                    .setText(doctorName);
+                    .setText(Html.fromHtml(sourceString), TextView.BufferType.SPANNABLE);
+        }
+
+        public void doctorConsultations(int consultations) {
+            TextView text = mView.findViewById(R.id.consultations);
+            if(consultations == 0)
+                text.setVisibility(View.GONE);
+            else {
+                String consultText = "Consultations";
+                if(consultations == 1)
+                    consultText = "Consultation";
+
+                text.setVisibility(View.VISIBLE);
+                String sourceString = "<b> <font color='#82e4ad'>" +
+                        consultations + "</b> " + " " +consultText;
+                text.setText(Html.fromHtml(sourceString), TextView.BufferType.SPANNABLE);
+            }
 
         }
-        public void setImage(String image) {
+
+        public void setImage(String image, String sex) {
+            int drawable = R.drawable.vector_doctor_male;
+            if(sex.equals("Female"))
+                drawable = R.drawable.vector_doctor_female;
+            int finalDrawable = drawable;
+
             Picasso.get().load(image)
                     .networkPolicy(NetworkPolicy.OFFLINE)
-                    .placeholder(R.drawable.vector_person)
+                    .placeholder(drawable)
                     .into(mView.findViewById(R.id.doctorImage),
                             new Callback() {
                                 @Override
-                                public void onSuccess() {
-                                }
+                                public void onSuccess() { }
 
                                 @Override
                                 public void onError(Exception e) {
-                                    Picasso.get().load(image).placeholder(R.drawable.vector_person)
+                                    Picasso.get().load(image).placeholder(finalDrawable)
                                             .into((ImageView) mView.findViewById(R.id.doctorImage));
                                 }
                             });
         }
-        public void showFragment(Context context, String doctorID) {
+
+        public void openDoctorActivity(Context context, DoctorObject doctor) {
             mView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, DoctorsDetailsActivity.class);
-                intent.putExtra("doctorID", doctorID);
+                intent.putExtra("doctor", doctor);
                 context.startActivity(intent);
             });
         }

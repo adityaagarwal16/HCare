@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
+import com.hcare.homeopathy.hcare.Main.Doctors.DoctorsActivity;
+import com.hcare.homeopathy.hcare.Main.Doctors.DoctorsDetailsActivity;
 import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Constants;
@@ -114,6 +116,12 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent = new Intent(
                                             getApplicationContext(),
                                             MainActivity.class);
+                                    intent = new Intent(
+                                            getApplicationContext(),
+                                            DoctorsActivity.class);
+                                    intent.putExtra("doctorID",
+                                            "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+
                                 }
                                 startActivity(intent);
                                 signInOpen = true;
