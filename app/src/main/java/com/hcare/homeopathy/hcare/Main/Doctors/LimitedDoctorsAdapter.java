@@ -67,8 +67,11 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
 
             } catch(Exception e) {e.printStackTrace();}
 
-            if(model.getSex() == null)
-                model.setSex("Male");
+            try {
+                if(model.getSex() == null)
+                    model.setSex("Male");
+            } catch (Exception e) {model.setSex("Male");}
+
             holder.setImage(model.getImage(), model.getSex());
             holder.openDoctorActivity(context, model);
 

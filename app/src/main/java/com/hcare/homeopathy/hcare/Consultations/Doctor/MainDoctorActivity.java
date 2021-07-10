@@ -80,8 +80,6 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
 
-        setToolbar();
-
         messagesReference = databaseRootReference
                 .child("messages").child(userID).child(doctorID);
 
@@ -90,9 +88,8 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         doctorReference = databaseRootReference.child("Private_consult")
                 .child(userID).child(doctorID);
 
+        setToolbar();
         loadMessages();
-        setConsultAgainButton();
-        setLastSeen();
     }
 
     void setLastSeen() {
@@ -221,12 +218,23 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
 
         databaseRootReference.child("Doctors").child(doctorID).
                 addValueEventListener(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        ((TextView) findViewById(R.id.title))
-                                .setText(MessageFormat.format("{0}  {1}",
-                                        "Dr.", Objects.requireNonNull(
-                                                dataSnapshot.child("name").getValue()).toString()));
+                        try {
+                            ((TextView) findViewById(R.id.title))
+                                    .setText(MessageFormat.format("{0}  {1}",
+                                            "Dr.", Objects.requireNonNull(
+                                                    dataSnapshot.child("name").getValue()).toString()));
+
+                            setConsultAgainButton();
+                            setLastSeen();
+
+                        } catch (Exception e) {
+                            ((TextView) findViewById(R.id.title)).setText("Doctor not Found");
+                            findViewById(R.id.consultAgain).setVisibility(View.GONE);
+                            findViewById(R.id.chatBar).setVisibility(View.GONE);
+                        }
                     }
 
                     @Override

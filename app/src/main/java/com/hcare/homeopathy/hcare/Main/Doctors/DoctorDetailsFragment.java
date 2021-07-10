@@ -51,7 +51,6 @@ public class DoctorDetailsFragment extends Fragment {
                 .child("Doctors").child(Objects.requireNonNull(doctor_id));
         mDoctorsDatabase.keepSynced(true);
 
-
         mDoctorsDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -88,38 +87,40 @@ public class DoctorDetailsFragment extends Fragment {
             drawable = R.drawable.vector_doctor_female;
 
         int finalDrawable = drawable;
-        Picasso.get().load(doctor.getImage())
-                .networkPolicy(NetworkPolicy.OFFLINE)
-                .placeholder(drawable)
-                .into(root.findViewById(R.id.profilePicture),
-                        new Callback() {
-                            @Override
-                            public void onSuccess() {
-                            }
+        if(!doctor.getImage().equals("doctor image")) {
+            Picasso.get().load(doctor.getImage())
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .placeholder(drawable)
+                    .into(root.findViewById(R.id.profilePicture),
+                            new Callback() {
+                                @Override
+                                public void onSuccess() {
+                                }
 
-                            @Override
-                            public void onError(Exception e) {
-                                ((ImageView) root.findViewById(R.id.profilePicture))
-                                        .setImageResource(finalDrawable);
-                            }
-                        });
+                                @Override
+                                public void onError(Exception e) {
+                                    ((ImageView) root.findViewById(R.id.profilePicture))
+                                            .setImageResource(finalDrawable);
+                                }
+                            });
 
-        Picasso.get()
-                .load(doctor.getImage())
-                .transform(new BlurTransformation
-                        (requireContext(), 25, 1))
-                .networkPolicy(NetworkPolicy.OFFLINE)
-                .into(root.findViewById(R.id.background),
-                        new Callback() {
+            Picasso.get()
+                    .load(doctor.getImage())
+                    .transform(new BlurTransformation
+                            (requireContext(), 25, 1))
+                    .networkPolicy(NetworkPolicy.OFFLINE)
+                    .into(root.findViewById(R.id.background),
+                            new Callback() {
 
-                            @Override
-                            public void onSuccess() { }
+                                @Override
+                                public void onSuccess() { }
 
-                            @Override
-                            public void onError(Exception e) {
-                                ((ImageView) root.findViewById(R.id.background))
-                                        .setImageResource(finalDrawable);
-                            }
-                        });
+                                @Override
+                                public void onError(Exception e) {
+                                    ((ImageView) root.findViewById(R.id.background))
+                                            .setImageResource(finalDrawable);
+                                }
+                            });
+        }
     }
 }
