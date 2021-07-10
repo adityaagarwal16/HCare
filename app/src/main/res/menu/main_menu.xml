@@ -26,6 +26,14 @@
             android:title="@string/covid" />
     </group>
 
+    <group android:id="@+id/group5">
+
+        <item
+            android:id="@+id/doctors"
+            android:icon="@drawable/vector_doctor"
+            android:title="HCare Doctors" />
+    </group>
+
     <group android:id="@+id/group3">
 
         <item

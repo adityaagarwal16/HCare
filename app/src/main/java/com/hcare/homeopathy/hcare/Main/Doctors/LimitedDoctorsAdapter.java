@@ -2,6 +2,7 @@ package com.hcare.homeopathy.hcare.Main.Doctors;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +27,16 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
 
     private final ArrayList<DoctorObject> arrayList;
     Context context;
-    private final String[] list;
 
     public LimitedDoctorsAdapter(ArrayList<DoctorObject> arrayList, Context context, String[] list) {
         this.arrayList = arrayList;
         this.context = context;
-        this.list = list;
     }
 
     @NonNull
     @Override
-    public LimitedDoctorsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public LimitedDoctorsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                                 int viewType) {
         return new LimitedDoctorsAdapter.MyViewHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.adapter_doctors_limited, parent, false));
     }
@@ -48,15 +48,30 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
         else {
             holder.hideViewMore();
             DoctorObject model = arrayList.get(position);
-            String doctorID = list[position];
             try {
                 holder.doctorName("Dr. " + model.getName());
                 holder.doctorDegree(model.getQualification());
-                holder.doctorExperience(model.getExperience() + " experience");
+                holder.doctorExperience(model.getExperience());
+
+                if(model.getCount() == null && model.getAcceptCount() == null)
+                    holder.doctorConsultations(0);
+                else {
+                    if(model.getCount() == null)
+                        holder.doctorConsultations(model.getAcceptCount().size());
+                    else if(model.getAcceptCount() == null)
+                        holder.doctorConsultations(model.getCount().size());
+                    else {
+                        holder.doctorConsultations(model.getCount().size() + model.getAcceptCount().size());
+                    }
+                }
+
             } catch(Exception e) {e.printStackTrace();}
 
+            if(model.getSex() == null)
+                model.setSex("Male");
             holder.setImage(model.getImage(), model.getSex());
-            holder.openDoctorActivity(context, doctorID);
+            holder.openDoctorActivity(context, model);
+
         }
 
     }
@@ -69,36 +84,34 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         View mView;
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
-        }
 
-        public void setViewMore(Context context) {
-            itemView.findViewById(R.id.viewMore).setVisibility(View.VISIBLE);
-            itemView.findViewById(R.id.info).setVisibility(View.GONE);
-            itemView.findViewById(R.id.viewMore).setOnClickListener( v ->
-                    context.startActivity(new Intent(context, DoctorsActivity.class)));
-        }
-
-        public void hideViewMore() {
-            itemView.findViewById(R.id.viewMore).setVisibility(View.GONE);
-            itemView.findViewById(R.id.info).setVisibility(View.VISIBLE);
-        }
-
-        public void doctorName(String doctorName) {
-            ((TextView) mView.findViewById(R.id.doctorName))
-                    .setText(doctorName);
-        }
-        public void doctorDegree(String doctorName) {
-            ((TextView) mView.findViewById(R.id.doctorDegree))
-                    .setText(doctorName);
-        }
-        public void doctorExperience(String doctorName) {
+        public void doctorExperience(int years) {
+            String text = String.valueOf(years);
+            if(years == 1)
+                text += " year";
+            else
+                text += " years";
+            String sourceString = "<b> <font color='black'>" + text + "</b> " + " experience";
             ((TextView) mView.findViewById(R.id.doctorExperience))
-                    .setText(doctorName);
+                    .setText(Html.fromHtml(sourceString), TextView.BufferType.SPANNABLE);
         }
 
+        public void doctorConsultations(int consultations) {
+            TextView text = mView.findViewById(R.id.consultations);
+            if(consultations == 0)
+                text.setVisibility(View.GONE);
+            else {
+                String consultText = "Consultations";
+                if(consultations == 1)
+                    consultText = "Consultation";
+
+                text.setVisibility(View.VISIBLE);
+                String sourceString = "<b> <font color='#82e4ad'>" +
+                        consultations + "</b> " + " " +consultText;
+                text.setText(Html.fromHtml(sourceString), TextView.BufferType.SPANNABLE);
+            }
+
+        }
 
         public void setImage(String image, String sex) {
             int drawable = R.drawable.vector_doctor_male;
@@ -112,8 +125,7 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
                     .into(mView.findViewById(R.id.doctorImage),
                             new Callback() {
                                 @Override
-                                public void onSuccess() {
-                                }
+                                public void onSuccess() { }
 
                                 @Override
                                 public void onError(Exception e) {
@@ -123,13 +135,56 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
                             });
         }
 
-        public void openDoctorActivity(Context context, String doctorID) {
+        public void openDoctorActivity(Context context, DoctorObject doctor) {
             mView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, DoctorsDetailsActivity.class);
-                intent.putExtra("doctorID", doctorID);
+                intent.putExtra("doctor", doctor);
                 context.startActivity(intent);
             });
         }
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setViewMore(Context context) {
+            ViewGroup.LayoutParams layoutParams = itemView.findViewById(R.id.viewMore)
+                    .getLayoutParams();
+            layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            itemView.findViewById(R.id.viewMore).setLayoutParams(layoutParams);
+
+            ViewGroup.LayoutParams layoutParams1 = itemView.findViewById(R.id.info)
+                    .getLayoutParams();
+            layoutParams1.width = 0;
+            itemView.findViewById(R.id.info).setLayoutParams(layoutParams1);
+
+            itemView.findViewById(R.id.viewMore).setOnClickListener( v ->
+                    context.startActivity(new Intent(context, DoctorsActivity.class)));
+        }
+
+        public void hideViewMore() {
+            ViewGroup.LayoutParams layoutParams = itemView.findViewById(R.id.viewMore).getLayoutParams();
+            layoutParams.width = 0;
+            itemView.findViewById(R.id.viewMore).setLayoutParams(layoutParams);
+
+            ViewGroup.LayoutParams layoutParams1 = itemView.findViewById(R.id.info).getLayoutParams();
+            layoutParams1.width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            itemView.findViewById(R.id.info).setLayoutParams(layoutParams1);
+        }
+
+        public void doctorName(String doctorName) {
+            ((TextView) mView.findViewById(R.id.doctorName))
+                    .setText(doctorName);
+        }
+
+        public void doctorDegree(String doctorName) {
+            ((TextView) mView.findViewById(R.id.doctorDegree))
+                    .setText(doctorName);
+        }
+
     }
+
+
 }
 

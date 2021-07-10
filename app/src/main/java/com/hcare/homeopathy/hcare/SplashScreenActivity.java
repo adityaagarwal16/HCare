@@ -116,11 +116,11 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent = new Intent(
                                             getApplicationContext(),
                                             MainActivity.class);
-                                    intent = new Intent(
+                                   /* intent = new Intent(
                                             getApplicationContext(),
                                             DoctorsActivity.class);
                                     intent.putExtra("doctorID",
-                                            "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+                                            "AQtq6nwXN6cjsvm0GqDdB49rH8u2");*/
 
                                 }
                                 startActivity(intent);

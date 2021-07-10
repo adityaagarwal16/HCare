@@ -364,7 +364,7 @@ public class MainActivity extends BaseActivity
             mDoctorList.hasFixedSize();
             mDoctorList.setNestedScrollingEnabled(false);
             String[] list = {"sCBWYaI75xZmIk8fXIaxFBJ4v2s2",
-                    "ZwthiKA5aDaXf6DNYVWVinzm0XP2", "w7sQhwsRFjN7sXBKt0Fy0p65r4o1", "open"};
+                    "ZwthiKA5aDaXf6DNYVWVinzm0XP2", "w7sQhwsRFjN7sXBKt0Fy0p65r4o1", "viewMore"};
 
             LimitedDoctorsAdapter adapter = new LimitedDoctorsAdapter(arrayList, this, list);
             for (String s : list) {
@@ -372,7 +372,10 @@ public class MainActivity extends BaseActivity
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
-                            arrayList.add(dataSnapshot.getValue(DoctorObject.class));
+                            DoctorObject obj = dataSnapshot.getValue(DoctorObject.class);
+                            if(!s.equals("viewMore"))
+                                Objects.requireNonNull(obj).setDoctorID(s);
+                            arrayList.add(obj);
                             adapter.notifyDataSetChanged();
                         } catch (Exception ignored) { }
                     }

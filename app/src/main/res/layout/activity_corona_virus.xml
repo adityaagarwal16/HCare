@@ -247,7 +247,7 @@
 
                 <ImageView
                     android:alpha="0.5"
-                    android:src="@drawable/corona_1"
+                    android:src="@drawable/vector_corona"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="20dp"
                     android:layout_alignBottom="@id/CovidRV"

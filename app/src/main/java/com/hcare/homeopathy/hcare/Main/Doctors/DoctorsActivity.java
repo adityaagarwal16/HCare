@@ -27,7 +27,7 @@ import java.util.Objects;
 
 public class DoctorsActivity extends BaseActivity {
 
-    int DOCTORS_TO_DISPLAY = 22;
+    long DOCTORS_TO_DISPLAY = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +38,27 @@ public class DoctorsActivity extends BaseActivity {
                 .setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        setRecycler();
+        FirebaseDatabase.getInstance().getReference()
+                .child("Doctors")
+                .addValueEventListener(new ValueEventListener() {
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        //remove coronaVirus
+                        DOCTORS_TO_DISPLAY = dataSnapshot.getChildrenCount() - 1;
+                        setRecycler();
+                    }
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
+                });
     }
 
     private void setRecycler() {
         try {
-            Query mDoctorsDatabase =
-                    FirebaseDatabase.getInstance().getReference()
-                            .child("Doctors").orderByChild("experience").limitToLast(DOCTORS_TO_DISPLAY);
-
             RecyclerView mDoctorList = findViewById(R.id.recycler);
             GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+
+            Query mDoctorsDatabase =
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Doctors").orderByChild("Rank")
+                            .limitToFirst((int) DOCTORS_TO_DISPLAY);
 
             mDoctorList.setLayoutManager(layoutManager);
             mDoctorList.hasFixedSize();

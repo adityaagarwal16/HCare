@@ -29,7 +29,6 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
 
     private final Context context;
 
-
     public DoctorsAdapter(@NonNull FirebaseRecyclerOptions<DoctorObject> options, Context context) {
         super(options);
         this.context = context;
@@ -45,7 +44,6 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull DoctorObject model) {
         model.setDoctorID(Objects.requireNonNull(getRef(position).getKey()));
-
         try {
             holder.doctorName("Dr. " + model.getName());
             holder.doctorDegree(model.getQualification());

@@ -208,22 +208,6 @@
 
                 </LinearLayout>
 
-                <!--<RelativeLayout
-                    android:background="@color/colorSecondary"
-                    android:layout_marginTop="5dp"
-                    android:padding="15dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:adjustViewBounds="true"
-                        android:layout_alignParentEnd="true" android:src="@drawable/consultation_banner"
-                        android:contentDescription="@string/todo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                </RelativeLayout>-->
-
                 <RelativeLayout
                     android:paddingTop="20dp"
                     android:paddingBottom="15dp"
@@ -329,38 +313,12 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView54"
                         tools:ignore="HardcodedText" />
 
-                    <androidx.core.widget.NestedScrollView
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="wrap_content">
-
-                        <LinearLayout
-                            android:background="@color/colorSecondary"
-                            android:orientation="horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/doctorsRecycler"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@color/colorPrimary"
-                                tools:ignore="RtlSymmetry" />
-
-                            <ImageView
-                                android:id="@+id/viewMore"
-                                android:layout_width="50dp"
-                                android:padding="5dp"
-                                android:layout_gravity="center"
-                                android:layout_height="wrap_content"
-                                android:rotation="-90"
-                                android:src="@drawable/vector_down_arrow"
-                                app:tint="#ffffff"
-                                android:contentDescription="@string/todo" />
-
-                        </LinearLayout>
-
-                    </androidx.core.widget.NestedScrollView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/doctorsRecycler"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        tools:ignore="RtlSymmetry" />
 
                 </LinearLayout>
 
