@@ -362,9 +362,8 @@ public class MainActivity extends BaseActivity
                     LinearLayoutManager.HORIZONTAL, false);
             mDoctorList.setLayoutManager(linearLayoutManager);
             mDoctorList.hasFixedSize();
-            mDoctorList.setNestedScrollingEnabled(false);
             String[] list = {"sCBWYaI75xZmIk8fXIaxFBJ4v2s2",
-                    "ZwthiKA5aDaXf6DNYVWVinzm0XP2", "w7sQhwsRFjN7sXBKt0Fy0p65r4o1", "viewMore"};
+                    "Y16wj8xBkqNiXCbz1Y6mnYuy1Bm2", "ZwthiKA5aDaXf6DNYVWVinzm0XP2", "viewMore"};
 
             LimitedDoctorsAdapter adapter = new LimitedDoctorsAdapter(arrayList, this, list);
             for (String s : list) {

@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +24,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
+import com.hcare.homeopathy.hcare.Main.Doctors.LimitedDoctorsAdapter;
 import com.hcare.homeopathy.hcare.NewConsultation.DiseaseInfo;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.R;
@@ -30,6 +34,7 @@ import com.razorpay.Checkout;
 import org.json.JSONObject;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.consultations;
@@ -129,6 +134,56 @@ public class CheckoutFragment extends Fragment {
             }
             return true;
         });
+
+        setDoctorsRecycler();
+    }
+
+    void setDoctorsRecycler() {
+        //Know your doctors
+        try {
+            ArrayList<DoctorObject> arrayList = new ArrayList<>();
+
+            DatabaseReference mDoctorsDatabase =
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Doctors");
+
+            RecyclerView mDoctorList = root.findViewById(R.id.doctorsRecycler);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(requireContext(),
+                    LinearLayoutManager.HORIZONTAL, false);
+            mDoctorList.setLayoutManager(linearLayoutManager);
+            mDoctorList.hasFixedSize();
+            String[] list = {"Y16wj8xBkqNiXCbz1Y6mnYuy1Bm2",
+                    "eAOz5y53YHSzX5uRHEyTPUld4fm2",
+                    "sCBWYaI75xZmIk8fXIaxFBJ4v2s2",
+                    "w7sQhwsRFjN7sXBKt0Fy0p65r4o1",
+                    "ZwthiKA5aDaXf6DNYVWVinzm0XP2",
+                    "AQtq6nwXN6cjsvm0GqDdB49rH8u2",
+                    "viewMore"};
+
+            LimitedDoctorsAdapter adapter = new LimitedDoctorsAdapter(arrayList, requireContext(),
+                    list);
+            for (String s : list) {
+                mDoctorsDatabase.child(s).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        try {
+                            DoctorObject obj = dataSnapshot.getValue(DoctorObject.class);
+                            if(!s.equals("viewMore"))
+                                Objects.requireNonNull(obj).setDoctorID(s);
+                            arrayList.add(obj);
+                            adapter.notifyDataSetChanged();
+                        } catch (Exception ignored) { }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+            }
+
+            mDoctorList.setAdapter(adapter);
+
+        } catch (Exception ignored) { }
     }
 
     void setHeaders() {
