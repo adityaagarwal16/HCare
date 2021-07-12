@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card"
     android:background="@color/colorPrimary"
-    android:padding="15dp"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?selectableItemBackground"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
-        app:cardCornerRadius="360dp"
+        android:id="@+id/doctorCard"
+        android:layout_margin="3dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -37,6 +38,8 @@
     <TextView
         android:id="@+id/doctorName"
         android:layout_marginTop="15dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:letterSpacing="0.02"
@@ -48,6 +51,8 @@
     <TextView
         android:id="@+id/doctorDegree"
         android:layout_width="match_parent"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:layout_height="wrap_content"
         android:letterSpacing="0.02"
         android:textStyle="bold"
@@ -56,6 +61,8 @@
     <TextView
         android:id="@+id/doctorExperience"
         android:layout_weight="1"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:letterSpacing="0.02"
@@ -63,6 +70,8 @@
 
     <TextView
         android:id="@+id/consultations"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -24,6 +25,7 @@ import java.text.MessageFormat;
 import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.coronaVirus;
+import static com.hcare.homeopathy.hcare.Main.Doctors.DoctorsActivity.SCREEN_WIDTH;
 
 public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, DoctorsAdapter.MyViewHolder> {
 
@@ -44,6 +46,8 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull DoctorObject model) {
         model.setDoctorID(Objects.requireNonNull(getRef(position).getKey()));
+
+        holder.setCardRadius();
         try {
             holder.doctorName("Dr. " + model.getName());
             holder.doctorDegree(model.getQualification());
@@ -68,6 +72,10 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
         try {
             if(model.getSex() == null)
                 model.setSex("Male");
+
+        } catch(Exception e) {model.setSex("Male");}
+
+        try {
             holder.setImage(model.getImage(), model.getSex());
             holder.openDoctorActivity(context, model);
         } catch(Exception ignored) {}
@@ -86,10 +94,17 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
             ((TextView) mView.findViewById(R.id.doctorName))
                     .setText(doctorName);
         }
+
+        public void setCardRadius() {
+            CardView card = mView.findViewById(R.id.doctorCard);
+            card.setRadius(SCREEN_WIDTH/4.6f);
+        }
+
         public void doctorDegree(String doctorName) {
             ((TextView) mView.findViewById(R.id.doctorDegree))
                     .setText(doctorName);
         }
+
         public void doctorExperience(int years) {
             String text = String.valueOf(years);
             if(years == 1)

@@ -43,7 +43,7 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
 
     @Override
     public void onBindViewHolder(@NonNull LimitedDoctorsAdapter.MyViewHolder holder, int position) {
-        if(position == arrayList.size() -1)
+        if(position == arrayList.size()-1)
             holder.setViewMore(context);
         else {
             holder.hideViewMore();
@@ -71,10 +71,13 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
             try {
                 if(model.getSex() == null)
                     model.setSex("Male");
-                holder.setImage(model.getImage(), model.getSex());
-                holder.openDoctorActivity(context, model);
+
             } catch (Exception e) {model.setSex("Male");}
 
+            try {
+                holder.setImage(model.getImage(), model.getSex());
+                holder.openDoctorActivity(context, model);
+            } catch (Exception ignored) {}
         }
 
     }

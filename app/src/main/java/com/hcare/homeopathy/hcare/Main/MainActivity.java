@@ -28,9 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
-import com.hcare.homeopathy.hcare.Main.Doctors.DoctorsActivity;
 import com.hcare.homeopathy.hcare.Main.Doctors.LimitedDoctorsAdapter;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
 import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
@@ -38,7 +38,6 @@ import com.hcare.homeopathy.hcare.NewConsultation.DiseaseAdapter;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 import com.hcare.homeopathy.hcare.R;
-import com.hcare.homeopathy.hcare.BaseActivity;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -47,6 +46,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.diabetes;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.female;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.hair;
@@ -55,7 +55,6 @@ import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.piles;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.renalProblems;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.skin;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.thyroid;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -367,22 +366,25 @@ public class MainActivity extends BaseActivity
 
             LimitedDoctorsAdapter adapter = new LimitedDoctorsAdapter(arrayList, this, list);
             for (String s : list) {
-                mDoctorsDatabase.child(s).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try {
-                            DoctorObject obj = dataSnapshot.getValue(DoctorObject.class);
-                            if(!s.equals("viewMore"))
+                try {
+                    mDoctorsDatabase.child(s).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            try {
+                                DoctorObject obj = dataSnapshot.getValue(DoctorObject.class);
                                 Objects.requireNonNull(obj).setDoctorID(s);
-                            arrayList.add(obj);
-                            adapter.notifyDataSetChanged();
-                        } catch (Exception ignored) { }
-                    }
+                                arrayList.add(obj);
+                                adapter.notifyDataSetChanged();
+                            } catch (Exception ignored) {
+                                arrayList.add(new DoctorObject());
+                            }
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+                } catch (Exception e) {arrayList.add(new DoctorObject());}
             }
 
             mDoctorList.setAdapter(adapter);

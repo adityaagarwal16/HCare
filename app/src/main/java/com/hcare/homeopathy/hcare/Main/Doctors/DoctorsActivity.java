@@ -1,6 +1,7 @@
 package com.hcare.homeopathy.hcare.Main.Doctors;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -28,11 +29,16 @@ import java.util.Objects;
 public class DoctorsActivity extends BaseActivity {
 
     long DOCTORS_TO_DISPLAY = 0;
+    static int SCREEN_WIDTH;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        SCREEN_WIDTH = displayMetrics.widthPixels;
 
         Objects.requireNonNull(getSupportActionBar())
                 .setDisplayHomeAsUpEnabled(true);
