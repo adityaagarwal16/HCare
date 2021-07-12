@@ -49,6 +49,9 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
             holder.doctorDegree(model.getQualification());
             holder.doctorExperience(model.getExperience());
 
+        } catch(Exception e) {e.printStackTrace();}
+
+        try {
             if(model.getCount() == null && model.getAcceptCount() == null)
                 holder.doctorConsultations(0);
             else {
@@ -56,19 +59,21 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
                     holder.doctorConsultations(model.getAcceptCount().size());
                 else if(model.getAcceptCount() == null)
                     holder.doctorConsultations(model.getCount().size());
-                else {
+                else
                     holder.doctorConsultations(model.getCount().size() + model.getAcceptCount().size());
-                }
             }
 
-        } catch(Exception e) {e.printStackTrace();}
+        } catch(Exception ignored) {}
 
-        if(model.getSex() == null)
-            model.setSex("Male");
-        holder.setImage(model.getImage(), model.getSex());
-        holder.openDoctorActivity(context, model);
+        try {
+            if(model.getSex() == null)
+                model.setSex("Male");
+            holder.setImage(model.getImage(), model.getSex());
+            holder.openDoctorActivity(context, model);
+        } catch(Exception ignored) {}
 
     }
+
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         View mView;

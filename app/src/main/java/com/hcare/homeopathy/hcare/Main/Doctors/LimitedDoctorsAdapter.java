@@ -52,7 +52,9 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
                 holder.doctorName("Dr. " + model.getName());
                 holder.doctorDegree(model.getQualification());
                 holder.doctorExperience(model.getExperience());
+            } catch(Exception e) {e.printStackTrace();}
 
+            try{
                 if(model.getCount() == null && model.getAcceptCount() == null)
                     holder.doctorConsultations(0);
                 else {
@@ -64,16 +66,14 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
                         holder.doctorConsultations(model.getCount().size() + model.getAcceptCount().size());
                     }
                 }
-
-            } catch(Exception e) {e.printStackTrace();}
+            } catch(Exception ignored) {}
 
             try {
                 if(model.getSex() == null)
                     model.setSex("Male");
+                holder.setImage(model.getImage(), model.getSex());
+                holder.openDoctorActivity(context, model);
             } catch (Exception e) {model.setSex("Male");}
-
-            holder.setImage(model.getImage(), model.getSex());
-            holder.openDoctorActivity(context, model);
 
         }
 

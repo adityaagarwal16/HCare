@@ -250,17 +250,17 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.hasChild("nextConsultdate")) {
-
                     String consultdate = Objects.requireNonNull(
                             dataSnapshot.child("nextConsultdate").getValue()).toString();
 
-                    int diff = 0;
+                    long diff = 0;
                     try {
                         @SuppressLint("SimpleDateFormat") DateFormat df =
                                 new SimpleDateFormat("dd-MM-yyyy");
                         Date date1 = new Date();
                         Date date2 = df.parse(consultdate);
-                        diff = (int) (Objects.requireNonNull(date2).getTime() - date1.getTime());
+                        diff = Objects.requireNonNull(date2).getTime() - date1.getTime();
+                        Log.i("diff", String.valueOf(diff));
                     } catch (ParseException e) {
                         Log.e("TEST", "Exception", e);
                     }
