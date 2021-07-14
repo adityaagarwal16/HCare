@@ -15,25 +15,27 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.ConsultationObject;
+import com.hcare.homeopathy.hcare.NewConsultation.DiseaseInfo;
+import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.PaymentResultListener;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.consultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.recentConsultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
 
 public class CheckoutActivity extends BaseActivity implements PaymentResultListener {
 
     String userID;
     Boolean paymentSuccessful = false;
-    static String patientName = "userName", age = "", sex = "Male", email = "", phoneNumber = "";
+    Diseases disease;
+    static String email = "", phoneNumber = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +54,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                 .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try { patientName = Objects.requireNonNull(dataSnapshot
-                        .child("name").getValue()).toString(); }
-                catch(Exception ignored) {}
-                try { age = Objects.requireNonNull(dataSnapshot
-                        .child("age").getValue()).toString(); }
-                catch (Exception ignored) {}
-                try { sex = Objects.requireNonNull(dataSnapshot.
-                        child("sex").getValue()).toString(); }
-                catch (Exception ignored) { }
                 try {email = (String) dataSnapshot
                         .child("email").getValue(); }
                 catch (Exception ignored) { }
@@ -94,8 +87,7 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                                     Bundle args = new Bundle();
                                     args.putSerializable(DISEASE_OBJECT,
                                             getIntent().getSerializableExtra(DISEASE_OBJECT));
-                                    args.putString("details1",
-                                            getIntent().getStringExtra("details1"));
+                                    args.putString(issue, getIntent().getStringExtra(issue));
 
                                     fragment.setArguments(args);
                                     transaction.replace(R.id.frameLayout, fragment).commit();
@@ -107,6 +99,9 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
+
+
+        //TODO CHECK
     }
 
     private void showCheckoutSuccessfulFragment() {
@@ -134,49 +129,44 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
     }
 
     private void sendRequest() {
-        String date = DateFormat.getDateTimeInstance().format(new Date());
-        @SuppressLint("SimpleDateFormat") DateFormat dateFormat =
-                new SimpleDateFormat("HH");
-        Date date2 = new Date();
-        String time = dateFormat.format(date2);
-
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
+        disease = (Diseases) getIntent().getSerializableExtra(DISEASE_OBJECT);
+
         String consultationID = generateConsultationID();
 
         String patientIssue = "";
         try {
-            patientIssue = getIntent().getStringExtra("details1");
+            patientIssue = getIntent().getStringExtra(issue);
         } catch (Exception ignored) {}
 
-
-        HashMap<String, String> notifyData = new HashMap<>();
+        ConsultationObject consultation = new ConsultationObject();
         try {
-            notifyData.put("consultationID", consultationID);
-            notifyData.put("details1", patientIssue);
-            notifyData.put("request_type1", patientName);
-            notifyData.put("date", date);
-            notifyData.put("name", patientName);
-            notifyData.put("age", age);
-            notifyData.put("sex", sex);
-            notifyData.put("Time", time);
-        } catch (Exception ignored) { }
-
-       /* DatabaseReference userRef = FirebaseDatabase.getInstance()
-                .getReference().child("Users").child(userID);
-
-        userRef.child("consultCount").push()
-                .child(Objects.requireNonNull(patientName))
-                .setValue(patientName);*/
+            consultation.setConsultationID(consultationID);
+            consultation.setDisease(new DiseaseInfo(disease).getDiseaseName());
+            consultation.setIssue(patientIssue);
+            consultation.setTime(System.currentTimeMillis());
+            consultation.setUserID(userID);
+        } catch (Exception e) {e.printStackTrace();}
+        Log.i("consultation", String.valueOf(consultation));
 
         //temporary store
-        FirebaseDatabase.getInstance().getReference().child(activeConsultations)
-                .child(userID).setValue(notifyData);
+        FirebaseDatabase.getInstance().getReference()
+                .child(activeConsultations)
+                .child(userID).setValue(consultation);
 
-        //permanent store
-        FirebaseDatabase.getInstance().getReference().child(consultations)
-                .child(userID).child(consultationID).setValue(notifyData);
+        //permanent store - user
+        FirebaseDatabase.getInstance().getReference()
+                .child(userConsultations)
+                .child(userID)
+                .child(consultationID)
+                .setValue(consultation);
 
+        //permanent store - recent
+        FirebaseDatabase.getInstance().getReference()
+                .child(recentConsultations)
+                .child(String.valueOf(consultation.getTime()))
+                .setValue(consultation);
     }
 
     @SuppressLint("DefaultLocale")

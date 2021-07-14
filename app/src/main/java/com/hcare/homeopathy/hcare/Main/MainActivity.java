@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.ConsultationObject;
 import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
 import com.hcare.homeopathy.hcare.Main.Doctors.LimitedDoctorsAdapter;
 import com.hcare.homeopathy.hcare.NavigationItems.OpenNavigationItems;
@@ -47,6 +48,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.diabetes;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.female;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.hair;
@@ -288,45 +290,27 @@ public class MainActivity extends BaseActivity
     }
 
     void eventListeners() {
-        final String[] consultationID = {""};
-        DatabaseReference publicConsult = FirebaseDatabase.getInstance().
-                getReference().child(activeConsultations)
-                .child(userID);
-
         FirebaseDatabase.getInstance().
-                getReference().child("Consultations")
-                .child(userID).orderByKey().limitToFirst(1)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.exists()) {
-                            try {
-                                for (DataSnapshot supportItem: snapshot.getChildren()) {
-                                    consultationID[0] = String.valueOf(
-                                            supportItem.child("consultationID").getValue());
-                                }
-                            } catch(Exception ignored) {}
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-        publicConsult.addValueEventListener(new ValueEventListener() {
+                getReference().child(activeConsultations)
+                .child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 final RelativeLayout consultReq = findViewById(R.id.requestText);
                 final TextView consultationText = findViewById(R.id.consultationText);
-                consultationText.setText(MessageFormat
-                        .format("You will be contacted by our doctor." +
-                                "\nConsultation ID : {0}", consultationID[0]));
-                if (dataSnapshot.hasChild("name"))
+                try {
+                    ConsultationObject obj = dataSnapshot.getValue(ConsultationObject.class);
+                    String consultationID = "";
+                    try {
+                        consultationID = Objects.requireNonNull(obj).getConsultationID();;
+                    } catch (Exception ignored) {}
+
+                    consultationText.setText(MessageFormat
+                            .format("You will be contacted by our doctor." +
+                                    "\nConsultation ID : {0}", consultationID));
                     consultReq.setVisibility(View.VISIBLE);
-                else
+                } catch (Exception e) {
                     consultReq.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -391,7 +375,6 @@ public class MainActivity extends BaseActivity
 
         } catch (Exception ignored) { }
     }
-
 
     void setAllCategoriesRecycler() {
         //top categories

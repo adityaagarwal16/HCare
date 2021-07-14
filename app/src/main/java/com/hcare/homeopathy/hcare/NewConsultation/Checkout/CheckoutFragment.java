@@ -37,16 +37,16 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.consultations;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.pricing;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
 import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.email;
-import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.patientName;
 import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.phoneNumber;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISCOUNT;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.FIRST_100;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.FIRST_100_COUPON;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.RS50_COUPON;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
 
 public class CheckoutFragment extends Fragment {
 
@@ -71,7 +71,7 @@ public class CheckoutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        patientIssue = requireArguments().getString("details1");
+        patientIssue = requireArguments().getString(issue);
 
         String userID = Objects.requireNonNull(
                 FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -82,7 +82,7 @@ public class CheckoutFragment extends Fragment {
         setHeaders();
 
         rootReference.child(pricing)
-                .child(consultations).addValueEventListener(new ValueEventListener() {
+                .child(userConsultations).addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
@@ -91,7 +91,7 @@ public class CheckoutFragment extends Fragment {
                             if(val > 100 && val < 500)
                                 CONSULTATION_FEE = val;
                         } catch(NullPointerException ignored) {}
-                        rootReference.child(consultations).child(userID)
+                        rootReference.child(userConsultations).child(userID)
                                 .addValueEventListener(new ValueEventListener() {
                                     @SuppressLint("SetTextI18n")
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

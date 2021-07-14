@@ -4,7 +4,9 @@ public class FirebaseConstants {
 
     public static final String
             activeConsultations = "ActiveConsultations",
-            consultations = "Consultations",
+            recentConsultations = "RecentConsultations",
+            userConsultations = "UserConsultations",
+
             newOrder = "neworder",
             pricing = "Pricing",
             customerOrders = "CustomerOrders",

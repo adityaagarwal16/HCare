@@ -20,6 +20,7 @@ import com.hcare.homeopathy.hcare.R;
 import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
 
 public class DiseaseActivity extends BaseActivity {
 
@@ -49,7 +50,7 @@ public class DiseaseActivity extends BaseActivity {
                         CheckoutActivity.class);
                 regIntent.putExtra(DISEASE_OBJECT,
                         getIntent().getSerializableExtra(DISEASE_OBJECT));
-                regIntent.putExtra("details1", mChatMessageView.getText().toString());
+                regIntent.putExtra(issue, mChatMessageView.getText().toString());
                 startActivity(regIntent);
             }
             catch (Exception ignored) { }

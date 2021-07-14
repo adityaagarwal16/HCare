@@ -13,4 +13,6 @@ public class Constants {
     public static final String
             DISEASE_OBJECT = "DISEASE_OBJECT";
 
+
+    public static final String issue = "Issue";
 }

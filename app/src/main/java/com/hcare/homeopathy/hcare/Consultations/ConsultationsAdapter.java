@@ -3,6 +3,7 @@ package com.hcare.homeopathy.hcare.Consultations;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,8 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
                     if (dataSnapshot.hasChild("seen")) {
                         try {
                             boolean data = (boolean) dataSnapshot.child("seen").getValue();
+                            Log.i("data", String.valueOf(data));
+
                             if (Objects.requireNonNull(dataSnapshot.child("from").getValue())
                                     .toString().equals(userID))
                                 //if last text is by user then set seen is true

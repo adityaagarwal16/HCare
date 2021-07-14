@@ -22,17 +22,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.Main.Doctors.DoctorsActivity;
-import com.hcare.homeopathy.hcare.Main.Doctors.DoctorsDetailsActivity;
 import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Constants;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
-import com.hcare.homeopathy.hcare.R;
 import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
 import java.util.Objects;
+
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
 
 public class SplashScreenActivity extends BaseActivity {
 
@@ -80,7 +78,7 @@ public class SplashScreenActivity extends BaseActivity {
                                             CheckoutActivity.class);
                                     intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
                                     intent.putExtra("details1", "hello");
-                                    intent.putExtra("request_type1", "Thyroid");
+                                    intent.putExtra(issue, "Thyroid");
                                     intent.putExtra("name", "hello");
                                     intent.putExtra("age", "19");
                                     intent.putExtra("sex", "male");
