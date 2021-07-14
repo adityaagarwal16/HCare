@@ -9,7 +9,16 @@ import java.util.HashMap;
 
 public class ConsultationObject implements Serializable {
 
-    String userID;
+    String userID, doctorID;
+
+    public String getDoctorID() {
+        return doctorID;
+    }
+
+    public void setDoctorID(String doctorID) {
+        this.doctorID = doctorID;
+    }
+
     String consultationID;
     long time;
     String disease;

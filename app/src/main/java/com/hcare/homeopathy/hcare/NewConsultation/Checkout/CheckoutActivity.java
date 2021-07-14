@@ -147,6 +147,7 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
             consultation.setIssue(patientIssue);
             consultation.setTime(System.currentTimeMillis());
             consultation.setUserID(userID);
+            consultation.setDoctorID("");
         } catch (Exception e) {e.printStackTrace();}
         Log.i("consultation", String.valueOf(consultation));
 

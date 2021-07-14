@@ -48,7 +48,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.diabetes;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.female;
 import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.hair;
