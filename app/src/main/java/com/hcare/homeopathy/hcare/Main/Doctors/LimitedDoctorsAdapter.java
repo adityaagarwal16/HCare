@@ -71,7 +71,6 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
             try {
                 if(model.getSex() == null)
                     model.setSex("Male");
-
             } catch (Exception e) {model.setSex("Male");}
 
             try {

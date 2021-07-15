@@ -73,9 +73,9 @@ public class MainActivity extends BaseActivity
 
         final String[] token = {""};
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-            if(task.isComplete()){
+            if(task.isComplete()) {
                 token[0] = task.getResult();
-                Log.i("AppConstants", "onComplete: new Token got: "+token[0] );
+                Log.i("AppConstants", "onComplete: new Token got: " + token[0]);
             }
         });
 
