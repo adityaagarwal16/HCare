@@ -29,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
+import com.hcare.homeopathy.hcare.Consultations.AllChatsActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.ConsultationObject;
 import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
 import com.hcare.homeopathy.hcare.Main.Doctors.LimitedDoctorsAdapter;
@@ -420,7 +420,7 @@ public class MainActivity extends BaseActivity
     }
 
     public void consultations(View view) {
-        startActivity(new Intent(this, ConsultationsActivity.class));
+        startActivity(new Intent(this, AllChatsActivity.class));
     }
 }
 

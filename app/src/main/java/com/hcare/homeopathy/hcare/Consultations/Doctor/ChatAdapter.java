@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.hcare.homeopathy.hcare.FirebaseClasses.ChatObject;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 import com.hcare.homeopathy.hcare.OrderTreatment.CartActivity;
 import com.hcare.homeopathy.hcare.R;

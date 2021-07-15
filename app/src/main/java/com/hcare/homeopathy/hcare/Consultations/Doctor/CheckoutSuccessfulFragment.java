@@ -34,7 +34,8 @@ public class CheckoutSuccessfulFragment extends Fragment {
         ((TextView) root.findViewById(R.id.subHeader))
                 .setText("Transaction successful! You can now consult your doctor again for follow-ups.");
         root.findViewById(R.id.closeActivity).setOnClickListener(v -> {
-            requireActivity().recreate();
+            requireActivity().finish();
+            startActivity(requireActivity().getIntent());
         });
     }
 

@@ -20,7 +20,7 @@ import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
 
-public class ConsultationsActivity extends BaseActivity {
+public class AllChatsActivity extends BaseActivity {
 
     String userID;
 
@@ -65,16 +65,16 @@ public class ConsultationsActivity extends BaseActivity {
             mDoctorsDatabase.keepSynced(true);
 
             //list
-            FirebaseRecyclerOptions<ConsultationsObject> options =
-                    new FirebaseRecyclerOptions.Builder<ConsultationsObject>()
+            FirebaseRecyclerOptions<AllChatsObject> options =
+                    new FirebaseRecyclerOptions.Builder<AllChatsObject>()
                             .setQuery(mDoctorsDatabase.orderByChild("time"),
-                                    ConsultationsObject.class)
+                                    AllChatsObject.class)
                             .setLifecycleOwner(this)
                             .build();
 
             mDoctorList.getRecycledViewPool().clear();
 
-            ConsultationsAdapter adapter = new ConsultationsAdapter(options, this, userID);
+            AllChatsAdapter adapter = new AllChatsAdapter(options, this, userID);
 
             adapter.notifyDataSetChanged();
             mDoctorList.setAdapter(adapter);

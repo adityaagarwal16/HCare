@@ -7,6 +7,7 @@ public class FirebaseConstants {
             recentConsultations = "RecentConsultations",
             userConsultations = "UserConsultations",
 
+    followUp = "FollowUp",
             newOrder = "neworder",
             pricing = "Pricing",
             customerOrders = "CustomerOrders",

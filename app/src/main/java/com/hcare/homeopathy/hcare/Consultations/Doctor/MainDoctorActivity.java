@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
 import android.util.Log;
@@ -36,6 +37,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.hcare.homeopathy.hcare.BaseActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.ChatObject;
+import com.hcare.homeopathy.hcare.FirebaseClasses.ConsultationObject;
 import com.hcare.homeopathy.hcare.Main.Doctors.DoctorDetailsFragment;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
@@ -58,6 +61,9 @@ import java.util.Random;
 
 import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.GALLERY_PICK;
 import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.PICK_PDF_CODE;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.followUp;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.recentConsultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
 
 public class MainDoctorActivity extends BaseActivity implements PaymentResultListener {
 
@@ -67,6 +73,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             doctorReference, messagesReference, userReference;
     ProgressDialog mProgressDialog;
     List<ChatObject> list;
+    boolean paymentSuccessful = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,6 +196,13 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             consultAgain.startAnimation(animate);
 
         } catch(Exception ignored) { }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(paymentSuccessful)
+            checkoutSuccessfulFragment();
     }
 
     private void checkoutSuccessfulFragment() {
@@ -316,13 +330,13 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
 
         DatabaseReference chat = databaseRootReference
                 .child("messages").child(userID).child(doctorID);
-        chat.keepSynced(true);
         chat.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 try {
                     ChatObject message = dataSnapshot.getValue(ChatObject.class);
                     assert message != null;
+                    message.setMessageID(dataSnapshot.getKey());
 
                     if (lastDay == new GetTime(Objects.requireNonNull(message)
                             .getTime()).getDays())
@@ -330,20 +344,8 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
                     else
                         lastDay = new GetTime(message.getTime()).getDays();
 
-                    /* Log.i("message", message.getSeen()+"\n" +message.getImage()+"\n" +message.getMedicineId()+"\n" +message.getMessage()+"\n" +message.getFrom()+"\n" +message.getOrdering()+"\n" +message.getType()+"\n"+message.getTime()+"\n");
-                    if (!((boolean) message.getSeen()) && message.getFrom().equals(doctorID)) {
-                        messagesReference.child(s).child("seen").setValue(true);
-                        Log.i("set true", messagesReference.child(s).child("seen").toString());
-                        Log.i("message", message.getMessage() + " " + message.getSeen());
-                    }
-                    Log.i("from", message.getFrom());
-                    Log.i("message", message.getMessage());
-                    Log.i("order", message.getOrdering());
-                    Log.i("type", message.getType());
-                    Log.i("seen", String.valueOf(message.getSeen()));
-                    Log.i("image", message.getImage());
-                    Log.i("medicine", message.getMedicineId());*/
                     list.add(message);
+                    adapter.notifyDataSetChanged();
                 } catch(Exception ignored){ }
                 mMessagesList.scrollToPosition(list.size() - 1);
             }
@@ -352,7 +354,19 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) { }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    ChatObject message = dataSnapshot.getValue(ChatObject.class);
+                    assert message != null;
+                    message.setMessageID(dataSnapshot.getKey());
+
+                    Log.i("message", message.toString());
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        list.removeIf(e -> e.getMessageID().equals(message.getMessageID()));
+                    }
+                    adapter.notifyDataSetChanged();
+                } catch(Exception ignored){ }
+            }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) { }
@@ -360,12 +374,11 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-
+        chat.keepSynced(true);
     }
 
     public void sendMessage(View view) {
         String message = ((EditText) findViewById(R.id.getUserMessage)).getText().toString();
-
         if (!message.isEmpty()) {
             String current_user_ref = "messages/" + userID +"/"+ doctorID;
             String chat_user_ref ="messages/" + doctorID +"/" + userID;
@@ -387,11 +400,11 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             ((EditText) findViewById(R.id.getUserMessage)).setText("");
             databaseRootReference.updateChildren(messageUserMap,
                     (databaseError, databaseReference) -> notification());
-        }
-        loadMessages();
+            loadMessages();
 
-        userReference.child("time").setValue(ServerValue.TIMESTAMP);
-        doctorReference.child("time").setValue(ServerValue.TIMESTAMP);
+            userReference.child("time").setValue(ServerValue.TIMESTAMP);
+            doctorReference.child("time").setValue(ServerValue.TIMESTAMP);
+        }
     }
 
     public void attachFile(View view) {
@@ -531,17 +544,10 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     @Override
     protected void onStart() {
         super.onStart();
-        doctorReference.child("list").setValue("online");
 
         databaseRootReference.child("notifications").child(userID).removeValue();
         databaseRootReference.child("Accepting")
                 .child(userID).removeValue();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        doctorReference.child("list").setValue("offline");
     }
 
     public void notification() {
@@ -598,30 +604,18 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         }
     }
 
-    @Override
-    public void onPaymentSuccess(String razorpayPaymentID) {
-        try {
-            mProgressDialog.dismiss();
-            sendRequest();
-            Toast.makeText(this,
-                    "Payment Successful! You can now consult your doctor again for follow-ups.",
-                    Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void sendRequest() {
         String current_user_ref = "messages/" + userID +"/"+ doctorID;
         String chat_user_ref ="messages/" + doctorID +"/" + userID;
 
         DatabaseReference user_message_push =
-                databaseRootReference.child("messages").child(userID).child(doctorID).push();
+                databaseRootReference.child("messages").child(userID)
+                        .child(doctorID).push();
 
         String push_id = user_message_push.getKey();
 
         Map messageMap = new HashMap();
-        messageMap.put("message","Follow up consultation");
+        messageMap.put("message", "Follow up consultation");
         messageMap.put("seen", false);
         messageMap.put("type","text");
         messageMap.put("time",ServerValue.TIMESTAMP);
@@ -631,13 +625,45 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
         messageUserMap.put(chat_user_ref +"/" + push_id,messageMap);
 
+
+        ConsultationObject consultation = new ConsultationObject();
+        consultation.setDoctorID(doctorID);
+        consultation.setUserID(userID);
+        consultation.setTime(System.currentTimeMillis());
+        consultation.setIssue("Follow Up");
+        consultation.setDisease("Follow Up");
+
+        //Consultation table record
+        databaseRootReference.child(userConsultations)
+                .child(userID).child(followUp)
+                .child(doctorID).child(String.valueOf(consultation.getTime()))
+                .setValue(consultation);
+
+        databaseRootReference.child(recentConsultations)
+                .child(String.valueOf(consultation.getTime()))
+                .setValue(consultation);
+
+        //temporary store
         databaseRootReference.child("Followup").child(doctorID)
                 .child(userID).setValue(messageMap);
+
         doctorReference.child("nextConsultdate")
                 .setValue(getCalculatedDate("dd-MM-yyyy", 10));
-        // mChatMessageView.setText("");
+
         databaseRootReference.updateChildren(messageUserMap,
                 (databaseError, databaseReference) -> notification());
+    }
+
+    @Override
+    public void onPaymentSuccess(String razorpayPaymentID) {
+        try {
+            mProgressDialog.dismiss();
+
+            paymentSuccessful = true;
+            sendRequest();
+        } catch (Exception e) {
+            Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
+        }
     }
 
     //TODO
@@ -645,6 +671,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     public void onPaymentError(int code, String response) {
         try {
             mProgressDialog.dismiss();
+
             Toast.makeText(this, "Payment failed", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();

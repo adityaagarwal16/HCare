@@ -75,7 +75,7 @@
             android:theme="@style/splashScreen" />
 
 
-        <activity android:name=".Consultations.ConsultationsActivity"
+        <activity android:name=".Consultations.AllChatsActivity"
             android:label="Consultations">
             <intent-filter>
                 <action android:name="com.hcare.homeopathy.hcare_TARGET_NOTIFICATION" />

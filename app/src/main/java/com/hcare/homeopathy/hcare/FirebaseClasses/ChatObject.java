@@ -1,12 +1,20 @@
-package com.hcare.homeopathy.hcare.Consultations.Doctor;
+package com.hcare.homeopathy.hcare.FirebaseClasses;
 
 import android.content.Context;
 
 public class ChatObject {
 
-    private String message, type, image, ordering, medicineId, from;
+    private String message, type, image, ordering, medicineId, from, messageID;
     private long time;
     private boolean seen;
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
+    }
 
     public ChatObject() { }
 
@@ -73,5 +81,20 @@ public class ChatObject {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    @Override
+    public String toString() {
+        return "ChatObject{" +
+                "message='" + message + '\'' +
+                ", type='" + type + '\'' +
+                ", image='" + image + '\'' +
+                ", ordering='" + ordering + '\'' +
+                ", medicineId='" + medicineId + '\'' +
+                ", from='" + from + '\'' +
+                ", messageID='" + messageID + '\'' +
+                ", time=" + time +
+                ", seen=" + seen +
+                '}';
     }
 }

@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 
-import com.hcare.homeopathy.hcare.Consultations.ConsultationsActivity;
+import com.hcare.homeopathy.hcare.Consultations.AllChatsActivity;
 import com.hcare.homeopathy.hcare.Main.CoronaVirusActivity;
 import com.hcare.homeopathy.hcare.Main.Doctors.DoctorsActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.CustomerCare.HelpSupportActivity;
@@ -44,7 +44,7 @@ public class OpenNavigationItems {
                 intent = new Intent(context, HelpSupportActivity.class);
                 break;
             case R.id.consultations:
-                intent = new Intent(context, ConsultationsActivity.class);
+                intent = new Intent(context, AllChatsActivity.class);
                 break;
             case R.id.invite:
                 intent = null;

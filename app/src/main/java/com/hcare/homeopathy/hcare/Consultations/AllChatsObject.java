@@ -1,15 +1,15 @@
 package com.hcare.homeopathy.hcare.Consultations;
 
-public class ConsultationsObject {
+public class AllChatsObject {
 
     public String name;
     public String image;
 
-    public ConsultationsObject() {
+    public AllChatsObject() {
 
     }
 
-    public ConsultationsObject(String name, String image) {
+    public AllChatsObject(String name, String image) {
         this.name = name;
         this.image = image;
     }

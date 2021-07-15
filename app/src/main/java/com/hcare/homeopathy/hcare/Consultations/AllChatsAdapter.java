@@ -29,15 +29,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
-class ConsultationsAdapter extends FirebaseRecyclerAdapter<
-        ConsultationsObject, ConsultationsAdapter.DoctorsViewHolder>  {
+class AllChatsAdapter extends FirebaseRecyclerAdapter<
+        AllChatsObject, AllChatsAdapter.DoctorsViewHolder>  {
 
     private final Context context;
     private final String userID;
     String userName = "";
 
-    public ConsultationsAdapter(@NonNull FirebaseRecyclerOptions<ConsultationsObject> options,
-                                Context context, String userID) {
+    public AllChatsAdapter(@NonNull FirebaseRecyclerOptions<AllChatsObject> options,
+                           Context context, String userID) {
         super(options);
         this.context = context;
         this.userID = userID;
@@ -52,7 +52,7 @@ class ConsultationsAdapter extends FirebaseRecyclerAdapter<
 
     @Override
     protected void onBindViewHolder(@NonNull DoctorsViewHolder holder, int position
-            , @NonNull ConsultationsObject model) {
+            , @NonNull AllChatsObject model) {
         getRef(position).getKey();
         try {
             String doctorID = Objects.requireNonNull(getRef(position).getKey());

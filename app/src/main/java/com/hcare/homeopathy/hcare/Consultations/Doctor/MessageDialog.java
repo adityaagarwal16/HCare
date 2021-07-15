@@ -2,17 +2,16 @@ package com.hcare.homeopathy.hcare.Consultations.Doctor;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.hcare.homeopathy.hcare.FirebaseClasses.ChatObject;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
@@ -57,10 +56,7 @@ public class MessageDialog {
                     context.getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Message", object.getMessage());
             clipboard.setPrimaryClip(clip);
-            dialog.dismiss();
+            Toast.makeText(context, "Message Copied", Toast.LENGTH_SHORT).show();
         });
-      /*  root.findViewById(R.id.delete).setOnClickListener(v -> {
-            dialog.dismiss();
-        });*/
     }
 }
