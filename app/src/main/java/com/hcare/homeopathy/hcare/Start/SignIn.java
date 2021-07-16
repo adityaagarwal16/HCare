@@ -50,7 +50,7 @@ public class SignIn {
         ((Activity) context).finish();
     }
 
-    public void signInWithPhoneAuthCredential(View root, String phoneNumber,
+    public void signInWithPhoneAuthCredential(String phoneNumber,
                                               PhoneAuthCredential credential) {
         FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener((Activity) context, task -> {
@@ -144,9 +144,7 @@ public class SignIn {
             }
         });
 
-
-
-        HashMap<String, String> loggedInData = new HashMap<>();
+        /*HashMap<String, String> loggedInData = new HashMap<>();
         loggedInData.put("phone_number", phoneNumber);
         loggedInData.put("email", email);
         loggedInData.put("name", name);
@@ -155,7 +153,7 @@ public class SignIn {
         FirebaseDatabase.getInstance().getReference()
                 .child("loggedin")
                 .child(userID)
-                .setValue(loggedInData);
+                .setValue(loggedInData);*/
 
         Intent intent = new Intent(context, MainActivity.class);
 

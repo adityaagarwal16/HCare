@@ -70,7 +70,6 @@ public class OTPFragment extends Fragment {
                                         otp.getText().toString());
                 requireActivity().findViewById(R.id.circleLoader).setVisibility(View.VISIBLE);
                 new SignIn(requireContext()).signInWithPhoneAuthCredential(
-                        root,
                         getArguments().getString("phoneNumber"),
                         credential);
 

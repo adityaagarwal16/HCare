@@ -166,7 +166,7 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         //permanent store - recent
         FirebaseDatabase.getInstance().getReference()
                 .child(recentConsultations)
-                .child(String.valueOf(consultation.getTime()))
+                .child(consultationID)
                 .setValue(consultation);
     }
 

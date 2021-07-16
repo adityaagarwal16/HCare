@@ -289,13 +289,13 @@ public class MainActivity extends BaseActivity
     }
 
     void eventListeners() {
+        final RelativeLayout consultReq = findViewById(R.id.requestText);
+        final TextView consultationText = findViewById(R.id.consultationText);
         FirebaseDatabase.getInstance().
                 getReference().child(activeConsultations)
                 .child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final RelativeLayout consultReq = findViewById(R.id.requestText);
-                final TextView consultationText = findViewById(R.id.consultationText);
                 try {
                     ConsultationObject obj = dataSnapshot.getValue(ConsultationObject.class);
                     String consultationID = "";
@@ -306,7 +306,10 @@ public class MainActivity extends BaseActivity
                     consultationText.setText(MessageFormat
                             .format("You will be contacted by our doctor." +
                                     "\nConsultation ID : {0}", consultationID));
-                    consultReq.setVisibility(View.VISIBLE);
+                    if(!consultationID.isEmpty())
+                        consultReq.setVisibility(View.VISIBLE);
+                    else
+                        consultReq.setVisibility(View.GONE);
                 } catch (Exception e) {
                     consultReq.setVisibility(View.GONE);
                 }
