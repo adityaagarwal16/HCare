@@ -67,7 +67,16 @@
 
         <activity
             android:name=".NavigationItems.CustomerCare.HelpSupportActivity"
-            android:theme="@style/loginTheme" />
+            android:theme="@style/loginTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="hcare.page.link"
+                    android:scheme="https"/>
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".Consultations.Doctor.MainDoctorActivity"
