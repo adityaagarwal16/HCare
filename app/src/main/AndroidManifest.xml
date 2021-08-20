@@ -36,10 +36,19 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="hcare.page.link"
+                    android:scheme="https"/>
+            </intent-filter>
         </activity>
 
         <activity android:name=".Start.LoginActivity"
-            android:theme="@style/loginTheme"/>
+            android:theme="@style/loginTheme">
+        </activity>
 
         <!--<receiver android:name=".Start.SMSBroadcastReceiver" android:exported="true"
             android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
