@@ -2,6 +2,7 @@ package com.hcare.homeopathy.hcare.Main;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.Explode;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +31,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Consultations.AllChatsActivity;
@@ -425,6 +431,28 @@ public class MainActivity extends BaseActivity
     public void consultations(View view) {
         startActivity(new Intent(this, AllChatsActivity.class));
     }
+
+//    public void receiveReferral() {
+//        try {
+//            FirebaseDynamicLinks.getInstance()
+//                    .getDynamicLink(getIntent())
+//                    .addOnSuccessListener(this, pendingDynamicLinkData -> {
+//                        Uri deepLink = null;
+//                        if (pendingDynamicLinkData != null) {
+//                            deepLink = pendingDynamicLinkData.getLink();
+//                        }
+//
+//                        assert deepLink != null;
+//                        String referLink = deepLink.toString();
+//
+//                        String custID = referLink.substring(referLink.lastIndexOf("%")+1);
+//                        Toast.makeText(this, custID, Toast.LENGTH_SHORT).show();
+//
+//                    })
+//                    .addOnFailureListener(this, e -> Log.w("main", "getDynamicLink:onFailure", e));
+//        } catch (Exception e) { e.printStackTrace(); }
+//
+//    }
 }
 
 

@@ -7,21 +7,26 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.pm.PackageInfoCompat;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Constants;
@@ -45,6 +50,10 @@ public class SplashScreenActivity extends BaseActivity {
 
         Context context = getApplicationContext();
         PackageManager manager = context.getPackageManager();
+
+//        checking to see if the app has been referred
+        retrieveReferral();
+
         try {
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
             versionCode = (int) PackageInfoCompat.getLongVersionCode(info);
@@ -145,6 +154,23 @@ public class SplashScreenActivity extends BaseActivity {
             }
 
         });
+    }
+
+    private void retrieveReferral() {
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, pendingDynamicLinkData -> {
+                    Uri deepLink;
+                    if (pendingDynamicLinkData != null) {
+                        deepLink = pendingDynamicLinkData.getLink();
+                        String referLink = deepLink.toString();
+                        referLink = referLink.substring(referLink.lastIndexOf("%")+1);
+                        String custID = referLink.substring(referLink.lastIndexOf("=")+1);
+
+//                        cust id retrieved
+//                        Toast.makeText(SplashScreenActivity.this, custID, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     private void showPopup() {
