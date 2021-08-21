@@ -80,5 +80,6 @@
     <string name="enterMobileNumber"><font size="21"> Enter number here</font></string>
     <string name="seen">Seen</string>
     <string name="date">Date</string>
+    <string name="become_a_partner">Become a Partner</string>
 
 </resources>

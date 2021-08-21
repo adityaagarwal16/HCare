@@ -26,9 +26,6 @@ import com.hcare.homeopathy.hcare.R;
 public class OpenNavigationItems {
 
     Context context;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
-    Uri mInvitationUrl;
     int id;
 
     public OpenNavigationItems(Context context, int id) {
@@ -75,6 +72,11 @@ public class OpenNavigationItems {
                 intent = null;
                 new LogoutDialog(context);
                 break;
+
+            case R.id.referAndEarn:
+                intent = new Intent(context, ReferralPartnersActivity.class);
+                break;
+
             default:
                 intent = null;
         }
@@ -83,45 +85,15 @@ public class OpenNavigationItems {
     }
 
     public void refer() {
-
-//        String link = "https://hcare.com/?invitedby=" + uid;
-//        FirebaseDynamicLinks.getInstance().createDynamicLink()
-//                .setLink(Uri.parse(link))
-//                .setDomainUriPrefix("https://hcare.page.link") // after registering on firebase, add link here
-//                .setAndroidParameters(
-//                        new DynamicLink.AndroidParameters.Builder("com.hcare.android")
-//                                .build())
-//                .setIosParameters(
-//                        new DynamicLink.IosParameters.Builder("com.hcare.homeopathy.hcare.ios")
-//                                .build())
-//                .buildShortDynamicLink()
-//                .addOnSuccessListener(new OnSuccessListener<ShortDynamicLink>() {
-//                    @Override
-//                    public void onSuccess(@NonNull ShortDynamicLink shortDynamicLink) {
-//                        mInvitationUrl = shortDynamicLink.getShortLink();
-//                        // ...
-//                    }
-//                });
-        DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLink(Uri.parse("https://hcare.com/?invitedby=" + uid))
-                .setDomainUriPrefix("https://hcare.page.link")
-                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
-                .setIosParameters(new DynamicLink.IosParameters.Builder("com.example.ios").build())
-                .buildDynamicLink();
-
-        Uri dynamicLinkUri = dynamicLink.getUri();
-
-
         try {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.app_name));
             String shareMessage= "Check out HCare!! India's first only Homeopathic " +
                     "online consultation and delivery app \n\n"
-                      + dynamicLinkUri.toString();
+                    + "https://play.google.com/store/apps/details?id=com.hcare.homeopathy.hcare";
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
             context.startActivity(Intent.createChooser(shareIntent, "How do you want to share"));
-
         } catch(Exception e) { e.printStackTrace(); }
     }
 
