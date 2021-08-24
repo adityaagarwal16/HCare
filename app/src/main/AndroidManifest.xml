@@ -51,6 +51,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Start.LoginActivity"
+            android:theme="@style/loginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -62,9 +66,6 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Start.LoginActivity"
-            android:theme="@style/loginTheme"></activity>
         <!--
 <receiver android:name=".Start.SMSBroadcastReceiver" android:exported="true"
             android:permission="com.google.android.gms.auth.api.phone.permission.SEND">

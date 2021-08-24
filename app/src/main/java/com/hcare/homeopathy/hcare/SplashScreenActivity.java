@@ -51,8 +51,6 @@ public class SplashScreenActivity extends BaseActivity {
         Context context = getApplicationContext();
         PackageManager manager = context.getPackageManager();
 
-//        checking to see if the app has been referred
-        retrieveReferral();
 
         try {
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
@@ -154,23 +152,6 @@ public class SplashScreenActivity extends BaseActivity {
             }
 
         });
-    }
-
-    private void retrieveReferral() {
-        FirebaseDynamicLinks.getInstance()
-                .getDynamicLink(getIntent())
-                .addOnSuccessListener(this, pendingDynamicLinkData -> {
-                    Uri deepLink;
-                    if (pendingDynamicLinkData != null) {
-                        deepLink = pendingDynamicLinkData.getLink();
-                        String referLink = deepLink.toString();
-                        referLink = referLink.substring(referLink.lastIndexOf("%")+1);
-                        String custID = referLink.substring(referLink.lastIndexOf("=")+1);
-
-//                        cust id retrieved
-//                        Toast.makeText(SplashScreenActivity.this, custID, Toast.LENGTH_LONG).show();
-                    }
-                });
     }
 
     private void showPopup() {
