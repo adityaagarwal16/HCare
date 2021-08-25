@@ -16,6 +16,11 @@
             android:title="@string/orders" />
 
         <item
+            android:id="@+id/wallet"
+            android:icon="@drawable/wallet_icon"
+            android:title="Your Wallet" />
+
+        <item
             android:id="@+id/consultations"
             android:icon="@drawable/vector_consultations"
             android:title="@string/consultations" />
