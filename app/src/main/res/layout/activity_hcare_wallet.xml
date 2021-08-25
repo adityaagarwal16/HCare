@@ -7,11 +7,11 @@
     tools:context=".NavigationItems.HCareWalletActivity">
 
     <TextView
-        android:id="@+id/pointsInWallet"
+        android:id="@+id/moneyInWalletTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="₹0"
-        android:textSize="36dp"
+        android:textSize="36sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

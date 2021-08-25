@@ -71,21 +71,21 @@ public class MainActivity extends BaseActivity
 
     private DatabaseReference mUserRef;
     private String userID;
-        String prevStarted = "prevStarted", referredByUserID, referredByUserName;
+    String prevStarted = "prevStarted", referredByUserID;
+    int moneyInWallet = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-//        if (!sharedpreferences.getBoolean(prevStarted, false)) {
-//            SharedPreferences.Editor editor = sharedpreferences.edit();
-//            retrieveReferral();
-//            editor.putBoolean(prevStarted, Boolean.TRUE);
-//            editor.apply();
-//        }
-        retrieveReferral();
+        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        if (!sharedpreferences.getBoolean(prevStarted, false)) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            retrieveReferral();
+            editor.putBoolean(prevStarted, Boolean.TRUE);
+            editor.apply();
+        }
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
@@ -446,6 +446,7 @@ public class MainActivity extends BaseActivity
     }
 
     private void retrieveReferral() {
+
         FirebaseDynamicLinks.getInstance()
                 .getDynamicLink(getIntent())
                 .addOnSuccessListener(this, pendingDynamicLinkData -> {
@@ -473,15 +474,28 @@ public class MainActivity extends BaseActivity
                                     .getReference().child("Users").child(referredByUserID).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    referredByUserName = snapshot.getValue()
-                                            .toString();
 
-                                    Toast.makeText(MainActivity.this, referredByUserName, Toast.LENGTH_LONG).show();
+                                    moneyInWallet = Integer.parseInt(snapshot.child("Wallet").getValue()
+                                            .toString());
+
                                 }
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
                                 }
                             });
+                            // Added delay to fn which adds Rs15 due to async retrieval
+                            new java.util.Timer().schedule(
+                                    new java.util.TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            moneyInWallet += 15;
+                                            FirebaseDatabase.getInstance()
+                                                    .getReference().child("Users").child(referredByUserID).child("Wallet").setValue(moneyInWallet);
+                                        }
+                                    },
+                                    5000
+                            );
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
