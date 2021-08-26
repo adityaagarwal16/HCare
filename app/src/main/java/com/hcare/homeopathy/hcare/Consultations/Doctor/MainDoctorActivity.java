@@ -74,6 +74,8 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     ProgressDialog mProgressDialog;
     List<ChatObject> list;
     boolean paymentSuccessful = false;
+    String referredByUserID;
+    int moneyInWallet = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,6 +222,37 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         transaction
                 .replace(R.id.fragment, new CheckoutSuccessfulFragment())
                 .commit();
+
+        //Adding money to the wallet of referredBy user
+        FirebaseDatabase.getInstance().getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                referredByUserID = snapshot.child("ReferredBy").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+        FirebaseDatabase.getInstance().getReference().child("Users").child(referredByUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                moneyInWallet = Integer.parseInt(snapshot.child("Wallet").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {}
+        });
+        new java.util.Timer().schedule(
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                        moneyInWallet += 15;
+                        FirebaseDatabase.getInstance()
+                                .getReference().child("Users").child(referredByUserID).child("Wallet").setValue(moneyInWallet);
+                    }
+                },
+                5000
+        );
     }
 
     private void setToolbar() {
