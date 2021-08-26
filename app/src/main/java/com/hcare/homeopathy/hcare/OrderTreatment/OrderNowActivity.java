@@ -7,6 +7,8 @@ import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +48,9 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     String userID, doctorID;
     OrderObject orderObject;
     String username, phoneNumber, email;
+    CheckBox walletIsChecked;
+    int moneyInWallet = 0;
+    float total, subtotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        walletIsChecked = findViewById(R.id.walletCheckBox);
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
@@ -66,6 +73,17 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         setAddress();
         setSpinner();
         setCrosses();
+
+        setWallet();
+        walletIsChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) {
+                total = subtotal - moneyInWallet;
+            } else {
+                total = subtotal;
+            }
+            setTotal();
+        });
+
     }
 
     @Override
@@ -78,10 +96,33 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         return super.onOptionsItemSelected(item);
     }
 
+    private void setWallet() {
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                moneyInWallet = Integer.parseInt(snapshot.child("Wallet").getValue().toString());
+                setTotal();
+                ((TextView) findViewById(R.id.walletMoney)).setText("HCare money in wallet: " + moneyInWallet);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void setTotal() {
+        ((TextView) findViewById(R.id.total)).setText(String.valueOf(total));
+    }
+
     private void setFields() {
         orderObject.setAmount(getIntent().getIntExtra("price", 0));
 
-        ((TextView) findViewById(R.id.total)).setText(String.valueOf(orderObject.getAmount()));
+        subtotal = orderObject.getAmount();
+        total = subtotal;
+        setTotal();
         ((TextView) findViewById(R.id.subTotal)).setText(String.valueOf(orderObject.getAmount()));
         ((TextView) findViewById(R.id.deliveryCharge)).setText(String.valueOf(0));
 
@@ -255,7 +296,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
             // options.put("image", R.drawable.logo);
             int RAZORPAY_MULTIPLIER = 100;
             options.put("currency", "INR");
-            options.put("amount", orderObject.getAmount() * RAZORPAY_MULTIPLIER);
+            options.put("amount", total * RAZORPAY_MULTIPLIER);
 
             JSONObject preFill = new JSONObject();
             preFill.put("email", email);
