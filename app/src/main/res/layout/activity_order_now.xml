@@ -146,10 +146,48 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/line"
                     android:layout_marginTop="10dp"
-                    android:textSize="18sp"
                     android:text="savings"
                     android:textColor="@color/colorSecondary"
+                    android:textSize="18sp"
                     tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/walletOption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/line"
+                    android:layout_marginTop="11dp"
+                    android:layout_marginRight="-13dp"
+                    android:layout_toLeftOf="@id/total"
+                    android:text="Add money from wallet"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="10sp"
+                    android:layout_marginEnd="3dp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/walletMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/walletOption"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="-10dp"
+                    android:layout_toLeftOf="@id/total"
+                    android:text="HCare money in wallet: "
+                    android:layout_marginEnd="3dp"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="8sp" />
+
+                <CheckBox
+                    android:id="@+id/walletCheckBox"
+                    android:layout_width="30dp"
+                    android:layout_height="21dp"
+                    android:layout_alignBottom="@id/walletMoney"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_toRightOf="@id/walletMoney"
+                    android:text=""
+                    android:visibility="visible" />
 
             </RelativeLayout>
 
@@ -212,7 +250,6 @@
                         android:layout_alignParentStart="true"
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@id/nameCross"
-                        android:autofillHints=""
                         android:background="@android:color/transparent"
                         android:hint="Enter your name"
                         android:inputType="textCapSentences"
@@ -283,7 +320,6 @@
                         android:layout_marginEnd="10dp"
                         android:letterSpacing="0.03"
                         android:layout_toStartOf="@id/phoneNumberCross"
-                        android:autofillHints=""
                         android:background="@android:color/transparent"
                         android:hint="Enter your phone Number"
                         android:inputType="phone"
@@ -340,7 +376,6 @@
                         android:layout_alignParentStart="true"
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@id/pinCodeCross"
-                        android:autofillHints=""
                         android:background="@android:color/transparent"
                         android:hint="Enter your PIN code"
                         android:inputType="number"
@@ -398,7 +433,6 @@
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@id/addressCross"
                         android:hint="House No. / Building / area"
-                        android:autofillHints=""
                         android:paddingBottom="5dp"
                         android:background="@android:color/transparent"
                         android:paddingTop="10dp"
@@ -454,7 +488,6 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginEnd="10dp"
                         android:layout_toStartOf="@id/cityCross"
-                        android:autofillHints=""
                         android:background="@android:color/transparent"
                         android:hint="Enter your city"
                         android:inputType="textCapSentences"
@@ -542,6 +575,11 @@
 
             </LinearLayout>
 
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
 
     </ScrollView>
@@ -562,11 +600,5 @@
         android:textColor="?android:textColorPrimaryInverse"
         android:textSize="18sp"
         tools:ignore="HardcodedText" />
-
-    <FrameLayout
-        android:layout_centerInParent="true"
-        android:id="@+id/frameLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
 </RelativeLayout>

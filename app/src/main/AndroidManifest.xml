@@ -30,6 +30,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity
+            android:name=".NavigationItems.HCareWalletActivity"
+            android:exported="true" />
+        <activity
             android:name=".NavigationItems.ReferralPartnersActivity"
             android:exported="true">
             <intent-filter>
@@ -51,20 +54,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="hcare.page.link"
-                    android:scheme="https" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Start.LoginActivity"
-            android:theme="@style/loginTheme"></activity>
+            android:theme="@style/loginTheme">
+
+        </activity>
         <!--
 <receiver android:name=".Start.SMSBroadcastReceiver" android:exported="true"
             android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
@@ -77,7 +72,18 @@
             android:name=".Main.MainActivity"
             android:label="HCare"
             android:theme="@style/splashScreen"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
+            android:windowSoftInputMode="stateHidden|adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="hcare.page.link"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Main.Doctors.DoctorsDetailsActivity"
             android:label="About the Doctor" />
@@ -89,8 +95,7 @@
             android:theme="@style/splashScreen" />
         <activity
             android:name=".NavigationItems.CustomerCare.HelpSupportActivity"
-            android:theme="@style/loginTheme">
-        </activity>
+            android:theme="@style/loginTheme"></activity>
         <activity
             android:name=".Consultations.Doctor.MainDoctorActivity"
             android:label="Consultation"
@@ -106,21 +111,21 @@
         </activity>
         <activity
             android:name=".NewConsultation.Checkout.CheckoutActivity"
-            android:label="Checkout"></activity>
+            android:label="Checkout" />
         <activity
             android:name=".Orders.PrescriptionActivity"
-            android:label="Prescription"></activity>
+            android:label="Prescription" />
         <activity
             android:name=".Orders.TrackOrderActivity"
             android:label="Order"
-            android:theme="@style/splashScreen"></activity>
+            android:theme="@style/splashScreen" />
         <activity
             android:name=".NavigationItems.CustomerCare.Faq.FaqActivity"
             android:label="FAQ"
             android:theme="@style/splashScreen" />
         <activity
             android:name=".NavigationItems.CustomerCare.CustomerCareActivity"
-            android:label="Customer care"></activity>
+            android:label="Customer care" />
         <activity
             android:name=".Orders.AllOrdersActivity"
             android:label="Your Orders" />

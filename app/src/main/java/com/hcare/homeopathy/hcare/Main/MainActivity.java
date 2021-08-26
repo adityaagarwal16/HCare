@@ -1,7 +1,9 @@
 package com.hcare.homeopathy.hcare.Main;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,6 +47,7 @@ import com.hcare.homeopathy.hcare.NewConsultation.DiseaseAdapter;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 import com.hcare.homeopathy.hcare.R;
+import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -68,11 +71,21 @@ public class MainActivity extends BaseActivity
 
     private DatabaseReference mUserRef;
     private String userID;
+    String prevStarted = "prevStarted", referredByUserID;
+    int moneyInWallet = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        if (!sharedpreferences.getBoolean(prevStarted, false)) {
+            SharedPreferences.Editor editor = sharedpreferences.edit();
+            retrieveReferral();
+            editor.putBoolean(prevStarted, Boolean.TRUE);
+            editor.apply();
+        }
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
@@ -432,27 +445,65 @@ public class MainActivity extends BaseActivity
         startActivity(new Intent(this, AllChatsActivity.class));
     }
 
-//    public void receiveReferral() {
-//        try {
-//            FirebaseDynamicLinks.getInstance()
-//                    .getDynamicLink(getIntent())
-//                    .addOnSuccessListener(this, pendingDynamicLinkData -> {
-//                        Uri deepLink = null;
-//                        if (pendingDynamicLinkData != null) {
-//                            deepLink = pendingDynamicLinkData.getLink();
-//                        }
-//
-//                        assert deepLink != null;
-//                        String referLink = deepLink.toString();
-//
-//                        String custID = referLink.substring(referLink.lastIndexOf("%")+1);
-//                        Toast.makeText(this, custID, Toast.LENGTH_SHORT).show();
-//
-//                    })
-//                    .addOnFailureListener(this, e -> Log.w("main", "getDynamicLink:onFailure", e));
-//        } catch (Exception e) { e.printStackTrace(); }
-//
-//    }
+    private void retrieveReferral() {
+
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, pendingDynamicLinkData -> {
+                    Uri deepLink;
+                    if (pendingDynamicLinkData != null) {
+                        deepLink = pendingDynamicLinkData.getLink();
+                        String referLink = deepLink.toString();
+                        referLink = referLink.substring(referLink.lastIndexOf("%")+1);
+                        referredByUserID = referLink.substring(referLink.lastIndexOf("=")+1);
+
+//                      cust id retrieved
+                        try {
+                            // Adding the details of referredTo user to the db of referredBy user
+                            DatabaseReference referredByUser = FirebaseDatabase.getInstance()
+                                    .getReference().child("Users").child(referredByUserID);
+                            referredByUser.child("Referrals").setValue(userID);
+                            referredByUser.child("Referrals").child(userID).child("time").setValue(System.currentTimeMillis());
+
+                            // Adding details of referredBy user to db of referredTo user
+                            FirebaseDatabase.getInstance()
+                                    .getReference().child("Users").child(userID).child("ReferredBy").setValue(referredByUserID);
+
+                            // Adding money to wallet of referredBy user
+                            FirebaseDatabase.getInstance()
+                                    .getReference().child("Users").child(referredByUserID).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    moneyInWallet = Integer.parseInt(snapshot.child("Wallet").getValue()
+                                            .toString());
+
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                }
+                            });
+                            // Added delay to fn which adds Rs15 due to async retrieval
+                            new java.util.Timer().schedule(
+                                    new java.util.TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            moneyInWallet += 15;
+                                            FirebaseDatabase.getInstance()
+                                                    .getReference().child("Users").child(referredByUserID).child("Wallet").setValue(moneyInWallet);
+                                        }
+                                    },
+                                    5000
+                            );
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+    }
+
 }
 
 

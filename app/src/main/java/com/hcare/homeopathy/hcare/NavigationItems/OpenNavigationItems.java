@@ -44,6 +44,9 @@ public class OpenNavigationItems {
             case R.id.orders:
                 intent = new Intent(context, AllOrdersActivity.class);
                 break;
+            case R.id.wallet:
+                intent = new Intent(context, HCareWalletActivity.class);
+                break;
             case R.id.covid:
                 intent = new Intent(context, CoronaVirusActivity.class);
                 break;
