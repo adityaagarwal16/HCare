@@ -53,8 +53,6 @@ public class CheckoutFragment extends Fragment {
     View root;
     private int totalAmount = 0;
     String patientIssue;
-
-
     int CONSULTATION_FEE = 199;
 
     @Nullable
@@ -160,25 +158,30 @@ public class CheckoutFragment extends Fragment {
                     "AQtq6nwXN6cjsvm0GqDdB49rH8u2",
                     "viewMore"};
 
-            LimitedDoctorsAdapter adapter = new LimitedDoctorsAdapter(arrayList, requireContext(),
-                    list);
+            LimitedDoctorsAdapter adapter =
+                    new LimitedDoctorsAdapter(arrayList,
+                            requireContext(), list);
             for (String s : list) {
-                mDoctorsDatabase.child(s).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        try {
-                            DoctorObject obj = dataSnapshot.getValue(DoctorObject.class);
-                            if(!s.equals("viewMore"))
+                try {
+                    mDoctorsDatabase.child(s)
+                            .addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            try {
+                                DoctorObject obj = dataSnapshot.getValue(DoctorObject.class);
                                 Objects.requireNonNull(obj).setDoctorID(s);
-                            arrayList.add(obj);
-                            adapter.notifyDataSetChanged();
-                        } catch (Exception ignored) { }
-                    }
+                                arrayList.add(obj);
+                                adapter.notifyDataSetChanged();
+                            } catch (Exception ignored) {
+                                arrayList.add(new DoctorObject());
+                            }
+                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+                } catch (Exception e) {arrayList.add(new DoctorObject());}
             }
 
             mDoctorList.setAdapter(adapter);

@@ -50,8 +50,7 @@ public class LoginActivity extends BaseActivity {
                     .beginTransaction()
                     .replace(R.id.frameLayout, new LoginHomeFragment())
                     .commit();
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) { }
     }
 
 

@@ -79,7 +79,8 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences =
+                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
         if (!sharedpreferences.getBoolean(prevStarted, false)) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
             retrieveReferral();
@@ -91,10 +92,12 @@ public class MainActivity extends BaseActivity
                 .getCurrentUser()).getUid();
 
         final String[] token = {""};
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
             if(task.isComplete()) {
                 token[0] = task.getResult();
-                Log.i("AppConstants", "onComplete: new Token got: " + token[0]);
+                Log.i("AppConstants",
+                        "onComplete: new Token got: " + token[0]);
             }
         });
 
@@ -116,13 +119,14 @@ public class MainActivity extends BaseActivity
         setDoctorsRecycler();
         setAllCategoriesRecycler();
         findViewById(R.id.searchDisease).setOnClickListener(V -> showOrHideFragment());
-        updateUserDetails();
     }
 
+    /*
     private void updateUserDetails() {
         final String[] token = {""};
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-            if(task.isComplete()){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+            if(task.isComplete()) {
                 token[0] = task.getResult();
             }
         });
@@ -183,7 +187,7 @@ public class MainActivity extends BaseActivity
                 .child(userID)
                 .setValue(userMap);
     }
-    /*
+
     private void consultations() {
         DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
 
@@ -247,9 +251,8 @@ public class MainActivity extends BaseActivity
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().findFragmentById(R.id.searchFragment) != null) {
+        if (getSupportFragmentManager().findFragmentById(R.id.searchFragment) != null)
             showOrHideFragment();
-        }
         else
             super.onBackPressed();
     }
@@ -442,63 +445,65 @@ public class MainActivity extends BaseActivity
     }
 
     public void consultations(View view) {
-        startActivity(new Intent(this, AllChatsActivity.class));
+        startActivity(new Intent(this,
+                AllChatsActivity.class));
     }
 
     private void retrieveReferral() {
-
         FirebaseDynamicLinks.getInstance()
                 .getDynamicLink(getIntent())
                 .addOnSuccessListener(this, pendingDynamicLinkData -> {
-                    Uri deepLink;
-                    if (pendingDynamicLinkData != null) {
+                    try {
+                        // Adding the details of referredTo user to the db of referredBy user
+                        Uri deepLink;
                         deepLink = pendingDynamicLinkData.getLink();
-                        String referLink = deepLink.toString();
+                        String referLink = Objects.requireNonNull(deepLink).toString();
                         referLink = referLink.substring(referLink.lastIndexOf("%")+1);
                         referredByUserID = referLink.substring(referLink.lastIndexOf("=")+1);
 
-//                      cust id retrieved
-                        try {
-                            // Adding the details of referredTo user to the db of referredBy user
-                            DatabaseReference referredByUser = FirebaseDatabase.getInstance()
-                                    .getReference().child("Users").child(referredByUserID);
-                            referredByUser.child("Referrals").setValue(userID);
-                            referredByUser.child("Referrals").child(userID).child("time").setValue(System.currentTimeMillis());
+                        DatabaseReference referredByUser = FirebaseDatabase.getInstance()
+                                .getReference().child("Users")
+                                .child(referredByUserID);
+                        referredByUser.child("Referrals")
+                                .setValue(userID);
+                        referredByUser.child("Referrals")
+                                .child(userID).child("time")
+                                .setValue(System.currentTimeMillis());
 
-                            // Adding details of referredBy user to db of referredTo user
-                            FirebaseDatabase.getInstance()
-                                    .getReference().child("Users").child(userID).child("ReferredBy").setValue(referredByUserID);
+                        // Adding details of referredBy user to db of referredTo user
+                        FirebaseDatabase.getInstance()
+                                .getReference().child("Users").child(userID).child("ReferredBy")
+                                .setValue(referredByUserID);
 
-                            // Adding money to wallet of referredBy user
-                            FirebaseDatabase.getInstance()
-                                    .getReference().child("Users").child(referredByUserID).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        // Adding money to wallet of referredBy user
+                        FirebaseDatabase.getInstance()
+                                .getReference().child("Users").child(referredByUserID)
+                                .addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                moneyInWallet = Integer.parseInt(Objects.requireNonNull(
+                                        snapshot.child("Wallet").getValue())
+                                        .toString());
 
-                                    moneyInWallet = Integer.parseInt(snapshot.child("Wallet").getValue()
-                                            .toString());
-
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                }
-                            });
-                            // Added delay to fn which adds Rs15 due to async retrieval
-                            new java.util.Timer().schedule(
-                                    new java.util.TimerTask() {
-                                        @Override
-                                        public void run() {
-                                            moneyInWallet += 15;
-                                            FirebaseDatabase.getInstance()
-                                                    .getReference().child("Users").child(referredByUserID).child("Wallet").setValue(moneyInWallet);
-                                        }
-                                    },
-                                    5000
-                            );
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        // Added delay to fn which adds Rs15 due to async retrieval
+                        new java.util.Timer().schedule(
+                                new java.util.TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        moneyInWallet += 15;
+                                        FirebaseDatabase.getInstance()
+                                                .getReference().child("Users")
+                                                .child(referredByUserID)
+                                                .child("Wallet").setValue(moneyInWallet);
+                                    }
+                                }, 5000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 });
 

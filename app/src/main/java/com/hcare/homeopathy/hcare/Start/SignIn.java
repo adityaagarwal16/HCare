@@ -127,7 +127,7 @@ public class SignIn {
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if(task.isComplete()){
                 token[0] = task.getResult();
-                HashMap<String, String> userMap = new HashMap<>();
+                HashMap userMap = new HashMap<>();
                 userMap.put("phone number", phoneNumber);
                 userMap.put("name", name);
                 userMap.put("age", "");
@@ -136,6 +136,7 @@ public class SignIn {
                 userMap.put("email", email);
                 userMap.put("device_token", token[0]);
                 userMap.put("status", "online");
+                userMap.put("createdAt", System.currentTimeMillis());
 
                 FirebaseDatabase.getInstance().getReference()
                         .child("Users")

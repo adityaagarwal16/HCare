@@ -19,36 +19,32 @@ import java.util.Objects;
 
 public class ReferralPartnersActivity extends AppCompatActivity {
 
-
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String uid = user.getUid();
+    String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_referral_partners);
 
+        uid = Objects.requireNonNull(FirebaseAuth.getInstance()
+                .getCurrentUser()).getUid();
+
         Objects.requireNonNull(getSupportActionBar())
                 .setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         Button referEarnButton = findViewById(R.id.referPartnerBtn);
-
         referEarnButton.setOnClickListener(v -> refer());
-
     }
 
     public void refer() {
-
         DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(Uri.parse("https://hcare.com/?invitedby=" + uid))
                 .setDomainUriPrefix("https://hcare.page.link")
                 .setAndroidParameters(new DynamicLink.AndroidParameters.Builder().build())
                 .setIosParameters(new DynamicLink.IosParameters.Builder("com.example.ios").build())
                 .buildDynamicLink();
-
         Uri dynamicLinkUri = dynamicLink.getUri();
-
 
         try {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);

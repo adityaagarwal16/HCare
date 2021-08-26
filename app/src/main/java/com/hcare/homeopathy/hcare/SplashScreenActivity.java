@@ -1,5 +1,7 @@
 package com.hcare.homeopathy.hcare;
 
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -7,26 +9,21 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.pm.PackageInfoCompat;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Constants;
@@ -34,8 +31,6 @@ import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
 import java.util.Objects;
-
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
 
 public class SplashScreenActivity extends BaseActivity {
 
@@ -50,7 +45,6 @@ public class SplashScreenActivity extends BaseActivity {
 
         Context context = getApplicationContext();
         PackageManager manager = context.getPackageManager();
-
 
         try {
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
@@ -77,10 +71,6 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent = new Intent(getApplicationContext(),
                                             LoginActivity.class);
                                 else {
-                                    /* intent = new Intent(getApplicationContext(),
-                                                    DiseaseActivity.class);
-                                            intent.putExtra("request_type1", Diseases.thyroid);
-                                            */
                                     intent = new Intent(getApplicationContext(),
                                             CheckoutActivity.class);
                                     intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
@@ -121,12 +111,6 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent = new Intent(
                                             getApplicationContext(),
                                             MainActivity.class);
-                                   /* intent = new Intent(
-                                            getApplicationContext(),
-                                            DoctorsActivity.class);
-                                    intent.putExtra("doctorID",
-                                            "AQtq6nwXN6cjsvm0GqDdB49rH8u2");*/
-
                                 }
                                 startActivity(intent);
                                 signInOpen = true;
@@ -150,7 +134,6 @@ public class SplashScreenActivity extends BaseActivity {
                     finish();
                 }
             }
-
         });
     }
 

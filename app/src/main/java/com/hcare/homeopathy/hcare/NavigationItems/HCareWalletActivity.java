@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,24 +28,25 @@ public class HCareWalletActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hcare_wallet);
 
-        userID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        userID = Objects.requireNonNull(FirebaseAuth.getInstance()
+                .getCurrentUser()).getUid();
 
         moneyInWallet = findViewById(R.id.moneyInWalletTV);
-        try {
-            FirebaseDatabase.getInstance()
+        FirebaseDatabase.getInstance()
                     .getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    String amount = Objects.requireNonNull(snapshot.child("Wallet").getValue()).toString();
-                    moneyInWallet.setText("₹ " + amount);
+                    try {
+                        String amount = Objects
+                                .requireNonNull(snapshot.child("Wallet")
+                                        .getValue(Integer.class)).toString();
+                        moneyInWallet.setText("₹ " + amount);
+                    } catch (Exception ignored) {}
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
         Objects.requireNonNull(getSupportActionBar())

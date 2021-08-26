@@ -3,6 +3,7 @@ package com.hcare.homeopathy.hcare.Main.Doctors;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,13 +47,11 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull DoctorObject model) {
         model.setDoctorID(Objects.requireNonNull(getRef(position).getKey()));
-
         holder.setCardRadius();
         try {
             holder.doctorName("Dr. " + model.getName());
             holder.doctorDegree(model.getQualification());
             holder.doctorExperience(model.getExperience());
-
         } catch(Exception e) {e.printStackTrace();}
 
         try {
@@ -72,7 +71,6 @@ public class DoctorsAdapter extends FirebaseRecyclerAdapter<DoctorObject, Doctor
         try {
             if(model.getSex() == null)
                 model.setSex("Male");
-
         } catch(Exception e) {model.setSex("Male");}
 
         try {

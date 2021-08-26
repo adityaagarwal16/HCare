@@ -1,5 +1,12 @@
 package com.hcare.homeopathy.hcare.OrderTreatment;
 
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.customerOrders;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.newOrder;
+import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.ADDRESS;
+import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.CITY;
+import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.PIN_CODE;
+import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.STATE;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -8,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,13 +39,6 @@ import org.json.JSONObject;
 import java.text.MessageFormat;
 import java.util.Objects;
 import java.util.Random;
-
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.customerOrders;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.newOrder;
-import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.ADDRESS;
-import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.CITY;
-import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.PIN_CODE;
-import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.STATE;
 
 public class OrderNowActivity extends BaseActivity implements PaymentResultListener {
 
@@ -101,9 +100,11 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         FirebaseDatabase.getInstance().getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                moneyInWallet = Integer.parseInt(snapshot.child("Wallet").getValue().toString());
+                moneyInWallet = Integer.parseInt(Objects.requireNonNull(snapshot
+                        .child("Wallet").getValue()).toString());
                 setTotal();
-                ((TextView) findViewById(R.id.walletMoney)).setText("HCare money in wallet: " + moneyInWallet);
+                ((TextView) findViewById(R.id.walletMoney))
+                        .setText(MessageFormat.format("HCare money in wallet : {0}",  moneyInWallet));
             }
 
             @Override

@@ -42,8 +42,8 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
 
-        Objects.requireNonNull(
-                getSupportActionBar()).setHomeButtonEnabled(true);
+        Objects.requireNonNull(getSupportActionBar())
+                .setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
