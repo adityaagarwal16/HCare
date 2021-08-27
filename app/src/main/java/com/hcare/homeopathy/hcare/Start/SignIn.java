@@ -40,8 +40,6 @@ public class SignIn {
     }
 
     private void login() {
-        Toast.makeText(context,
-                "Sign in successful", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(
                 Intent.FLAG_ACTIVITY_NEW_TASK |

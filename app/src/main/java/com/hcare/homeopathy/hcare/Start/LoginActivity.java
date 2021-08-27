@@ -37,14 +37,6 @@ public class LoginActivity extends BaseActivity {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
-//        SharedPreferences sharedpreferences = getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-//        if (!sharedpreferences.getBoolean(prevStarted, false)) {
-//            SharedPreferences.Editor editor = sharedpreferences.edit();
-//            retrieveReferral();
-//            editor.putBoolean(prevStarted, Boolean.TRUE);
-//            editor.apply();
-//        }
-
         try {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -67,38 +59,5 @@ public class LoginActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
-
-//    void openPhoneFragment() {
-//        try {
-//            PhoneNumberFragment fragment = new PhoneNumberFragment();
-//            fragment.setEnterTransition(new
-//                    Slide(Gravity.START).setDuration(200));
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.frameLayout, fragment)
-//                    .commit();
-//        } catch (Exception ignored) {}
-//    }
-
-  /*  public void carouselView() {
-        customCarouselView = (CarouselView) findViewById(R.id.carouselView);
-        customCarouselView.setPageCount(carousel_Num_of_pages);
-        customCarouselView.setViewListener(viewListener);
-    }
-
-    ViewListener viewListener = position -> {
-        View customView;
-        if(position == 0){
-            customView = getLayoutInflater().inflate(R.layout.login_carousel_1, null);
-        }
-        else if(position == 1) {
-            customView = getLayoutInflater().inflate(R.layout.login_carousel_2, null);
-        }
-        else{
-            customView = getLayoutInflater().inflate(R.layout.login_carousel_3, null);
-        }
-        return customView;
-    };*/
-
 
 }

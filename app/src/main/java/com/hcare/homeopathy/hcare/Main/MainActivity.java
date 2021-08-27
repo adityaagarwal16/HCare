@@ -1,18 +1,23 @@
 package com.hcare.homeopathy.hcare.Main;
 
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.diabetes;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.female;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.hair;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.men;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.piles;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.renalProblems;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.skin;
+import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.thyroid;
+
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.annotation.NonNull;
@@ -24,8 +29,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.Explode;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,8 +36,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.Consultations.AllChatsActivity;
@@ -52,54 +53,30 @@ import com.hcare.homeopathy.hcare.Start.LoginActivity;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
-
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
-import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.diabetes;
-import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.female;
-import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.hair;
-import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.men;
-import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.piles;
-import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.renalProblems;
-import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.skin;
-import static com.hcare.homeopathy.hcare.NewConsultation.Diseases.thyroid;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DatabaseReference mUserRef;
     private String userID;
-    String prevStarted = "prevStarted", referredByUserID;
-    int moneyInWallet = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedpreferences =
-                getSharedPreferences(getString(R.string.app_name), Context.MODE_PRIVATE);
-        if (!sharedpreferences.getBoolean(prevStarted, false)) {
-            SharedPreferences.Editor editor = sharedpreferences.edit();
-            retrieveReferral();
-            editor.putBoolean(prevStarted, Boolean.TRUE);
-            editor.apply();
+        //check referral
+        new Referral(getIntent(), this);
+
+        //prevent access to main without signing in (using deep links)
+        try {
+            userID = Objects.requireNonNull(FirebaseAuth.getInstance()
+                    .getCurrentUser()).getUid();
+        } catch (Exception e) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
         }
-
-        userID = Objects.requireNonNull(FirebaseAuth.getInstance()
-                .getCurrentUser()).getUid();
-
-        final String[] token = {""};
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-            if(task.isComplete()) {
-                token[0] = task.getResult();
-                Log.i("AppConstants",
-                        "onComplete: new Token got: " + token[0]);
-            }
-        });
 
         mUserRef = FirebaseDatabase.getInstance().getReference()
                 .child("Users").child(userID);
@@ -107,8 +84,14 @@ public class MainActivity extends BaseActivity
         new SetNavigationHeader(this);
 
         //drawer and toolbar
+
+        //if user logs in from another device, device token will be updated
+        updateUserDetails();
+
         setToolbar();
         eventListeners();
+
+
         setFlipper();
         setCoronaFlipper();
 
@@ -118,10 +101,10 @@ public class MainActivity extends BaseActivity
         setTopIssuesRecycler();
         setDoctorsRecycler();
         setAllCategoriesRecycler();
+
         findViewById(R.id.searchDisease).setOnClickListener(V -> showOrHideFragment());
     }
 
-    /*
     private void updateUserDetails() {
         final String[] token = {""};
         FirebaseMessaging.getInstance().getToken()
@@ -141,9 +124,13 @@ public class MainActivity extends BaseActivity
                                 if(!Objects.requireNonNull(
                                         dataSnapshot.child("device_token").getValue())
                                         .toString().equals(token[0]))
-                                    updateFirebase(dataSnapshot, token[0]);
+                                    FirebaseDatabase.getInstance()
+                                            .getReference().child("Users").child(userID)
+                                            .child("device_token").setValue(token[0]);
                             } catch (Exception e) {
-                                updateFirebase(dataSnapshot, token[0]);
+                                FirebaseDatabase.getInstance()
+                                        .getReference().child("Users").child(userID)
+                                        .child("device_token").setValue(token[0]);
                                 e.printStackTrace();
                             }
 
@@ -158,37 +145,7 @@ public class MainActivity extends BaseActivity
 
     }
 
-    private void updateFirebase(DataSnapshot dataSnapshot, String token) {
-        Map userMap = new HashMap();
-        userMap.put("phone number", Objects.requireNonNull(dataSnapshot.child("phone number")
-                .getValue()));
-        userMap.put("name", Objects.requireNonNull(dataSnapshot.child("name")
-                .getValue()));
-        userMap.put("age", Objects.requireNonNull(dataSnapshot.child("age")
-                .getValue()));
-        userMap.put("sex", Objects.requireNonNull(dataSnapshot.child("sex")
-                .getValue()));
-        userMap.put("email", Objects.requireNonNull(dataSnapshot.child("email")
-                .getValue()));
-        try {
-            userMap.put("image", Objects.requireNonNull(dataSnapshot
-                    .child("image").getValue()));
-        } catch (Exception ignored) { }
-        try {
-            userMap.put("consultCount", Objects.requireNonNull(dataSnapshot
-                    .child("consultCount").getValue()));
-        } catch (Exception ignored) { }
-
-        userMap.put("device_token", token);
-        userMap.put("status", "online");
-
-        FirebaseDatabase.getInstance().getReference()
-                .child("Users")
-                .child(userID)
-                .setValue(userMap);
-    }
-
-    private void consultations() {
+    /*private void consultations() {
         DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
 
         DatabaseReference messages =
@@ -216,8 +173,7 @@ public class MainActivity extends BaseActivity
         });
 
 
-    }
-*/
+    }*/
 
     private void showOrHideFragment() {
         FragmentTransaction transaction =
@@ -258,7 +214,6 @@ public class MainActivity extends BaseActivity
     }
 
     void setFlipper() {
-
         int[] images = {
                 R.drawable.ban1,
                 R.drawable.ban2,
@@ -447,66 +402,6 @@ public class MainActivity extends BaseActivity
     public void consultations(View view) {
         startActivity(new Intent(this,
                 AllChatsActivity.class));
-    }
-
-    private void retrieveReferral() {
-        FirebaseDynamicLinks.getInstance()
-                .getDynamicLink(getIntent())
-                .addOnSuccessListener(this, pendingDynamicLinkData -> {
-                    try {
-                        // Adding the details of referredTo user to the db of referredBy user
-                        Uri deepLink;
-                        deepLink = pendingDynamicLinkData.getLink();
-                        String referLink = Objects.requireNonNull(deepLink).toString();
-                        referLink = referLink.substring(referLink.lastIndexOf("%")+1);
-                        referredByUserID = referLink.substring(referLink.lastIndexOf("=")+1);
-
-                        DatabaseReference referredByUser = FirebaseDatabase.getInstance()
-                                .getReference().child("Users")
-                                .child(referredByUserID);
-                        referredByUser.child("Referrals")
-                                .setValue(userID);
-                        referredByUser.child("Referrals")
-                                .child(userID).child("time")
-                                .setValue(System.currentTimeMillis());
-
-                        // Adding details of referredBy user to db of referredTo user
-                        FirebaseDatabase.getInstance()
-                                .getReference().child("Users").child(userID).child("ReferredBy")
-                                .setValue(referredByUserID);
-
-                        // Adding money to wallet of referredBy user
-                        FirebaseDatabase.getInstance()
-                                .getReference().child("Users").child(referredByUserID)
-                                .addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                moneyInWallet = Integer.parseInt(Objects.requireNonNull(
-                                        snapshot.child("Wallet").getValue())
-                                        .toString());
-
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                            }
-                        });
-                        // Added delay to fn which adds Rs15 due to async retrieval
-                        new java.util.Timer().schedule(
-                                new java.util.TimerTask() {
-                                    @Override
-                                    public void run() {
-                                        moneyInWallet += 15;
-                                        FirebaseDatabase.getInstance()
-                                                .getReference().child("Users")
-                                                .child(referredByUserID)
-                                                .child("Wallet").setValue(moneyInWallet);
-                                    }
-                                }, 5000);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-
     }
 
 }

@@ -1,19 +1,18 @@
 package com.hcare.homeopathy.hcare.NavigationItems;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.hcare.homeopathy.hcare.R;
+import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
 import java.util.Objects;
 
@@ -25,16 +24,20 @@ public class ReferralPartnersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_referral_partners);
+        try {
+            uid = Objects.requireNonNull(FirebaseAuth.getInstance()
+                    .getCurrentUser()).getUid();
 
-        uid = Objects.requireNonNull(FirebaseAuth.getInstance()
-                .getCurrentUser()).getUid();
+            Objects.requireNonNull(getSupportActionBar())
+                    .setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        Objects.requireNonNull(getSupportActionBar())
-                .setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-        Button referEarnButton = findViewById(R.id.referPartnerBtn);
-        referEarnButton.setOnClickListener(v -> refer());
+            Button referEarnButton = findViewById(R.id.referPartnerBtn);
+            referEarnButton.setOnClickListener(v -> refer());
+        } catch (Exception ignored) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
     }
 
     public void refer() {
