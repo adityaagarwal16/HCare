@@ -20,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,12 +29,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
-import com.hcare.homeopathy.hcare.Main.PaymentInitiation;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.PaymentSuccessful;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.RazorPay;
 import com.hcare.homeopathy.hcare.R;
-import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
-
-import org.json.JSONObject;
 
 import java.text.MessageFormat;
 import java.util.Objects;
@@ -149,7 +146,6 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
                             phoneNumber = (String) dataSnapshot.child("phone number").getValue();
                             ((EditText) findViewById(R.id.phoneNumber)).setText(phoneNumber);
                             email = (String) dataSnapshot.child("email").getValue();
-
                         } catch (Exception ignored) { }
                     }
 
@@ -291,17 +287,14 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         sharedPref.save(ADDRESS, orderObject.getAddress());
         sharedPref.save(CITY, orderObject.getCity());
         sharedPref.save(STATE, orderObject.getState());
-
-        final AppCompatActivity activity = this;
-        new PaymentInitiation("Medicine", "40% discount applied", total, activity);
-
+        new RazorPay(total, this);
     }
 
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
             paymentSuccessful = true;
-            orderSuccessful();
+            new PaymentSuccessful(orderObject, userID, doctorID);
         } catch (Exception e) {
             Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
         }
@@ -318,68 +311,5 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         }
     }
 
-    private void orderSuccessful() {
-        try {
-            orderObject.setOrderID("Hcr" + getRandomNumberString());
-            orderObject.setUserID(userID);
-            orderObject.setDoctorID(doctorID);
-
-            reference.child(newOrder)
-                    .child(orderObject.getOrderID())
-                    .setValue(orderObject);
-
-            reference.child(customerOrders).child(userID)
-                    .child(orderObject.getOrderID())
-                    .setValue(orderObject).addOnCompleteListener(task -> {
-
-                reference.child("Doctors").child(doctorID)
-                        .child("count").push().setValue(userID);
-
-                reference.child("messages").child(userID).child(doctorID)
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                    child.getRef().child("ordering").setValue("ordered");
-                                    reference.child("messages").child(doctorID).child(userID)
-                                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                                @Override
-                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                    for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                                        child.getRef().child("ordering").setValue("ordered");
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                }
-                                            });
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @SuppressLint("DefaultLocale")
-    public String getRandomNumberString() {
-        // It will generate 6 digit random Number.
-        // from 0 to 999999
-        Random rnd = new Random();
-        int number = rnd.nextInt(9999999);
-
-        // this will convert any number sequence into 6 character.
-        return String.format("%07d", number);
-    }
 
 }

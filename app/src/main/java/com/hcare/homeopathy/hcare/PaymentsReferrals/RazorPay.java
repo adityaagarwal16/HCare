@@ -1,6 +1,4 @@
-package com.hcare.homeopathy.hcare.Main;
-
-import android.app.Activity;
+package com.hcare.homeopathy.hcare.PaymentsReferrals;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.FirebaseClasses.UserObject;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 
@@ -17,28 +16,27 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
-public class PaymentInitiation extends Activity {
+public class RazorPay {
 
-    String name;
-    String discount;
     float total;
     String email, phoneNumber, userID;
     AppCompatActivity activity;
 
-
-    public PaymentInitiation(String name, String discount, float total, AppCompatActivity activity) {
-        this.name = name;
-        this.discount = discount;
+    public RazorPay(float total, AppCompatActivity activity) {
         this.total = total;
         this.activity = activity;
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                email = Objects.requireNonNull(snapshot.child("email").getValue()).toString();
-                phoneNumber = Objects.requireNonNull(snapshot.child("phone number").getValue()).toString();
+                try {
+                    UserObject user = snapshot.getValue(UserObject.class);
+                    email = Objects.requireNonNull(user).getEmail();
+                    phoneNumber = Objects.requireNonNull(user).getPhoneNumber();
+                } catch(Exception ignore) {}
                 startPayment();
             }
 
@@ -50,14 +48,12 @@ public class PaymentInitiation extends Activity {
 
     }
 
-    @NonNull
     public void startPayment() {
-
         try {
             final Checkout co = new Checkout();
             JSONObject options = new JSONObject();
-            options.put("name", name);
-            options.put("description", discount);
+            options.put("name", "HCare");
+            options.put("description", "Discount Applied");
 
             //You can omit the image option to fetch the image from dashboard
             // options.put("image", R.drawable.logo);

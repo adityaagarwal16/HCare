@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -23,11 +22,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.hcare.homeopathy.hcare.FirebaseClasses.UserObject;
 import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.ProfileActivity;
 import com.hcare.homeopathy.hcare.R;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 public class SignIn {
@@ -122,50 +121,39 @@ public class SignIn {
 
     private void newAccount(String phoneNumber, String name, String email) {
         final String[] token = {""};
+        UserObject user = new UserObject();
         FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
             if(task.isComplete()){
                 token[0] = task.getResult();
-                HashMap userMap = new HashMap<>();
-                userMap.put("phone number", phoneNumber);
-                userMap.put("name", name);
-                userMap.put("age", "");
-                userMap.put("sex", "Male");
-                userMap.put("image", "default");
-                userMap.put("email", email);
-                userMap.put("device_token", token[0]);
-                userMap.put("status", "online");
-                userMap.put("createdAt", System.currentTimeMillis());
-
-                FirebaseDatabase.getInstance().getReference()
-                        .child("Users")
-                        .child(userID)
-                        .setValue(userMap);
+                user.setName(name);
+                user.setPhoneNumber(phoneNumber);
+                user.setEmail(email);
+                user.setAge("");
+                user.setSex("Male");
+                user.setImage("default");
+                user.setDevice_token(token[0]);
+                user.setStatus("online");
+                user.setWallet(0);
+                user.setCreatedAt(System.currentTimeMillis());
+                FirebaseDatabase.getInstance().getReference().child("Users")
+                        .child(userID).setValue(user);
             }
         });
 
-        /*HashMap<String, String> loggedInData = new HashMap<>();
-        loggedInData.put("phone_number", phoneNumber);
-        loggedInData.put("email", email);
-        loggedInData.put("name", name);
-        loggedInData.put("age", "");
-        loggedInData.put("sex", "Male");
-        FirebaseDatabase.getInstance().getReference()
-                .child("loggedin")
-                .child(userID)
-                .setValue(loggedInData);*/
-
+        //add below profile activity
         Intent intent = new Intent(context, MainActivity.class);
-
         intent.addFlags(
                 Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
 
+        //even if user doesn't save details, they can go to the main activity
         Intent profile = new Intent(context, ProfileActivity.class);
         profile.putExtra("newUser", true);
-        profile.putExtra("name", name);
-        profile.putExtra("phoneNumber", phoneNumber);
-        profile.putExtra("email", email);
+        user.setName(name);
+        user.setPhoneNumber(phoneNumber);
+        user.setEmail(email);
+        profile.putExtra("user", user);
         context.startActivity(profile);
 
         ((Activity) context).finish();

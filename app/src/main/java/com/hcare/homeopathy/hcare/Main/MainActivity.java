@@ -47,6 +47,7 @@ import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
 import com.hcare.homeopathy.hcare.NewConsultation.DiseaseAdapter;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.Referral;
 import com.hcare.homeopathy.hcare.R;
 import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
@@ -116,7 +117,7 @@ public class MainActivity extends BaseActivity
 
         FirebaseDatabase.getInstance()
                 .getReference().child("Users").child(userID)
-                .addValueEventListener(new ValueEventListener() {
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         try {
@@ -277,7 +278,7 @@ public class MainActivity extends BaseActivity
                     ConsultationObject obj = dataSnapshot.getValue(ConsultationObject.class);
                     String consultationID = "";
                     try {
-                        consultationID = Objects.requireNonNull(obj).getConsultationID();;
+                        consultationID = Objects.requireNonNull(obj).getConsultationID();
                     } catch (Exception ignored) {}
 
                     consultationText.setText(MessageFormat
@@ -331,6 +332,7 @@ public class MainActivity extends BaseActivity
             for (String s : list) {
                 try {
                     mDoctorsDatabase.child(s).addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             try {

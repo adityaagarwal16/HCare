@@ -26,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.hcare.homeopathy.hcare.BaseActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.UserObject;
 import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.R;
 import com.squareup.picasso.Callback;
@@ -73,13 +74,12 @@ public class ProfileActivity extends BaseActivity {
                 new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserObject user = new UserObject();
                 try {
-                    setFields(dataSnapshot);
-                } catch(Exception ignored) { }
-                try {
-                    setImage(Objects.requireNonNull(dataSnapshot.child("image")
-                            .getValue()).toString());
-                } catch(Exception ignored) { }
+                    user = dataSnapshot.getValue(UserObject.class);
+                } catch(Exception ignore) {}
+                setFields(user);
+                setImage(Objects.requireNonNull(user).getImage());
             }
 
             @Override
@@ -101,41 +101,26 @@ public class ProfileActivity extends BaseActivity {
 
     void newUser() {
         if(getIntent().getBooleanExtra("newUser", false)) {
-            ((EditText) findViewById(R.id.patientName))
-                    .setText(getIntent().getStringExtra("name"));
-            ((EditText) findViewById(R.id.email))
-                    .setText(getIntent().getStringExtra("email"));
-            ((EditText) findViewById(R.id.contact))
-                    .setText(getIntent().getStringExtra("phoneNumber"));
-            String patientName = ((EditText)
-                    findViewById(R.id.patientName)).getText().toString();
-            String email = ((EditText)
-                    findViewById(R.id.email)).getText().toString();
-            String contactNumber = ((EditText)
-                    findViewById(R.id.contact)).getText().toString();
-
-            mUserDatabase.child("name").setValue(patientName);
-            mUserDatabase.child("phone number")
-                    .setValue(contactNumber);
-            mUserDatabase.child("email").setValue(email);
+            UserObject user = new UserObject();
+            try {
+                user = (UserObject) getIntent().getSerializableExtra("user");
+            } catch (Exception ignored) {}
+            setFields(user);
 
             HashMap<String, String> notifyData = new HashMap<>();
-            notifyData.put("phone_number", contactNumber);
-            notifyData.put("email", email);
-            notifyData.put("name", patientName);
+            try {
+                notifyData.put("phone_number", Objects.requireNonNull(user).getPhoneNumber());
+                notifyData.put("email", user.getEmail());
+                notifyData.put("name", user.getName());
+            } catch (Exception ignore) {}
 
-            FirebaseDatabase.getInstance()
-                    .getReference()
-                    .child("loggedin")
-                    .child(userID)
-                    .setValue(notifyData);
-
+            FirebaseDatabase.getInstance().getReference().child("loggedin")
+                    .child(userID).setValue(notifyData);
         }
     }
 
     void setImage(String image) {
         if (!image.equals("default")) {
-
             Picasso.get()
                     .load(image)
                     .networkPolicy(NetworkPolicy.OFFLINE)
@@ -176,36 +161,19 @@ public class ProfileActivity extends BaseActivity {
                             findViewById(R.id.tint).setVisibility(View.VISIBLE);
                         }
                     });
-
         }
     }
 
-    void setFields(DataSnapshot dataSnapshot) {
-        try {
-            ((EditText) findViewById(R.id.patientName))
-                    .setText(Objects.requireNonNull(dataSnapshot.child("name")
-                            .getValue()).toString());
+    void setFields(UserObject user) {
+        try { ((EditText) findViewById(R.id.patientName)).setText(user.getName());
         } catch (Exception ignored) {}
-        try {
-            ((EditText) findViewById(R.id.email))
-                    .setText(Objects.requireNonNull(dataSnapshot.child("email")
-                            .getValue()).toString());
+        try { ((EditText) findViewById(R.id.email)).setText(user.getEmail());
         } catch (Exception ignored) {}
-        try {
-            ((EditText) findViewById(R.id.age))
-                    .setText(Objects.requireNonNull(dataSnapshot.child("age")
-                            .getValue()).toString());
+        try { ((EditText) findViewById(R.id.age)).setText(user.getAge());
         } catch (Exception ignored) {}
-        try {
-            ((EditText) findViewById(R.id.contact))
-                    .setText(Objects.requireNonNull(dataSnapshot.child("phone number")
-                            .getValue()).toString());
+        try { ((EditText) findViewById(R.id.contact)).setText(user.getPhoneNumber());
         } catch (Exception ignored) {}
-        try {
-            spinner.setSelection(getSpinnerNum(
-                    Objects.requireNonNull(dataSnapshot.child("sex")
-                            .getValue()).toString())
-            );
+        try { spinner.setSelection(getSpinnerNum(user.getSex()));
         } catch (Exception ignored) {}
     }
 
@@ -228,7 +196,8 @@ public class ProfileActivity extends BaseActivity {
     void crossListeners(int crossID, int textID) {
         findViewById(crossID).setOnClickListener(v -> {
             EditText text =  findViewById(textID);
-            final InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            final InputMethodManager manager =
+                    (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             text.requestFocus();
             text.setText("");
             manager.showSoftInput(text, 1);

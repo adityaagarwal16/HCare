@@ -1,5 +1,11 @@
 package com.hcare.homeopathy.hcare.Consultations.Doctor;
 
+import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.GALLERY_PICK;
+import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.PICK_PDF_CODE;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.followUp;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.recentConsultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
@@ -40,12 +45,12 @@ import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.ChatObject;
 import com.hcare.homeopathy.hcare.FirebaseClasses.ConsultationObject;
 import com.hcare.homeopathy.hcare.Main.Doctors.DoctorDetailsFragment;
-import com.hcare.homeopathy.hcare.Main.PaymentInitiation;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.PaymentSuccessful;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.RazorPay;
 import com.hcare.homeopathy.hcare.R;
-import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import com.theartofdev.edmodo.cropper.CropImage;
-import org.json.JSONObject;
+
 import java.io.File;
 import java.text.DateFormat;
 import java.text.MessageFormat;
@@ -59,12 +64,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
-
-import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.GALLERY_PICK;
-import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.PICK_PDF_CODE;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.followUp;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.recentConsultations;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
 
 public class MainDoctorActivity extends BaseActivity implements PaymentResultListener {
 
@@ -348,9 +347,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             mProgressDialog.setMessage("Please wait");
             mProgressDialog.setCanceledOnTouchOutside(false);
             mProgressDialog.show();
-
-            final AppCompatActivity activity = this;
-            new PaymentInitiation("Medicine", "discount applied", 149, activity);
+            new RazorPay( 149, this);
         });
     }
 
@@ -367,6 +364,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         DatabaseReference chat = databaseRootReference
                 .child("messages").child(userID).child(doctorID);
         chat.addChildEventListener(new ChildEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
                 try {
@@ -389,14 +387,13 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) { }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 try {
                     ChatObject message = dataSnapshot.getValue(ChatObject.class);
                     assert message != null;
                     message.setMessageID(dataSnapshot.getKey());
-
-                    Log.i("message", message.toString());
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         list.removeIf(e -> e.getMessageID().equals(message.getMessageID()));
                     }
@@ -580,7 +577,6 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     @Override
     protected void onStart() {
         super.onStart();
-
         databaseRootReference.child("notifications").child(userID).removeValue();
         databaseRootReference.child("Accepting")
                 .child(userID).removeValue();
@@ -613,63 +609,12 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         return s.format(new Date(cal.getTimeInMillis()));
     }
 
-    private void sendRequest() {
-        String current_user_ref = "messages/" + userID +"/"+ doctorID;
-        String chat_user_ref ="messages/" + doctorID +"/" + userID;
-
-        DatabaseReference user_message_push =
-                databaseRootReference.child("messages").child(userID)
-                        .child(doctorID).push();
-
-        String push_id = user_message_push.getKey();
-
-        Map messageMap = new HashMap();
-        messageMap.put("message", "Follow up consultation");
-        messageMap.put("seen", false);
-        messageMap.put("type","text");
-        messageMap.put("time",ServerValue.TIMESTAMP);
-        messageMap.put("from", userID);
-
-        Map messageUserMap = new HashMap();
-        messageUserMap.put(current_user_ref +"/" + push_id,messageMap);
-        messageUserMap.put(chat_user_ref +"/" + push_id,messageMap);
-
-
-        ConsultationObject consultation = new ConsultationObject();
-        consultation.setDoctorID(doctorID);
-        consultation.setUserID(userID);
-        consultation.setTime(System.currentTimeMillis());
-        consultation.setIssue("Follow Up");
-        consultation.setDisease("Follow Up");
-
-        //Consultation table record
-        databaseRootReference.child(userConsultations)
-                .child(userID).child(followUp)
-                .child(doctorID).child(String.valueOf(consultation.getTime()))
-                .setValue(consultation);
-
-        databaseRootReference.child(recentConsultations)
-                .child(String.valueOf(consultation.getTime()))
-                .setValue(consultation);
-
-        //temporary store
-        databaseRootReference.child("Followup").child(doctorID)
-                .child(userID).setValue(messageMap);
-
-        doctorReference.child("nextConsultdate")
-                .setValue(getCalculatedDate("dd-MM-yyyy", 10));
-
-        databaseRootReference.updateChildren(messageUserMap,
-                (databaseError, databaseReference) -> notification());
-    }
-
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
             mProgressDialog.dismiss();
-
             paymentSuccessful = true;
-            sendRequest();
+            new PaymentSuccessful(userID, doctorID);
         } catch (Exception e) {
             Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
         }

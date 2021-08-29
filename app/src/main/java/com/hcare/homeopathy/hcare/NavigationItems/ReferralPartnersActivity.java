@@ -53,12 +53,11 @@ public class ReferralPartnersActivity extends AppCompatActivity {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, "HCare");
-            String shareMessage= "Check out HCare!! India's first only Homeopathic " +
-                    "online consultation and delivery app \n\n"
+            String shareMessage= "HCare - India's first only Homeopathic " +
+                    "online consultation and delivery app \n"
                     + dynamicLinkUri.toString();
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
             startActivity(Intent.createChooser(shareIntent, "How do you want to share"));
-
         } catch(Exception e) { e.printStackTrace(); }
     }
 

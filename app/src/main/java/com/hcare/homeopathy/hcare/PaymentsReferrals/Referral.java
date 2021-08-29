@@ -1,4 +1,4 @@
-package com.hcare.homeopathy.hcare.Main;
+package com.hcare.homeopathy.hcare.PaymentsReferrals;
 
 import android.app.Activity;
 import android.content.Context;

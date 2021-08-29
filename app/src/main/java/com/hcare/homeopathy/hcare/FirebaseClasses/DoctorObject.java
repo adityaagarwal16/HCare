@@ -15,6 +15,14 @@ public class DoctorObject implements Serializable {
     String sex;
     String languages;
     HashMap<String, String> count, AcceptCount;
+    @PropertyName("about yourself")
+    public String aboutYourself;
+
+    @PropertyName("register id")
+    public String registerID;
+
+    String Availability;
+    int experience;
 
     public HashMap<String, String> getAcceptCount() {
         return AcceptCount;
@@ -31,15 +39,6 @@ public class DoctorObject implements Serializable {
     public void setCount(HashMap<String, String> count) {
         this.count = count;
     }
-
-    @PropertyName("about yourself")
-    public String aboutYourself;
-
-    @PropertyName("register id")
-    public String registerID;
-
-    String Availability;
-    int experience;
 
     public String getLanguages() {
         return languages;
@@ -72,7 +71,6 @@ public class DoctorObject implements Serializable {
     public void setAvailability(String availability) {
         Availability = availability;
     }
-
 
     public String getSex() {
         return sex;

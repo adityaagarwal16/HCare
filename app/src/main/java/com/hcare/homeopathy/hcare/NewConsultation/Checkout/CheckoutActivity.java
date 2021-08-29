@@ -1,8 +1,10 @@
 package com.hcare.homeopathy.hcare.NewConsultation.Checkout;
 
-import android.annotation.SuppressLint;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -15,20 +17,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
-import com.hcare.homeopathy.hcare.FirebaseClasses.ConsultationObject;
-import com.hcare.homeopathy.hcare.NewConsultation.DiseaseInfo;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.PaymentSuccessful;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.PaymentResultListener;
 
 import java.util.Objects;
-import java.util.Random;
-
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.recentConsultations;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
 
 public class CheckoutActivity extends BaseActivity implements PaymentResultListener {
 
@@ -48,6 +42,7 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
+        disease = (Diseases) getIntent().getSerializableExtra(DISEASE_OBJECT);
 
         FirebaseDatabase.getInstance().getReference()
                 .child("Users").child(userID)
@@ -128,64 +123,11 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
         return super.onOptionsItemSelected(item);
     }
 
-    private void sendRequest() {
-        userID = Objects.requireNonNull(FirebaseAuth.getInstance()
-                .getCurrentUser()).getUid();
-        disease = (Diseases) getIntent().getSerializableExtra(DISEASE_OBJECT);
-
-        String consultationID = generateConsultationID();
-
-        String patientIssue = "";
-        try {
-            patientIssue = getIntent().getStringExtra(issue);
-        } catch (Exception ignored) {}
-
-        ConsultationObject consultation = new ConsultationObject();
-        try {
-            consultation.setConsultationID(consultationID);
-            consultation.setDisease(new DiseaseInfo(disease).getDiseaseName());
-            consultation.setIssue(patientIssue);
-            consultation.setTime(System.currentTimeMillis());
-            consultation.setUserID(userID);
-            consultation.setDoctorID("");
-        } catch (Exception e) {e.printStackTrace();}
-        Log.i("consultation", String.valueOf(consultation));
-
-        //temporary store
-        FirebaseDatabase.getInstance().getReference()
-                .child(activeConsultations)
-                .child(userID).setValue(consultation);
-
-        //permanent store - user
-        FirebaseDatabase.getInstance().getReference()
-                .child(userConsultations)
-                .child(userID)
-                .child(consultationID)
-                .setValue(consultation);
-
-        //permanent store - recent
-        FirebaseDatabase.getInstance().getReference()
-                .child(recentConsultations)
-                .child(consultationID)
-                .setValue(consultation);
-    }
-
-    @SuppressLint("DefaultLocale")
-    public String generateConsultationID() {
-        // It will generate 6 digit random Number.
-        // from 0 to 999999
-        Random rnd = new Random();
-        int number = rnd.nextInt(9999999);
-
-        // this will convert any number sequence into 6 character.
-        return "CN" + String.format("%07d", number);
-    }
-
     @Override
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
             paymentSuccessful = true;
-            sendRequest();
+            new PaymentSuccessful(userID, disease, getIntent().getStringExtra(issue));
         } catch (Exception ignored) { }
     }
 
@@ -193,6 +135,8 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
     @Override
     public void onPaymentError(int code, String response) {
         try {
+            paymentSuccessful = true;
+            //sendRequest();
             Toast.makeText(this, "Payment failed",
                     Toast.LENGTH_LONG).show();
         } catch (Exception  e) {

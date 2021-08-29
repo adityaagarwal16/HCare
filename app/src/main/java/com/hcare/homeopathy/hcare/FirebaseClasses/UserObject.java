@@ -7,78 +7,40 @@ import java.util.HashMap;
 
 public class UserObject implements Serializable {
 
-    String name;
-    String image;
-    String doctorID;
-    String qualification;
-    String sex;
-    String languages;
-    HashMap<String, String> count, AcceptCount;
+    String name, image, email, age, ReferredBy, device_token, status, sex;
+    int Wallet;
+    ReferralObject referral;
+    long createdAt;
 
-    public HashMap<String, String> getAcceptCount() {
-        return AcceptCount;
+    public int getWallet() {
+        return Wallet;
     }
 
-    public void setAcceptCount(HashMap<String, String> acceptCount) {
-        AcceptCount = acceptCount;
+    public void setWallet(int wallet) {
+        Wallet = wallet;
     }
 
-    public HashMap<String, String> getCount() {
-        return count;
+    public ReferralObject getReferral() {
+        return referral;
     }
 
-    public void setCount(HashMap<String, String> count) {
-        this.count = count;
+    public void setReferral(ReferralObject referral) {
+        this.referral = referral;
     }
 
-    @PropertyName("about yourself")
-    public String aboutYourself;
-
-    @PropertyName("register id")
-    public String registerID;
-
-    String Availability;
-    int experience;
-
-    public String getLanguages() {
-        return languages;
+    public long getCreatedAt() {
+        return createdAt;
     }
 
-    public void setLanguages(String languages) {
-        this.languages = languages;
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getAboutYourself() {
-        return aboutYourself;
-    }
+    @PropertyName("phone number")
+    public String phoneNumber;
 
-    public void setAboutYourself(String aboutYourself) {
-        this.aboutYourself = aboutYourself;
-    }
-
-    public String getRegisterID() {
-        return registerID;
-    }
-
-    public void setRegisterID(String registerID) {
-        this.registerID = registerID;
-    }
-
-    public String getAvailability() {
-        return Availability;
-    }
-
-    public void setAvailability(String availability) {
-        Availability = availability;
-    }
-
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
+    public String getName() {
+        return name;
     }
 
     public void setName(String name) {
@@ -93,33 +55,60 @@ public class UserObject implements Serializable {
         this.image = image;
     }
 
-    public void setDoctorID(String doctorID) {
-        this.doctorID = doctorID;
+    public String getEmail() {
+        return email;
     }
 
-    public void setQualification(String qualification) {
-        this.qualification = qualification;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public int getExperience() {
-        return experience;
+    public String getAge() {
+        return age;
     }
 
-    public void setExperience(int experience) {
-        this.experience = experience;
+    public void setAge(String age) {
+        this.age = age;
     }
 
-    public String getName() {
-        return name;
+    public String getReferredBy() {
+        return ReferredBy;
     }
 
-    public String getDoctorID() {
-        return doctorID;
+    public void setReferredBy(String referredBy) {
+        ReferredBy = referredBy;
     }
 
-    public String getQualification() {
-        return qualification;
+    public String getDevice_token() {
+        return device_token;
     }
 
+    public void setDevice_token(String device_token) {
+        this.device_token = device_token;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }
 

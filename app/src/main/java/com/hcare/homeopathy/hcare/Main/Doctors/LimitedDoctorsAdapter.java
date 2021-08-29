@@ -54,19 +54,14 @@ public class LimitedDoctorsAdapter extends RecyclerView.Adapter<LimitedDoctorsAd
                 holder.doctorExperience(model.getExperience());
             } catch(Exception e) {e.printStackTrace();}
 
+            int consultations = 0;
             try{
-                if(model.getCount() == null && model.getAcceptCount() == null)
-                    holder.doctorConsultations(0);
-                else {
-                    if(model.getCount() == null)
-                        holder.doctorConsultations(model.getAcceptCount().size());
-                    else if(model.getAcceptCount() == null)
-                        holder.doctorConsultations(model.getCount().size());
-                    else {
-                        holder.doctorConsultations(model.getCount().size() + model.getAcceptCount().size());
-                    }
-                }
+                if(model.getCount() != null)
+                    consultations += model.getCount().size();
+                if(model.getAcceptCount() != null)
+                    consultations += model.getAcceptCount().size();
             } catch(Exception ignored) {}
+            holder.doctorConsultations(consultations);
 
             try {
                 if(model.getSex() == null)

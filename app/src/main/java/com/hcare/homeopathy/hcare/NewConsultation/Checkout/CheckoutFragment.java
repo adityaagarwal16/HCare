@@ -26,13 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
 import com.hcare.homeopathy.hcare.Main.Doctors.LimitedDoctorsAdapter;
-import com.hcare.homeopathy.hcare.Main.PaymentInitiation;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.RazorPay;
 import com.hcare.homeopathy.hcare.NewConsultation.DiseaseInfo;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.R;
-import com.razorpay.Checkout;
-
-import org.json.JSONObject;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -40,8 +37,6 @@ import java.util.Objects;
 
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.pricing;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
-import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.email;
-import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.phoneNumber;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISCOUNT;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
 import static com.hcare.homeopathy.hcare.NewConsultation.Constants.FIRST_100;
@@ -111,8 +106,8 @@ public class CheckoutFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
 
-        final AppCompatActivity activity = (AppCompatActivity) requireContext();
-        root.findViewById(R.id.payNowButton).setOnClickListener(v -> new PaymentInitiation("HCare", "Discount applied", totalAmount, activity));
+        root.findViewById(R.id.payNowButton).setOnClickListener(v ->
+                new RazorPay(totalAmount, (AppCompatActivity) requireActivity()));
 
         View summaryBoxExp = root.findViewById(R.id.summaryBoxExpanded);
         TextView breakup = root.findViewById(R.id.viewBreakupText);
