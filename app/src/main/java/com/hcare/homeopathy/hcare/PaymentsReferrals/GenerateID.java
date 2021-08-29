@@ -6,14 +6,6 @@ import java.util.Random;
 
 public class GenerateID {
 
-    String ID;
-
-
-    public GenerateID() {
-
-
-    }
-
     @SuppressLint("DefaultLocale")
     public String getID(Service service) {
         Random random = new Random();

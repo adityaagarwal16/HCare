@@ -6,12 +6,15 @@ public class FirebaseConstants {
             activeConsultations = "ActiveConsultations",
             recentConsultations = "RecentConsultations",
             userConsultations = "UserConsultations",
+            consultations = "Consultations", //inside referrals
 
     followUp = "FollowUp",
             newOrder = "neworder",
             pricing = "Pricing",
             customerOrders = "CustomerOrders",
-            shipRocket = "ShipRocket";
+            shipRocket = "ShipRocket",
+
+    orders = "Orders";  //inside referrals
 
 
     public static final String coronaVirus = "coronaVirus";

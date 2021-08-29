@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.PaymentsReferrals.PaymentSuccessful;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.WalletStatic;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.PaymentResultListener;
 
@@ -127,7 +128,9 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
             paymentSuccessful = true;
-            new PaymentSuccessful(userID, disease, getIntent().getStringExtra(issue));
+            new PaymentSuccessful(userID, disease,
+                    getIntent().getStringExtra(issue),  WalletStatic.walletMoneyUsed);
+            WalletStatic.walletMoneyUsed = 0;
         } catch (Exception ignored) { }
     }
 
@@ -135,8 +138,12 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
     @Override
     public void onPaymentError(int code, String response) {
         try {
+            //TODO REMOVE
             paymentSuccessful = true;
-            //sendRequest();
+            new PaymentSuccessful(userID, disease,
+                    getIntent().getStringExtra(issue),  WalletStatic.walletMoneyUsed);
+
+            WalletStatic.walletMoneyUsed = 0;
             Toast.makeText(this, "Payment failed",
                     Toast.LENGTH_LONG).show();
         } catch (Exception  e) {

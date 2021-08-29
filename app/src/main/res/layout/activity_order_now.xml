@@ -21,6 +21,10 @@
             android:background="@color/colorAccent"
             android:orientation="vertical">
 
+            <include
+
+                layout="@layout/include_hcare_wallet"/>
+
             <RelativeLayout
                 android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
@@ -31,6 +35,7 @@
                     android:id="@+id/subtotalHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="?android:textColorPrimary"
                     android:text="Subtotal"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -89,8 +94,77 @@
                     android:layout_below="@id/subTotal"
                     android:layout_marginTop="5dp"
                     android:text="Delivery Charge"
-                    android:textColor="@color/colorSecondary"
                     tools:ignore="HardcodedText" />
+
+
+                <TextView
+                    android:id="@+id/HCareDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/HCareDiscountHeader"
+                    android:layout_alignParentEnd="true"
+                    android:letterSpacing="0.03"
+                    android:text="360"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="15sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/rupee6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/HCareDiscountHeader"
+                    android:layout_marginEnd="3dp"
+                    android:layout_toStartOf="@id/HCareDiscount"
+                    android:text="₹"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/HCareDiscountHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/deliveryChargeHeader"
+                    android:layout_marginTop="5dp"
+                    android:text="HCare Discount"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/WalletDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/WalletDiscountHeader"
+                    android:layout_alignParentEnd="true"
+                    android:letterSpacing="0.03"
+                    android:text="0"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="15sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/rupee7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/WalletDiscountHeader"
+                    android:layout_marginEnd="3dp"
+                    android:layout_toStartOf="@id/WalletDiscount"
+                    android:text="₹"
+                    android:textColor="@color/colorSecondary"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/WalletDiscountHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/HCareDiscountHeader"
+                    android:layout_marginTop="5dp"
+                    android:text="HCare Wallet"
+                    tools:ignore="HardcodedText" />
+
+
+
 
                 <TextView
                     android:id="@+id/total"
@@ -109,7 +183,7 @@
                     android:id="@+id/totalHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/deliveryCharge"
+                    android:layout_below="@id/WalletDiscountHeader"
                     android:layout_marginTop="20dp"
                     android:text="Order Total"
                     android:textColor="?android:textColorPrimary"
@@ -151,18 +225,18 @@
                     android:textSize="18sp"
                     tools:ignore="HardcodedText" />
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/walletOption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/line"
                     android:layout_marginTop="11dp"
+                    android:layout_marginEnd="3dp"
                     android:layout_marginRight="-13dp"
                     android:layout_toLeftOf="@id/total"
                     android:text="Add money from wallet"
                     android:textColor="@color/colorSecondary"
                     android:textSize="10sp"
-                    android:layout_marginEnd="3dp"
                     tools:ignore="HardcodedText" />
 
                 <TextView
@@ -187,7 +261,7 @@
                     android:layout_marginBottom="2dp"
                     android:layout_toRightOf="@id/walletMoney"
                     android:text=""
-                    android:visibility="visible" />
+                    android:visibility="visible" />-->
 
             </RelativeLayout>
 

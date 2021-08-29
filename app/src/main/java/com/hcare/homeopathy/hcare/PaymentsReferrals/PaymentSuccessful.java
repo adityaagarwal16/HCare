@@ -1,14 +1,15 @@
 package com.hcare.homeopathy.hcare.PaymentsReferrals;
 
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.activeConsultations;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.consultations;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.customerOrders;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.followUp;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.newOrder;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.orders;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.recentConsultations;
 import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -28,12 +29,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class PaymentSuccessful {
 
     DatabaseReference reference;
+    static final int moneyToReferredByUsersWallet = 15;
 
-    public PaymentSuccessful(String userID, Diseases disease, String patientIssue) {
+    public PaymentSuccessful(String userID, Diseases disease,
+                             String patientIssue, int walletMoneyUsed) {
+
+        //Consultation
+
         reference = FirebaseDatabase.getInstance().getReference();
         String consultationID = new GenerateID().getID(Service.Consultation);
 
@@ -46,7 +53,6 @@ public class PaymentSuccessful {
             consultation.setUserID(userID);
             consultation.setDoctorID("");
         } catch (Exception e) {e.printStackTrace();}
-        Log.i("consultation", String.valueOf(consultation));
 
         //temporary store
         reference.child(activeConsultations)
@@ -62,9 +68,13 @@ public class PaymentSuccessful {
         reference.child(recentConsultations)
                 .child(consultationID)
                 .setValue(consultation);
+
+        referralWalletOperations(userID, consultations, walletMoneyUsed);
     }
 
     public PaymentSuccessful(String userID, String doctorID) {
+        //Renew Consultation
+
         reference = FirebaseDatabase.getInstance().getReference();
         String current_user_ref = "messages/" + userID +"/"+ doctorID;
         String chat_user_ref ="messages/" + doctorID +"/" + userID;
@@ -127,13 +137,15 @@ public class PaymentSuccessful {
         HashMap<String,String> notificationData = new HashMap<>();
         notificationData.put("from", userID);
         notificationData.put("type", "text");
-        FirebaseDatabase.getInstance().getReference()
-                .child("notifications").child(doctorID)
+        reference.child("notifications").child(doctorID)
                 .push().setValue(notificationData);
     }
 
 
-    public PaymentSuccessful(OrderObject orderObject, String userID, String doctorID) {
+    public PaymentSuccessful(OrderObject orderObject, String userID,
+                             String doctorID, int walletMoneyUsed) {
+
+        //Order
         reference = FirebaseDatabase.getInstance().getReference();
         try {
             orderObject.setOrderID(new GenerateID().getID(Service.Order));
@@ -181,9 +193,44 @@ public class PaymentSuccessful {
                         });
             });
 
+            referralWalletOperations(userID, orders, walletMoneyUsed);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void referralWalletOperations(String userID, String table, int moneyToRemove) {
+        //remove money from wallet
+        new WalletOperations().removeMoneyFromWallet(moneyToRemove);
+
+        //Add to referredBy User's wallet and update Information
+        reference.child("Users").child(userID).child("ReferredBy")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String referredByUserID = "";
+                        try {
+                            referredByUserID = snapshot.getValue(String.class);
+                        } catch(Exception ignore) {
+                            //not referred by anyone
+                        }
+                        if(!Objects.requireNonNull(referredByUserID).isEmpty()) {
+                            //add 15 to the user's wallet
+                            new WalletOperations()
+                                    .addMoneyToWallet(referredByUserID);
+
+                            //update consultations
+                            reference.child("Users")
+                                    .child(referredByUserID).child("Referrals")
+                                    .child(table)
+                                    .child(String.valueOf(System.currentTimeMillis()))
+                                    .setValue(userID);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) { }
+                });
     }
 
 }

@@ -1,13 +1,10 @@
 package com.hcare.homeopathy.hcare.OrderTreatment;
 
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.customerOrders;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.newOrder;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.ADDRESS;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.CITY;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.PIN_CODE;
 import static com.hcare.homeopathy.hcare.OrderTreatment.AddressSharedPref.STATE;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -31,110 +28,46 @@ import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
 import com.hcare.homeopathy.hcare.PaymentsReferrals.PaymentSuccessful;
 import com.hcare.homeopathy.hcare.PaymentsReferrals.RazorPay;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.WalletStatic;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.PaymentResultListener;
 
 import java.text.MessageFormat;
 import java.util.Objects;
-import java.util.Random;
 
 public class OrderNowActivity extends BaseActivity implements PaymentResultListener {
 
-    private DatabaseReference reference;
     boolean paymentSuccessful = false;
     String userID, doctorID;
     OrderObject orderObject;
     String username, phoneNumber, email;
-    CheckBox walletIsChecked;
-    int moneyInWallet = 0;
-    float total, subtotal;
+    int totalMoneyInWallet = 0;
+    float subTotal, discount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_now);
+        WalletStatic.walletMoneyUsed = 0;
 
         Objects.requireNonNull(getSupportActionBar()).setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        walletIsChecked = findViewById(R.id.walletCheckBox);
 
         userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
 
         doctorID = getIntent().getStringExtra("user_id");
-        reference = FirebaseDatabase.getInstance().getReference();
-        orderObject = new OrderObject();
+        discount = getIntent().getIntExtra("discount", 0);
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+        orderObject = new OrderObject();
+        orderObject.setAmount(getIntent().getIntExtra("price", 0));
+
+        subTotal = orderObject.getAmount();
         setFields();
         setAddress();
         setSpinner();
         setCrosses();
-
-        setWallet();
-        walletIsChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked) {
-                total = subtotal - moneyInWallet;
-            } else {
-                total = subtotal;
-            }
-            setTotal();
-        });
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void setWallet() {
-
-        FirebaseDatabase.getInstance().getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    moneyInWallet = Integer.parseInt(Objects.requireNonNull(snapshot
-                            .child("Wallet").getValue()).toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                setTotal();
-                ((TextView) findViewById(R.id.walletMoney))
-                        .setText(MessageFormat.format("HCare money in wallet : {0}",  moneyInWallet));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void setTotal() {
-        ((TextView) findViewById(R.id.total)).setText(String.valueOf(total));
-    }
-
-    private void setFields() {
-        orderObject.setAmount(getIntent().getIntExtra("price", 0));
-
-        subtotal = orderObject.getAmount();
-        total = subtotal;
-        setTotal();
-        ((TextView) findViewById(R.id.subTotal)).setText(String.valueOf(orderObject.getAmount()));
-        ((TextView) findViewById(R.id.deliveryCharge)).setText(String.valueOf(0));
-
-        ((TextView) findViewById(R.id.savings))
-                .setText(MessageFormat.format("{0} {1}",
-                        "Your Savings : ₹",
-                        getIntent().getIntExtra("discount", 0))
-                );
 
         reference.child("Users").child(userID)
                 .addValueEventListener(new ValueEventListener() {
@@ -154,6 +87,66 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
 
                     }
                 });
+
+        setWallet();
+        walletCheck();
+    }
+
+    void walletCheck() {
+        CheckBox walletIsChecked = findViewById(R.id.walletCheckBox2);
+        walletIsChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) {
+                int max = (int) Math.ceil((double) (subTotal - discount) / 2);
+                WalletStatic.walletMoneyUsed = Math.min(totalMoneyInWallet, max);
+            }
+            else
+                WalletStatic.walletMoneyUsed = 0;
+
+            setFields();
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setWallet() {
+        FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    totalMoneyInWallet = Objects.requireNonNull(snapshot
+                            .child("Wallet").getValue(Integer.class));
+                    ((TextView) findViewById(R.id.availableMoney))
+                            .setText(MessageFormat.format("₹ {0}",  totalMoneyInWallet));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) { }
+        });
+    }
+
+    private void setFields() {
+        int total = (int) (subTotal - discount - WalletStatic.walletMoneyUsed);
+        ((TextView) findViewById(R.id.total)).setText(String.valueOf(total));
+        ((TextView) findViewById(R.id.subTotal)).setText(String.valueOf((int) subTotal));
+        ((TextView) findViewById(R.id.deliveryCharge)).setText(String.valueOf(0));
+        ((TextView) findViewById(R.id.HCareDiscount)).setText(String.valueOf((int) discount));
+        ((TextView) findViewById(R.id.WalletDiscount)).setText(String.valueOf(WalletStatic.walletMoneyUsed));
+
+        ((TextView) findViewById(R.id.savings))
+                .setText(MessageFormat.format("{0} {1}",
+                        "Your Savings : ₹", discount + WalletStatic.walletMoneyUsed));
     }
 
     private void setAddress() {
@@ -287,6 +280,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         sharedPref.save(ADDRESS, orderObject.getAddress());
         sharedPref.save(CITY, orderObject.getCity());
         sharedPref.save(STATE, orderObject.getState());
+        int total = (int) (subTotal - discount - WalletStatic.walletMoneyUsed);
         new RazorPay(total, this);
     }
 
@@ -294,7 +288,8 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
             paymentSuccessful = true;
-            new PaymentSuccessful(orderObject, userID, doctorID);
+            new PaymentSuccessful(orderObject, userID, doctorID, WalletStatic.walletMoneyUsed);
+            WalletStatic.walletMoneyUsed = 0;
         } catch (Exception e) {
             Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
         }
@@ -304,6 +299,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     @Override
     public void onPaymentError(int code, String response) {
         try {
+            WalletStatic.walletMoneyUsed = 0;
             Toast.makeText(OrderNowActivity.this,
                     "Payment failed", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {

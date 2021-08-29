@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:paddingTop="13dp"
+    android:paddingBottom="13dp"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:background="@color/colorSecondary"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/WalletHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HCare Money"
+        android:textSize="16sp"
+        android:textColor="?android:textColorPrimaryInverse"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/walletSub"
+        android:layout_width="0dp"
+        android:layout_marginEnd="30dp"
+        android:layout_height="wrap_content"
+        android:text="Check the box to use your HCare Money during checkout to get a discount"
+        android:textColor="?android:textColorSecondaryInverse"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@+id/availableMoney"
+        app:layout_constraintStart_toStartOf="@+id/WalletHeadline"
+        app:layout_constraintTop_toBottomOf="@id/WalletHeadline" />
+
+    <TextView
+        android:id="@+id/walletWarning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Please note that the maximum usable amount is 50% of the total"
+        android:textColor="?android:textColorSecondaryInverse"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/walletSub"
+        app:layout_constraintTop_toBottomOf="@id/walletSub" />
+
+    <TextView
+        android:id="@+id/availableMoney"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:text="₹ 0" android:textColor="?android:textColorSecondaryInverse"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="3dp"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/walletCheckBox2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/walletCheckBox2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

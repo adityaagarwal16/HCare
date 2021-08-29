@@ -24,60 +24,61 @@
             <RelativeLayout
                 android:id="@+id/consultationCard"
                 android:layout_width="match_parent"
+                android:background="@color/colorPrimary"
                 android:padding="18dp"
-                android:background="@color/colorSecondary"
+                android:paddingStart="21dp"
+                android:paddingEnd="21dp"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_alignParentStart="true"
                     android:id="@+id/diseaseImage"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    app:srcCompat="@drawable/disease_female"
-                    android:contentDescription="@string/todo" />
+                    android:layout_alignParentStart="true"
+                    android:contentDescription="@string/todo"
+                    app:srcCompat="@drawable/disease_female" />
 
                 <TextView
                     android:id="@+id/diseaseName"
-                    android:textStyle="bold"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="20dp"
-                    android:gravity="center_vertical"
-                    android:layout_alignTop="@id/diseaseImage"
-                    android:layout_alignParentEnd="true"
-                    android:textSize="16sp"
-                    android:layout_toEndOf="@id/diseaseImage"
-                    android:textColor="?android:textColorPrimaryInverse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/disease"/>
+                    android:layout_alignTop="@id/diseaseImage"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/diseaseImage"
+                    android:gravity="center_vertical"
+                    android:text="@string/disease"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/diseaseNameLine"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginStart="3dp"
-                    android:layout_alignStart="@id/diseaseName"
-                    android:layout_below="@id/diseaseName"
                     android:layout_width="wrap_content"
                     android:layout_height="2dp"
-                    android:background="@color/colorPrimary"
-                    android:text="@string/disease"/>
+                    android:layout_below="@id/diseaseName"
+                    android:layout_alignStart="@id/diseaseName"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorSecondary"
+                    android:text="@string/disease" />
 
                 <TextView
                     android:id="@+id/patientIssue"
                     android:layout_width="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="3dp"
                     android:layout_below="@id/diseaseNameLine"
                     android:layout_alignStart="@id/diseaseName"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="3dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@android:color/transparent"
-                    android:maxLines="5"
                     android:ellipsize="end"
+                    android:maxLines="5"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
-                    android:textColor="?android:textColorSecondaryInverse"
                     android:text="@string/yourIssue"
+                    android:textColor="?android:textColorSecondary"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -85,6 +86,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:background="@color/colorPrimary"
                 android:padding="20dp">
 
@@ -268,33 +270,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/center"
                     tools:ignore="HardcodedText" />
 
-                <TextView
-                    android:id="@+id/useWallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    app:layout_constraintTop_toBottomOf="@id/couponApplied"
-                    app:layout_constraintStart_toStartOf="@id/couponApplied"
-                    android:text="Use money from wallet"/>
-
-                <TextView
-                    android:id="@+id/availableMoney"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="10sp"
-                    app:layout_constraintTop_toBottomOf="@id/useWallet"
-                    app:layout_constraintStart_toStartOf="@id/useWallet"
-                    android:text="Available HCare money: "/>
-
-                <CheckBox
-                    android:id="@+id/walletCheckBox2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    app:layout_constraintEnd_toEndOf="@+id/couponImage"
-                    app:layout_constraintStart_toStartOf="@id/couponImage"
-                    app:layout_constraintTop_toBottomOf="@id/couponImage" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <include
+                android:layout_marginTop="5dp"
+                layout="@layout/include_hcare_wallet"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -329,11 +311,11 @@
                     android:text="What customers say about us"/>
 
                 <ViewFlipper
-                    android:layout_below="@id/line"
                     android:id="@+id/imageFlipper"
-                    android:layout_centerHorizontal="true"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"/>
+                    android:layout_height="220dp"
+                    android:layout_below="@id/line"
+                    android:layout_centerHorizontal="true" />
 
             </RelativeLayout>
 
@@ -515,7 +497,7 @@
                 <TextView
                     android:id="@+id/discount"
                     android:textSize="15sp"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/colorSecondary"
                     android:layout_below="@id/subTotal"
                     android:text="Discount"
                     tools:ignore="HardcodedText"
@@ -527,8 +509,7 @@
 
                 <TextView
                     android:id="@+id/discountHeader"
-                    android:textColor="?android:textColorPrimary"
-                    android:text="Discount"
+                    android:text="Offer Discount"
                     tools:ignore="HardcodedText"
                     android:layout_marginTop="4dp"
                     android:layout_below="@id/subtotalHeader"
@@ -538,10 +519,10 @@
                 <TextView
                     android:id="@+id/rupee2"
                     android:textSize="15sp"
-                    android:textColor="?android:textColorPrimary"
+                    android:textColor="@color/colorSecondary"
                     android:layout_below="@id/rupee1"
                     android:layout_toStartOf="@id/discount"
-                    android:text="- ₹"
+                    android:text="₹"
                     tools:ignore="HardcodedText"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="4dp"
@@ -550,11 +531,22 @@
 
                 <TextView
                     android:id="@+id/walletHeader"
-                    android:textColor="?android:textColorPrimary"
-                    android:text="Discount applied from wallet"
+                    android:text="HCare Money"
                     android:layout_marginTop="4dp"
                     android:layout_below="@id/discountHeader"
                     tools:ignore="HardcodedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/rupee5"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorSecondary"
+                    android:layout_below="@id/rupee2"
+                    android:layout_toStartOf="@id/walletInBreakup"
+                    android:text="₹"
+                    tools:ignore="HardcodedText"
+                    android:layout_marginEnd="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -565,9 +557,9 @@
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/discountHeader"
                     android:letterSpacing="0.03"
-                    android:text="Wallet"
+                    android:text="0"
                     tools:ignore="HardcodedText"
-                    android:textColor="?android:textColorPrimary" />
+                    android:textColor="@color/colorSecondary" />
 
                 <TextView
                     android:id="@+id/total"
@@ -626,7 +618,7 @@
                     android:layout_below="@id/line5"
                     android:layout_marginTop="10dp"
                     android:textSize="18sp"
-                    android:text="savings"
+                    android:text="0"
                     android:textColor="@color/colorSecondary"
                     tools:ignore="HardcodedText" />
 

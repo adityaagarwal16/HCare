@@ -24,7 +24,7 @@ public class Referral {
 
     private final Intent intent;
     private final Context context;
-    private int moneyInWallet = 0;
+    static private final int initialMoneyToWallet = 15;
 
     public Referral(Intent intent, Context context) {
         this.intent = intent;
@@ -111,33 +111,19 @@ public class Referral {
         // Adding details of referredBy user to db of current user
         databaseReference.child("Users").child(userID).child("ReferredBy")
                 .setValue(referredByUserID);
+
         //add 15 to current user's wallet
-        databaseReference.child("Users").child(userID)
-                .child("Wallet").setValue(15);
-
-        // Adding money to wallet of referredBy user
-        databaseReference.child("Users").child(referredByUserID)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        try {
-                            moneyInWallet = Integer.parseInt(Objects.requireNonNull(
-                                    snapshot.child("Wallet").getValue())
-                                    .toString());
-                        } catch (Exception ignore) { }
-                        moneyInWallet += 15;
-                        databaseReference.child("Users").child(referredByUserID)
-                                .child("Wallet").setValue(moneyInWallet);
-
-                        Toast.makeText(context,
-                                "Congratulations! ₹15 has been successfully added to your HCare Wallet",
-                                Toast.LENGTH_LONG).show();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
+        try {
+            databaseReference.child("Users").child(userID)
+                    .child("Wallet").setValue(initialMoneyToWallet);
+            Toast.makeText(context,
+                    "Congratulations! ₹15 has been successfully added to your HCare Wallet",
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(context,
+                    "Error in Adding HCare Money, please try again!",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
 }

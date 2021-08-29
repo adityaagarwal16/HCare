@@ -41,9 +41,7 @@ public class RazorPay {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
 
     }
@@ -63,7 +61,7 @@ public class RazorPay {
 
             JSONObject preFill = new JSONObject();
             preFill.put("email", email);
-            preFill.put("contact", phoneNumber);
+            preFill.put("contact", "+91"+phoneNumber);
 
             options.put("prefill", preFill);
 

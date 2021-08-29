@@ -32,7 +32,7 @@ public class CartActivity extends BaseActivity {
     String doctorID, userID;
 
     int ONE_MEDICINE_COST = 240, DELIVERY_FEE = 0;
-    int total, discount;
+    int total, discount, subtotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,13 +140,13 @@ public class CartActivity extends BaseActivity {
     public void proceedButton(View view) {
         Intent regIntent = new Intent(this, OrderNowActivity.class);
         regIntent.putExtra("user_id" , doctorID);
-        regIntent.putExtra("price", total);
+        regIntent.putExtra("price", subtotal);
         regIntent.putExtra("discount", discount);
         startActivity(regIntent);
     }
 
     private void setFields(DataSnapshot dataSnapshot) {
-        final int subtotal = ONE_MEDICINE_COST * (int) dataSnapshot.getChildrenCount();
+        subtotal = ONE_MEDICINE_COST * (int) dataSnapshot.getChildrenCount();
         ((TextView) findViewById(R.id.subTotal)).setText(String.valueOf(subtotal));
 
         discount = (subtotal / 100)* 40;

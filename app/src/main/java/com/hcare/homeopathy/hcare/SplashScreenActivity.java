@@ -24,10 +24,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
+import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
 import com.hcare.homeopathy.hcare.Main.MainActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.CustomerCare.Faq.FaqActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Constants;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
+import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
+import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
 import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
 import java.util.Objects;
@@ -79,35 +84,32 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent.putExtra("name", "hello");
                                     intent.putExtra("age", "19");
                                     intent.putExtra("sex", "male");
-                                            
-                                    /*
-                                            intent = new Intent(getApplicationContext(),
-                                                    ConsultationsActivity.class);
 
-                                            intent = new Intent(getApplicationContext(),
-                                                    MainDoctorActivity.class);
-                                            intent.putExtra("user_id",
-                                                    "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
+                                    intent = new Intent(getApplicationContext(),
+                                            MainDoctorActivity.class);
+                                    intent.putExtra("user_id",
+                                            "AQtq6nwXN6cjsvm0GqDdB49rH8u2");
 
-                                            intent = new Intent(getApplicationContext(),
-                                                    FaqActivity.class);
-                                            intent = new Intent(getApplicationContext(),
-                                                    OrderNowActivity.class);
-                                            intent.putExtra("price", 200);
+                                    intent = new Intent(getApplicationContext(),
+                                            FaqActivity.class);
+                                    intent = new Intent(getApplicationContext(),
+                                            OrderNowActivity.class);
+                                    intent.putExtra("price", 200);
 
-                                            intent = new Intent(
-                                                    getApplicationContext(),
-                                                    AllOrdersActivity.class);
-                                            intent = new Intent(getApplicationContext(),
-                                                    OrderActivity.class);
-                                            AllOrdersObject object =  new AllOrdersObject();
-                                            object.setOrderId("Hcr409803");
-                                            intent.putExtra("order", object);
-                                            intent.putExtra("discount", 360);
-                                            intent.putExtra("price", 600);
-                                            intent = new Intent(
-                                                    getApplicationContext(),
-                                                    CoronaVirusActivity.class);*/
+                                    intent = new Intent(
+                                            getApplicationContext(),
+                                            AllOrdersActivity.class);
+                                    intent = new Intent(getApplicationContext(),
+                                            OrderNowActivity.class);
+
+                                    OrderObject object =  new OrderObject();
+                                    object.setOrderID("Hcr409803");
+                                    intent.putExtra("order", object);
+                                    intent.putExtra("discount", 360);
+                                    intent.putExtra("price", 600);
+
+                                         intent = new Intent(getApplicationContext(),
+                                            CheckoutActivity.class);
                                     intent = new Intent(
                                             getApplicationContext(),
                                             MainActivity.class);

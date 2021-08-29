@@ -1,5 +1,14 @@
 package com.hcare.homeopathy.hcare.NewConsultation.Checkout;
 
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.pricing;
+import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISCOUNT;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.FIRST_100;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.FIRST_100_COUPON;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.RS50_COUPON;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
+
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,36 +36,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
 import com.hcare.homeopathy.hcare.Main.Doctors.LimitedDoctorsAdapter;
-import com.hcare.homeopathy.hcare.Main.PaymentInitiation;
 import com.hcare.homeopathy.hcare.NewConsultation.DiseaseInfo;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.RazorPay;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.WalletStatic;
 import com.hcare.homeopathy.hcare.R;
-import com.razorpay.Checkout;
-
-import org.json.JSONObject;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.pricing;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
-import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.email;
-import static com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity.phoneNumber;
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISCOUNT;
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.FIRST_100;
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.FIRST_100_COUPON;
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.RS50_COUPON;
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
-
 public class CheckoutFragment extends Fragment {
 
     View root;
-    private int totalWithoutWallet = 0;
+    private int subTotal = 0, discount = 0;
     String patientIssue;
-    int CONSULTATION_FEE = 199, totalWithWallet = 0, moneyInWallet = 0;
-    CheckBox walletIsChecked;
+    int CONSULTATION_FEE = 199, totalMoneyInWallet = 0;
 
     @Nullable
     @Override
@@ -72,6 +67,7 @@ public class CheckoutFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        WalletStatic.walletMoneyUsed = 0;
         patientIssue = requireArguments().getString(issue);
 
         String userID = Objects.requireNonNull(
@@ -91,19 +87,18 @@ public class CheckoutFragment extends Fragment {
                                     dataSnapshot.getValue(Integer.class));
                             if(val > 100 && val < 500)
                                 CONSULTATION_FEE = val;
-                        } catch(NullPointerException ignored) {}
+                        } catch(Exception ignored) {}
                         rootReference.child(userConsultations).child(userID)
                                 .addValueEventListener(new ValueEventListener() {
                                     @SuppressLint("SetTextI18n")
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        subTotal = CONSULTATION_FEE;
                                         if ((int) dataSnapshot.getChildrenCount() < 1) {
-                                            setFields(FIRST_100, FIRST_100_COUPON);
-                                            totalWithoutWallet = CONSULTATION_FEE - FIRST_100;
-                                            totalWithWallet = CONSULTATION_FEE - FIRST_100;
+                                            discount = FIRST_100;
+                                            setFields(FIRST_100_COUPON);
                                         } else {
-                                            setFields(DISCOUNT, RS50_COUPON);
-                                            totalWithoutWallet = CONSULTATION_FEE - DISCOUNT;
-                                            totalWithWallet = CONSULTATION_FEE - DISCOUNT;
+                                            discount = DISCOUNT;
+                                            setFields( RS50_COUPON);
                                         }
                                     }
 
@@ -115,33 +110,18 @@ public class CheckoutFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
 
-        final AppCompatActivity activity = (AppCompatActivity) requireContext();
-        root.findViewById(R.id.payNowButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new PaymentInitiation("HCare", "Discount applied", totalWithWallet, activity);
-//                deductMoneyFromWallet(userID);
-            }
+        //flow ->
+        //opens razor pay
+        //payment successful receiver in Checkout Activity
+        //Calls PaymentSuccessful class that handles all successful transactions
+
+        root.findViewById(R.id.payNowButton).setOnClickListener(v -> {
+            int total = subTotal - discount -  WalletStatic.walletMoneyUsed;
+            new RazorPay(total, (AppCompatActivity) requireActivity());
         });
-        walletIsChecked = root.findViewById(R.id.walletCheckBox2);
+
         setWallet(userID);
-        walletIsChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked) {
-                totalWithWallet = totalWithoutWallet - moneyInWallet;
-                ((TextView) root.findViewById(R.id.walletInBreakup)).setText(
-                        MessageFormat.format("- {0} {1}",
-                                "₹", String.valueOf(moneyInWallet)));
-            } else {
-                totalWithWallet = totalWithoutWallet;
-                ((TextView) root.findViewById(R.id.walletInBreakup)).setText("- ₹ 0");
-            }
-
-            ((TextView) root.findViewById(R.id.total)).setText(String.valueOf(totalWithWallet));
-            ((TextView) root.findViewById(R.id.total1)).setText(
-                    MessageFormat.format("{0} {1}",
-                            "₹", String.valueOf(totalWithWallet)));
-        });
-
+        walletCheck();
 
         View summaryBoxExp = root.findViewById(R.id.summaryBoxExpanded);
         TextView breakup = root.findViewById(R.id.viewBreakupText);
@@ -165,6 +145,20 @@ public class CheckoutFragment extends Fragment {
         });
 
         setDoctorsRecycler();
+    }
+
+    void walletCheck() {
+        CheckBox walletIsChecked = root.findViewById(R.id.walletCheckBox2);
+        walletIsChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) {
+                int max = (int) Math.ceil((double) (subTotal - discount) / 2);
+                WalletStatic.walletMoneyUsed = Math.min(totalMoneyInWallet, max);
+            }
+            else
+                WalletStatic.walletMoneyUsed = 0;
+
+            setVariableFields();
+        });
     }
 
     void setDoctorsRecycler() {
@@ -196,6 +190,7 @@ public class CheckoutFragment extends Fragment {
                 try {
                     mDoctorsDatabase.child(s)
                             .addValueEventListener(new ValueEventListener() {
+                        @SuppressLint("NotifyDataSetChanged")
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             try {
@@ -221,37 +216,28 @@ public class CheckoutFragment extends Fragment {
     }
 
     private void setWallet(String userID) {
-
-        FirebaseDatabase.getInstance().getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("Users")
+                .child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try {
-                    moneyInWallet = Integer.parseInt(Objects.requireNonNull(snapshot
-                            .child("Wallet").getValue()).toString());
+                    totalMoneyInWallet = Objects.requireNonNull(snapshot
+                            .child("Wallet").getValue(Integer.class));
+                    ((TextView) root.findViewById(R.id.availableMoney))
+                            .setText(MessageFormat.format("₹ {0}",  totalMoneyInWallet));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                ((TextView) root.findViewById(R.id.availableMoney))
-                        .setText(MessageFormat.format("HCare money in wallet : {0}",  moneyInWallet));
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
-        ((TextView) root.findViewById(R.id.availableMoney))
-                .setText(MessageFormat.format("HCare money in wallet : {0}",  moneyInWallet));
     }
 
     void setHeaders() {
         DiseaseInfo disease = new DiseaseInfo((Diseases)
                 requireArguments().getSerializable(DISEASE_OBJECT));
-
-      /*  ((TextView) root.findViewById(R.id.header)).setText
-                (MessageFormat.format("{0} {1}", "Consultation for",
-                        patientName.substring(0, 1).toUpperCase() + patientName.substring(1)));*/
         try {
             ((TextView) root.findViewById(R.id.diseaseName))
                     .setText(disease.getDiseaseName());
@@ -265,18 +251,46 @@ public class CheckoutFragment extends Fragment {
 
     }
 
-    void setFields(int discount, String coupon) {
+    void setVariableFields() {
+        int total = subTotal - discount -  WalletStatic.walletMoneyUsed,
+                totalDiscount = discount + WalletStatic.walletMoneyUsed;
+        ((TextView) root.findViewById(R.id.total))
+                .setText(String.valueOf(total));
+        ((TextView) root.findViewById(R.id.total1)).setText(
+                MessageFormat.format("{0} {1}",
+                        "₹", String.valueOf(total)));
+        ((TextView) root.findViewById(R.id.savings)).setText(
+                MessageFormat.format("{0} {1}",
+                        "Your Savings : ₹", totalDiscount));
+        ((TextView) root.findViewById(R.id.walletInBreakup))
+                .setText(String.valueOf(WalletStatic.walletMoneyUsed));
+
+    }
+
+    void setFields(String coupon) {
+        int total = subTotal - discount -  WalletStatic.walletMoneyUsed,
+                totalDiscount = discount + WalletStatic.walletMoneyUsed;
         ((TextView) root.findViewById(R.id.subTotal)).setText(String.valueOf(CONSULTATION_FEE));
         ((TextView) root.findViewById(R.id.discount)).setText(String.valueOf(discount));
         ((TextView) root.findViewById(R.id.savings)).setText(
                 MessageFormat.format("{0} {1}",
                         "Your Savings : ₹",
-                        discount)
+                        discount +  WalletStatic.walletMoneyUsed)
         );
-        ((TextView) root.findViewById(R.id.total)).setText(String.valueOf(CONSULTATION_FEE - discount));
+
+        ((TextView) root.findViewById(R.id.total))
+                .setText(String.valueOf(total));
+        ((TextView) root.findViewById(R.id.walletInBreakup))
+                .setText(String.valueOf(WalletStatic.walletMoneyUsed));
+
         ((TextView) root.findViewById(R.id.total1)).setText(
                 MessageFormat.format("{0} {1}",
-                        "₹", String.valueOf(CONSULTATION_FEE - discount)));
+                        "₹", String.valueOf(total)));
+        ((TextView) root.findViewById(R.id.savings)).setText(
+                MessageFormat.format("{0} {1}",
+                        "Your Savings : ₹", totalDiscount)
+        );
+
         ((TextView) root.findViewById(R.id.couponHeader)).setText(coupon);
     }
 
@@ -302,16 +316,5 @@ public class CheckoutFragment extends Fragment {
             mFlipper.setInAnimation(requireActivity(),android.R.anim.slide_in_left);
         }
     }
-
-//    void deductMoneyFromWallet(String userID) {
-//        if (walletIsChecked.isChecked()) {
-//            // set value according to the restrictions which are to be added later
-//            try {
-//                FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("Wallet").setValue("0");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
 }
