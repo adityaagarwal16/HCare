@@ -40,6 +40,7 @@ import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.ChatObject;
 import com.hcare.homeopathy.hcare.FirebaseClasses.ConsultationObject;
 import com.hcare.homeopathy.hcare.Main.Doctors.DoctorDetailsFragment;
+import com.hcare.homeopathy.hcare.Main.PaymentInitiation;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -76,6 +77,7 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
     boolean paymentSuccessful = false;
     String referredByUserID;
     int moneyInWallet = 0;
+    String phoneNumber, eMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -347,7 +349,8 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
             mProgressDialog.setCanceledOnTouchOutside(false);
             mProgressDialog.show();
 
-            startPayment();
+            final AppCompatActivity activity = this;
+            new PaymentInitiation("Medicine", "discount applied", 149, activity);
         });
     }
 
@@ -608,33 +611,6 @@ public class MainDoctorActivity extends BaseActivity implements PaymentResultLis
         @SuppressLint("SimpleDateFormat") SimpleDateFormat s = new SimpleDateFormat(dateFormat);
         cal.add(Calendar.DAY_OF_YEAR, days);
         return s.format(new Date(cal.getTimeInMillis()));
-    }
-
-    String phoneNumber, eMail;
-    public void startPayment() {
-        final AppCompatActivity activity = this;
-        final Checkout co = new Checkout();
-        try {
-
-            JSONObject options = new JSONObject();
-            options.put("name", "HCare");
-            options.put("description", "discount applied");
-            //You can omit the image option to fetch the image from dashboard
-            options.put("currency", "INR");
-            options.put("amount", "14900");
-
-            JSONObject preFill = new JSONObject();
-            preFill.put("email", eMail);
-            preFill.put("contact", phoneNumber);
-
-            options.put("prefill", preFill);
-            co.setImage(R.drawable.logo_green);
-            co.open(activity, options);
-        }
-        catch (Exception e) {
-            Toast.makeText(activity, "Error in payment", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
     }
 
     private void sendRequest() {
