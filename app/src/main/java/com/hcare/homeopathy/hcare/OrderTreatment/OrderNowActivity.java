@@ -32,10 +32,8 @@ import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
 import com.hcare.homeopathy.hcare.Main.PaymentInitiation;
 import com.hcare.homeopathy.hcare.R;
-import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
-import org.json.JSONObject;
 
 import java.text.MessageFormat;
 import java.util.Objects;
@@ -301,6 +299,7 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
     public void onPaymentSuccess(String razorpayPaymentID) {
         try {
             paymentSuccessful = true;
+            deductMoneyFromWallet();
             orderSuccessful();
         } catch (Exception e) {
             Toast.makeText(this, "Payment Failed", Toast.LENGTH_SHORT).show();
@@ -382,4 +381,14 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         return String.format("%07d", number);
     }
 
+    void deductMoneyFromWallet() {
+        if (walletIsChecked.isChecked()) {
+            // set value according to the restrictions which are to be added later
+            try {
+                FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("Wallet").setValue("0");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

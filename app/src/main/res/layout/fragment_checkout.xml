@@ -257,7 +257,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-
                 <TextView
                     android:id="@+id/couponApplied"
                     android:layout_width="wrap_content"
@@ -268,6 +267,32 @@
                     app:layout_constraintStart_toEndOf="@+id/couponImage"
                     app:layout_constraintTop_toBottomOf="@+id/center"
                     tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/useWallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toBottomOf="@id/couponApplied"
+                    app:layout_constraintStart_toStartOf="@id/couponApplied"
+                    android:text="Use money from wallet"/>
+
+                <TextView
+                    android:id="@+id/availableMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    app:layout_constraintTop_toBottomOf="@id/useWallet"
+                    app:layout_constraintStart_toStartOf="@id/useWallet"
+                    android:text="Available HCare money: "/>
+
+                <CheckBox
+                    android:id="@+id/walletCheckBox2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:layout_constraintEnd_toEndOf="@+id/couponImage"
+                    app:layout_constraintStart_toStartOf="@id/couponImage"
+                    app:layout_constraintTop_toBottomOf="@id/couponImage" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -524,9 +549,30 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    android:id="@+id/walletHeader"
+                    android:textColor="?android:textColorPrimary"
+                    android:text="Discount applied from wallet"
+                    android:layout_marginTop="4dp"
+                    android:layout_below="@id/discountHeader"
+                    tools:ignore="HardcodedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/walletInBreakup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/discountHeader"
+                    android:letterSpacing="0.03"
+                    android:text="Wallet"
+                    tools:ignore="HardcodedText"
+                    android:textColor="?android:textColorPrimary" />
+
+                <TextView
                     android:id="@+id/total"
                     android:textColor="?android:textColorPrimary"
-                    android:layout_below="@id/discountHeader"
+                    android:layout_below="@id/walletHeader"
                     android:text="Total"
                     tools:ignore="HardcodedText"
                     android:textSize="16sp"
@@ -545,14 +591,14 @@
                     android:textSize="18sp"
                     android:layout_marginTop="20dp"
                     android:textStyle="bold"
-                    android:layout_below="@id/discountHeader"
+                    android:layout_below="@id/walletHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/rupee3"
                     android:textColor="?android:textColorPrimary"
-                    android:layout_below="@id/discountHeader"
+                    android:layout_below="@id/walletHeader"
                     android:layout_toStartOf="@id/total"
                     android:text="₹"
                     android:textSize="16sp"

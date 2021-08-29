@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -52,9 +53,10 @@ import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
 public class CheckoutFragment extends Fragment {
 
     View root;
-    private int totalAmount = 0;
+    private int totalWithoutWallet = 0;
     String patientIssue;
-    int CONSULTATION_FEE = 199;
+    int CONSULTATION_FEE = 199, totalWithWallet = 0, moneyInWallet = 0;
+    CheckBox walletIsChecked;
 
     @Nullable
     @Override
@@ -96,10 +98,12 @@ public class CheckoutFragment extends Fragment {
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                         if ((int) dataSnapshot.getChildrenCount() < 1) {
                                             setFields(FIRST_100, FIRST_100_COUPON);
-                                            totalAmount = CONSULTATION_FEE - FIRST_100;
+                                            totalWithoutWallet = CONSULTATION_FEE - FIRST_100;
+                                            totalWithWallet = CONSULTATION_FEE - FIRST_100;
                                         } else {
                                             setFields(DISCOUNT, RS50_COUPON);
-                                            totalAmount = CONSULTATION_FEE - DISCOUNT;
+                                            totalWithoutWallet = CONSULTATION_FEE - DISCOUNT;
+                                            totalWithWallet = CONSULTATION_FEE - DISCOUNT;
                                         }
                                     }
 
@@ -112,7 +116,32 @@ public class CheckoutFragment extends Fragment {
                 });
 
         final AppCompatActivity activity = (AppCompatActivity) requireContext();
-        root.findViewById(R.id.payNowButton).setOnClickListener(v -> new PaymentInitiation("HCare", "Discount applied", totalAmount, activity));
+        root.findViewById(R.id.payNowButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new PaymentInitiation("HCare", "Discount applied", totalWithWallet, activity);
+//                deductMoneyFromWallet(userID);
+            }
+        });
+        walletIsChecked = root.findViewById(R.id.walletCheckBox2);
+        setWallet(userID);
+        walletIsChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked) {
+                totalWithWallet = totalWithoutWallet - moneyInWallet;
+                ((TextView) root.findViewById(R.id.walletInBreakup)).setText(
+                        MessageFormat.format("- {0} {1}",
+                                "₹", String.valueOf(moneyInWallet)));
+            } else {
+                totalWithWallet = totalWithoutWallet;
+                ((TextView) root.findViewById(R.id.walletInBreakup)).setText("- ₹ 0");
+            }
+
+            ((TextView) root.findViewById(R.id.total)).setText(String.valueOf(totalWithWallet));
+            ((TextView) root.findViewById(R.id.total1)).setText(
+                    MessageFormat.format("{0} {1}",
+                            "₹", String.valueOf(totalWithWallet)));
+        });
+
 
         View summaryBoxExp = root.findViewById(R.id.summaryBoxExpanded);
         TextView breakup = root.findViewById(R.id.viewBreakupText);
@@ -191,6 +220,31 @@ public class CheckoutFragment extends Fragment {
         } catch (Exception ignored) { }
     }
 
+    private void setWallet(String userID) {
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    moneyInWallet = Integer.parseInt(Objects.requireNonNull(snapshot
+                            .child("Wallet").getValue()).toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                ((TextView) root.findViewById(R.id.availableMoney))
+                        .setText(MessageFormat.format("HCare money in wallet : {0}",  moneyInWallet));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        ((TextView) root.findViewById(R.id.availableMoney))
+                .setText(MessageFormat.format("HCare money in wallet : {0}",  moneyInWallet));
+    }
+
     void setHeaders() {
         DiseaseInfo disease = new DiseaseInfo((Diseases)
                 requireArguments().getSerializable(DISEASE_OBJECT));
@@ -248,5 +302,16 @@ public class CheckoutFragment extends Fragment {
             mFlipper.setInAnimation(requireActivity(),android.R.anim.slide_in_left);
         }
     }
+
+//    void deductMoneyFromWallet(String userID) {
+//        if (walletIsChecked.isChecked()) {
+//            // set value according to the restrictions which are to be added later
+//            try {
+//                FirebaseDatabase.getInstance().getReference().child("Users").child(userID).child("Wallet").setValue("0");
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 }
