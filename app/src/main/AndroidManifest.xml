@@ -57,9 +57,7 @@
         </activity>
         <activity
             android:name=".Start.LoginActivity"
-            android:theme="@style/loginTheme">
-
-        </activity>
+            android:theme="@style/loginTheme"></activity>
         <!--
 <receiver android:name=".Start.SMSBroadcastReceiver" android:exported="true"
             android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
@@ -72,7 +70,7 @@
             android:name=".Main.MainActivity"
             android:label="HCare"
             android:theme="@style/splashScreen"
-            android:windowSoftInputMode="stateHidden|adjustPan" >
+            android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -95,7 +93,7 @@
             android:theme="@style/splashScreen" />
         <activity
             android:name=".NavigationItems.CustomerCare.HelpSupportActivity"
-            android:theme="@style/loginTheme"></activity>
+            android:theme="@style/loginTheme" />
         <activity
             android:name=".Consultations.Doctor.MainDoctorActivity"
             android:label="Consultation"

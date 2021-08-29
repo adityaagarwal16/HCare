@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.FirebaseClasses.DoctorObject;
 import com.hcare.homeopathy.hcare.Main.Doctors.LimitedDoctorsAdapter;
+import com.hcare.homeopathy.hcare.Main.PaymentInitiation;
 import com.hcare.homeopathy.hcare.NewConsultation.DiseaseInfo;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.R;
@@ -110,7 +111,8 @@ public class CheckoutFragment extends Fragment {
                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
 
-        root.findViewById(R.id.payNowButton).setOnClickListener(v -> startPayment());
+        final AppCompatActivity activity = (AppCompatActivity) requireContext();
+        root.findViewById(R.id.payNowButton).setOnClickListener(v -> new PaymentInitiation("Medicine", "40% discount applied", totalAmount, activity));
 
         View summaryBoxExp = root.findViewById(R.id.summaryBoxExpanded);
         TextView breakup = root.findViewById(R.id.viewBreakupText);
@@ -245,30 +247,6 @@ public class CheckoutFragment extends Fragment {
             mFlipper.setOutAnimation(requireActivity(),android.R.anim.slide_out_right);
             mFlipper.setInAnimation(requireActivity(),android.R.anim.slide_in_left);
         }
-    }
-
-    public void startPayment() {
-        final AppCompatActivity activity = (AppCompatActivity) requireContext();
-        final Checkout co = new Checkout();
-
-        try {
-            JSONObject options = new JSONObject();
-            options.put("name", "HCare");
-            options.put("description", "Discount applied");
-            options.put("currency", "INR");
-
-            int RAZORPAY_MULTIPLIER = 100;
-            options.put("amount", totalAmount * RAZORPAY_MULTIPLIER);
-
-            JSONObject preFill = new JSONObject();
-            preFill.put("email", email);
-            preFill.put("contact", phoneNumber);
-
-            options.put("prefill", preFill);
-
-            co.setImage(R.drawable.logo_green);
-            co.open(activity, options);
-        } catch (Exception e) { e.printStackTrace(); }
     }
 
 }

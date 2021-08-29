@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
+import com.hcare.homeopathy.hcare.Main.PaymentInitiation;
 import com.hcare.homeopathy.hcare.R;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -100,8 +101,13 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         FirebaseDatabase.getInstance().getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                moneyInWallet = Integer.parseInt(Objects.requireNonNull(snapshot
-                        .child("Wallet").getValue()).toString());
+                try {
+                    moneyInWallet = Integer.parseInt(Objects.requireNonNull(snapshot
+                            .child("Wallet").getValue()).toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 setTotal();
                 ((TextView) findViewById(R.id.walletMoney))
                         .setText(MessageFormat.format("HCare money in wallet : {0}",  moneyInWallet));
@@ -286,30 +292,9 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         sharedPref.save(CITY, orderObject.getCity());
         sharedPref.save(STATE, orderObject.getState());
 
-        try {
-            final AppCompatActivity activity = this;
-            final Checkout co = new Checkout();
-            JSONObject options = new JSONObject();
-            options.put("name", "Medicine");
-            options.put("description", "40% discount applied");
+        final AppCompatActivity activity = this;
+        new PaymentInitiation("Medicine", "40% discount applied", total, activity);
 
-            //You can omit the image option to fetch the image from dashboard
-            // options.put("image", R.drawable.logo);
-            int RAZORPAY_MULTIPLIER = 100;
-            options.put("currency", "INR");
-            options.put("amount", total * RAZORPAY_MULTIPLIER);
-
-            JSONObject preFill = new JSONObject();
-            preFill.put("email", email);
-            preFill.put("contact", phoneNumber);
-
-            options.put("prefill", preFill);
-
-            co.setImage(R.drawable.logo_green);
-            co.open(activity, options);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
