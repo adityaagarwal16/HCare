@@ -112,7 +112,7 @@ public class CheckoutFragment extends Fragment {
                 });
 
         final AppCompatActivity activity = (AppCompatActivity) requireContext();
-        root.findViewById(R.id.payNowButton).setOnClickListener(v -> new PaymentInitiation("Medicine", "40% discount applied", totalAmount, activity));
+        root.findViewById(R.id.payNowButton).setOnClickListener(v -> new PaymentInitiation("HCare", "Discount applied", totalAmount, activity));
 
         View summaryBoxExp = root.findViewById(R.id.summaryBoxExpanded);
         TextView breakup = root.findViewById(R.id.viewBreakupText);
