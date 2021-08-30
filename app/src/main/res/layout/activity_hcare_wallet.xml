@@ -6,41 +6,108 @@
     android:layout_height="match_parent"
     tools:context=".NavigationItems.HCareWalletActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="15dp"
+            android:gravity="start"
+            android:paddingBottom="4dp"
+            android:text="Wallet"
+            android:textColor="@color/colorSecondary"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/back"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/todo"
+            android:onClick="Back"
+            android:padding="2dp"
+            android:src="@drawable/vector_back"
+            app:layout_constraintBottom_toBottomOf="@+id/header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimaryInverse" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/gradient_wallet"
+        android:padding="25dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header">
+
+        <TextView
+            android:id="@+id/header1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HCare Money"
+            android:textColor="?android:textColorSecondaryInverse"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/moneyInWalletTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header1"
+            android:text="₹ 0"
+            android:textColor="?android:textColorPrimaryInverse"
+            android:textSize="28sp" />
+
+    </RelativeLayout>
+
     <TextView
-        android:id="@+id/moneyInWalletTV"
+        android:id="@+id/inviteEarn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="₹0"
-        android:textSize="36sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.293" />
+        android:textColor="@drawable/background_clickable_text"
+        android:textSize="18sp"
+        android:layout_margin="14dp"
+        android:text="Invite &amp; Earn"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/relativeLayout"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
     <TextView
         android:id="@+id/aboutWallet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:lineSpacingExtra="2dp"
-        android:paddingHorizontal="40dp"
-        android:text="HCare wallet is where all the points and discounts you have earned are stored, for future use. You can use these points at the checkout page of each transaction"
+        android:layout_marginBottom="30dp"
+        android:justificationMode="inter_word"
+        android:paddingStart="35dp"
+        android:paddingEnd="35dp"
+        android:text="Your Wallet shows your current HCare Money Balance. You can use this balance at the checkout page of each transaction."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.577"
-        android:src="@drawable/wallet" />
 </androidx.constraintlayout.widget.ConstraintLayout>

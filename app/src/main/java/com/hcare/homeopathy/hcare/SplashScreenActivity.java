@@ -28,6 +28,8 @@ import com.hcare.homeopathy.hcare.Consultations.Doctor.MainDoctorActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.OrderObject;
 import com.hcare.homeopathy.hcare.Main.MainActivity;
 import com.hcare.homeopathy.hcare.NavigationItems.CustomerCare.Faq.FaqActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.HCareWalletActivity;
+import com.hcare.homeopathy.hcare.NavigationItems.InviteEarnActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.NewConsultation.Constants;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
@@ -108,10 +110,9 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent.putExtra("discount", 360);
                                     intent.putExtra("price", 600);
 
-                                         intent = new Intent(getApplicationContext(),
+                                    intent = new Intent(getApplicationContext(),
                                             CheckoutActivity.class);
-                                    intent = new Intent(
-                                            getApplicationContext(),
+                                    intent = new Intent(getApplicationContext(),
                                             MainActivity.class);
                                 }
                                 startActivity(intent);

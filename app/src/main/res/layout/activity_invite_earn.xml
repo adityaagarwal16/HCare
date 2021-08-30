@@ -4,49 +4,97 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NavigationItems.ReferralPartnersActivity">
+    tools:context=".NavigationItems.InviteEarnActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/header"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="20dp"
+            android:gravity="start"
+            android:paddingBottom="4dp"
+            android:text="Invite &amp; Earn"
+            android:textColor="@color/colorSecondary"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf
+                ="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/back"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/todo"
+            android:onClick="Back"
+            android:padding="2dp"
+            android:src="@drawable/vector_back"
+            app:layout_constraintBottom_toBottomOf="@+id/header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorPrimaryInverse" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="350dp"
-        android:layout_height="172dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.892">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:layout_height="93dp"
+            android:padding="20dp"
+            android:textSize="18sp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Share the app to earn rewards and points!" />
 
-        <Button
-            android:id="@+id/referPartnerBtn"
-            android:layout_width="225dp"
-            android:layout_height="66dp"
+        <TextView
+            android:id="@+id/inviteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@color/colorPrimary"
-            android:text="Refer and Earn"
-            android:textColor="@color/blackcolor" />
+            android:padding="20dp"
+            android:textSize="22sp"
+            android:gravity="center"
+            android:background="@color/colorSecondary"
+            android:text="Invite &amp; Earn"
+            android:textColor="?android:textColorPrimaryInverse" />
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout1"
-        android:layout_width="410dp"
-        android:layout_height="345dp"
-        android:background="@color/colorSecondary"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.653">
+        app:layout_constraintTop_toBottomOf="@+id/header">
 
         <TextView
             android:id="@+id/textView4"
@@ -55,7 +103,7 @@
             android:gravity="center"
             android:letterSpacing="0.05"
             android:text="HOW IT WORKS"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -63,6 +111,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:background="@color/colorSecondary"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -125,23 +174,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginLeft="18dp"
-                android:src="@drawable/share_earn"/>
+                android:src="@drawable/share_earn" />
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Share the app to earn HCare money"
-        android:textSize="32sp"
-        android:gravity="center"
-        android:layout_marginVertical="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/layout1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

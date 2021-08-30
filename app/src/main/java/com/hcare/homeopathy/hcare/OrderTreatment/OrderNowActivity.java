@@ -281,6 +281,8 @@ public class OrderNowActivity extends BaseActivity implements PaymentResultListe
         sharedPref.save(CITY, orderObject.getCity());
         sharedPref.save(STATE, orderObject.getState());
         int total = (int) (subTotal - discount - WalletStatic.walletMoneyUsed);
+        orderObject.setAmount(total);
+        orderObject.setDiscount(discount + WalletStatic.walletMoneyUsed);
         new RazorPay(total, this);
     }
 

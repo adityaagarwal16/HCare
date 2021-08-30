@@ -3,8 +3,10 @@ package com.hcare.homeopathy.hcare.NavigationItems;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hcare.homeopathy.hcare.R;
 
+import java.text.MessageFormat;
 import java.util.Objects;
 
 public class HCareWalletActivity extends AppCompatActivity {
@@ -33,34 +36,26 @@ public class HCareWalletActivity extends AppCompatActivity {
 
         moneyInWallet = findViewById(R.id.moneyInWalletTV);
         FirebaseDatabase.getInstance()
-                    .getReference().child("Users").child(userID).addValueEventListener(new ValueEventListener() {
+                .getReference().child("Users").child(userID)
+                .addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try {
-                        String amount = Objects
-                                .requireNonNull(snapshot.child("Wallet")
-                                        .getValue(Integer.class)).toString();
-                        moneyInWallet.setText("₹ " + amount);
+                        int amount = Objects.requireNonNull(snapshot.child("Wallet")
+                                        .getValue(Integer.class));
+                        moneyInWallet.setText(MessageFormat.format("₹ {0}", amount));
                     } catch (Exception ignored) {}
                 }
+
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
+                public void onCancelled(@NonNull DatabaseError error) { }
             });
 
-
-        Objects.requireNonNull(getSupportActionBar())
-                .setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        findViewById(R.id.inviteEarn).setOnClickListener(v ->
+                startActivity(new Intent(this, InviteEarnActivity.class)));
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void Back(View view) {
+        onBackPressed();
     }
 }

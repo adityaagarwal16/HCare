@@ -1,9 +1,16 @@
 package com.hcare.homeopathy.hcare.NewConsultation;
 
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
+import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
+
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -18,9 +25,6 @@ import com.hcare.homeopathy.hcare.NewConsultation.Checkout.CheckoutActivity;
 import com.hcare.homeopathy.hcare.R;
 
 import java.util.Objects;
-
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.DISEASE_OBJECT;
-import static com.hcare.homeopathy.hcare.NewConsultation.Constants.issue;
 
 public class DiseaseActivity extends BaseActivity {
 
@@ -37,7 +41,37 @@ public class DiseaseActivity extends BaseActivity {
 
         setToolbar();
         setContent();
+        setTextDialog();
         mChatMessageView = findViewById(R.id.diseases);
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    void setTextDialog() {
+        TextView about = findViewById(R.id.aboutDisease);
+        ColorStateList old = about.getTextColors();
+        findViewById(R.id.aboutDisease).setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    about.setTextColor(Color.LTGRAY);
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    about.setTextColor(old);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    about.setTextColor(old);
+                    final Dialog dialog = new Dialog(this);
+                    dialog.setContentView(R.layout.dialog_message);
+                    ((TextView) dialog.findViewById(R.id.header)).setText(disease.getDiseaseName());
+                    ((TextView) dialog.findViewById(R.id.copy)).setText(disease.getInfo());
+
+                    int width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    int height = ViewGroup.LayoutParams.WRAP_CONTENT;
+                    Objects.requireNonNull(dialog.getWindow()).setLayout(width, height);
+                    dialog.show();
+                    break;
+            }
+            return true;
+        });
     }
 
     public void continueButton(View view) {

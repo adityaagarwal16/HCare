@@ -54,7 +54,7 @@
         <item
             android:id="@+id/referAndEarn"
             android:icon="@drawable/vector_person"
-            android:title="@string/become_a_partner" />
+            android:title="Invite &amp; Earn" />
 
         <item
             android:id="@+id/rateUs"

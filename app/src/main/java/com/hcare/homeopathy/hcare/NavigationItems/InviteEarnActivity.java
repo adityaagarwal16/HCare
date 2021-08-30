@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,32 +12,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.hcare.homeopathy.hcare.R;
-import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
 import java.util.Objects;
 
-public class ReferralPartnersActivity extends AppCompatActivity {
+public class InviteEarnActivity extends AppCompatActivity {
 
     String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_referral_partners);
+        setContentView(R.layout.activity_invite_earn);
         try {
             uid = Objects.requireNonNull(FirebaseAuth.getInstance()
                     .getCurrentUser()).getUid();
-
-            Objects.requireNonNull(getSupportActionBar())
-                    .setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-            Button referEarnButton = findViewById(R.id.referPartnerBtn);
-            referEarnButton.setOnClickListener(v -> refer());
-        } catch (Exception ignored) {
-            finish();
-            startActivity(new Intent(this, LoginActivity.class));
-        }
+            findViewById(R.id.inviteButton).setOnClickListener(v -> refer());
+        } catch (Exception ignore) { }
     }
 
     public void refer() {
@@ -61,13 +51,7 @@ public class ReferralPartnersActivity extends AppCompatActivity {
         } catch(Exception e) { e.printStackTrace(); }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void Back(View view) {
+        onBackPressed();
     }
 }

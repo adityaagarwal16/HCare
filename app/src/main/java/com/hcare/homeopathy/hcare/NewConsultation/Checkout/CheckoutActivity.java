@@ -138,11 +138,6 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
     @Override
     public void onPaymentError(int code, String response) {
         try {
-            //TODO REMOVE
-            paymentSuccessful = true;
-            new PaymentSuccessful(userID, disease,
-                    getIntent().getStringExtra(issue),  WalletStatic.walletMoneyUsed);
-
             WalletStatic.walletMoneyUsed = 0;
             Toast.makeText(this, "Payment failed",
                     Toast.LENGTH_LONG).show();

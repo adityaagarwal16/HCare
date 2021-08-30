@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/deliveryChargeHeader"
                     android:layout_marginTop="5dp"
-                    android:text="HCare Discount"
+                    android:text="Discount Applied"
                     tools:ignore="HardcodedText" />
 
                 <TextView
@@ -649,11 +649,6 @@
 
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
         </LinearLayout>
 
     </ScrollView>
@@ -674,5 +669,10 @@
         android:textColor="?android:textColorPrimaryInverse"
         android:textSize="18sp"
         tools:ignore="HardcodedText" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

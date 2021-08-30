@@ -29,23 +29,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+
         <activity
             android:name=".NavigationItems.HCareWalletActivity"
+            android:theme="@style/splashScreen"
             android:exported="true" />
+
         <activity
-            android:name=".NavigationItems.ReferralPartnersActivity"
+            android:name=".NavigationItems.InviteEarnActivity"
+            android:theme="@style/splashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="hcare.page.link"
-                    android:scheme="https" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/splashScreen">
@@ -57,7 +56,7 @@
         </activity>
         <activity
             android:name=".Start.LoginActivity"
-            android:theme="@style/loginTheme"></activity>
+            android:theme="@style/loginTheme" />
         <!--
 <receiver android:name=".Start.SMSBroadcastReceiver" android:exported="true"
             android:permission="com.google.android.gms.auth.api.phone.permission.SEND">
@@ -73,8 +72,8 @@
             android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
@@ -82,6 +81,7 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Main.Doctors.DoctorsDetailsActivity"
             android:label="About the Doctor" />
@@ -98,15 +98,16 @@
             android:name=".Consultations.Doctor.MainDoctorActivity"
             android:label="Consultation"
             android:theme="@style/splashScreen" />
+
         <activity
             android:name=".Consultations.AllChatsActivity"
             android:label="Consultations">
             <intent-filter>
                 <action android:name="com.hcare.homeopathy.hcare_TARGET_NOTIFICATION" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".NewConsultation.Checkout.CheckoutActivity"
             android:label="Checkout" />

@@ -7,7 +7,15 @@ public class OrderObject implements Serializable {
     String  address, userID, city, state, doctorID, OrderID, status;
     long time, shipRocketOrderID, shipmentID;
     int pinCode;
-    float amount;
+    float amount, discount;
+
+    public float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
 
     public String getStatus() {
         return status;
