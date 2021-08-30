@@ -217,7 +217,7 @@ public class PaymentSuccessful {
                         if(!Objects.requireNonNull(referredByUserID).isEmpty()) {
                             //add 15 to the user's wallet
                             new WalletOperations()
-                                    .addMoneyToWallet(referredByUserID);
+                                    .addMoneyToWallet(referredByUserID, moneyToReferredByUsersWallet);
 
                             //update consultations
                             reference.child("Users")

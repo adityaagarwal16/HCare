@@ -71,17 +71,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="HCare Money"
-            android:textColor="?android:textColorSecondaryInverse"
-            android:textSize="24sp" />
+            android:textColor="?android:textColorPrimaryInverse"
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/moneyInWalletTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/header1"
+            android:layout_marginTop="15dp"
             android:text="₹ 0"
             android:textColor="?android:textColorPrimaryInverse"
-            android:textSize="28sp" />
+            android:textSize="24sp" />
 
     </RelativeLayout>
 

@@ -22,12 +22,10 @@ import java.util.Objects;
 
 public class Referral {
 
-    private final Intent intent;
     private final Context context;
     static private final int initialMoneyToWallet = 15;
 
-    public Referral(Intent intent, Context context) {
-        this.intent = intent;
+    public Referral(Context context) {
         this.context = context;
         checkFirstOpen();
     }
@@ -40,7 +38,6 @@ public class Referral {
         String prevStarted = "prevStarted";
         if (!sharedpreferences.getBoolean(prevStarted, false)) {
             SharedPreferences.Editor editor = sharedpreferences.edit();
-            retrieveReferral();
             editor.putBoolean(prevStarted, true);
             editor.apply();
 
@@ -55,9 +52,8 @@ public class Referral {
                                 String referredBy = Objects.requireNonNull(
                                         snapshot.child("ReferredBy").getValue())
                                         .toString();
-                                if(referredBy.isEmpty()) {
+                                if(referredBy.isEmpty())
                                     retrieveReferral();
-                                }
                                 else
                                     Toast.makeText(context, "Already used Referral",
                                             Toast.LENGTH_SHORT).show();
@@ -67,8 +63,7 @@ public class Referral {
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
+                        public void onCancelled(@NonNull DatabaseError error) { }
                     });
         }
     }
@@ -77,7 +72,7 @@ public class Referral {
         String userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
         FirebaseDynamicLinks.getInstance()
-                .getDynamicLink(intent)
+                .getDynamicLink(IntentStatic.intent)
                 .addOnSuccessListener((Activity) context, pendingDynamicLinkData -> {
                     try {
                         // Adding the details of referredTo user to the db of referredBy user
@@ -85,15 +80,18 @@ public class Referral {
                         deepLink = pendingDynamicLinkData.getLink();
                         String referLink = Objects.requireNonNull(deepLink).toString();
                         referLink = referLink.substring(referLink.lastIndexOf("%") + 1);
-                        String referredByUserID = referLink.substring(referLink.lastIndexOf("=") + 1);
+                        String referredByUserID =
+                                referLink.substring(referLink.lastIndexOf("=") + 1);
 
-                        //check if user has referred self
-                        if (!userID.equals(referredByUserID)) {
-                            referralOperation(userID, referredByUserID);
+                        if(!referredByUserID.isEmpty()) {
+                            //check if user has referred self
+                            if (!userID.equals(referredByUserID)) {
+                                referralOperation(userID, referredByUserID);
+                            } else
+                                Toast.makeText(context, "Can't refer Self",
+                                        Toast.LENGTH_SHORT).show();
                         }
-                        else
-                            Toast.makeText(context, "Can't refer Self", Toast.LENGTH_SHORT).show();
-                        } catch(Exception ignore){ }
+                    } catch (Exception ignore) { }
                 });
     }
 
@@ -104,8 +102,7 @@ public class Referral {
                 databaseReference.child("Users")
                         .child(referredByUserID);
 
-        referredByUser.child("Referrals").setValue(userID);
-        referredByUser.child("Referrals").child(userID).child("time")
+        referredByUser.child("Referrals").child("Users").child(userID)
                 .setValue(System.currentTimeMillis());
 
         // Adding details of referredBy user to db of current user
@@ -114,8 +111,7 @@ public class Referral {
 
         //add 15 to current user's wallet
         try {
-            databaseReference.child("Users").child(userID)
-                    .child("Wallet").setValue(initialMoneyToWallet);
+            new WalletOperations().addMoneyToWallet(userID, initialMoneyToWallet);
             Toast.makeText(context,
                     "Congratulations! ₹15 has been successfully added to your HCare Wallet",
                     Toast.LENGTH_LONG).show();

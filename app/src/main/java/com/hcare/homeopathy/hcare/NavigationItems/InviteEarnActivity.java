@@ -43,8 +43,7 @@ public class InviteEarnActivity extends AppCompatActivity {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, "HCare");
-            String shareMessage= "HCare - India's first only Homeopathic " +
-                    "online consultation and delivery app \n"
+            String shareMessage= "Download the HCare - Online Homeopathy Consultancy app using my link to get ₹15 added to your Wallet\n\n"
                     + dynamicLinkUri.toString();
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
             startActivity(Intent.createChooser(shareIntent, "How do you want to share"));

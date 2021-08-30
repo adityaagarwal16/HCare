@@ -45,7 +45,7 @@ public class WalletOperations {
         }
     }
 
-    void addMoneyToWallet(String referredByUserID) {
+    void addMoneyToWallet(String referredByUserID, int moneyToAdd) {
         if(PaymentSuccessful.moneyToReferredByUsersWallet > 0)  {
             reference.child("Users").child(referredByUserID)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -54,7 +54,7 @@ public class WalletOperations {
                             try {
                                 int moneyInWallet = Objects.requireNonNull(
                                         snapshot.child("Wallet").getValue(Integer.class));
-                                moneyInWallet += PaymentSuccessful.moneyToReferredByUsersWallet;
+                                moneyInWallet += moneyToAdd;
                                 reference.child("Users").child(referredByUserID)
                                         .child("Wallet").setValue(moneyInWallet);
                             } catch (Exception ignore) { }

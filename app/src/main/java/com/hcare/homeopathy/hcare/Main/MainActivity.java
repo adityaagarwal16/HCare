@@ -47,6 +47,7 @@ import com.hcare.homeopathy.hcare.NavigationItems.SetNavigationHeader;
 import com.hcare.homeopathy.hcare.NewConsultation.DiseaseAdapter;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.IntentStatic;
 import com.hcare.homeopathy.hcare.PaymentsReferrals.Referral;
 import com.hcare.homeopathy.hcare.R;
 import com.hcare.homeopathy.hcare.Start.LoginActivity;
@@ -67,43 +68,46 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //check referral
-        new Referral(getIntent(), this);
 
         //prevent access to main without signing in (using deep links)
         try {
             userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                     .getCurrentUser()).getUid();
+
+            //check referral
+            new Referral(this);
+
+            mUserRef = FirebaseDatabase.getInstance().getReference()
+                    .child("Users").child(userID);
+
+            new SetNavigationHeader(this);
+
+            //if user logs in from another device, device token will be updated
+            updateUserDetails();
+
+            //drawer and toolbar
+            setToolbar();
+            eventListeners();
+
+
+            setFlipper();
+            setCoronaFlipper();
+
+            findViewById(R.id.cart).setOnClickListener(v ->
+                    startActivity(new Intent(MainActivity.this, AllOrdersActivity.class)));
+
+            setTopIssuesRecycler();
+            setDoctorsRecycler();
+            setAllCategoriesRecycler();
+
+            findViewById(R.id.searchDisease).setOnClickListener(V -> showOrHideFragment());
         } catch (Exception e) {
+            //save in static variable because when it goes to login activity
+            //the getIntent is lost
+            IntentStatic.intent = getIntent();
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
-
-        mUserRef = FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(userID);
-
-        new SetNavigationHeader(this);
-
-        //drawer and toolbar
-
-        //if user logs in from another device, device token will be updated
-        updateUserDetails();
-
-        setToolbar();
-        eventListeners();
-
-
-        setFlipper();
-        setCoronaFlipper();
-
-        findViewById(R.id.cart).setOnClickListener(v ->
-                startActivity(new Intent(MainActivity.this, AllOrdersActivity.class)));
-
-        setTopIssuesRecycler();
-        setDoctorsRecycler();
-        setAllCategoriesRecycler();
-
-        findViewById(R.id.searchDisease).setOnClickListener(V -> showOrHideFragment());
     }
 
     private void updateUserDetails() {
@@ -369,13 +373,17 @@ public class MainActivity extends BaseActivity
     @Override
     public void onStart() {
         super.onStart();
-        mUserRef.child("status").setValue("online");
+        try {
+            mUserRef.child("status").setValue("online");
+        } catch (Exception ignore) {}
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUserRef.child("status").setValue("offline");
+        try {
+            mUserRef.child("status").setValue("offline");
+        } catch (Exception ignore) {}
     }
 
     private void setToolbar() {

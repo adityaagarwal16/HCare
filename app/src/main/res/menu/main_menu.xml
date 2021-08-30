@@ -11,27 +11,28 @@
     <group android:id="@+id/group2">
 
         <item
-            android:id="@+id/orders"
-            android:icon="@drawable/vector_cart"
-            android:title="@string/orders" />
-
-        <item
             android:id="@+id/wallet"
             android:icon="@drawable/wallet_icon"
             android:title="Your Wallet" />
+
+        <item
+            android:id="@+id/orders"
+            android:icon="@drawable/vector_cart"
+            android:title="@string/orders" />
 
         <item
             android:id="@+id/consultations"
             android:icon="@drawable/vector_consultations"
             android:title="@string/consultations" />
 
+    </group>
+
+    <group android:id="@+id/group5">
+
         <item
             android:id="@+id/covid"
             android:icon="@drawable/vector_corona"
             android:title="@string/covid" />
-    </group>
-
-    <group android:id="@+id/group5">
 
         <item
             android:id="@+id/doctors"
@@ -47,14 +48,14 @@
             android:title="@string/helpSupport" />
 
         <item
+            android:id="@+id/referAndEarn"
+            android:icon="@drawable/vector_invite"
+            android:title="Invite &amp; Earn" />
+
+        <item
             android:id="@+id/invite"
             android:icon="@drawable/vector_share"
             android:title="@string/invite" />
-
-        <item
-            android:id="@+id/referAndEarn"
-            android:icon="@drawable/vector_person"
-            android:title="Invite &amp; Earn" />
 
         <item
             android:id="@+id/rateUs"
