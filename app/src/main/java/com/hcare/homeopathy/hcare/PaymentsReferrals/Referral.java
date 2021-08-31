@@ -2,7 +2,6 @@ package com.hcare.homeopathy.hcare.PaymentsReferrals;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.widget.Toast;
@@ -71,28 +70,35 @@ public class Referral {
     private void retrieveReferral() {
         String userID = Objects.requireNonNull(FirebaseAuth.getInstance()
                 .getCurrentUser()).getUid();
-        FirebaseDynamicLinks.getInstance()
-                .getDynamicLink(IntentStatic.intent)
-                .addOnSuccessListener((Activity) context, pendingDynamicLinkData -> {
-                    try {
-                        // Adding the details of referredTo user to the db of referredBy user
-                        Uri deepLink;
-                        deepLink = pendingDynamicLinkData.getLink();
-                        String referLink = Objects.requireNonNull(deepLink).toString();
-                        referLink = referLink.substring(referLink.lastIndexOf("%") + 1);
-                        String referredByUserID =
-                                referLink.substring(referLink.lastIndexOf("=") + 1);
+        if(IntentStatic.intent != null) {
+            try {
+                FirebaseDynamicLinks.getInstance()
+                        .getDynamicLink(IntentStatic.intent)
+                        .addOnSuccessListener((Activity) context, pendingDynamicLinkData -> {
+                            try {
+                                // Adding the details of referredTo user to the db of referredBy user
+                                Uri deepLink;
+                                deepLink = pendingDynamicLinkData.getLink();
+                                String referLink = Objects.requireNonNull(deepLink).toString();
+                                referLink = referLink.substring(referLink.lastIndexOf("%") + 1);
+                                String referredByUserID =
+                                        referLink.substring(referLink.lastIndexOf("=") + 1);
 
-                        if(!referredByUserID.isEmpty()) {
-                            //check if user has referred self
-                            if (!userID.equals(referredByUserID)) {
-                                referralOperation(userID, referredByUserID);
-                            } else
-                                Toast.makeText(context, "Can't refer Self",
-                                        Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (Exception ignore) { }
-                });
+                                if (!referredByUserID.isEmpty()) {
+                                    //check if user has referred self
+                                    if (!userID.equals(referredByUserID)) {
+                                        referralOperation(userID, referredByUserID);
+                                    } else
+                                        Toast.makeText(context, "Can't refer Self",
+                                                Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception ignore) {
+                            }
+                        });
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void referralOperation(String userID, String referredByUserID) {

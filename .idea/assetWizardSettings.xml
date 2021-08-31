@@ -337,8 +337,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="vector_invite" />
-                            <entry key="sourceFile" value="C:\Users\adity\Downloads\181b4c94-971c-4c68-bb31-cf47afbf8710.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="vector_refer_graphic" />
+                            <entry key="sourceFile" value="F:\HCare\Refer vector.svg" />
                           </map>
                         </option>
                       </PersistentState>

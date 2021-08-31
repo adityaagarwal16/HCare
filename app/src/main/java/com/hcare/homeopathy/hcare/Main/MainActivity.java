@@ -68,7 +68,6 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //prevent access to main without signing in (using deep links)
         try {
             userID = Objects.requireNonNull(FirebaseAuth.getInstance()

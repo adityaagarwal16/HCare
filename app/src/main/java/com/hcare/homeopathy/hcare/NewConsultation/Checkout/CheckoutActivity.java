@@ -103,7 +103,8 @@ public class CheckoutActivity extends BaseActivity implements PaymentResultListe
     private void showCheckoutSuccessfulFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.frameLayout, new CheckoutSuccessfulFragment())
+                .replace(R.id.frameLayout, new
+                        CheckoutSuccessfulFragment())
                 .commit();
     }
 

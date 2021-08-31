@@ -35,6 +35,7 @@ import com.hcare.homeopathy.hcare.NewConsultation.Constants;
 import com.hcare.homeopathy.hcare.NewConsultation.Diseases;
 import com.hcare.homeopathy.hcare.OrderTreatment.OrderNowActivity;
 import com.hcare.homeopathy.hcare.Orders.AllOrdersActivity;
+import com.hcare.homeopathy.hcare.PaymentsReferrals.IntentStatic;
 import com.hcare.homeopathy.hcare.Start.LoginActivity;
 
 import java.util.Objects;
@@ -61,6 +62,7 @@ public class SplashScreenActivity extends BaseActivity {
             e.printStackTrace();
         }
 
+        IntentStatic.intent = getIntent();
         versionReference = FirebaseDatabase.getInstance().getReference().child("Version");
         versionReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,7 +80,7 @@ public class SplashScreenActivity extends BaseActivity {
                                     intent = new Intent(getApplicationContext(),
                                             LoginActivity.class);
                                 else {
-                                    intent = new Intent(getApplicationContext(),
+                                    /*intent = new Intent(getApplicationContext(),
                                             CheckoutActivity.class);
                                     intent.putExtra(Constants.DISEASE_OBJECT, Diseases.thyroid);
                                     intent.putExtra("details1", "hello");
@@ -112,6 +114,8 @@ public class SplashScreenActivity extends BaseActivity {
 
                                     intent = new Intent(getApplicationContext(),
                                             CheckoutActivity.class);
+                                    intent = new Intent(getApplicationContext(),
+                                            InviteEarnActivity.class);*/
                                     intent = new Intent(getApplicationContext(),
                                             MainActivity.class);
                                 }

@@ -3,7 +3,6 @@ package com.hcare.homeopathy.hcare.NavigationItems;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,11 +25,10 @@ public class InviteEarnActivity extends AppCompatActivity {
         try {
             uid = Objects.requireNonNull(FirebaseAuth.getInstance()
                     .getCurrentUser()).getUid();
-            findViewById(R.id.inviteButton).setOnClickListener(v -> refer());
         } catch (Exception ignore) { }
     }
 
-    public void refer() {
+    String shareText() {
         DynamicLink dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(Uri.parse("https://hcare.com/?invitedby=" + uid))
                 .setDomainUriPrefix("https://hcare.page.link")
@@ -39,18 +37,46 @@ public class InviteEarnActivity extends AppCompatActivity {
                 .buildDynamicLink();
         Uri dynamicLinkUri = dynamicLink.getUri();
 
+        return
+                "Download the HCare - Online Homeopathy Consultancy app using my" +
+                        " link to get ₹15 added to your Wallet\n\n"
+                + dynamicLinkUri.toString();
+    }
+
+    void refer() {
         try {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, "HCare");
-            String shareMessage= "Download the HCare - Online Homeopathy Consultancy app using my link to get ₹15 added to your Wallet\n\n"
-                    + dynamicLinkUri.toString();
-            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage);
+
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareText());
             startActivity(Intent.createChooser(shareIntent, "How do you want to share"));
         } catch(Exception e) { e.printStackTrace(); }
     }
 
     public void Back(View view) {
         onBackPressed();
+    }
+
+    public void invite(View view) {
+        refer();
+    }
+
+    void shareWhatsApp() {
+        Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
+        whatsappIntent.setType("text/plain");
+        whatsappIntent.setPackage("com.whatsapp");
+        whatsappIntent.putExtra(Intent.EXTRA_TEXT, shareText());
+
+        try {
+            startActivity(whatsappIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=com.whatsapp")));
+        }
+    }
+
+    public void whatsapp(View view) {
+        shareWhatsApp();
     }
 }
