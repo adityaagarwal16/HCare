@@ -7,25 +7,30 @@ import java.util.HashMap;
 
 public class UserObject implements Serializable {
 
-    String name, image, email, age, ReferredBy, device_token, status, sex;
-    int Wallet;
-    ReferralObject referral;
+
+    String name, image, email, age, ReferredBy, device_token, status, sex, phoneNumber;
+    int wallet;
+    //ReferralObject referral;
     long createdAt;
 
+    @PropertyName("phone number")
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    @PropertyName("phone number")
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    @PropertyName("Wallet")
     public int getWallet() {
-        return Wallet;
+        return wallet;
     }
 
+    @PropertyName("Wallet")
     public void setWallet(int wallet) {
-        Wallet = wallet;
-    }
-
-    public ReferralObject getReferral() {
-        return referral;
-    }
-
-    public void setReferral(ReferralObject referral) {
-        this.referral = referral;
+        this.wallet = wallet;
     }
 
     public long getCreatedAt() {
@@ -35,9 +40,6 @@ public class UserObject implements Serializable {
     public void setCreatedAt(long createdAt) {
         this.createdAt = createdAt;
     }
-
-    @PropertyName("phone number")
-    public String phoneNumber;
 
     public String getName() {
         return name;
@@ -101,14 +103,6 @@ public class UserObject implements Serializable {
 
     public void setSex(String sex) {
         this.sex = sex;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }
 

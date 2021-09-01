@@ -77,9 +77,15 @@ public class ProfileActivity extends BaseActivity {
                 UserObject user = new UserObject();
                 try {
                     user = dataSnapshot.getValue(UserObject.class);
-                } catch(Exception ignore) {}
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
                 setFields(user);
-                setImage(Objects.requireNonNull(user).getImage());
+                try {
+                    setImage(Objects.requireNonNull(user).getImage());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

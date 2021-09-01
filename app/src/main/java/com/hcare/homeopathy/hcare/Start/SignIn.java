@@ -133,7 +133,6 @@ public class SignIn {
                 user.setImage("default");
                 user.setDevice_token(token[0]);
                 user.setStatus("online");
-                user.setWallet(0);
                 user.setCreatedAt(System.currentTimeMillis());
                 FirebaseDatabase.getInstance().getReference().child("Users")
                         .child(userID).setValue(user);

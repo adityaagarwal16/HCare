@@ -28,14 +28,15 @@ public class WalletOperations {
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int moneyInWallet = 0;
                             try {
-                                int moneyInWallet = Objects.requireNonNull(
+                                moneyInWallet = Objects.requireNonNull(
                                         snapshot.child("Wallet").getValue(Integer.class));
-                                moneyInWallet -= moneyToRemove;
-                                reference.child("Users").child(userID)
-                                        .child("Wallet").setValue(moneyInWallet);
-                            } catch (Exception ignore) {
-                            }
+
+                            } catch (Exception ignore) { }
+                            moneyInWallet -= moneyToRemove;
+                            reference.child("Users").child(userID)
+                                    .child("Wallet").setValue(moneyInWallet);
                         }
 
                         @Override
@@ -51,13 +52,14 @@ public class WalletOperations {
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int moneyInWallet = 0;
                             try {
-                                int moneyInWallet = Objects.requireNonNull(
+                                moneyInWallet = Objects.requireNonNull(
                                         snapshot.child("Wallet").getValue(Integer.class));
-                                moneyInWallet += moneyToAdd;
-                                reference.child("Users").child(referredByUserID)
-                                        .child("Wallet").setValue(moneyInWallet);
                             } catch (Exception ignore) { }
+                            moneyInWallet += moneyToAdd;
+                            reference.child("Users").child(referredByUserID)
+                                    .child("Wallet").setValue(moneyInWallet);
                         }
 
                         @Override

@@ -117,7 +117,6 @@
                     android:inputType="textCapSentences"
                     android:layout_toStartOf="@id/patientNameCross"
                     android:layout_height="wrap_content"
-                    android:autofillHints=""
                     tools:ignore="HardcodedText" />
 
                 <ImageView
@@ -188,7 +187,6 @@
                     android:layout_centerHorizontal="true"
                     android:hint="Enter your E-mail"
                     android:text=""
-                    android:autofillHints=""
                     android:inputType="textEmailAddress|textMultiLine"
                     tools:ignore="HardcodedText" />
 
@@ -247,7 +245,6 @@
                     android:paddingBottom="5dp"
                     android:hint="Enter age"
                     android:textSize="15sp"
-                    android:autofillHints=""
                     tools:ignore="HardcodedText" />
 
                 <ImageView
@@ -354,7 +351,6 @@
                     android:layout_centerHorizontal="true"
                     android:text=""
                     android:hint="Enter your contact number"
-                    android:autofillHints=""
                     android:inputType="phone"
                     tools:ignore="HardcodedText" />
 
