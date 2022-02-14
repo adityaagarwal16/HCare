@@ -2,9 +2,6 @@ package com.hcare.homeopathy.hcare.Consultations.Doctor;
 
 import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.GALLERY_PICK;
 import static com.hcare.homeopathy.hcare.Consultations.Doctor.Constants.PICK_PDF_CODE;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.followUp;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.recentConsultations;
-import static com.hcare.homeopathy.hcare.FirebaseClasses.FirebaseConstants.userConsultations;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -43,7 +40,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.hcare.homeopathy.hcare.BaseActivity;
 import com.hcare.homeopathy.hcare.FirebaseClasses.ChatObject;
-import com.hcare.homeopathy.hcare.FirebaseClasses.ConsultationObject;
 import com.hcare.homeopathy.hcare.Main.Doctors.DoctorDetailsFragment;
 import com.hcare.homeopathy.hcare.PaymentsReferrals.PaymentSuccessful;
 import com.hcare.homeopathy.hcare.PaymentsReferrals.RazorPay;

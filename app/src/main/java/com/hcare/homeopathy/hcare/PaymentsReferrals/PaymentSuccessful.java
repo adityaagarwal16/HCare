@@ -36,10 +36,9 @@ public class PaymentSuccessful {
     DatabaseReference reference;
     static final int moneyToReferredByUsersWallet = 15;
 
+    //Consultation
     public PaymentSuccessful(String userID, Diseases disease,
                              String patientIssue, int walletMoneyUsed) {
-
-        //Consultation
 
         reference = FirebaseDatabase.getInstance().getReference();
         String consultationID = new GenerateID().getID(Service.Consultation);
@@ -72,9 +71,8 @@ public class PaymentSuccessful {
         referralWalletOperations(userID, consultations, walletMoneyUsed);
     }
 
+    //Renew Consultation
     public PaymentSuccessful(String userID, String doctorID) {
-        //Renew Consultation
-
         reference = FirebaseDatabase.getInstance().getReference();
         String current_user_ref = "messages/" + userID +"/"+ doctorID;
         String chat_user_ref ="messages/" + doctorID +"/" + userID;
@@ -142,10 +140,10 @@ public class PaymentSuccessful {
     }
 
 
+    //Order
     public PaymentSuccessful(OrderObject orderObject, String userID,
                              String doctorID, int walletMoneyUsed) {
 
-        //Order
         reference = FirebaseDatabase.getInstance().getReference();
         try {
             orderObject.setOrderID(new GenerateID().getID(Service.Order));

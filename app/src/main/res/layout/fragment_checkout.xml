@@ -144,16 +144,16 @@
                         android:paddingTop="5dp"
                         android:paddingEnd="15dp"
                         android:src="@drawable/vector_check_circle"
-                        app:tint="@color/colorSecondary"  />
+                        app:tint="@color/colorSecondary" />
 
                     <TextView
                         android:id="@+id/heading3"
-                        android:layout_toEndOf="@id/image3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:textColor="?android:textColorPrimary"
+                        android:layout_toEndOf="@id/image3"
                         android:text="10 days follow up"
+                        android:textColor="?android:textColorPrimary"
+                        android:textSize="16sp"
                         tools:ignore="HardcodedText" />
 
                     <TextView

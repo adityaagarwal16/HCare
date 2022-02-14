@@ -124,15 +124,19 @@ public class PhoneNumberFragment extends Fragment {
         public void onVerificationFailed(@NonNull FirebaseException e) {
             TextView otpFailedLayout =
                     root.findViewById(R.id.otpFailedText);
-            if (e instanceof FirebaseAuthInvalidCredentialsException)
-                otpFailedLayout.setText("INVALID NUMBER");
-            else if (e instanceof FirebaseNetworkException)
-                otpFailedLayout.setText("NO INTERNET");
-            else {
+            try {
+                if (e instanceof FirebaseAuthInvalidCredentialsException)
+                    otpFailedLayout.setText("INVALID NUMBER");
+                else if (e instanceof FirebaseNetworkException)
+                    otpFailedLayout.setText("NO INTERNET");
+                else {
+                    otpFailedLayout.setText("OTP FAILED");
+                    Toast.makeText(requireContext().getApplicationContext(),
+                            "Try re-installing the app if you're not able to receive the OTP",
+                            Toast.LENGTH_SHORT).show();
+                }
+            } catch (Exception e1) {
                 otpFailedLayout.setText("OTP FAILED");
-                Toast.makeText(requireActivity(),
-                        "Try re-installing the app if you're not able to receive the OTP",
-                        Toast.LENGTH_SHORT).show();
             }
             root.findViewById(R.id.otpFailedLayout).setVisibility(View.VISIBLE);
         }
